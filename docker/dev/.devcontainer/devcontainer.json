@@ -1,0 +1,62 @@
+{
+  "name": "React Dev (cv-site)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "react-dev",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "devuser",
+  "shutdownAction": "stopCompose",
+
+  "forwardPorts": [5173, 3000, 4173],
+  "portsAttributes": {
+    "5173": { "label": "Vite Dev Server" },
+    "3000": { "label": "CRA Dev Server" },
+    "4173": { "label": "Vite Preview" }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // React
+        "dsznajder.es7-react-js-snippets",
+        "burkeholland.simple-react-snippets",
+        "formulahendry.auto-rename-tag",
+        "steoates.autoimport",
+        // TypeScript / JavaScript
+        "ms-vscode.vscode-typescript-next",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        // Styling
+        "bradlc.vscode-tailwindcss",
+        "styled-components.vscode-styled-components",
+        // Git
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        // AI
+        "openai.chatgpt",
+        // Utilities
+        "christian-kohler.path-intellisense",
+        "streetsidesoftware.code-spell-checker",
+        "ms-azuretools.vscode-docker",
+        "EditorConfig.EditorConfig"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "prettier.requireConfig": false,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": { "path": "/bin/bash" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+name: ${COMPOSE_PROJECT_NAME:-cv-site}
+
+services:
+  react-dev:
+    build:
+      context: ../..
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      # Project files
+      - ../..:/workspace
+      # Codex: auth.json, config.toml, skills, memories, rules — live mount = auto-logged-in
+      # On Windows with Docker Desktop ${USERPROFILE} resolves to C:\Users\<you>
+      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.codex:/home/devuser/.codex
+      # Copilot: copilot-instructions.md + Explore/Plan/Ask agents
+      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.copilot:/home/devuser/.copilot
+      # Named volume for node_modules keeps installs fast and off the bind mount
+      - node_modules_cache:/workspace/node_modules
+    ports:
+      - "${HOST_VITE_PORT:-5173}:5173"       # Vite dev server
+      - "${HOST_CRA_PORT:-3000}:3000"        # Create React App / alternative dev server
+      - "${HOST_PREVIEW_PORT:-4173}:4173"    # Vite preview
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    stdin_open: true
+    tty: true
+
+volumes:
+  node_modules_cache:
