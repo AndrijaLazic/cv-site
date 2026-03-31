@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Početna",
+    "about": "O meni",
+    "docs": "Dokumentacija"
+  },
+  "theme": {
+    "auto": "Auto",
+    "light": "Svetlo",
+    "dark": "Tamno",
+    "autoLabel": "Tema: automatski (sistem)",
+    "modeLabel": "Tema: {{mode}}"
+  },
+  "language": {
+    "switchLabel": "Promeni jezik",
+    "en": "EN",
+    "sr": "SR"
+  },
+  "footer": {
+    "rights": "© {{year}} Vaše ime ovde. Sva prava zadržana.",
+    "builtWith": "Napravljeno uz TanStack Start"
+  },
+  "assistant": {
+    "title": "Asistent za CV",
+    "subtitle": "AI za evaluaciju kandidata",
+    "open": "Otvori asistenta za CV",
+    "welcome": "Dobrodošli, regruteru!",
+    "hint": "Pitajte o veštinama, iskustvu ili kvalifikacijama...",
+    "placeholder": "Pitajte o veštinama, iskustvu ili kvalifikacijama...",
+    "analyzing": "Analiziram iskustvo...",
+    "resumeAssistant": "Asistent za CV"
+  }
+}

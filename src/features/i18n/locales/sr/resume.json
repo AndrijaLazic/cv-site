@@ -1,0 +1,12 @@
+{
+  "title": "Moj CV",
+  "subtitle": "Profesionalno iskustvo i obrazovanje",
+  "careerSummary": "Rezime karijere",
+  "careerSummaryText": "Ja sam strastven i motivisan profesionalac koji traži prilike koje će iskoristiti moje bogato iskustvo u frontend razvoju uz mogućnost kontinuiranog rasta i učenja. Moj cilj je da doprinosim inovativnim projektima koji me izazivaju da proširim svoje veštine i ostvarim značajan uticaj kroz tehnologiju.",
+  "headshot": "Profesionalna fotografija",
+  "workExperience": "Radno iskustvo",
+  "education": "Obrazovanje",
+  "present": "Trenutno",
+  "skillsFilter": "Veštine i tehnologije",
+  "experienceWith": "Iskustvo sa {{tag}} u profesionalnom razvoju"
+}

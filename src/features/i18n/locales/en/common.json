@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "docs": "Docs"
+  },
+  "theme": {
+    "auto": "Auto",
+    "light": "Light",
+    "dark": "Dark",
+    "autoLabel": "Theme: auto (system)",
+    "modeLabel": "Theme: {{mode}}"
+  },
+  "language": {
+    "switchLabel": "Switch language",
+    "en": "EN",
+    "sr": "SR"
+  },
+  "footer": {
+    "rights": "© {{year}} Your name here. All rights reserved.",
+    "builtWith": "Built with TanStack Start"
+  },
+  "assistant": {
+    "title": "Resume Assistant",
+    "subtitle": "Candidate Evaluation AI",
+    "open": "Open Resume Assistant",
+    "welcome": "Welcome, Recruiter!",
+    "hint": "Ask about skills, experience, or qualifications...",
+    "placeholder": "Ask about skills, experience, or qualifications...",
+    "analyzing": "Analyzing experience...",
+    "resumeAssistant": "Resume Assistant"
+  }
+}
