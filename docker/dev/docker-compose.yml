@@ -5,6 +5,8 @@ services:
     build:
       context: ../..
       dockerfile: docker/dev/Dockerfile
+      args:
+        NPM_VERSION: "11.12.1"
     volumes:
       # Project files
       - ../..:/workspace
