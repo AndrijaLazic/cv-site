@@ -2,14 +2,19 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "docs": "Docs"
+    "docs": "Docs",
+    "aboutMe": "About me",
+    "carrier": "Carrier",
+    "contacts": "Contacts",
+    "experience": "Experience",
+    "education": "Education",
+    "contact": "Contact"
   },
   "theme": {
-    "auto": "Auto",
     "light": "Light",
     "dark": "Dark",
-    "autoLabel": "Theme: auto (system)",
-    "modeLabel": "Theme: {{mode}}"
+    "modeLabel": "Theme",
+    "setTo": "Set theme to {{mode}}"
   },
   "language": {
     "switchLabel": "Switch language",
@@ -17,8 +22,15 @@
     "sr": "SR"
   },
   "footer": {
-    "rights": "© {{year}} Your name here. All rights reserved.",
-    "builtWith": "Built with TanStack Start"
+    "name": "Andrija Lazic",
+    "rights": "© {{year}} {{name}}. All rights reserved."
+  },
+  "contact": {
+    "kicker": "Contact",
+    "title": "Let's connect",
+    "description": "Reach out through GitHub or LinkedIn and I will get back to you soon.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
   },
   "assistant": {
     "title": "Resume Assistant",

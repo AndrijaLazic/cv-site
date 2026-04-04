@@ -1,20 +1,82 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
+import {
+  allEducationsEns,
+  allEducationsSrs,
+  allJobsEns,
+  allJobsSrs,
+} from '../../.content-collections/generated/index.js'
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
-import { Checkbox } from '#/shared/ui/checkbox'
+import { supportedLanguages } from '#/features/i18n/config'
 import { Badge } from '#/shared/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 import { Separator } from '#/shared/ui/separator'
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '#/shared/ui/hover-card'
 
-import ResumeAssistant from '#/features/resume/ResumeAssistant'
-import { useLocalizedContent } from '#/features/resume/useLocalizedContent'
+const sectionOrder = ['about', 'experience', 'education'] as const
+type SectionId = (typeof sectionOrder)[number]
+type ResumeLanguage = (typeof supportedLanguages)[number]
+
+type ResumeJob = {
+  jobTitle: string
+  summary: string
+  startDate: string
+  endDate?: string
+  company: string
+  location: string
+  tags: string[]
+  content: string
+}
+
+type ResumeEducation = {
+  school: string
+  summary: string
+  startDate: string
+  endDate?: string
+  tags: string[]
+  content: string
+}
+
+const fallbackLanguage: ResumeLanguage = 'en'
+
+const jobsByLanguage = {
+  en: allJobsEns,
+  sr: allJobsSrs,
+} as const satisfies Record<ResumeLanguage, ReadonlyArray<ResumeJob>>
+
+const educationsByLanguage = {
+  en: allEducationsEns,
+  sr: allEducationsSrs,
+} as const satisfies Record<ResumeLanguage, ReadonlyArray<ResumeEducation>>
+
+function resolveResumeLanguage(language: string): ResumeLanguage {
+  const baseLanguage = language.toLowerCase().split('-')[0]
+
+  if ((supportedLanguages as readonly string[]).includes(baseLanguage)) {
+    return baseLanguage as ResumeLanguage
+  }
+
+  return fallbackLanguage
+}
+
+function parseDate(value?: string) {
+  if (!value) {
+    return Number.NEGATIVE_INFINITY
+  }
+
+  const parsed = Date.parse(value)
+
+  return Number.isNaN(parsed) ? Number.NEGATIVE_INFINITY : parsed
+}
+
+function getSectionIndexFromHash(hash: string) {
+  const normalizedHash = hash.replace('#', '')
+  const id =
+    normalizedHash === 'work-experience-heading' ? 'experience' : normalizedHash
+
+  return sectionOrder.indexOf(id as SectionId)
+}
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -49,16 +111,10 @@ function PersonJsonLd() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Your Name Here',
-    jobTitle: 'Senior Frontend Developer',
-    url: typeof window !== 'undefined' ? window.location.origin : '',
-    knowsAbout: [
-      'React',
-      'TypeScript',
-      'JavaScript',
-      'Frontend Development',
-      'Web Development',
-    ],
+    name: 'Andrija Lazic',
+    jobTitle: 'Software Engineer',
+    url: 'https://www.linkedin.com/in/andrija-lazic-dev/',
+    knowsAbout: ['React', 'Python', 'Devops'],
   }
 
   return (
@@ -70,216 +126,334 @@ function PersonJsonLd() {
 }
 
 function App() {
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const { t } = useTranslation('resume')
-  const { jobs, educations } = useLocalizedContent()
+  const { t, i18n } = useTranslation('resume')
+  const activeLanguage = resolveResumeLanguage(
+    i18n.resolvedLanguage ?? i18n.language,
+  )
+  const jobs = jobsByLanguage[activeLanguage]
+  const educations = educationsByLanguage[activeLanguage]
 
-  const allTags = useMemo(() => {
-    const tags = new Set<string>()
-    jobs.forEach((job) => {
-      job.tags.forEach((tag) => tags.add(tag))
+  const sortedJobs = useMemo(() => {
+    return [...jobs].sort((a, b) => {
+      const aIsOngoing = !a.endDate
+      const bIsOngoing = !b.endDate
+
+      if (aIsOngoing && !bIsOngoing) {
+        return -1
+      }
+
+      if (!aIsOngoing && bIsOngoing) {
+        return 1
+      }
+
+      if (aIsOngoing && bIsOngoing) {
+        return parseDate(b.startDate) - parseDate(a.startDate)
+      }
+
+      const endDateSort = parseDate(b.endDate) - parseDate(a.endDate)
+
+      if (endDateSort !== 0) {
+        return endDateSort
+      }
+
+      return parseDate(b.startDate) - parseDate(a.startDate)
     })
-    return Array.from(tags).sort()
   }, [jobs])
 
-  const filteredJobs = useMemo(() => {
-    if (selectedTags.length === 0) return jobs
-    return jobs.filter((job) =>
-      selectedTags.some((tag) => job.tags.includes(tag)),
+  const totalSections = sectionOrder.length
+  const [visibleSectionCount, setVisibleSectionCount] = useState(1)
+  const loadMoreTriggerRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const revealSectionByHash = () => {
+      const sectionIndex = getSectionIndexFromHash(window.location.hash)
+
+      if (sectionIndex < 0) {
+        return
+      }
+
+      setVisibleSectionCount((current) =>
+        Math.max(current, Math.min(sectionIndex + 1, totalSections)),
+      )
+    }
+
+    revealSectionByHash()
+    window.addEventListener('hashchange', revealSectionByHash)
+
+    return () => {
+      window.removeEventListener('hashchange', revealSectionByHash)
+    }
+  }, [totalSections])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    if (visibleSectionCount >= totalSections) {
+      return
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      setVisibleSectionCount(totalSections)
+      return
+    }
+
+    const trigger = loadMoreTriggerRef.current
+
+    if (!trigger) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+
+        if (!entry.isIntersecting) {
+          return
+        }
+
+        setVisibleSectionCount((current) =>
+          Math.min(current + 1, totalSections),
+        )
+        observer.disconnect()
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px 220px 0px',
+        threshold: 0.15,
+      },
     )
-  }, [selectedTags, jobs])
+
+    observer.observe(trigger)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [totalSections, visibleSectionCount])
+
+  const showExperience = visibleSectionCount >= 2
+  const showEducation = visibleSectionCount >= 3
 
   return (
     <>
       <PersonJsonLd />
-      <ResumeAssistant />
-      <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
-        <div className="flex">
-          {/* Sidebar with filters */}
-          <aside className="w-72 min-h-screen bg-white dark:bg-gray-900 border-r dark:border-gray-800 shadow-sm p-8 sticky top-0">
-            <nav aria-label={t('skillsFilter')}>
-              <h2 className="text-lg font-semibold mb-6 text-gray-900 dark:text-gray-100">
-                {t('skillsFilter')}
-              </h2>
-              <div className="space-y-4">
-                {allTags.map((tag) => (
-                  <div key={tag} className="flex items-center space-x-3 group">
-                    <Checkbox
-                      id={tag}
-                      checked={selectedTags.includes(tag)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedTags([...selectedTags, tag])
-                        } else {
-                          setSelectedTags(selectedTags.filter((s) => s !== tag))
-                        }
-                      }}
-                      className="data-[state=checked]:bg-blue-600"
-                    />
-                    <label
-                      htmlFor={tag}
-                      className="text-sm font-medium leading-none text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors cursor-pointer"
-                    >
-                      {tag}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </nav>
-          </aside>
-
-          {/* Main content */}
-          <main className="flex-1 p-8 lg:p-12">
-            <div className="max-w-4xl mx-auto space-y-12">
-              <div className="text-center space-y-4">
-                <h1 className="text-5xl font-bold bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-gray-100 dark:via-gray-200 dark:to-gray-100 bg-clip-text text-transparent">
-                  {t('title')}
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 text-lg">
-                  {t('subtitle')}
-                </p>
-                <Separator className="mt-8" />
-              </div>
-
-              {/* Career Summary */}
-              <Card className="border-0 shadow-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-gray-900 dark:text-gray-100">
+      <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_42%),linear-gradient(to_bottom,rgb(248_250_252),rgb(241_245_249))] dark:bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.18),transparent_45%),linear-gradient(to_bottom,rgb(2_6_23),rgb(3_7_18))]">
+        <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
+          <div className="mx-auto max-w-5xl space-y-8 sm:space-y-10">
+            <section
+              id="about"
+              aria-labelledby="about-heading"
+              className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32"
+            >
+              <Card className="border-slate-200/80 bg-white/70 shadow-lg backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/65 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3">
+                <CardHeader className="space-y-3">
+                  <p className="text-sm font-medium tracking-[0.16em] text-slate-500 uppercase dark:text-slate-400">
+                    {t('subtitle')}
+                  </p>
+                  <h1
+                    id="about-heading"
+                    className="text-3xl font-bold text-slate-900 sm:text-4xl lg:text-5xl dark:text-slate-100"
+                  >
+                    {t('title')}
+                  </h1>
+                  <CardTitle className="text-xl text-slate-800 sm:text-2xl dark:text-slate-100">
                     {t('careerSummary')}
                   </CardTitle>
+                  <Separator className="mt-2" />
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-8">
-                    <p className="text-gray-700 dark:text-gray-300 flex-1 leading-relaxed">
-                      {t('careerSummaryText')}
-                    </p>
-                    <img
-                      src="/headshot-on-white.jpg"
-                      alt={t('headshot')}
-                      className="w-44 h-52 rounded-2xl object-cover shadow-md transition-transform hover:scale-105"
-                      width="176"
-                      height="208"
-                    />
-                  </div>
+                <CardContent className="grid gap-6 pb-1 md:grid-cols-[1fr_auto] md:items-center">
+                  <p className="text-base leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
+                    {t('careerSummaryText')}
+                  </p>
+                  <img
+                    src="/headshot-on-white.jpg"
+                    alt={t('headshot')}
+                    className="h-44 w-36 rounded-2xl object-cover shadow-md ring-1 ring-slate-900/10 md:h-52 md:w-44 dark:ring-slate-100/10"
+                    width="176"
+                    height="208"
+                    loading="eager"
+                  />
                 </CardContent>
               </Card>
+            </section>
 
-              {/* Work Experience */}
+            {showExperience && (
               <section
-                aria-labelledby="work-experience-heading"
-                className="space-y-6"
+                id="experience"
+                aria-labelledby="experience-heading"
+                className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3"
               >
-                <h2
-                  id="work-experience-heading"
-                  className="text-3xl font-semibold text-gray-900 dark:text-gray-100"
-                >
-                  {t('workExperience')}
-                </h2>
-                <div className="space-y-6">
-                  {filteredJobs.map((job) => (
+                <span id="work-experience-heading" className="sr-only" />
+                <div className="space-y-2">
+                  <h2
+                    id="experience-heading"
+                    className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+                  >
+                    {t('workExperience')}
+                  </h2>
+                  <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
+                    Project highlights are included under each role.
+                  </p>
+                </div>
+
+                <div className="space-y-4 sm:space-y-5">
+                  {sortedJobs.map((job) => (
                     <article
-                      key={job.jobTitle}
-                      className="border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl bg-card text-card-foreground py-6"
+                      key={`${job.company}-${job.jobTitle}-${job.startDate}`}
                     >
-                      <CardHeader>
-                        <div className="flex justify-between items-start">
-                          <div className="space-y-2">
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                              {job.jobTitle}
-                            </h3>
-                            <p className="text-blue-600 dark:text-blue-400 font-medium">
-                              {job.company} - {job.location}
-                            </p>
+                      <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
+                        <CardHeader className="space-y-4">
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                            <div className="space-y-1.5">
+                              <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+                                {job.jobTitle}
+                              </h3>
+                              <p className="text-sm font-medium text-cyan-700 sm:text-base dark:text-cyan-300">
+                                {job.company} · {job.location}
+                              </p>
+                            </div>
+
+                            <Badge
+                              variant="secondary"
+                              className="text-xs font-medium sm:text-sm"
+                            >
+                              <time>{job.startDate}</time> -{' '}
+                              {job.endDate ? (
+                                <time>{job.endDate}</time>
+                              ) : (
+                                t('present')
+                              )}
+                            </Badge>
                           </div>
-                          <Badge variant="secondary" className="text-sm">
-                            <time>{job.startDate}</time> -{' '}
-                            {job.endDate ? (
-                              <time>{job.endDate}</time>
-                            ) : (
-                              t('present')
-                            )}
-                          </Badge>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                          {job.summary}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {job.tags.map((tag) => (
-                            <HoverCard key={tag}>
-                              <HoverCardTrigger>
+                        </CardHeader>
+
+                        <CardContent className="space-y-4">
+                          <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+                            {job.summary}
+                          </p>
+
+                          <div className="flex flex-wrap gap-2">
+                            {job.tags.map((tag) => (
+                              <Badge
+                                key={`${job.jobTitle}-${tag}`}
+                                variant="outline"
+                                className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          {job.content && (
+                            <div
+                              className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                              dangerouslySetInnerHTML={{
+                                __html: marked(job.content),
+                              }}
+                            />
+                          )}
+                        </CardContent>
+                      </Card>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {showEducation && (
+              <section
+                id="education"
+                aria-labelledby="education-heading"
+                className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3"
+              >
+                <div className="space-y-2">
+                  <h2
+                    id="education-heading"
+                    className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+                  >
+                    {t('education')} & Certifications
+                  </h2>
+                </div>
+
+                <div className="space-y-4 sm:space-y-5">
+                  {educations.map((education) => (
+                    <article
+                      key={`${education.school}-${education.startDate}`}
+                      className="rounded-xl"
+                    >
+                      <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
+                        <CardHeader className="space-y-3">
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                            <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+                              {education.school}
+                            </h3>
+
+                            <Badge
+                              variant="secondary"
+                              className="text-xs font-medium sm:text-sm"
+                            >
+                              <time>{education.startDate}</time> -{' '}
+                              {education.endDate ? (
+                                <time>{education.endDate}</time>
+                              ) : (
+                                t('present')
+                              )}
+                            </Badge>
+                          </div>
+                        </CardHeader>
+
+                        <CardContent className="space-y-4">
+                          <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+                            {education.summary}
+                          </p>
+
+                          {education.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {education.tags.map((tag) => (
                                 <Badge
+                                  key={`${education.school}-${tag}`}
                                   variant="outline"
-                                  className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                                  className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
                                 >
                                   {tag}
                                 </Badge>
-                              </HoverCardTrigger>
-                              <HoverCardContent className="w-64">
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                  {t('experienceWith', { tag })}
-                                </p>
-                              </HoverCardContent>
-                            </HoverCard>
-                          ))}
-                        </div>
-                        {job.content && (
-                          <div
-                            className="mt-6 text-gray-700 dark:text-gray-300 prose dark:prose-invert prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{
-                              __html: marked(job.content),
-                            }}
-                          />
-                        )}
-                      </CardContent>
-                    </article>
-                  ))}
-                </div>
-              </section>
+                              ))}
+                            </div>
+                          )}
 
-              {/* Education */}
-              <section
-                aria-labelledby="education-heading"
-                className="space-y-6"
-              >
-                <h2
-                  id="education-heading"
-                  className="text-3xl font-semibold text-gray-900 dark:text-gray-100"
-                >
-                  {t('education')}
-                </h2>
-                <div className="space-y-6">
-                  {educations.map((education) => (
-                    <article
-                      key={education.school}
-                      className="border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl bg-card text-card-foreground py-6"
-                    >
-                      <CardHeader>
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                          {education.school}
-                        </h3>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                          {education.summary}
-                        </p>
-                        {education.content && (
-                          <div
-                            className="mt-6 text-gray-700 dark:text-gray-300 prose dark:prose-invert prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{
-                              __html: marked(education.content),
-                            }}
-                          />
-                        )}
-                      </CardContent>
+                          {education.content && (
+                            <div
+                              className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                              dangerouslySetInnerHTML={{
+                                __html: marked(education.content),
+                              }}
+                            />
+                          )}
+                        </CardContent>
+                      </Card>
                     </article>
                   ))}
                 </div>
               </section>
-            </div>
-          </main>
-        </div>
+            )}
+
+            {visibleSectionCount < totalSections && (
+              <div
+                ref={loadMoreTriggerRef}
+                className="flex items-center justify-center py-1 sm:py-3"
+              >
+                <p className="rounded-full border border-slate-300/80 bg-white/75 px-3 py-1.5 text-center text-xs text-slate-600 backdrop-blur-sm sm:px-4 sm:text-sm dark:border-slate-700/80 dark:bg-slate-900/70 dark:text-slate-400">
+                  Scroll to reveal the next section.
+                </p>
+              </div>
+            )}
+          </div>
+        </main>
       </div>
     </>
   )

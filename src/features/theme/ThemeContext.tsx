@@ -7,7 +7,7 @@ import {
 } from 'react'
 import type { ReactNode } from 'react'
 
-export type ThemeMode = 'light' | 'dark' | 'auto'
+export type ThemeMode = 'light' | 'dark'
 
 interface ThemeContextValue {
   mode: ThemeMode
@@ -18,60 +18,43 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function getInitialMode(): ThemeMode {
-  if (typeof window === 'undefined') return 'auto'
+  if (typeof window === 'undefined') return 'dark'
   const stored = window.localStorage.getItem('theme')
-  if (stored === 'light' || stored === 'dark' || stored === 'auto')
-    return stored
-  return 'auto'
+  if (stored === 'light' || stored === 'dark') return stored
+  return getSystemTheme()
 }
 
-function resolveTheme(mode: ThemeMode): 'light' | 'dark' {
-  if (mode !== 'auto') return mode
-  if (typeof window === 'undefined') return 'light'
+function getSystemTheme(): ThemeMode {
+  if (typeof window === 'undefined') return 'dark'
+  if (typeof window.matchMedia !== 'function') return 'dark'
   return window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light'
 }
 
 function applyTheme(mode: ThemeMode) {
-  const resolved = resolveTheme(mode)
   const root = document.documentElement
   root.classList.remove('light', 'dark')
-  root.classList.add(resolved)
-  if (mode === 'auto') {
-    root.removeAttribute('data-theme')
-  } else {
-    root.setAttribute('data-theme', mode)
-  }
-  root.style.colorScheme = resolved
+  root.classList.add(mode)
+  root.setAttribute('data-theme', mode)
+  root.style.colorScheme = mode
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>('auto')
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light')
+  const [mode, setModeState] = useState<ThemeMode>('dark')
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark')
 
   useEffect(() => {
     const initial = getInitialMode()
     setModeState(initial)
     applyTheme(initial)
-    setResolvedTheme(resolveTheme(initial))
+    setResolvedTheme(initial)
   }, [])
-
-  useEffect(() => {
-    if (mode !== 'auto') return
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => {
-      applyTheme('auto')
-      setResolvedTheme(resolveTheme('auto'))
-    }
-    media.addEventListener('change', onChange)
-    return () => media.removeEventListener('change', onChange)
-  }, [mode])
 
   const setMode = useCallback((next: ThemeMode) => {
     setModeState(next)
     applyTheme(next)
-    setResolvedTheme(resolveTheme(next))
+    setResolvedTheme(next)
     window.localStorage.setItem('theme', next)
   }, [])
 

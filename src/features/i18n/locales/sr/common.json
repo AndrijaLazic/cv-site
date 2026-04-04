@@ -2,14 +2,19 @@
   "nav": {
     "home": "Početna",
     "about": "O meni",
-    "docs": "Dokumentacija"
+    "docs": "Dokumentacija",
+    "aboutMe": "O meni",
+    "carrier": "Karijera",
+    "contacts": "Kontakti",
+    "experience": "Iskustvo",
+    "education": "Obrazovanje",
+    "contact": "Kontakt"
   },
   "theme": {
-    "auto": "Auto",
     "light": "Svetlo",
     "dark": "Tamno",
-    "autoLabel": "Tema: automatski (sistem)",
-    "modeLabel": "Tema: {{mode}}"
+    "modeLabel": "Tema",
+    "setTo": "Podesi temu na {{mode}}"
   },
   "language": {
     "switchLabel": "Promeni jezik",
@@ -17,8 +22,16 @@
     "sr": "SR"
   },
   "footer": {
-    "rights": "© {{year}} Vaše ime ovde. Sva prava zadržana.",
+    "name": "Andrija Lazic",
+    "rights": "© {{year}} {{name}}. Sva prava zadržana.",
     "builtWith": "Napravljeno uz TanStack Start"
+  },
+  "contact": {
+    "kicker": "Kontakt",
+    "title": "Hajde da se povežemo",
+    "description": "Pišite mi preko GitHub-a ili LinkedIn-a i odgovoriću u najkraćem roku.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
   },
   "assistant": {
     "title": "Asistent za CV",
