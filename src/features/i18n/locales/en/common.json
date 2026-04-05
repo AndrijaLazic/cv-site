@@ -8,7 +8,9 @@
     "contacts": "Contacts",
     "experience": "Experience",
     "education": "Education",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "theme": {
     "light": "Light",

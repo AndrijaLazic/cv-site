@@ -1,5 +1,6 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
 import { z } from 'zod'
+import { supportedLanguages } from './src/features/i18n/languages'
 
 const jobSchema = z.object({
   jobTitle: z.string(),
@@ -21,34 +22,34 @@ const educationSchema = z.object({
   content: z.string(),
 })
 
-const jobsEn = defineCollection({
-  name: 'jobsEn',
-  directory: 'content/jobs/en',
-  include: '**/*.md',
-  schema: jobSchema,
-})
+function toCollectionSuffix(language: string) {
+  return language.charAt(0).toUpperCase() + language.slice(1)
+}
 
-const jobsSr = defineCollection({
-  name: 'jobsSr',
-  directory: 'content/jobs/sr',
-  include: '**/*.md',
-  schema: jobSchema,
-})
+function defineLocalizedCollections<TSchema extends z.ZodTypeAny>(
+  baseName: string,
+  baseDirectory: string,
+  schema: TSchema,
+) {
+  return supportedLanguages.map((language) =>
+    defineCollection({
+      name: `${baseName}${toCollectionSuffix(language)}`,
+      directory: `${baseDirectory}/${language}`,
+      include: '**/*.md',
+      schema,
+    }),
+  )
+}
 
-const educationsEn = defineCollection({
-  name: 'educationsEn',
-  directory: 'content/education/en',
-  include: '**/*.md',
-  schema: educationSchema,
-})
-
-const educationsSr = defineCollection({
-  name: 'educationsSr',
-  directory: 'content/education/sr',
-  include: '**/*.md',
-  schema: educationSchema,
-})
+const content = [
+  ...defineLocalizedCollections('jobs', 'content/jobs', jobSchema),
+  ...defineLocalizedCollections(
+    'educations',
+    'content/education',
+    educationSchema,
+  ),
+]
 
 export default defineConfig({
-  collections: [jobsEn, jobsSr, educationsEn, educationsSr],
+  content,
 })

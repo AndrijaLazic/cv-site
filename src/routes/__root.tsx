@@ -1,4 +1,9 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import {
+  HeadContent,
+  Link,
+  Scripts,
+  createRootRoute,
+} from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '#/features/layout/Footer'
@@ -56,6 +61,7 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -65,10 +71,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+      <body className="font-sans antialiased wrap-break-word min-h-screen flex flex-col selection:bg-rose-500/20">
         <ThemeProvider>
           <Header />
-          {children}
+          <main className="flex-1 flex flex-col w-full">{children}</main>
           <Footer />
         </ThemeProvider>
         <TanStackDevtools
@@ -85,5 +91,25 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function NotFound() {
+  return (
+    <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-4 px-6 py-12 text-center">
+      <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+        404
+      </p>
+      <h1 className="text-3xl font-semibold tracking-tight">Page not found</h1>
+      <p className="text-muted-foreground">
+        The page you requested does not exist or was moved.
+      </p>
+      <Link
+        to="/"
+        className="inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        Back to home
+      </Link>
+    </section>
   )
 }

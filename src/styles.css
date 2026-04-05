@@ -52,6 +52,20 @@ code {
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.871 0.006 286.286);
+
+  --sea-ink: oklch(0.34 0.044 221.2);
+  --sea-ink-soft: oklch(0.5 0.03 222.5);
+  --line: oklch(0.9 0.01 236);
+  --header-bg: rgb(248 250 252 / 0.84);
+  --chip-bg: rgb(255 255 255 / 0.9);
+  --chip-line: oklch(0.87 0.015 226);
+  --link-bg-hover: rgb(14 165 233 / 0.1);
+  --card-bg: rgb(255 255 255 / 0.95);
+  --header-height: 4.25rem;
+
+  --scrollbar-track: rgb(148 163 184 / 0.15);
+  --scrollbar-thumb: rgb(71 85 105 / 0.5);
+  --scrollbar-thumb-hover: rgb(51 65 85 / 0.68);
 }
 
 .dark {
@@ -87,6 +101,19 @@ code {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
+
+  --sea-ink: oklch(0.92 0.02 228);
+  --sea-ink-soft: oklch(0.75 0.02 228);
+  --line: oklch(0.34 0.012 253);
+  --header-bg: rgb(2 6 23 / 0.78);
+  --chip-bg: rgb(15 23 42 / 0.9);
+  --chip-line: oklch(0.39 0.015 248);
+  --link-bg-hover: rgb(56 189 248 / 0.16);
+  --card-bg: rgb(3 7 18 / 0.95);
+
+  --scrollbar-track: rgb(71 85 105 / 0.22);
+  --scrollbar-thumb: rgb(148 163 184 / 0.5);
+  --scrollbar-thumb-hover: rgb(203 213 225 / 0.68);
 }
 
 @theme inline {
@@ -132,7 +159,62 @@ code {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scrollbar-gutter: stable both-edges;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .page-wrap {
+    @apply mx-auto w-full max-w-6xl;
+  }
+
+  .nav-link {
+    @apply inline-flex items-center rounded-full px-3 py-2 text-sm font-semibold text-(--sea-ink-soft) transition-colors hover:bg-(--link-bg-hover) hover:text-(--sea-ink);
+  }
+
+  .nav-link.is-active {
+    @apply bg-(--link-bg-hover) text-(--sea-ink);
+  }
+
+  .island-shell {
+    @apply border border-(--line) bg-(--card-bg) shadow-sm;
+  }
+
+  .island-kicker {
+    @apply text-xs font-semibold tracking-[0.18em] text-(--sea-ink-soft) uppercase;
+  }
+
+  .display-title {
+    @apply text-(--sea-ink) leading-tight;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border: 2px solid var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }

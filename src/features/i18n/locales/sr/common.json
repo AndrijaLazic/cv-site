@@ -8,7 +8,9 @@
     "contacts": "Kontakti",
     "experience": "Iskustvo",
     "education": "Obrazovanje",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "openMenu": "Otvori meni",
+    "closeMenu": "Zatvori meni"
   },
   "theme": {
     "light": "Svetlo",

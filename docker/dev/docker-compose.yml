@@ -6,7 +6,7 @@ services:
       context: ../..
       dockerfile: docker/dev/Dockerfile
       args:
-        NPM_VERSION: "11.12.1"
+        NPM_VERSION: '11.12.1'
     volumes:
       # Project files
       - ../..:/workspace
@@ -19,15 +19,15 @@ services:
       - node_modules_cache:/workspace/node_modules
     environment:
       # Reliable file watching on Docker bind mounts (especially Docker Desktop/WSL2)
-      CHOKIDAR_USEPOLLING: "true"
-      CHOKIDAR_INTERVAL: "120"
-      WATCHPACK_POLLING: "true"
-      VITE_USE_POLLING: "true"
-      VITE_WATCH_POLL_INTERVAL: "120"
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '120'
+      WATCHPACK_POLLING: 'true'
+      VITE_USE_POLLING: 'true'
+      VITE_WATCH_POLL_INTERVAL: '120'
     ports:
-      - "${HOST_VITE_PORT:-5173}:5173"       # Vite dev server
-      - "${HOST_CRA_PORT:-3000}:3000"        # Create React App / alternative dev server
-      - "${HOST_PREVIEW_PORT:-4173}:4173"    # Vite preview
+      - '${HOST_VITE_PORT:-5173}:5173' # Vite dev server
+      - '${HOST_CRA_PORT:-3000}:3000' # Create React App / alternative dev server
+      - '${HOST_PREVIEW_PORT:-4173}:4173' # Vite preview
     security_opt:
       - no-new-privileges:true
     cap_drop:

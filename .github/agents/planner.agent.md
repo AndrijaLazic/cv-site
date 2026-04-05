@@ -12,8 +12,9 @@ Your job is to analyze requests, create actionable implementation plans, and orc
 
 1. **Analyze** the request — read relevant files to understand current state
 2. **Plan** — break the work into ordered tasks using the todo list
-3. **Delegate** — invoke `@coder` for logic/data/API work and `@ui-designer` for component/styling work
-4. **Verify** — review agent outputs for consistency and completeness
+3. **Ask clarifying questions** if requirements are ambiguous or incomplete
+4. **Delegate** — invoke `@coder` for logic/data/API work and `@ui-designer` for component/styling work
+5. **Verify** — review agent outputs for consistency and completeness
 
 ## Constraints
 

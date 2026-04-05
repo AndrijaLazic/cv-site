@@ -29,7 +29,9 @@ export default function Footer() {
             <LinkedInIcon aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
-        <p className="m-0 text-sm">© 2026 Andrija Lazic. All rights reserved.</p>
+        <p className="m-0 text-sm">
+          © 2026 Andrija Lazic. All rights reserved.
+        </p>
       </div>
     </footer>
   )

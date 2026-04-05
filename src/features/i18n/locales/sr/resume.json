@@ -4,8 +4,11 @@
   "careerSummary": "Rezime karijere",
   "careerSummaryText": "Ja sam strastven i motivisan profesionalac koji traži prilike koje će iskoristiti moje bogato iskustvo u frontend razvoju uz mogućnost kontinuiranog rasta i učenja. Moj cilj je da doprinosim inovativnim projektima koji me izazivaju da proširim svoje veštine i ostvarim značajan uticaj kroz tehnologiju.",
   "headshot": "Profesionalna fotografija",
+  "scrollHint": "Skroluj da prikažeš sledeću sekciju.",
   "workExperience": "Radno iskustvo",
+  "experienceLeadIn": "Istaknuti projekti su navedeni u okviru svake uloge.",
   "education": "Obrazovanje",
+  "educationWithCertifications": "Obrazovanje i sertifikati",
   "present": "Trenutno",
   "skillsFilter": "Veštine i tehnologije",
   "experienceWith": "Iskustvo sa {{tag}} u profesionalnom razvoju"
