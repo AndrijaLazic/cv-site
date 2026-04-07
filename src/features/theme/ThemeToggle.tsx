@@ -1,8 +1,18 @@
+import { memo, useEffect, useRef } from 'react'
 import { useTheme } from './ThemeContext'
 import { useTranslation } from 'react-i18next'
 import { Moon, Sun } from 'lucide-react'
 
-export default function ThemeToggle() {
+type RenderSnapshot = {
+  mode: string
+  nextMode: string
+  label: string
+  language: string
+  setModeRef: unknown
+  tRef: unknown
+}
+
+function ThemeToggle() {
   const { mode, setMode } = useTheme()
   const { t } = useTranslation('common')
   const nextMode = mode === 'dark' ? 'light' : 'dark'
@@ -27,3 +37,5 @@ export default function ThemeToggle() {
     </button>
   )
 }
+
+export default memo(ThemeToggle)

@@ -5,20 +5,12 @@ This folder provides dark/light theme state, startup hydration safety, and UI co
 ## How it works
 
 - [`ThemeContext.tsx`](./ThemeContext.tsx) exposes `ThemeProvider` and `useTheme()`.
-- Theme mode is `light | dark` and is stored in `localStorage` under the `theme` key.
-- On provider mount, initial mode is resolved in this order:
-  1. Stored value in `localStorage`
-  2. System preference (`prefers-color-scheme`)
-  3. Fallback to `dark`
+- Theme mode is `light | dark` and is stored in cookie (`theme`).
+- The initial mode is provided by the root route loader from cookie data, with `dark` as fallback.
 - `applyTheme(mode)` updates:
   - `<html>` classes (`light` / `dark`)
   - `data-theme` attribute
   - `color-scheme` style
-
-## SSR and no-flash initialization
-
-- [`theme-init-script.ts`](./theme-init-script.ts) exports `THEME_INIT_SCRIPT`.
-- The script is injected in the root `<head>` before React hydration, so the correct theme is applied immediately and avoids theme flash.
 
 ## Toggle UI
 

@@ -1,7 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import type { ComponentType } from 'react'
 import { Check } from 'lucide-react'
+import {
+  LANGUAGE_COOKIE_KEY,
+  setClientCookie,
+} from '#/features/preferences/cookies'
 import { supportedLanguages, resolveSupportedLanguage } from './languages'
 import type { SupportedLanguage } from './languages'
 
@@ -84,7 +88,7 @@ const languageMeta: Record<
   sr: { labelKey: 'language.sr', Icon: SerbiaFlagIcon },
 }
 
-export default function LanguageSwitcher() {
+function LanguageSwitcher() {
   const { i18n, t } = useTranslation('common')
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -113,8 +117,9 @@ export default function LanguageSwitcher() {
   }, [isOpen])
 
   function switchLanguage(nextLang: SupportedLanguage) {
-    i18n.changeLanguage(nextLang)
+    void i18n.changeLanguage(nextLang)
     document.documentElement.lang = nextLang
+    setClientCookie(LANGUAGE_COOKIE_KEY, nextLang)
     setIsOpen(false)
   }
 
@@ -164,3 +169,5 @@ export default function LanguageSwitcher() {
     </div>
   )
 }
+
+export default memo(LanguageSwitcher)

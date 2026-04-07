@@ -2,6 +2,7 @@ import i18n from 'i18next'
 import type { Resource } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import { LANGUAGE_COOKIE_KEY } from '#/features/preferences/cookies'
 
 import {
   defaultLanguage,
@@ -52,7 +53,7 @@ const defaultNamespace = namespaces.includes('common')
   ? 'common'
   : namespaces[0]
 
-i18n
+const i18nInitialization = i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -62,12 +63,19 @@ i18n
     ns: namespaces,
     defaultNS: defaultNamespace,
     detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
-      lookupLocalStorage: 'language',
+      order: ['htmlTag', 'cookie'],
+      caches: ['cookie'],
+      lookupCookie: LANGUAGE_COOKIE_KEY,
+      cookieMinutes: 60 * 24 * 365,
+      cookieOptions: {
+        path: '/',
+        sameSite: 'lax',
+      },
     },
     interpolation: { escapeValue: false },
   })
+
+export const i18nReady = i18nInitialization.then(() => undefined)
 
 export {
   defaultLanguage,

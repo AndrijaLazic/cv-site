@@ -15,9 +15,10 @@ This folder defines TanStack Router file-based routes for pages and APIs.
 
 - [`__root.tsx`](./__root.tsx) is the app shell:
   - Injects global CSS
-  - Boots i18n (`#/features/i18n/config`)
-  - Injects `THEME_INIT_SCRIPT` in `<head>`
-  - Wraps content with `ThemeProvider`
+  - Loads initial `language` + `theme` from cookies via a server function
+  - Boots i18n (`#/features/i18n/config`) and applies request language in the root loader
+  - Sets `<html lang/class/data-theme/color-scheme>` from loader data for hydration-safe SSR
+  - Wraps content with `ThemeProvider initialMode={theme}`
   - Renders shared layout (`Header`, `Footer`)
 
 ## API routes

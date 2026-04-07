@@ -8,13 +8,27 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '#/features/layout/Footer'
 import Header from '#/features/layout/Header'
+import { loadInitialPreferences } from '#/features/preferences/preference.functions'
 import { ThemeProvider } from '#/features/theme/ThemeContext'
-import { THEME_INIT_SCRIPT } from '#/features/theme/theme-init-script'
-import '#/features/i18n/config'
+import i18n, { i18nReady, resolveSupportedLanguage } from '#/features/i18n/config'
 
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
+  loader: async () => {
+    const preferences = await loadInitialPreferences()
+
+    await i18nReady
+    const currentLanguage = resolveSupportedLanguage(
+      i18n.resolvedLanguage ?? i18n.language,
+    )
+
+    if (currentLanguage !== preferences.language) {
+      await i18n.changeLanguage(preferences.language)
+    }
+
+    return preferences
+  },
   head: () => ({
     meta: [
       {
@@ -65,14 +79,20 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { language, theme } = Route.useLoaderData()
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang={language}
+      className={theme}
+      data-theme={theme}
+      style={{ colorScheme: theme }}
+    >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body className="font-sans antialiased wrap-break-word min-h-screen flex flex-col selection:bg-rose-500/20">
-        <ThemeProvider>
+        <ThemeProvider initialMode={theme}>
           <Header />
           <main className="flex-1 flex flex-col w-full">{children}</main>
           <Footer />

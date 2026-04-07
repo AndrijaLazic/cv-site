@@ -4,8 +4,13 @@ import {
   useEffect,
   useState,
   useCallback,
+  useMemo,
 } from 'react'
 import type { ReactNode } from 'react'
+import {
+  THEME_COOKIE_KEY,
+  setClientCookie,
+} from '#/features/preferences/cookies'
 
 export type ThemeMode = 'light' | 'dark'
 
@@ -17,21 +22,6 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
-function getInitialMode(): ThemeMode {
-  if (typeof window === 'undefined') return 'dark'
-  const stored = window.localStorage.getItem('theme')
-  if (stored === 'light' || stored === 'dark') return stored
-  return getSystemTheme()
-}
-
-function getSystemTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'dark'
-  if (typeof window.matchMedia !== 'function') return 'dark'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
-}
-
 function applyTheme(mode: ThemeMode) {
   const root = document.documentElement
   root.classList.remove('light', 'dark')
@@ -40,26 +30,37 @@ function applyTheme(mode: ThemeMode) {
   root.style.colorScheme = mode
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>('dark')
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark')
+type ThemeProviderProps = {
+  children: ReactNode
+  initialMode: ThemeMode
+}
+
+export function ThemeProvider({ children, initialMode }: ThemeProviderProps) {
+  const [mode, setModeState] = useState<ThemeMode>(initialMode)
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(
+    initialMode,
+  )
 
   useEffect(() => {
-    const initial = getInitialMode()
-    setModeState(initial)
-    applyTheme(initial)
-    setResolvedTheme(initial)
-  }, [])
+    setModeState(initialMode)
+    applyTheme(initialMode)
+    setResolvedTheme(initialMode)
+  }, [initialMode])
 
   const setMode = useCallback((next: ThemeMode) => {
     setModeState(next)
     applyTheme(next)
     setResolvedTheme(next)
-    window.localStorage.setItem('theme', next)
+    setClientCookie(THEME_COOKIE_KEY, next)
   }, [])
 
+  const contextValue = useMemo(
+    () => ({ mode, resolvedTheme, setMode }),
+    [mode, resolvedTheme, setMode],
+  )
+
   return (
-    <ThemeContext value={{ mode, resolvedTheme, setMode }}>
+    <ThemeContext value={contextValue}>
       {children}
     </ThemeContext>
   )

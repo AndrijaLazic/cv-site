@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
 
-export default function Footer() {
+function Footer() {
   return (
     <footer
       id="contacts"
@@ -36,3 +37,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+export default memo(Footer)

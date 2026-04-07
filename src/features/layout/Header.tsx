@@ -1,18 +1,29 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Menu, ArrowLeft } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import ThemeToggle from '#/features/theme/ThemeToggle'
 import LanguageSwitcher from '#/features/i18n/LanguageSwitcher'
 
-export default function Header() {
+const HeaderControls = memo(function HeaderControlsView() {
+  return (
+    <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+      <LanguageSwitcher />
+      <ThemeToggle />
+    </div>
+  )
+})
+
+function Header() {
   const { t } = useTranslation('common')
-  const location = useLocation()
+  const locationPathAndHash = useLocation({
+    select: (location) => `${location.pathname}${location.hash}`,
+  })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     setIsMenuOpen(false)
-  }, [location.pathname, location.hash])
+  }, [locationPathAndHash])
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -66,15 +77,27 @@ export default function Header() {
 
         <div className="hidden min-w-0 flex-1 sm:flex">
           <div className="flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto pb-1 text-sm font-semibold sm:gap-2">
-            <a href="/#about" className="nav-link shrink-0">
+            <Link
+              to="/"
+              hash="about"
+              className="nav-link shrink-0"
+            >
               {t('nav.about')}
-            </a>
-            <a href="/#experience" className="nav-link shrink-0">
+            </Link>
+            <Link
+              to="/"
+              hash="experience"
+              className="nav-link shrink-0"
+            >
               {t('nav.experience')}
-            </a>
-            <a href="/#education" className="nav-link shrink-0">
+            </Link>
+            <Link
+              to="/"
+              hash="education"
+              className="nav-link shrink-0"
+            >
               {t('nav.education')}
-            </a>
+            </Link>
             <Link
               to="/contact"
               className="nav-link shrink-0"
@@ -87,10 +110,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <LanguageSwitcher />
-          <ThemeToggle />
-        </div>
+        <HeaderControls />
       </nav>
 
       <div
@@ -110,27 +130,30 @@ export default function Header() {
           onClick={(event) => event.stopPropagation()}
         >
           <div className="flex flex-col gap-2">
-            <a
-              href="/#about"
+            <Link
+              to="/"
+              hash="about"
               className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.about')}
-            </a>
-            <a
-              href="/#experience"
+            </Link>
+            <Link
+              to="/"
+              hash="experience"
               className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.experience')}
-            </a>
-            <a
-              href="/#education"
+            </Link>
+            <Link
+              to="/"
+              hash="education"
               className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.education')}
-            </a>
+            </Link>
             <Link
               to="/contact"
               className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
@@ -148,3 +171,5 @@ export default function Header() {
     </header>
   )
 }
+
+export default memo(Header)
