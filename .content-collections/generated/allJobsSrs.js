@@ -1,31 +1,6 @@
 
 export default [
   {
-    "jobTitle": "Tim lider - AI Playground",
-    "summary": "Web aplikacija za obradu podataka i treniranje modela masinskog ucenja.",
-    "startDate": "2022-02-01",
-    "endDate": "2022-06-30",
-    "company": "Akademski projekat",
-    "location": "Kragujevac, Srbija",
-    "tags": [
-      ".NET",
-      "MySQL",
-      "Python",
-      "TensorFlow",
-      "Angular",
-      "Machine Learning",
-      "Team Leadership"
-    ],
-    "content": "Web aplikacija dizajnirana za obradu podataka i treniranje modela masinskog ucenja.\n\nBio sam tim lider na ovom projektu, ukljucujuci:\n\n- Pisanje dokumenta Software Design Specification.\n- Raspodelu zadataka clanovima tima.\n- Direktan rad na implementaciji aplikacije.",
-    "_meta": {
-      "filePath": "ai-playground-project.md",
-      "fileName": "ai-playground-project.md",
-      "directory": ".",
-      "extension": "md",
-      "path": "ai-playground-project"
-    }
-  },
-  {
     "jobTitle": "Bekend softverski inzenjer",
     "summary": "Bekend inzenjer fokusiran na backend, AI razvoj i DevOps.",
     "startDate": "2025-05-01",
@@ -70,29 +45,6 @@ export default [
       "directory": ".",
       "extension": "md",
       "path": "ezdeals-project"
-    }
-  },
-  {
-    "jobTitle": "Tim lider - FastToLocations",
-    "summary": "Mobilna aplikacija za otkrivanje lokacija, komentarisanje i ocenjivanje mesta.",
-    "startDate": "2022-10-01",
-    "endDate": "2023-02-28",
-    "company": "Akademski projekat",
-    "location": "Kragujevac, Srbija",
-    "tags": [
-      ".NET 6",
-      "Kotlin",
-      "MongoDB",
-      "Mobile Application",
-      "Team Leadership"
-    ],
-    "content": "Mobilna aplikacija koja korisnicima omogucava da otkrivaju zanimljive lokacije, ostavljaju komentare i ocenjuju mesta.\n\nBio sam tim lider na ovom projektu, ukljucujuci:\n\n- Pisanje dokumenta Software Design Specification.\n- Raspodelu zadataka clanovima tima.\n- Direktan rad na implementaciji aplikacije.",
-    "_meta": {
-      "filePath": "fasttolocations-project.md",
-      "fileName": "fasttolocations-project.md",
-      "directory": ".",
-      "extension": "md",
-      "path": "fasttolocations-project"
     }
   },
   {
