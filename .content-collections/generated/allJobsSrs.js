@@ -1,102 +1,123 @@
 
 export default [
   {
-    "jobTitle": "Konsultant za Frontend razvoj",
-    "summary": "Nezavisni konsultant za frontend razvoj koji radi sa više klijenata na web aplikacijama i sajtovima",
-    "startDate": "2020-01-01",
-    "endDate": "2020-12-31",
-    "company": "Freelance",
-    "location": "Daljinski",
+    "jobTitle": "Tim lider - AI Playground",
+    "summary": "Web aplikacija za obradu podataka i treniranje modela masinskog ucenja.",
+    "startDate": "2022-02-01",
+    "endDate": "2022-06-30",
+    "company": "Akademski projekat",
+    "location": "Kragujevac, Srbija",
     "tags": [
-      "React",
-      "TypeScript",
-      "Frontend Development",
-      "JavaScript",
-      "CSS",
-      "HTML"
+      ".NET",
+      "MySQL",
+      "Python",
+      "TensorFlow",
+      "Angular",
+      "Machine Learning",
+      "Team Leadership"
     ],
-    "content": "Pružao stručne usluge frontend razvoja raznim klijentima, specijalizovan za React, TypeScript i moderne web tehnologije. Isporučivao responzivne i performantne web aplikacije uz održavanje visokog kvaliteta koda i najboljih praksi.",
+    "content": "Web aplikacija dizajnirana za obradu podataka i treniranje modela masinskog ucenja.\n\nBio sam tim lider na ovom projektu, ukljucujuci:\n\n- Pisanje dokumenta Software Design Specification.\n- Raspodelu zadataka clanovima tima.\n- Direktan rad na implementaciji aplikacije.",
     "_meta": {
-      "filePath": "freelance.md",
-      "fileName": "freelance.md",
+      "filePath": "ai-playground-project.md",
+      "fileName": "ai-playground-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "freelance"
+      "path": "ai-playground-project"
     }
   },
   {
-    "jobTitle": "Junior Frontend Developer",
-    "summary": "Junior frontend developer koji radi na React web aplikacijama koristeći moderne razvojne prakse",
-    "startDate": "2021-01-01",
-    "endDate": "2021-12-31",
-    "company": "IniTech",
-    "location": "Daljinski",
+    "jobTitle": "Bekend softverski inzenjer",
+    "summary": "Bekend inzenjer fokusiran na backend, AI razvoj i DevOps.",
+    "startDate": "2025-05-01",
+    "company": "DigitalLeather",
+    "location": "Kragujevac, Srbija",
     "tags": [
-      "React",
-      "TypeScript",
-      "Frontend Development",
-      "JavaScript",
-      "TanStack",
-      "Web Development"
+      "Backend Development",
+      "AI",
+      "DevOps",
+      "Spring Boot",
+      "Python",
+      "Docker"
     ],
-    "content": "Radio kao junior frontend developer u IniTech-u, doprinoseći React web aplikacijama. Sarađivao sa razvojnim timom na implementaciji responzivnih korisničkih interfejsa, integraciji REST API-ja i održavanju kvaliteta koda. Stekao praktično iskustvo sa modernim frontend tehnologijama i razvojnim radnim procesima radeći na produkcijskim aplikacijama.",
+    "content": "Radim kao bekend inzenjer sa fokusom na backend razvoj, AI funkcionalnosti i DevOps.",
     "_meta": {
-      "filePath": "initech-junior.md",
-      "fileName": "initech-junior.md",
+      "filePath": "digitalleather-backend-engineer.md",
+      "fileName": "digitalleather-backend-engineer.md",
       "directory": ".",
       "extension": "md",
-      "path": "initech-junior"
+      "path": "digitalleather-backend-engineer"
     }
   },
   {
-    "jobTitle": "Frontend Tim Lider",
-    "summary": "Vodio multifunkcionalni tim od tri inženjera u razvoju i održavanju IniTech-ove marketing platforme, donosio tehničke odluke i implementirao moderne razvojne prakse",
-    "startDate": "2022-01-01",
-    "endDate": "2022-12-31",
-    "company": "IniTech",
-    "location": "Daljinski",
+    "jobTitle": "Softverski projekat - EzDeals",
+    "summary": "Web aplikacija za pronalazenje najboljih ponuda za odabrane proizvode, razvijena kao diplomski projekat.",
+    "startDate": "2023-11-01",
+    "endDate": "2024-06-30",
+    "company": "Akademski projekat",
+    "location": "Kragujevac, Srbija",
     "tags": [
+      "Python",
+      "Node.js",
       "React",
-      "TypeScript",
-      "Team Leadership",
-      "Frontend Architecture",
-      "Technical Leadership",
-      "Project Management",
-      "TanStack",
-      "Web Development"
+      "MongoDB",
+      "Web Application",
+      "Graduation Thesis"
     ],
-    "content": "Vodio razvoj i održavanje IniTech-ove marketing platforme kao Frontend Tim Lider, upravljajući multifunkcionalnim timom od tri inženjera uključujući backend developera i DevOps inženjera. Ključna postignuća i odgovornosti:\n\n- Projektovao i implementirao modernu React marketing platformu koristeći TypeScript i TanStack, što je rezultiralo poboljšanjem vremena učitavanja stranice od 40%\n- Upravljao i mentorisao tim od tri inženjera, sprovodeći redovne code review-e, planiranje sprintova i tehničko vođenje\n- Sarađivao sa marketing zainteresovanim stranama na definisanju i implementaciji novih funkcionalnosti uz održavanje visokog kvaliteta koda i performansi\n- Uspostavio CI/CD pipeline-ove i razvojne radne procese u partnerstvu sa DevOps-om, smanjujući vreme deploy-a za 60%\n- Koordinisao sa backend developerom na dizajnu i implementaciji RESTful API-ja, obezbeđujući besprekorno povezivanje između frontend i backend sistema\n- Uveo moderne razvojne prakse uključujući automatizovano testiranje, dokumentaciju komponenti i praćenje performansi",
+    "content": "Web aplikacija koja korisnicima omogucava da pronadju najbolje ponude za odabrane proizvode.\n\nOvaj projekat je predstavljao zavrsnicu mog akademskog rada i razvijen je kao deo diplomskog rada.",
     "_meta": {
-      "filePath": "initech-lead.md",
-      "fileName": "initech-lead.md",
+      "filePath": "ezdeals-project.md",
+      "fileName": "ezdeals-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "initech-lead"
+      "path": "ezdeals-project"
     }
   },
   {
-    "jobTitle": "Senior Frontend Developer",
-    "summary": "Razvijao i projektovao funkcionalnosti za vizualizaciju podataka u realnom vremenu za Initrode-ovu platformu za enterprise dashboard-e, implementirajući robustan WebSocket sloj i optimizujući performanse za tokove podataka velikih razmera",
-    "startDate": "2024-01-01",
-    "company": "Initrode",
-    "location": "Daljinski",
+    "jobTitle": "Tim lider - FastToLocations",
+    "summary": "Mobilna aplikacija za otkrivanje lokacija, komentarisanje i ocenjivanje mesta.",
+    "startDate": "2022-10-01",
+    "endDate": "2023-02-28",
+    "company": "Akademski projekat",
+    "location": "Kragujevac, Srbija",
     "tags": [
-      "React",
-      "TypeScript",
-      "WebSockets",
-      "Real-time Data",
-      "System Architecture",
-      "Performance Optimization",
-      "TanStack",
-      "Web Development"
+      ".NET 6",
+      "Kotlin",
+      "MongoDB",
+      "Mobile Application",
+      "Team Leadership"
     ],
-    "content": "Radio kao Senior Frontend Developer u Initrode-ovom Dashboard timu, fokusirajući se na izgradnju visoko-performantnih funkcionalnosti za vizualizaciju podataka u realnom vremenu za enterprise klijente. Ključna postignuća i odgovornosti:\n\n- Dizajnirao i implementirao WebSocket transportni sloj za podatke u realnom vremenu, omogućavajući live ažuriranja za dashboard komponente sa latencijom ispod 100ms\n- Projektovao i razvio modularni dashboard framework koristeći React i TypeScript, podržavajući dinamičku kompoziciju widget-a i tokove podataka u realnom vremenu\n- Optimizovao frontend performanse za rukovanje velikim skupovima podataka, implementirajući efikasne strukture podataka i tehnike virtualizacije koje su poboljšale performanse renderovanja za 65%\n- Izgradio višekratno upotrebljive komponente za grafikone i vizualizaciju koristeći D3.js i TanStack biblioteke, podržavajući ažuriranja u realnom vremenu i kompleksne transformacije podataka\n- Implementirao strategije za keširanje podataka na klijentskoj strani i upravljanje stanjem, smanjujući opterećenje servera za 40% uz održavanje konzistentnosti podataka\n- Razvio automatizovane test suite-ove za WebSocket konekcije i tok podataka u realnom vremenu, postižući 90% pokrivenost testovima za kritične putanje",
+    "content": "Mobilna aplikacija koja korisnicima omogucava da otkrivaju zanimljive lokacije, ostavljaju komentare i ocenjuju mesta.\n\nBio sam tim lider na ovom projektu, ukljucujuci:\n\n- Pisanje dokumenta Software Design Specification.\n- Raspodelu zadataka clanovima tima.\n- Direktan rad na implementaciji aplikacije.",
     "_meta": {
-      "filePath": "initrode-senior.md",
-      "fileName": "initrode-senior.md",
+      "filePath": "fasttolocations-project.md",
+      "fileName": "fasttolocations-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "initrode-senior"
+      "path": "fasttolocations-project"
+    }
+  },
+  {
+    "jobTitle": "Bekend praktikant",
+    "summary": "Doprinos web platformi za netehnicke zaposlene kroz implementaciju kljucnih backend funkcionalnosti.",
+    "startDate": "2024-09-01",
+    "endDate": "2024-10-31",
+    "company": "HTEC",
+    "location": "Kragujevac, Srbija",
+    "tags": [
+      "Backend Development",
+      "Spring Boot",
+      "Docker",
+      "MySQL",
+      "Keycloak",
+      "RabbitMQ",
+      "Testing"
+    ],
+    "content": "Radio na web aplikaciji dizajniranoj da pomogne netehnickim zaposlenima u svakodnevnim zadacima.\n\n- Razvio automatsko i manuelno generisanje izvestaja.\n- Implementirao auditing baze podataka.\n- Napravio sistem notifikacija.\n- Pisao unit i integracione testove.\n- Koriscene tehnologije: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.",
+    "_meta": {
+      "filePath": "htec-backend-intern.md",
+      "fileName": "htec-backend-intern.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "htec-backend-intern"
     }
   }
 ]

@@ -39,12 +39,12 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Professional Resume — Frontend Developer',
+        title: 'Professional Resume — Backend Software Engineer',
       },
       {
         name: 'description',
         content:
-          'Professional resume of an experienced frontend developer specializing in React, TypeScript, and modern web technologies.',
+          'Professional resume of a backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows.',
       },
       {
         property: 'og:site_name',

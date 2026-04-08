@@ -68,21 +68,21 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       {
-        title: 'Professional Resume — Frontend Developer',
+        title: 'Professional Resume — Backend Software Engineer',
       },
       {
         name: 'description',
         content:
-          'Experienced frontend developer specializing in React, TypeScript, and modern web technologies. View my work history, skills, and education.',
+          'Backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows. View work history, projects, skills, and education.',
       },
       {
         property: 'og:title',
-        content: 'Professional Resume — Frontend Developer',
+        content: 'Professional Resume — Backend Software Engineer',
       },
       {
         property: 'og:description',
         content:
-          'Experienced frontend developer specializing in React, TypeScript, and modern web technologies.',
+          'Backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows.',
       },
       {
         property: 'og:type',
@@ -97,9 +97,21 @@ function PersonJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Andrija Lazic',
-    jobTitle: 'Software Engineer',
+    jobTitle: 'Backend Software Engineer',
     url: 'https://www.linkedin.com/in/andrija-lazic-dev/',
-    knowsAbout: ['React', 'Python', 'Devops'],
+    sameAs: [
+      'https://www.linkedin.com/in/andrija-lazic-dev/',
+      'https://github.com/AndrijaLazic',
+    ],
+    knowsAbout: [
+      'Spring Boot',
+      'Python',
+      '.NET',
+      'Node.js',
+      'Docker',
+      'DevOps',
+      'Machine Learning',
+    ],
   }
 
   return (
@@ -148,6 +160,40 @@ function App() {
       return parseDate(b.startDate) - parseDate(a.startDate)
     })
   }, [jobs])
+
+  const sortedEducations = useMemo(() => {
+    const isBachelorEntry = (education: ResumeEducation) => {
+      const combined = `${education.school} ${education.summary} ${education.content}`.toLowerCase()
+
+      if (combined.includes('bachelor') || combined.includes('diplom')) {
+        return true
+      }
+
+      return education.tags.some((tag) => tag.toLowerCase().includes('bachelor'))
+    }
+
+    return [...educations].sort((a, b) => {
+      const aIsBachelor = isBachelorEntry(a)
+      const bIsBachelor = isBachelorEntry(b)
+
+      if (aIsBachelor && !bIsBachelor) {
+        return -1
+      }
+
+      if (!aIsBachelor && bIsBachelor) {
+        return 1
+      }
+
+      const aDate = parseDate(a.endDate ?? a.startDate)
+      const bDate = parseDate(b.endDate ?? b.startDate)
+
+      if (aDate !== bDate) {
+        return bDate - aDate
+      }
+
+      return a.school.localeCompare(b.school)
+    })
+  }, [educations])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -440,7 +486,7 @@ function App() {
               </div>
 
               <div className="space-y-4 sm:space-y-5">
-                {educations.map((education) => (
+                {sortedEducations.map((education) => (
                   <article
                     key={`${education.school}-${education.startDate}`}
                     className="rounded-xl"

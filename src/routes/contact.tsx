@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { Mail } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
 
@@ -12,7 +13,8 @@ export const Route = createFileRoute('/contact')({
       },
       {
         name: 'description',
-        content: 'Get in touch with Andrija Lazic via GitHub or LinkedIn.',
+        content:
+          'Get in touch with Andrija Lazic via email, GitHub, or LinkedIn.',
       },
       {
         property: 'og:title',
@@ -20,7 +22,8 @@ export const Route = createFileRoute('/contact')({
       },
       {
         property: 'og:description',
-        content: 'Get in touch with Andrija Lazic via GitHub or LinkedIn.',
+        content:
+          'Get in touch with Andrija Lazic via email, GitHub, or LinkedIn.',
       },
     ],
   }),
@@ -47,7 +50,15 @@ function Contact() {
               {t('contact.description')}
             </p>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-3">
+              <a
+                href="mailto:lazic.andrija223@gmail.com"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300/80 bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800"
+              >
+                <Mail aria-hidden="true" className="h-4 w-4" />
+                {t('contact.email')}
+              </a>
+
               <a
                 href="https://github.com/AndrijaLazic"
                 target="_blank"

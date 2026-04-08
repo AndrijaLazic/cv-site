@@ -30,7 +30,8 @@
   "contact": {
     "kicker": "Contact",
     "title": "Let's connect",
-    "description": "Reach out through GitHub or LinkedIn and I will get back to you soon.",
+    "description": "Reach out via email, GitHub, or LinkedIn and I will get back to you soon.",
+    "email": "Email",
     "github": "GitHub",
     "linkedin": "LinkedIn"
   },

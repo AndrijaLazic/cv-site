@@ -31,7 +31,8 @@
   "contact": {
     "kicker": "Kontakt",
     "title": "Hajde da se povežemo",
-    "description": "Pišite mi preko GitHub-a ili LinkedIn-a i odgovoriću u najkraćem roku.",
+    "description": "Pišite mi putem mejla, GitHub-a ili LinkedIn-a i odgovoriću u najkraćem roku.",
+    "email": "Mejl",
     "github": "GitHub",
     "linkedin": "LinkedIn"
   },

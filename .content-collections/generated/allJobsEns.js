@@ -1,102 +1,123 @@
 
 export default [
   {
-    "jobTitle": "Frontend Development Consultant",
-    "summary": "Independent frontend development consultant working with multiple clients on web applications and sites",
-    "startDate": "2020-01-01",
-    "endDate": "2020-12-31",
-    "company": "Freelance",
-    "location": "Remote",
+    "jobTitle": "Team Lead - AI Playground",
+    "summary": "Web app for data processing and training machine learning models.",
+    "startDate": "2022-02-01",
+    "endDate": "2022-06-30",
+    "company": "Academic Project",
+    "location": "Kragujevac, Serbia",
     "tags": [
-      "React",
-      "TypeScript",
-      "Frontend Development",
-      "JavaScript",
-      "CSS",
-      "HTML"
+      ".NET",
+      "MySQL",
+      "Python",
+      "TensorFlow",
+      "Angular",
+      "Machine Learning",
+      "Team Leadership"
     ],
-    "content": "Provided expert frontend development services to various clients, specializing in React, TypeScript, and modern web technologies. Delivered responsive and performant web applications while maintaining high code quality and best practices.",
+    "content": "Web application designed for data processing and training machine learning models.\n\nI served as the team lead for this project, including:\n\n- Writing the Software Design Specification.\n- Assigning tasks to team members.\n- Contributing directly to implementation.",
     "_meta": {
-      "filePath": "freelance.md",
-      "fileName": "freelance.md",
+      "filePath": "ai-playground-project.md",
+      "fileName": "ai-playground-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "freelance"
+      "path": "ai-playground-project"
     }
   },
   {
-    "jobTitle": "Junior Frontend Developer",
-    "summary": "Junior frontend developer working on React-based web applications using modern development practices",
-    "startDate": "2021-01-01",
-    "endDate": "2021-12-31",
-    "company": "IniTech",
-    "location": "Remote",
+    "jobTitle": "Backend Software Engineer",
+    "summary": "Backend engineer focused on backend, AI development, and DevOps.",
+    "startDate": "2025-05-01",
+    "company": "DigitalLeather",
+    "location": "Kragujevac, Serbia",
     "tags": [
-      "React",
-      "TypeScript",
-      "Frontend Development",
-      "JavaScript",
-      "TanStack",
-      "Web Development"
+      "Backend Development",
+      "AI",
+      "DevOps",
+      "Spring Boot",
+      "Python",
+      "Docker"
     ],
-    "content": "Worked as a junior frontend developer at IniTech, contributing to React-based web applications. Collaborated with the development team to implement responsive user interfaces, integrate REST APIs, and maintain code quality. Gained hands-on experience with modern frontend technologies and development workflows while working on production applications.",
+    "content": "Working as a backend engineer focused on backend development, AI-related work, and DevOps.",
     "_meta": {
-      "filePath": "initech-junior.md",
-      "fileName": "initech-junior.md",
+      "filePath": "digitalleather-backend-engineer.md",
+      "fileName": "digitalleather-backend-engineer.md",
       "directory": ".",
       "extension": "md",
-      "path": "initech-junior"
+      "path": "digitalleather-backend-engineer"
     }
   },
   {
-    "jobTitle": "Frontend Team Lead",
-    "summary": "Led a cross-functional team of three engineers in developing and maintaining IniTech's marketing platform, driving technical decisions and implementing modern development practices",
-    "startDate": "2022-01-01",
-    "endDate": "2022-12-31",
-    "company": "IniTech",
-    "location": "Remote",
+    "jobTitle": "Software Engineering Project - EzDeals",
+    "summary": "Web application for finding the best deals on selected products, developed as a graduation thesis project.",
+    "startDate": "2023-11-01",
+    "endDate": "2024-06-30",
+    "company": "Academic Project",
+    "location": "Kragujevac, Serbia",
     "tags": [
+      "Python",
+      "Node.js",
       "React",
-      "TypeScript",
-      "Team Leadership",
-      "Frontend Architecture",
-      "Technical Leadership",
-      "Project Management",
-      "TanStack",
-      "Web Development"
+      "MongoDB",
+      "Web Application",
+      "Graduation Thesis"
     ],
-    "content": "Led the development and maintenance of IniTech's marketing platform as Frontend Team Lead, managing a cross-functional team of three engineers including a backend developer and a DevOps engineer. Key achievements and responsibilities included:\n\n- Architected and implemented a modern React-based marketing platform using TypeScript and TanStack, resulting in a 40% improvement in page load times\n- Managed and mentored a team of three engineers, conducting regular code reviews, sprint planning, and technical guidance\n- Collaborated with marketing stakeholders to define and implement new features while maintaining high code quality and performance standards\n- Established CI/CD pipelines and development workflows in partnership with DevOps, reducing deployment time by 60%\n- Coordinated with the backend developer to design and implement RESTful APIs, ensuring seamless integration between frontend and backend systems\n- Introduced modern development practices including automated testing, component documentation, and performance monitoring",
+    "content": "Web application that allows users to find the best deals on selected products.\n\nThis project was the culmination of my academic work and was developed as part of my graduation thesis.",
     "_meta": {
-      "filePath": "initech-lead.md",
-      "fileName": "initech-lead.md",
+      "filePath": "ezdeals-project.md",
+      "fileName": "ezdeals-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "initech-lead"
+      "path": "ezdeals-project"
     }
   },
   {
-    "jobTitle": "Senior Frontend Developer",
-    "summary": "Developed and architected real-time data visualization features for Initrode's enterprise dashboard platform, implementing a robust WebSocket layer and optimizing performance for large-scale data streams",
-    "startDate": "2024-01-01",
-    "company": "Initrode",
-    "location": "Remote",
+    "jobTitle": "Team Lead - FastToLocations",
+    "summary": "Mobile app for discovering locations, leaving comments, and rating places.",
+    "startDate": "2022-10-01",
+    "endDate": "2023-02-28",
+    "company": "Academic Project",
+    "location": "Kragujevac, Serbia",
     "tags": [
-      "React",
-      "TypeScript",
-      "WebSockets",
-      "Real-time Data",
-      "System Architecture",
-      "Performance Optimization",
-      "TanStack",
-      "Web Development"
+      ".NET 6",
+      "Kotlin",
+      "MongoDB",
+      "Mobile Application",
+      "Team Leadership"
     ],
-    "content": "Served as a Senior Frontend Developer on Initrode's Dashboard team, focusing on building high-performance, real-time data visualization features for enterprise clients. Key achievements and responsibilities included:\n\n- Designed and implemented a WebSocket-based real-time data transport layer, enabling live updates for dashboard components with sub-100ms latency\n- Architected and developed a modular dashboard framework using React and TypeScript, supporting dynamic widget composition and real-time data streams\n- Optimized frontend performance for handling large-scale data sets, implementing efficient data structures and virtualization techniques that improved rendering performance by 65%\n- Built reusable charting and visualization components using D3.js and TanStack libraries, supporting real-time updates and complex data transformations\n- Implemented client-side data caching and state management strategies, reducing server load by 40% while maintaining data consistency\n- Developed automated testing suites for WebSocket connections and real-time data flow, achieving 90% test coverage for critical paths",
+    "content": "A mobile application that allows users to discover interesting locations, leave comments, and provide ratings for specific places.\n\nI served as the team lead for this project, including:\n\n- Writing the Software Design Specification.\n- Assigning tasks to team members.\n- Contributing directly to implementation.",
     "_meta": {
-      "filePath": "initrode-senior.md",
-      "fileName": "initrode-senior.md",
+      "filePath": "fasttolocations-project.md",
+      "fileName": "fasttolocations-project.md",
       "directory": ".",
       "extension": "md",
-      "path": "initrode-senior"
+      "path": "fasttolocations-project"
+    }
+  },
+  {
+    "jobTitle": "Backend Intern",
+    "summary": "Contributed to a web platform for non-technical employees by implementing core backend capabilities.",
+    "startDate": "2024-09-01",
+    "endDate": "2024-10-31",
+    "company": "HTEC",
+    "location": "Kragujevac, Serbia",
+    "tags": [
+      "Backend Development",
+      "Spring Boot",
+      "Docker",
+      "MySQL",
+      "Keycloak",
+      "RabbitMQ",
+      "Testing"
+    ],
+    "content": "Worked on a web application designed to assist non-technical employees with daily tasks.\n\n- Developed automatic and manual report generation.\n- Implemented database auditing.\n- Built a notification system.\n- Wrote unit and integration tests.\n- Technologies used: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.",
+    "_meta": {
+      "filePath": "htec-backend-intern.md",
+      "fileName": "htec-backend-intern.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "htec-backend-intern"
     }
   }
 ]
