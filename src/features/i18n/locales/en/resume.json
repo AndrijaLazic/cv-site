@@ -11,5 +11,11 @@
   "educationWithCertifications": "Education & Certifications",
   "present": "Present",
   "skillsFilter": "Skills & Technologies",
-  "experienceWith": "Experience with {{tag}} in professional development"
+  "experienceWith": "Experience with {{tag}} in professional development",
+  "blogTitle": "Blog",
+  "blogSubtitle": "Experiments, findings, and technical write-ups.",
+  "blogReadMore": "Read more",
+  "blogBackToList": "Back to all posts",
+  "blogPublished": "Published",
+  "blogSections": "Sections"
 }

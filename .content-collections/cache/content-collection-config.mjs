@@ -35,6 +35,15 @@ var educationSchema = z.object({
   tags: z.array(z.string()),
   content: z.string()
 });
+var blogSchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  summary: z.string(),
+  publishedDate: z.string(),
+  coverImage: z.string().optional(),
+  tags: z.array(z.string()),
+  content: z.string()
+});
 function toCollectionSuffix(language) {
   return language.charAt(0).toUpperCase() + language.slice(1);
 }
@@ -54,7 +63,8 @@ var content = [
     "educations",
     "content/education",
     educationSchema
-  )
+  ),
+  ...defineLocalizedCollections("blogs", "content/blog", blogSchema)
 ];
 var content_collections_default = defineConfig({
   content

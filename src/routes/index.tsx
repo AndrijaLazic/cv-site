@@ -10,6 +10,7 @@ import {
   resolveSupportedLanguage,
   supportedLanguages,
 } from '#/features/i18n/config'
+import { publicConfig } from '#/shared/config/public-env'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 import { Separator } from '#/shared/ui/separator'
@@ -68,21 +69,25 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       {
-        title: 'Professional Resume — Backend Software Engineer',
+        title: 'Andrija Lazic | Backend Software Engineer',
       },
       {
         name: 'description',
         content:
-          'Backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows. View work history, projects, skills, and education.',
+          'Explore the professional resume of Andrija Lazic — backend engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
       },
       {
         property: 'og:title',
-        content: 'Professional Resume — Backend Software Engineer',
+        content: 'Andrija Lazic | Backend Software Engineer',
       },
       {
         property: 'og:description',
         content:
-          'Backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows.',
+          'Explore the professional resume of Andrija Lazic — backend engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
+      },
+      {
+        property: 'og:url',
+        content: `${publicConfig.siteUrl}/`,
       },
       {
         property: 'og:type',
@@ -98,7 +103,7 @@ function PersonJsonLd() {
     '@type': 'Person',
     name: 'Andrija Lazic',
     jobTitle: 'Backend Software Engineer',
-    url: 'https://www.linkedin.com/in/andrija-lazic-dev/',
+    url: publicConfig.siteUrl,
     sameAs: [
       'https://www.linkedin.com/in/andrija-lazic-dev/',
       'https://github.com/AndrijaLazic',
@@ -112,6 +117,10 @@ function PersonJsonLd() {
       'DevOps',
       'Machine Learning',
     ],
+    alumniOf: {
+      '@type': 'EducationalOrganization',
+      name: 'Faculty of Natural Sciences and Mathematics',
+    },
   }
 
   return (
@@ -163,13 +172,16 @@ function App() {
 
   const sortedEducations = useMemo(() => {
     const isBachelorEntry = (education: ResumeEducation) => {
-      const combined = `${education.school} ${education.summary} ${education.content}`.toLowerCase()
+      const combined =
+        `${education.school} ${education.summary} ${education.content}`.toLowerCase()
 
       if (combined.includes('bachelor') || combined.includes('diplom')) {
         return true
       }
 
-      return education.tags.some((tag) => tag.toLowerCase().includes('bachelor'))
+      return education.tags.some((tag) =>
+        tag.toLowerCase().includes('bachelor'),
+      )
     }
 
     return [...educations].sort((a, b) => {

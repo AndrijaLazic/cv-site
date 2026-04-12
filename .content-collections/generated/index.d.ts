@@ -13,4 +13,10 @@ export declare const allEducationsEns: Array<EducationsEn>;
 export type EducationsSr = GetTypeByName<typeof configuration, "educationsSr">;
 export declare const allEducationsSrs: Array<EducationsSr>;
 
+export type BlogsEn = GetTypeByName<typeof configuration, "blogsEn">;
+export declare const allBlogsEns: Array<BlogsEn>;
+
+export type BlogsSr = GetTypeByName<typeof configuration, "blogsSr">;
+export declare const allBlogsSrs: Array<BlogsSr>;
+
 export {};

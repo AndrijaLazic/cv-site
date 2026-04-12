@@ -10,7 +10,8 @@
     "education": "Obrazovanje",
     "contact": "Kontakt",
     "openMenu": "Otvori meni",
-    "closeMenu": "Zatvori meni"
+    "closeMenu": "Zatvori meni",
+    "blog": "Blog"
   },
   "theme": {
     "light": "Svetlo",

@@ -11,5 +11,11 @@
   "educationWithCertifications": "Obrazovanje i sertifikati",
   "present": "Trenutno",
   "skillsFilter": "Veštine i tehnologije",
-  "experienceWith": "Iskustvo sa {{tag}} u profesionalnom razvoju"
+  "experienceWith": "Iskustvo sa {{tag}} u profesionalnom razvoju",
+  "blogTitle": "Blog",
+  "blogSubtitle": "Eksperimenti, nalazi i tehnicki tekstovi.",
+  "blogReadMore": "Citaj vise",
+  "blogBackToList": "Nazad na sve postove",
+  "blogPublished": "Objavljeno",
+  "blogSections": "Sekcije"
 }

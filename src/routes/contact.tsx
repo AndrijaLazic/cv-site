@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Mail } from 'lucide-react'
+import { publicConfig } from '#/shared/config/public-env'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
 
@@ -9,21 +9,25 @@ export const Route = createFileRoute('/contact')({
   head: () => ({
     meta: [
       {
-        title: 'Contact - Professional Resume',
+        title: 'Contact | Andrija Lazic',
       },
       {
         name: 'description',
         content:
-          'Get in touch with Andrija Lazic via email, GitHub, or LinkedIn.',
+          'Reach out to Andrija Lazic — available via email, GitHub, and LinkedIn for backend engineering opportunities and collaborations.',
       },
       {
         property: 'og:title',
-        content: 'Contact - Professional Resume',
+        content: 'Contact | Andrija Lazic',
       },
       {
         property: 'og:description',
         content:
-          'Get in touch with Andrija Lazic via email, GitHub, or LinkedIn.',
+          'Reach out to Andrija Lazic — available via email, GitHub, and LinkedIn for backend engineering opportunities and collaborations.',
+      },
+      {
+        property: 'og:url',
+        content: `${publicConfig.siteUrl}/contact`,
       },
     ],
   }),

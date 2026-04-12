@@ -178,10 +178,6 @@ code {
     @apply inline-flex items-center rounded-full px-3 py-2 text-sm font-semibold text-(--sea-ink-soft) transition-colors hover:bg-(--link-bg-hover) hover:text-(--sea-ink);
   }
 
-  .nav-link.is-active {
-    @apply bg-(--link-bg-hover) text-(--sea-ink);
-  }
-
   .island-shell {
     @apply border border-(--line) bg-(--card-bg) shadow-sm;
   }

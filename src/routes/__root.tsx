@@ -10,7 +10,10 @@ import Footer from '#/features/layout/Footer'
 import Header from '#/features/layout/Header'
 import { loadInitialPreferences } from '#/features/preferences/preference.functions'
 import { ThemeProvider } from '#/features/theme/ThemeContext'
-import i18n, { i18nReady, resolveSupportedLanguage } from '#/features/i18n/config'
+import i18n, {
+  i18nReady,
+  resolveSupportedLanguage,
+} from '#/features/i18n/config'
 
 import appCss from '../styles.css?url'
 
@@ -39,16 +42,20 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Professional Resume — Backend Software Engineer',
+        title: 'Andrija Lazic | Backend Software Engineer',
       },
       {
         name: 'description',
         content:
-          'Professional resume of a backend software engineer specializing in Spring Boot, Python, .NET, AI-oriented systems, and DevOps workflows.',
+          'Andrija Lazic — backend software engineer specializing in Spring Boot, Python, .NET, AI systems, and DevOps. View resume, blog, and contact info.',
+      },
+      {
+        name: 'author',
+        content: 'Andrija Lazic',
       },
       {
         property: 'og:site_name',
-        content: 'Professional Resume',
+        content: 'Andrija Lazic',
       },
       {
         property: 'og:type',

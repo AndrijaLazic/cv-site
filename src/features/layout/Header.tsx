@@ -14,6 +14,8 @@ const HeaderControls = memo(function HeaderControlsView() {
   )
 })
 
+const noActiveClassName = { className: '' }
+
 function Header() {
   const { t } = useTranslation('common')
   const locationPathAndHash = useLocation({
@@ -81,6 +83,7 @@ function Header() {
               to="/"
               hash="about"
               className="nav-link shrink-0"
+              activeProps={noActiveClassName}
             >
               {t('nav.about')}
             </Link>
@@ -88,6 +91,7 @@ function Header() {
               to="/"
               hash="experience"
               className="nav-link shrink-0"
+              activeProps={noActiveClassName}
             >
               {t('nav.experience')}
             </Link>
@@ -95,15 +99,21 @@ function Header() {
               to="/"
               hash="education"
               className="nav-link shrink-0"
+              activeProps={noActiveClassName}
             >
               {t('nav.education')}
             </Link>
             <Link
+              to="/blog"
+              className="nav-link shrink-0"
+              activeProps={noActiveClassName}
+            >
+              {t('nav.blog')}
+            </Link>
+            <Link
               to="/contact"
               className="nav-link shrink-0"
-              activeProps={{
-                className: 'nav-link is-active shrink-0',
-              }}
+              activeProps={noActiveClassName}
             >
               {t('nav.contact')}
             </Link>
@@ -155,12 +165,15 @@ function Header() {
               {t('nav.education')}
             </Link>
             <Link
+              to="/blog"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.blog')}
+            </Link>
+            <Link
               to="/contact"
               className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
-              activeProps={{
-                className:
-                  'block rounded-lg bg-slate-100 px-4 py-3 text-base font-medium text-slate-900 dark:bg-slate-800 dark:text-slate-100',
-              }}
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.contact')}

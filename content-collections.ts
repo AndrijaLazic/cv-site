@@ -22,6 +22,16 @@ const educationSchema = z.object({
   content: z.string(),
 })
 
+const blogSchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  summary: z.string(),
+  publishedDate: z.string(),
+  coverImage: z.string().optional(),
+  tags: z.array(z.string()),
+  content: z.string(),
+})
+
 function toCollectionSuffix(language: string) {
   return language.charAt(0).toUpperCase() + language.slice(1)
 }
@@ -48,6 +58,7 @@ const content = [
     'content/education',
     educationSchema,
   ),
+  ...defineLocalizedCollections('blogs', 'content/blog', blogSchema),
 ]
 
 export default defineConfig({
