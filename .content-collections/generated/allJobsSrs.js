@@ -15,6 +15,7 @@ export default [
       "Docker"
     ],
     "content": "Radim kao bekend inzenjer sa fokusom na backend razvoj, AI funkcionalnosti i DevOps.",
+    "blogSlug": "digitalleather-backend-engineering",
     "_meta": {
       "filePath": "digitalleather-backend-engineer.md",
       "fileName": "digitalleather-backend-engineer.md",
@@ -64,6 +65,7 @@ export default [
       "Testing"
     ],
     "content": "Radio na web aplikaciji dizajniranoj da pomogne netehnickim zaposlenima u svakodnevnim zadacima.\n\n- Razvio automatsko i manuelno generisanje izvestaja.\n- Implementirao auditing baze podataka.\n- Napravio sistem notifikacija.\n- Pisao unit i integracione testove.\n- Koriscene tehnologije: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.",
+    "blogSlug": "htec-backend-internship",
     "_meta": {
       "filePath": "htec-backend-intern.md",
       "fileName": "htec-backend-intern.md",

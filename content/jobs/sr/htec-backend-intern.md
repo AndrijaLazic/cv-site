@@ -5,6 +5,7 @@ location: Kragujevac, Srbija
 startDate: 2024-09-01
 endDate: 2024-10-31
 summary: Doprinos web platformi za netehnicke zaposlene kroz implementaciju kljucnih backend funkcionalnosti.
+blogSlug: htec-backend-internship
 tags:
   [
     'Backend Development',

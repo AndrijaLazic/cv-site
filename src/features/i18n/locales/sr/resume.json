@@ -17,5 +17,8 @@
   "blogReadMore": "Citaj vise",
   "blogBackToList": "Nazad na sve postove",
   "blogPublished": "Objavljeno",
-  "blogSections": "Sekcije"
+  "blogSections": "Sekcije",
+  "blogAllPosts": "Sve",
+  "blogLatestPost": "Najnovije",
+  "blogFilterByTag": "Filtriraj po tagu"
 }

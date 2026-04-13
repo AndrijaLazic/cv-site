@@ -59,11 +59,7 @@ export function ThemeProvider({ children, initialMode }: ThemeProviderProps) {
     [mode, resolvedTheme, setMode],
   )
 
-  return (
-    <ThemeContext value={contextValue}>
-      {children}
-    </ThemeContext>
-  )
+  return <ThemeContext value={contextValue}>{children}</ThemeContext>
 }
 
 export function useTheme(): ThemeContextValue {

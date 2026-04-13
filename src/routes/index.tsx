@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
-import { ChevronDown } from 'lucide-react'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import * as contentCollections from '../../.content-collections/generated/index.js'
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import type { SupportedLanguage } from '#/features/i18n/config'
 import {
   resolveSupportedLanguage,
@@ -351,115 +351,199 @@ function App() {
   return (
     <>
       <PersonJsonLd />
-      <div className="min-h-full bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_42%),linear-gradient(to_bottom,rgb(248_250_252),rgb(241_245_249))] dark:bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.18),transparent_45%),linear-gradient(to_bottom,rgb(2_6_23),rgb(3_7_18))]">
-        <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
-          <div className="mx-auto max-w-5xl space-y-12 sm:space-y-14">
-            <section
-              id="about"
-              aria-labelledby="about-heading"
-              className="relative flex min-h-[calc(100svh-9rem)] flex-col justify-center space-y-5 scroll-mt-28 sm:space-y-6 sm:scroll-mt-32"
-            >
-              <Card className="border-slate-200/80 bg-white/70 shadow-lg backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/65 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3">
-                <CardHeader className="space-y-3">
-                  <p className="text-sm font-medium tracking-[0.16em] text-slate-500 uppercase dark:text-slate-400">
-                    {t('subtitle')}
-                  </p>
-                  <h1
-                    id="about-heading"
-                    className="text-3xl font-bold text-slate-900 sm:text-4xl lg:text-5xl dark:text-slate-100"
-                  >
-                    {t('title')}
-                  </h1>
-                  <CardTitle className="text-xl text-slate-800 sm:text-2xl dark:text-slate-100">
-                    {t('careerSummary')}
-                  </CardTitle>
-                  <Separator className="mt-2" />
-                </CardHeader>
-                <CardContent className="grid gap-6 pb-1 md:grid-cols-[1fr_auto] md:items-center">
-                  <p className="text-base leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
-                    {t('careerSummaryText')}
-                  </p>
-                  <img
-                    src="/headshot-on-white.jpg"
-                    alt={t('headshot')}
-                    className="h-44 w-36 rounded-2xl object-cover shadow-md ring-1 ring-slate-900/10 md:h-52 md:w-44 dark:ring-slate-100/10"
-                    width="176"
-                    height="208"
-                    loading="eager"
-                  />
-                </CardContent>
-              </Card>
-              {isScrollHintVisible ? (
-                <div className="pointer-events-none absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center text-center text-slate-500 motion-safe:animate-pulse dark:text-slate-400">
-                  <p className="text-base font-bold sm:text-lg">
-                    {t('scrollHint')}
-                  </p>
-                  <ChevronDown
-                    className="mt-1 size-5 sm:size-6"
-                    aria-hidden="true"
-                  />
-                </div>
-              ) : null}
-            </section>
-            <section
-              id="experience"
-              ref={experienceSectionRef}
-              aria-labelledby="experience-heading"
-              className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32"
-            >
-              <span id="work-experience-heading" className="sr-only" />
-              <div className="space-y-2">
-                <h2
-                  id="experience-heading"
-                  className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
-                >
-                  {t('workExperience')}
-                </h2>
-                <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
-                  {t('experienceLeadIn')}
+      <div className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
+        <div className="mx-auto max-w-5xl space-y-12 sm:space-y-14">
+          <section
+            id="about"
+            aria-labelledby="about-heading"
+            className="relative flex min-h-[calc(100svh-9rem)] flex-col justify-center space-y-5 scroll-mt-28 sm:space-y-6 sm:scroll-mt-32"
+          >
+            <Card className="border-slate-200/80 bg-white/70 shadow-lg backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/65 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3">
+              <CardHeader className="space-y-3">
+                <p className="text-sm font-medium tracking-[0.16em] text-slate-500 uppercase dark:text-slate-400">
+                  {t('subtitle')}
                 </p>
+                <h1
+                  id="about-heading"
+                  className="text-3xl font-bold text-slate-900 sm:text-4xl lg:text-5xl dark:text-slate-100"
+                >
+                  {t('title')}
+                </h1>
+                <CardTitle className="text-xl text-slate-800 sm:text-2xl dark:text-slate-100">
+                  {t('careerSummary')}
+                </CardTitle>
+                <Separator className="mt-2" />
+              </CardHeader>
+              <CardContent className="grid gap-6 pb-1 md:grid-cols-[1fr_auto] md:items-center">
+                <p className="text-base leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
+                  {t('careerSummaryText')}
+                </p>
+                <img
+                  src="/headshot-on-white.jpg"
+                  alt={t('headshot')}
+                  className="h-44 w-36 rounded-2xl object-cover shadow-md ring-1 ring-slate-900/10 md:h-52 md:w-44 dark:ring-slate-100/10"
+                  width="176"
+                  height="208"
+                  loading="eager"
+                />
+              </CardContent>
+            </Card>
+            {isScrollHintVisible ? (
+              <div className="pointer-events-none absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center text-center text-slate-500 motion-safe:animate-pulse dark:text-slate-400">
+                <p className="text-base font-bold sm:text-lg">
+                  {t('scrollHint')}
+                </p>
+                <ChevronDown
+                  className="mt-1 size-5 sm:size-6"
+                  aria-hidden="true"
+                />
               </div>
+            ) : null}
+          </section>
+          <section
+            id="experience"
+            ref={experienceSectionRef}
+            aria-labelledby="experience-heading"
+            className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32"
+          >
+            <span id="work-experience-heading" className="sr-only" />
+            <div className="space-y-2">
+              <h2
+                id="experience-heading"
+                className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+              >
+                {t('workExperience')}
+              </h2>
+              <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
+                {t('experienceLeadIn')}
+              </p>
+            </div>
 
-              <div className="space-y-4 sm:space-y-5">
-                {sortedJobs.map((job) => (
-                  <article
-                    key={`${job.company}-${job.jobTitle}-${job.startDate}`}
-                  >
-                    <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
-                      <CardHeader className="space-y-4">
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                          <div className="space-y-1.5">
-                            <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
-                              {job.jobTitle}
-                            </h3>
-                            <p className="text-sm font-medium text-cyan-700 sm:text-base dark:text-cyan-300">
-                              {job.company} · {job.location}
-                            </p>
-                          </div>
-
-                          <Badge
-                            variant="secondary"
-                            className="text-xs font-medium sm:text-sm"
-                          >
-                            <time>{job.startDate}</time> -{' '}
-                            {job.endDate ? (
-                              <time>{job.endDate}</time>
-                            ) : (
-                              t('present')
-                            )}
-                          </Badge>
+            <div className="space-y-4 sm:space-y-5">
+              {sortedJobs.map((job) => (
+                <article
+                  key={`${job.company}-${job.jobTitle}-${job.startDate}`}
+                >
+                  <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
+                    <CardHeader className="space-y-4">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="space-y-1.5">
+                          <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+                            {job.jobTitle}
+                          </h3>
+                          <p className="text-sm font-medium text-cyan-700 sm:text-base dark:text-cyan-300">
+                            {job.company} · {job.location}
+                          </p>
                         </div>
-                      </CardHeader>
 
-                      <CardContent className="space-y-4">
-                        <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
-                          {job.summary}
-                        </p>
+                        <Badge
+                          variant="secondary"
+                          className="text-xs font-medium sm:text-sm"
+                        >
+                          <time>{job.startDate}</time> -{' '}
+                          {job.endDate ? (
+                            <time>{job.endDate}</time>
+                          ) : (
+                            t('present')
+                          )}
+                        </Badge>
+                      </div>
+                    </CardHeader>
 
+                    <CardContent className="space-y-4">
+                      <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+                        {job.summary}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {job.tags.map((tag) => (
+                          <Badge
+                            key={`${job.jobTitle}-${tag}`}
+                            variant="outline"
+                            className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      {job.content && (
+                        <div
+                          className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                          dangerouslySetInnerHTML={{
+                            __html: marked(job.content),
+                          }}
+                        />
+                      )}
+
+                      {job.blogSlug && (
+                        <Link
+                          to="/blog/$slug"
+                          params={{ slug: job.blogSlug }}
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-700 hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
+                        >
+                          {t('blogReadMore')}
+                          <ArrowRight className="size-4" />
+                        </Link>
+                      )}
+                    </CardContent>
+                  </Card>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section
+            id="education"
+            aria-labelledby="education-heading"
+            className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32"
+          >
+            <div className="space-y-2">
+              <h2
+                id="education-heading"
+                className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+              >
+                {t('educationWithCertifications')}
+              </h2>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5">
+              {sortedEducations.map((education) => (
+                <article
+                  key={`${education.school}-${education.startDate}`}
+                  className="rounded-xl"
+                >
+                  <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
+                    <CardHeader className="space-y-3">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+                          {education.school}
+                        </h3>
+
+                        <Badge
+                          variant="secondary"
+                          className="text-xs font-medium sm:text-sm"
+                        >
+                          <time>{education.startDate}</time> -{' '}
+                          {education.endDate ? (
+                            <time>{education.endDate}</time>
+                          ) : (
+                            t('present')
+                          )}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-4">
+                      <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+                        {education.summary}
+                      </p>
+
+                      {education.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
-                          {job.tags.map((tag) => (
+                          {education.tags.map((tag) => (
                             <Badge
-                              key={`${job.jobTitle}-${tag}`}
+                              key={`${education.school}-${tag}`}
                               variant="outline"
                               className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
                             >
@@ -467,98 +551,23 @@ function App() {
                             </Badge>
                           ))}
                         </div>
+                      )}
 
-                        {job.content && (
-                          <div
-                            className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
-                            dangerouslySetInnerHTML={{
-                              __html: marked(job.content),
-                            }}
-                          />
-                        )}
-                      </CardContent>
-                    </Card>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section
-              id="education"
-              aria-labelledby="education-heading"
-              className="scroll-mt-28 space-y-5 sm:space-y-6 sm:scroll-mt-32"
-            >
-              <div className="space-y-2">
-                <h2
-                  id="education-heading"
-                  className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
-                >
-                  {t('educationWithCertifications')}
-                </h2>
-              </div>
-
-              <div className="space-y-4 sm:space-y-5">
-                {sortedEducations.map((education) => (
-                  <article
-                    key={`${education.school}-${education.startDate}`}
-                    className="rounded-xl"
-                  >
-                    <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
-                      <CardHeader className="space-y-3">
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                          <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
-                            {education.school}
-                          </h3>
-
-                          <Badge
-                            variant="secondary"
-                            className="text-xs font-medium sm:text-sm"
-                          >
-                            <time>{education.startDate}</time> -{' '}
-                            {education.endDate ? (
-                              <time>{education.endDate}</time>
-                            ) : (
-                              t('present')
-                            )}
-                          </Badge>
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="space-y-4">
-                        <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
-                          {education.summary}
-                        </p>
-
-                        {education.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {education.tags.map((tag) => (
-                              <Badge
-                                key={`${education.school}-${tag}`}
-                                variant="outline"
-                                className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                        )}
-
-                        {education.content && (
-                          <div
-                            className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
-                            dangerouslySetInnerHTML={{
-                              __html: marked(education.content),
-                            }}
-                          />
-                        )}
-                      </CardContent>
-                    </Card>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </div>
-        </main>
+                      {education.content && (
+                        <div
+                          className="prose prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                          dangerouslySetInnerHTML={{
+                            __html: marked(education.content),
+                          }}
+                        />
+                      )}
+                    </CardContent>
+                  </Card>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </>
   )

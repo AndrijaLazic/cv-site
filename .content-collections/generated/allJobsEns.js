@@ -15,6 +15,7 @@ export default [
       "Docker"
     ],
     "content": "Working as a backend engineer focused on backend development, AI-related work, and DevOps.",
+    "blogSlug": "digitalleather-backend-engineering",
     "_meta": {
       "filePath": "digitalleather-backend-engineer.md",
       "fileName": "digitalleather-backend-engineer.md",
@@ -64,6 +65,7 @@ export default [
       "Testing"
     ],
     "content": "Worked on a web application designed to assist non-technical employees with daily tasks.\n\n- Developed automatic and manual report generation.\n- Implemented database auditing.\n- Built a notification system.\n- Wrote unit and integration tests.\n- Technologies used: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.",
+    "blogSlug": "htec-backend-internship",
     "_meta": {
       "filePath": "htec-backend-intern.md",
       "fileName": "htec-backend-intern.md",

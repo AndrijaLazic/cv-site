@@ -17,5 +17,8 @@
   "blogReadMore": "Read more",
   "blogBackToList": "Back to all posts",
   "blogPublished": "Published",
-  "blogSections": "Sections"
+  "blogSections": "Sections",
+  "blogAllPosts": "All",
+  "blogLatestPost": "Latest",
+  "blogFilterByTag": "Filter by tag"
 }

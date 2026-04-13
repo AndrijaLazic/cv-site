@@ -11,6 +11,7 @@ const jobSchema = z.object({
   location: z.string(),
   tags: z.array(z.string()),
   content: z.string(),
+  blogSlug: z.string().optional(),
 })
 
 const educationSchema = z.object({
@@ -18,16 +19,6 @@ const educationSchema = z.object({
   summary: z.string(),
   startDate: z.string(),
   endDate: z.string().optional(),
-  tags: z.array(z.string()),
-  content: z.string(),
-})
-
-const blogSchema = z.object({
-  title: z.string(),
-  slug: z.string(),
-  summary: z.string(),
-  publishedDate: z.string(),
-  coverImage: z.string().optional(),
   tags: z.array(z.string()),
   content: z.string(),
 })
@@ -58,7 +49,6 @@ const content = [
     'content/education',
     educationSchema,
   ),
-  ...defineLocalizedCollections('blogs', 'content/blog', blogSchema),
 ]
 
 export default defineConfig({

@@ -15,6 +15,7 @@ tags:
     'RabbitMQ',
     'Testing',
   ]
+blogSlug: htec-backend-internship
 ---
 
 Worked on a web application designed to assist non-technical employees with daily tasks.

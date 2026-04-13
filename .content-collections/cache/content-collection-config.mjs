@@ -25,22 +25,14 @@ var jobSchema = z.object({
   company: z.string(),
   location: z.string(),
   tags: z.array(z.string()),
-  content: z.string()
+  content: z.string(),
+  blogSlug: z.string().optional()
 });
 var educationSchema = z.object({
   school: z.string(),
   summary: z.string(),
   startDate: z.string(),
   endDate: z.string().optional(),
-  tags: z.array(z.string()),
-  content: z.string()
-});
-var blogSchema = z.object({
-  title: z.string(),
-  slug: z.string(),
-  summary: z.string(),
-  publishedDate: z.string(),
-  coverImage: z.string().optional(),
   tags: z.array(z.string()),
   content: z.string()
 });
@@ -63,8 +55,7 @@ var content = [
     "educations",
     "content/education",
     educationSchema
-  ),
-  ...defineLocalizedCollections("blogs", "content/blog", blogSchema)
+  )
 ];
 var content_collections_default = defineConfig({
   content

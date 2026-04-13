@@ -10,6 +10,10 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import contentCollections from '@content-collections/vite'
+import mdx from '@mdx-js/rollup'
+import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 function resolveOptionalFilePath(filePath?: string) {
   if (!filePath) {
@@ -111,6 +115,23 @@ const config = defineConfig(({ mode }) => {
       tsconfigPaths({ projects: ['./tsconfig.json'] }),
       tailwindcss(),
       tanstackStart(),
+      {
+        enforce: 'pre',
+        ...mdx({
+          providerImportSource: '@mdx-js/react',
+          remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            rehypeSlug,
+            [
+              rehypePrettyCode,
+              {
+                theme: { dark: 'github-dark', light: 'github-light' },
+                keepBackground: false,
+              },
+            ],
+          ],
+        }),
+      },
       viteReact(),
     ],
   }
