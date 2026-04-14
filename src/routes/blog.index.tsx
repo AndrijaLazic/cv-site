@@ -1,4 +1,4 @@
-import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useMemo } from 'react'
 import { getAllPostMetas } from '#/features/blog/registry'
@@ -6,11 +6,10 @@ import {
   resolveSupportedLanguage,
   supportedLanguages,
 } from '#/features/i18n/config'
+import { PostCard } from '#/features/blog/components'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { PostMeta } from '#/features/blog/types'
 import { publicConfig } from '#/shared/config/public-env'
-import { Badge } from '#/shared/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 
 const allPostsByLanguage = Object.fromEntries(
   supportedLanguages.map((lang) => [lang, getAllPostMetas(lang)]),
@@ -81,62 +80,6 @@ function useScrollReveal(deps: unknown[]) {
   return containerRef
 }
 
-function PostCard({
-  post,
-  featured = false,
-}: {
-  post: PostMeta
-  featured?: boolean
-}) {
-  return (
-    <Link to="/blog/$slug" params={{ slug: post.slug }} className="group block">
-      <Card className="border-slate-200/85 bg-white/80 shadow-md backdrop-blur-xs transition-shadow group-hover:shadow-lg dark:border-slate-700/75 dark:bg-slate-900/70">
-        {post.coverImage ? (
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className={`w-full rounded-t-xl object-cover ${featured ? 'aspect-[21/9] sm:aspect-video' : 'aspect-video'}`}
-            loading={featured ? 'eager' : 'lazy'}
-          />
-        ) : null}
-        <CardHeader className="space-y-3">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-            <CardTitle
-              className={`font-semibold text-slate-900 group-hover:text-cyan-700 dark:text-slate-100 dark:group-hover:text-cyan-300 ${featured ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'}`}
-            >
-              {post.title}
-            </CardTitle>
-            <Badge
-              variant="secondary"
-              className="shrink-0 text-xs font-medium sm:text-sm"
-            >
-              <time dateTime={post.publishedDate}>{post.publishedDate}</time>
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <p
-            className={`leading-relaxed text-slate-700 dark:text-slate-300 ${featured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}
-          >
-            {post.summary}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <Badge
-                key={`${post.slug}-${tag}`}
-                variant="outline"
-                className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
-  )
-}
-
 function BlogList() {
   const { t, i18n } = useTranslation('resume')
   const activeLanguage = resolveSupportedLanguage(
@@ -158,7 +101,10 @@ function BlogList() {
   )
 
   const featuredPost = activeTag ? null : (filteredPosts[0] ?? null)
-  const gridPosts = activeTag ? filteredPosts : filteredPosts.slice(1)
+  const gridPosts = useMemo(() => {
+    const firstPost = filteredPosts.at(0)
+    return firstPost ? Array.from({ length: 30 }, () => firstPost) : []
+  }, [filteredPosts])
 
   const gridRef = useScrollReveal([activeTag, activeLanguage])
 
@@ -172,7 +118,7 @@ function BlogList() {
 
   return (
     <div className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
-      <div className="mx-auto max-w-4xl space-y-10">
+      <div className="mx-auto max-w-5xl space-y-10">
         {/* Page header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">
@@ -186,7 +132,7 @@ function BlogList() {
         {/* Featured post (latest, only when no tag filter) */}
         {featuredPost && (
           <section aria-label={t('blogLatestPost')}>
-            <article>
+            <article className="mx-auto w-full md:w-[90%]">
               <PostCard post={featuredPost} featured />
             </article>
           </section>
@@ -228,15 +174,21 @@ function BlogList() {
         {/* Post grid with scroll-reveal */}
         {gridPosts.length > 0 && (
           <div ref={gridRef} className="grid gap-5 sm:grid-cols-2">
-            {gridPosts.map((post) => (
-              <article
-                key={post.slug}
-                data-reveal="true"
-                className="transition-all duration-500 ease-out"
-              >
-                <PostCard post={post} />
-              </article>
-            ))}
+            {gridPosts.map((post, index) => {
+              const isFirstRow = index < 2
+
+              return (
+                <article
+                  key={`${post.slug}-${index}`}
+                  data-reveal={isFirstRow ? undefined : 'true'}
+                  className={`transition-all duration-500 ease-out ${
+                    isFirstRow ? 'opacity-100 translate-y-0' : ''
+                  }`}
+                >
+                  <PostCard post={post} />
+                </article>
+              )
+            })}
           </div>
         )}
 

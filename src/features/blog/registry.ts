@@ -52,7 +52,15 @@ export function getAllPostMetas(locale: SupportedLanguage): PostMeta[] {
   return Array.from(metaByLocaleSlug.entries())
     .filter(([key]) => key.startsWith(`${locale}:`))
     .map(([, meta]) => meta)
-    .sort((a, b) => Date.parse(b.publishedDate) - Date.parse(a.publishedDate))
+    .sort((a, b) => {
+      const publishedDateSort =
+        Date.parse(b.publishedDate) - Date.parse(a.publishedDate)
+      if (publishedDateSort !== 0) {
+        return publishedDateSort
+      }
+
+      return a.slug.localeCompare(b.slug)
+    })
 }
 
 export function getPostMeta(

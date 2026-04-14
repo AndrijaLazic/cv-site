@@ -7,5 +7,6 @@ export type PostMeta = {
   summary: string
   publishedDate: string
   coverImage?: string
+  imageBackground?: string
   tags: string[]
 }

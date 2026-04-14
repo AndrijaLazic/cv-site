@@ -9,5 +9,6 @@ export const meta: PostMeta = {
   publishedDate: '2026-04-12',
   coverImage:
     '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
+  imageBackground: 'red',
   tags: ['Spring Boot', 'Python', 'AI', 'DevOps', 'Backend Development'],
 }

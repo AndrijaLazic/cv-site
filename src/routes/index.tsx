@@ -69,21 +69,21 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       {
-        title: 'Andrija Lazic | Backend Software Engineer',
+        title: 'Andrija Lazic | Software Engineer',
       },
       {
         name: 'description',
         content:
-          'Explore the professional resume of Andrija Lazic — backend engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
+          'Explore the professional resume of Andrija Lazic — software engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
       },
       {
         property: 'og:title',
-        content: 'Andrija Lazic | Backend Software Engineer',
+        content: 'Andrija Lazic | Software Engineer',
       },
       {
         property: 'og:description',
         content:
-          'Explore the professional resume of Andrija Lazic — backend engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
+          'Explore the professional resume of Andrija Lazic — software engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
       },
       {
         property: 'og:url',

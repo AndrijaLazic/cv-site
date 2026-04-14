@@ -8,5 +8,6 @@ export const meta: PostMeta = {
     'A look at my experience as a backend intern at HTEC — building reports, notifications, and learning enterprise Java.',
   publishedDate: '2026-04-12',
   coverImage: '/blog/htec-backend-internship/htec-internship-kragujevac.webp',
+  imageBackground: '#e2e8f0',
   tags: ['Spring Boot', 'Docker', 'Backend Development', 'Internship'],
 }
