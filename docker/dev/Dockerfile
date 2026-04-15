@@ -28,6 +28,8 @@ RUN usermod -l devuser -d /home/devuser -m node \
 
 WORKDIR /workspace
 RUN chown devuser:devuser /workspace
+RUN mkdir -p /workspace/node_modules \
+    && chown -R devuser:devuser /workspace/node_modules
 
 USER devuser
 

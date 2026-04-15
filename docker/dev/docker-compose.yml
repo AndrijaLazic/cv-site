@@ -36,6 +36,18 @@ services:
       - CHOWN
       - SETGID
       - SETUID
+    command:
+      - /bin/bash
+      - -lc
+      - |
+        cd /workspace
+
+        if [ ! -f node_modules/.package-lock.json ] || ! cmp -s package-lock.json node_modules/.package-lock.json; then
+          echo "[docker/dev] Lockfile changed (or first install), running npm ci..."
+          npm ci
+        fi
+
+        tail -f /dev/null
     stdin_open: true
     tty: true
 
