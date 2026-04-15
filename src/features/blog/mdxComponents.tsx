@@ -7,6 +7,8 @@ import {
   Callout,
   Section,
   TwoColumn,
+  ImageCarousel,
+  ContentBlock,
 } from './components'
 import { cn } from '#/shared/utils'
 
@@ -202,4 +204,6 @@ export const mdxComponents: MDXComponents = {
   BlogVideo,
   TwoColumn,
   BlogCode,
+  ImageCarousel,
+  ContentBlock,
 }

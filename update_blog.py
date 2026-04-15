@@ -1,4 +1,7 @@
-import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
+import urllib.request
+import os
+
+content = """import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useRef, useMemo, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -91,14 +94,10 @@ function BlogList() {
   const navigate = useNavigate({ from: '/blog/' })
   const posts = allPostsByLanguage[activeLanguage]
 
-  // Hero carousel - Top 3 newest posts (no tag filter)
+  // Hero carousel - Top 3 newest posts
   const topPosts = useMemo(() => {
     return [...posts]
-      .sort(
-        (a, b) =>
-          new Date(b.publishedDate).getTime() -
-          new Date(a.publishedDate).getTime(),
-      )
+      .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
       .slice(0, 3)
   }, [posts])
 
@@ -143,13 +142,9 @@ function BlogList() {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc')
 
   const filteredPosts = useMemo(() => {
-    const result = activeTag
-      ? posts.filter((p) => p.tags.includes(activeTag))
-      : [...posts]
+    const result = activeTag ? posts.filter((p) => p.tags.includes(activeTag)) : [...posts]
     result.sort((a, b) => {
-      const diff =
-        new Date(b.publishedDate).getTime() -
-        new Date(a.publishedDate).getTime()
+      const diff = new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
       return sortOrder === 'desc' ? diff : -diff
     })
     return result
@@ -180,7 +175,7 @@ function BlogList() {
 
         {/* Top - Hero Carousel */}
         {topPosts.length > 0 && !activeTag && (
-          <section
+          <section 
             aria-label={t('blogLatestPost') ?? 'Latest Posts'}
             className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800"
             onMouseEnter={() => setIsHovered(true)}
@@ -188,24 +183,24 @@ function BlogList() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <div
+            <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
             >
               {topPosts.map((post) => (
                 <div key={post.slug} className="w-full shrink-0">
-                  <Link
-                    to="/blog/$slug"
+                  <Link 
+                    to="/blog/$slug" 
                     params={{ slug: post.slug }}
-                    className="flex h-[clamp(26rem,62svh,44rem)] flex-col"
+                    className="flex flex-col h-[400px] sm:h-[450px]"
                   >
                     {/* Image fraction */}
                     <div className="relative h-[60%] w-full overflow-hidden">
                       {post.coverImage || post.imageBackground ? (
-                        <img
-                          src={post.coverImage || post.imageBackground}
+                        <img 
+                          src={post.coverImage || post.imageBackground} 
                           alt={post.title}
-                          className="h-full w-full object-cover object-center"
+                          className="h-full w-full object-cover"
                         />
                       ) : (
                         <div className="h-full w-full bg-slate-200 dark:bg-slate-700" />
@@ -214,10 +209,7 @@ function BlogList() {
                       {/* Tags over image */}
                       <div className="absolute bottom-4 left-4 flex flex-wrap gap-2 text-white">
                         {post.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full bg-cyan-600/80 px-2 py-0.5 text-xs font-medium backdrop-blur-sm"
-                          >
+                          <span key={tag} className="rounded-full bg-cyan-600/80 px-2 py-0.5 text-xs font-medium backdrop-blur-sm">
                             {tag}
                           </span>
                         ))}
@@ -226,14 +218,11 @@ function BlogList() {
                     {/* Content fraction */}
                     <div className="flex h-[40%] flex-col justify-center bg-white p-4 sm:p-6 dark:bg-slate-800">
                       <time className="mb-2 text-xs text-slate-500 dark:text-slate-400">
-                        {new Date(post.publishedDate).toLocaleDateString(
-                          activeLanguage === 'sr' ? 'sr-RS' : 'en-US',
-                          {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          },
-                        )}
+                        {new Date(post.publishedDate).toLocaleDateString(activeLanguage === 'sr' ? 'sr-RS' : 'en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
                       </time>
                       <h2 className="line-clamp-1 text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">
                         {post.title}
@@ -252,10 +241,7 @@ function BlogList() {
               <>
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handlePrev()
-                  }}
+                  onClick={(e) => { e.preventDefault(); handlePrev(); }}
                   className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-2 text-white opacity-0 transition-opacity hover:bg-black/50 group-hover:opacity-100"
                   aria-label="Previous post"
                 >
@@ -263,10 +249,7 @@ function BlogList() {
                 </button>
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNext()
-                  }}
+                  onClick={(e) => { e.preventDefault(); handleNext(); }}
                   className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-2 text-white opacity-0 transition-opacity hover:bg-black/50 group-hover:opacity-100"
                   aria-label="Next post"
                 >
@@ -278,15 +261,10 @@ function BlogList() {
                     <button
                       key={i}
                       type="button"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setCarouselIndex(i)
-                      }}
+                      onClick={(e) => { e.preventDefault(); setCarouselIndex(i); }}
                       className={cn(
                         'h-2 w-2 rounded-full transition-colors',
-                        i === carouselIndex
-                          ? 'bg-cyan-500'
-                          : 'bg-slate-300/50 hover:bg-slate-400',
+                        i === carouselIndex ? 'bg-cyan-500' : 'bg-slate-300/50 hover:bg-slate-400'
                       )}
                       aria-label={`Go to slide ${i + 1}`}
                     />
@@ -306,10 +284,10 @@ function BlogList() {
                   type="button"
                   onClick={() => void navigate({ search: {} })}
                   className={cn(
-                    'rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
                     !activeTag
                       ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                      : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300',
+                      : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300'
                   )}
                 >
                   {t('blogAllPosts')}
@@ -320,10 +298,10 @@ function BlogList() {
                     type="button"
                     onClick={() => handleTagClick(tag)}
                     className={cn(
-                      'rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
                       activeTag === tag
                         ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                        : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300',
+                        : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300'
                     )}
                   >
                     {tag}
@@ -334,18 +312,16 @@ function BlogList() {
           )}
 
           <div className="flex items-center gap-2 self-end sm:self-auto">
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
-              Sort:
-            </span>
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Sort:</span>
             <div className="flex rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => setSortOrder('desc')}
                 className={cn(
-                  'rounded-l-md border border-slate-300 px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                  "rounded-l-md border px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
                   sortOrder === 'desc'
                     ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                    : 'bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50',
+                    : 'border-slate-300 bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50'
                 )}
               >
                 {t('blogNewest', 'Newest')}
@@ -354,10 +330,10 @@ function BlogList() {
                 type="button"
                 onClick={() => setSortOrder('asc')}
                 className={cn(
-                  'rounded-r-md border border-l-0 border-slate-300 px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                  "rounded-r-md border border-l-0 px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
                   sortOrder === 'asc'
                     ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                    : 'bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50',
+                    : 'border-slate-300 bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50'
                 )}
               >
                 {t('blogOldest', 'Oldest')}
@@ -368,10 +344,7 @@ function BlogList() {
 
         {/* Post grid with scroll-reveal */}
         {filteredPosts.length > 0 ? (
-          <div
-            ref={gridRef}
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          >
+          <div ref={gridRef} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPosts.map((post, index) => {
               const isFirstRow = index < 3
               return (
@@ -379,8 +352,8 @@ function BlogList() {
                   key={`${post.slug}-${index}`}
                   data-reveal={isFirstRow ? undefined : 'true'}
                   className={cn(
-                    'transition-all duration-500 ease-out',
-                    isFirstRow ? 'opacity-100 translate-y-0' : '',
+                    "transition-all duration-500 ease-out",
+                    isFirstRow ? 'opacity-100 translate-y-0' : ''
                   )}
                 >
                   <PostCard post={post} />
@@ -397,3 +370,7 @@ function BlogList() {
     </div>
   )
 }
+"""
+
+with open('/workspace/src/routes/blog.index.tsx', 'w', encoding='utf-8') as f:
+    f.write(content)

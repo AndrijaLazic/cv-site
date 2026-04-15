@@ -1,21 +1,82 @@
-import { Callout, Section, TwoColumn } from '#/features/blog/components'
+import {
+  Callout,
+  Section,
+  TwoColumn,
+  ContentBlock,
+  ImageCarousel,
+} from '#/features/blog/components'
 
-_Coming soon — this post will cover my time as a backend intern at HTEC in Kragujevac, Serbia._
+My backend internship at HTEC in Kragujevac, from September to October 2024, was my first real experience with enterprise backend development. I worked as a Backend Intern and quickly learned how important reliability is, not just fast implementation.
 
-## What I Worked On
+<ContentBlock title="The Project">
+  I worked on a web platform designed to help non-technical employees complete recurring daily tasks with less manual overhead. That context shaped the engineering priorities: workflows had to be clear, generated reports needed to be trustworthy, and notifications had to arrive at the right time so users could act without extra coordination.
 
-<Section title="Core responsibilities">
-  - Automatic and manual report generation - Database auditing - Notification
-  system - Unit and integration testing
+For me, this was an important shift from mostly educational and project environments into a team setting where implementation decisions had immediate practical impact. Instead of optimizing only for code elegance, I had to optimize for stability, clarity, and supportability in everyday use.
+
+  <Section title="What the platform needed most">
+    - Usable backend-driven workflows for non-technical users.
+    - Automatic and manual report generation with consistent output.
+    - Database auditing to improve traceability and accountability.
+    - Notification delivery that supported daily task execution.
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="What I Built">
+  The core of my work was implementing backend capabilities that solved practical friction points.
+
+<Section title="Reporting and data flows">
+  - Developed both automatic and manual report generation features. - Structured
+  backend logic so report behavior was predictable and maintainable. - Supported
+  use cases where different teams needed different report timing.
 </Section>
 
-<Callout type="info">
-  This post is a work in progress. The full write-up will be published soon.
-</Callout>
+<Section title="Auditing and notifications">
+  - Implemented database auditing mechanisms to track important changes. - Built
+  a notification system to surface relevant events to users. - Focused on
+  backend behavior that remained understandable under change.
+</Section>
 
-## Tech Stack
+  <Section title="Quality and validation">
+    - Wrote unit tests for service-level correctness.
+    - Added integration tests to verify communication across components.
+    - Used testing as a way to reduce regressions while iterating quickly.
+  </Section>
+</ContentBlock>
 
-<TwoColumn>
-  <div>**Backend** Spring Boot, MySQL, Keycloak</div>
-  <div>**Infrastructure** Docker, RabbitMQ</div>
-</TwoColumn>
+<ContentBlock title="Tech Stack in Practice">
+  I used a backend stack that is common in enterprise systems, but the value came from how the pieces worked together under product constraints.
+
+  <TwoColumn>
+    <div>
+      **Application Layer**
+
+      - Spring Boot for backend services and API logic.
+      - MySQL for transactional data and reporting support.
+      - Keycloak for authentication and access considerations.
+    </div>
+    <div>
+      **Platform Layer**
+
+      - Docker for consistent development and runtime environments.
+      - RabbitMQ for asynchronous communication scenarios.
+      - Test suites for confidence in iterative delivery.
+    </div>
+
+  </TwoColumn>
+
+  <Callout type="info" title="Internship reality">
+    In a short internship window, the biggest growth came from learning how to deliver production-minded backend changes without overcomplicating the design.
+  </Callout>
+</ContentBlock>
+
+<ContentBlock title="Learnings That Stayed With Me">
+  This internship gave me practical habits that I still use in my current role at DigitalLeather: define clear backend contracts, verify behavior with tests, and keep operational concerns visible while implementing features. It also sharpened how I communicate technical decisions with teammates.
+
+My academic background at the Faculty of Natural Sciences and Mathematics gave me breadth across tools, while my EzDeals graduation project gave me end-to-end ownership experience. HTEC connected those foundations to real product delivery and team engineering standards.
+
+Later, my internal auditor training for ISO 19011 and ISO/IEC 27001 gave me stronger language for controls and traceability, but many of those instincts started here through auditing-related backend work.
+
+  <Callout type="tip" title="Main takeaway">
+    Strong backend engineering starts with understanding user workflows, then building systems that stay reliable when requirements inevitably evolve.
+  </Callout>
+</ContentBlock>

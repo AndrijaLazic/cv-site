@@ -1,16 +1,85 @@
-import { Callout, Section } from '#/features/blog/components'
+import {
+  Callout,
+  Section,
+  TwoColumn,
+  ContentBlock,
+  ImageCarousel,
+} from '#/features/blog/components'
 
-_Coming soon — this post will cover my ongoing work as a backend engineer at DigitalLeather._
+When I joined DigitalLeather in May 2025 in Kragujevac, I moved from project-driven student and internship work into a role where backend quality, iteration speed, and operational reliability all had to coexist. My official title is Backend Software Engineer, but the practical scope is broader: I work on backend development, AI-related implementation, and DevOps workflows.
 
-## What I Work On
+<ImageCarousel
+  images={[
+    {
+      src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
+      alt: 'DigitalLeather company logo',
+      caption: 'DigitalLeather, where I currently work as a backend engineer.',
+    },
+  ]}
+  interval={4000}
+  autoPlay={true}
+/>
 
-<Section title="Responsibilities">
-  - Backend development with Spring Boot and Python - AI-oriented features and
-  integrations - DevOps workflows and containerization
-</Section>
+<ContentBlock title="Overview">
+  At DigitalLeather, I learned to treat backend systems as products with a long operational life, not as short project deliverables. The stack itself is familiar, mostly Spring Boot, Python, and Docker, but the challenge comes from the blend of deterministic backend requirements and AI-oriented behavior that often needs fast iterations and careful monitoring.
 
-<Callout type="info">Full write-up coming soon.</Callout>
+I spend a lot of time making sure services are understandable by other engineers, easy to deploy, and resilient when requirements evolve. That mindset grew from my Computer Science background and my EzDeals graduation project, where I combined backend logic, data handling, and delivery constraints.
 
-## Tech Stack
+  <Section title="Current scope">
+    - Build and evolve backend services that support core product workflows.
+    - Implement AI-related backend capabilities and integration points.
+    - Maintain practical DevOps responsibilities around containerized execution.
+  </Section>
+</ContentBlock>
 
-Spring Boot, Python, Docker, and more.
+<ContentBlock title="Tech Stack">
+  My daily work usually starts in the service layer and then moves quickly into integration and deployment concerns. I use Spring Boot where strong API structure and mature Java tooling are important, and Python for areas where speed of experimentation matters, especially when AI-related behavior is involved.
+
+  <TwoColumn>
+    <div>
+      **Backend Core**
+
+      - Spring Boot for service architecture and API development.
+      - Structured business logic with maintainable, testable boundaries.
+      - Reliable integration behavior as requirements expand.
+    </div>
+    <div>
+      **AI and Operations**
+
+      - Python for AI-adjacent workflows and implementation speed.
+      - Docker-based environments to reduce configuration drift.
+      - DevOps practices that keep releases repeatable and low-friction.
+    </div>
+
+  </TwoColumn>
+</ContentBlock>
+
+<ContentBlock title="Key Responsibilities">
+  <Section title="How I approach delivery">
+    - Start from business intent, then define clean backend contracts.
+    - Break work into safe increments that can be validated early.
+    - Keep deployment and runtime behavior in scope from day one.
+    - Document assumptions so future changes stay controlled.
+  </Section>
+
+</ContentBlock>
+
+<ContentBlock title="DevOps and Infrastructure">
+  DevOps in this role is not a separate phase after coding. I treat containerization as a design constraint, so service startup behavior, configuration strategy, and dependency management must be practical in real environments, not only locally.
+
+This perspective also aligns with my ISO 19011 and ISO/IEC 27001 internal auditor training, which strengthened how I think about controls, traceability, and responsible system operation. Even when I am implementing features, I try to keep auditability and operational clarity in mind.
+
+  <Callout type="tip" title="Operational lesson">
+    The fastest feature is not the one merged first; it is the one that remains stable, observable, and easy to support after release.
+  </Callout>
+</ContentBlock>
+
+<ContentBlock title="AI Work in a Backend Context">
+  The most interesting part of my current role is connecting AI-oriented functionality to conventional backend standards. AI-related features can introduce uncertainty, but backend services still need deterministic interfaces, clear failure handling, and predictable performance characteristics.
+
+I enjoy that intersection because it rewards both structured engineering and experimentation. It pushes me to design systems where innovation does not bypass reliability, and where operational concerns remain visible from the first implementation draft.
+
+  <Callout type="info" title="Why this role matters to me">
+    DigitalLeather is where my education, internship experience, and thesis project work converged into full-time engineering ownership.
+  </Callout>
+</ContentBlock>

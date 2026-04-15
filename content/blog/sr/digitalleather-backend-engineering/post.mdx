@@ -1,16 +1,86 @@
-import { Callout, Section } from '#/features/blog/components'
+import {
+  Callout,
+  Section,
+  TwoColumn,
+  ContentBlock,
+  ImageCarousel,
+} from '#/features/blog/components'
 
-_Uskoro — ovaj post će pokriti moj tekući rad kao backend inženjer u DigitalLeather-u._
+Kada sam u maju 2025. počeo da radim u DigitalLeather-u u Kragujevcu, prešao sam iz studentskih i internship projekata u okruženje gde backend kvalitet, brzina isporuke i operativna stabilnost moraju da postoje u isto vreme. Iako je moja pozicija Backend Software Engineer, svakodnevni posao je širi: backend razvoj, AI-orijentisane funkcionalnosti i DevOps odgovornosti.
 
-## Čime Se Bavim
+<ImageCarousel
+  images={[
+    {
+      src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
+      alt: 'DigitalLeather logo kompanije',
+      caption:
+        'DigitalLeather, kompanija u kojoj trenutno radim kao backend inženjer.',
+    },
+  ]}
+  interval={4000}
+  autoPlay={true}
+/>
 
-<Section title="Odgovornosti">
-  - Backend razvoj sa Spring Boot i Python - AI-orijentisane funkcionalnosti i
-  integracije - DevOps tokovi rada i kontejnerizacija
-</Section>
+<ContentBlock title="Pregled uloge">
+  U DigitalLeather-u sam naučio da backend sisteme posmatram kao dugoročne proizvode, a ne kao kratke zadatke koji se završavaju merge-om koda. Tehnologije su mi poznate, pre svega Spring Boot, Python i Docker, ali je pravi izazov kombinacija klasičnih backend zahteva i AI funkcionalnosti gde su iteracije brže, a ponašanje često manje determinističko.
 
-<Callout type="info">Kompletan tekst uskoro.</Callout>
+Veliki deo vremena ulažem u to da servisi budu razumljivi drugim inženjerima, jednostavni za deployment i stabilni kada se zahtevi promene. Taj način razmišljanja je nastavak mog iskustva sa studija računarstva i EzDeals diplomskog projekta.
 
-## Tech Stack
+  <Section title="Trenutni fokus">
+    - Razvoj i unapređenje backend servisa za ključne poslovne tokove.
+    - Implementacija AI-orijentisanih backend funkcionalnosti i integracija.
+    - DevOps rad oko kontejnerizacije i stabilnog izvršavanja servisa.
+  </Section>
+</ContentBlock>
 
-Spring Boot, Python, Docker i još mnogo toga.
+<ContentBlock title="Tehnološki stack">
+  Moj rad najčešće počinje u servisu i poslovnoj logici, a zatim se brzo širi na integracije i deployment zahteve. Spring Boot koristim kada su struktura API-ja i stabilnost ključni, dok Python koristim tamo gde je potrebno brzo eksperimentisanje, posebno u AI delu.
+
+  <TwoColumn>
+    <div>
+      **Backend osnova**
+
+      - Spring Boot za arhitekturu servisa i API razvoj.
+      - Jasna organizacija poslovne logike i održiv kod.
+      - Pouzdane integracije kako sistem raste.
+    </div>
+    <div>
+      **AI i operativa**
+
+      - Python za AI-prateće tokove i brzu iteraciju.
+      - Docker za konzistentna razvojna i runtime okruženja.
+      - DevOps praksa koja čini isporuku ponovljivom i stabilnom.
+    </div>
+
+  </TwoColumn>
+</ContentBlock>
+
+<ContentBlock title="Ključne odgovornosti">
+  <Section title="Kako pristupam isporuci">
+    - Prvo definišem poslovnu nameru, pa tek onda backend ugovore.
+    - Rad delim na manje, bezbedne korake koji mogu rano da se validiraju.
+    - O runtime ponašanju i deployment-u razmišljam od početka razvoja.
+    - Beležim pretpostavke kako bi buduće izmene bile kontrolisane.
+  </Section>
+
+</ContentBlock>
+
+<ContentBlock title="DevOps i infrastruktura">
+  U ovoj ulozi DevOps nije odvojena faza nakon kodiranja. To je deo samog procesa razvoja. Kontejnerizaciju posmatram kao dizajnersko ograničenje, što znači da startup ponašanje servisa, konfiguracija i upravljanje zavisnostima moraju biti praktični u realnom okruženju, ne samo lokalno.
+
+Ovakav pristup se dobro nadovezuje i na internu auditor obuku po ISO 19011 i ISO/IEC 27001, koja mi je dodatno učvrstila razmišljanje o kontrolama, sledljivosti i odgovornom radu sistema. Čak i kada gradim funkcionalnosti, pokušavam da zadržim perspektivu auditabilnosti i operativne jasnoće.
+
+  <Callout type="tip" title="Operativna lekcija">
+    Najbrža funkcionalnost nije ona koja se prva spoji u granu, već ona koja i posle puštanja ostaje stabilna, merljiva i laka za održavanje.
+  </Callout>
+</ContentBlock>
+
+<ContentBlock title="AI rad u backend kontekstu">
+  Najzanimljiviji deo mog posla je povezivanje AI-orijentisanih funkcionalnosti sa standardima klasičnog backend inženjeringa. AI deo može da unese neizvesnost, ali backend i dalje mora da obezbedi jasne interfejse, predvidivo rukovanje greškama i razumljive performanse.
+
+Upravo taj spoj mi najviše odgovara, jer traži i strukturnu disciplinu i spremnost na eksperiment. Cilj mi je da inovacija ne zaobiđe pouzdanost, već da obe strane rastu zajedno.
+
+  <Callout type="info" title="Zašto mi je ova uloga važna">
+    U DigitalLeather-u su se spojili znanje sa fakulteta, iskustvo sa prakse i samostalnost koju sam razvio kroz diplomski projekat.
+  </Callout>
+</ContentBlock>
