@@ -1,33 +1,34 @@
-import { cn } from '#/shared/utils'
-
-type BlogImageProps = {
-  src: string
-  alt: string
-  caption?: string
-  className?: string
-  priority?: boolean
-}
+import type { CSSProperties } from 'react'
+import type { BlogImageContent } from '#/features/blog/types/blog'
 
 export function BlogImage({
   src,
   alt,
-  caption,
-  className,
-  priority = false,
-}: BlogImageProps) {
+  fit = 'cover',
+  position = 'center',
+  bgColor = 'transparent',
+  aspectRatio = '16/9',
+  rounded = false,
+}: BlogImageContent) {
+  const wrapperStyle: CSSProperties = {
+    width: '100%',
+    aspectRatio,
+    backgroundColor: bgColor,
+    borderRadius: rounded ? '8px' : 0,
+    overflow: 'hidden',
+  }
+
+  const imageStyle: CSSProperties = {
+    width: '100%',
+    height: '100%',
+    objectFit: fit,
+    objectPosition: position,
+    display: 'block',
+  }
+
   return (
-    <figure className={cn('my-6', className)}>
-      <img
-        src={src}
-        alt={alt}
-        loading={priority ? 'eager' : 'lazy'}
-        className="w-full rounded-xl object-cover"
-      />
-      {caption && (
-        <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
+    <div style={wrapperStyle}>
+      <img src={src} alt={alt} loading="lazy" style={imageStyle} />
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from './types'
+import type { PostMeta } from './types/blog'
 
 // Eagerly loaded meta modules - keyed by path like "/content/blog/en/my-post/meta.ts"
 const metaModules = import.meta.glob<{ meta: PostMeta }>(

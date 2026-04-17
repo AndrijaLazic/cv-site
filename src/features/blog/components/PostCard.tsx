@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import type { PostMeta } from '#/features/blog/types'
+import type { PostMeta } from '#/features/blog/types/blog'
 import { cn } from '#/shared/utils'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
@@ -36,14 +36,18 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
             )}
             style={{
               backgroundColor:
-                post.imageBackground ?? FALLBACK_IMAGE_BACKGROUND,
+                post.coverImage.bgColor ?? FALLBACK_IMAGE_BACKGROUND,
             }}
           >
             <img
-              src={post.coverImage}
-              alt={post.title}
-              className="block h-full w-auto max-w-none object-contain object-center"
+              src={post.coverImage.src}
+              alt={post.coverImage.alt}
+              className="block h-full w-auto max-w-none"
               loading={featured ? 'eager' : 'lazy'}
+              style={{
+                objectFit: post.coverImage.fit ?? 'contain',
+                objectPosition: post.coverImage.position ?? 'center',
+              }}
             />
           </div>
         ) : null}

@@ -1,12 +1,7 @@
-import type { SupportedLanguage } from '#/features/i18n/languages'
-
-export type PostMeta = {
-  slug: string
-  locale: SupportedLanguage
-  title: string
-  summary: string
-  publishedDate: string
-  coverImage?: string
-  imageBackground?: string
-  tags: string[]
-}
+export type {
+  BlogImageContent,
+  BlogPostMeta,
+  ImageFit,
+  ImagePosition,
+  PostMeta,
+} from './types/blog'

@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
 import { getPostComponent, getPostMeta } from '#/features/blog/registry'
 import { MdxRenderer } from '#/features/blog/MdxRenderer'
+import { BlogImage } from '#/features/blog/components'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
 import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from '#/features/blog/types'
+import type { PostMeta } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 import { Badge } from '#/shared/ui/badge'
 
@@ -25,10 +26,11 @@ export const Route = createFileRoute('/blog/$slug')({
       findPostMeta(params.slug, 'en') ?? findPostMeta(params.slug, 'sr')
     const title = post ? `${post.title} | Andrija Lazic` : 'Blog | Andrija Lazic'
     const description = post?.summary ?? 'Blog post by Andrija Lazic.'
-    const coverImageUrl = post?.coverImage
-      ? post.coverImage.startsWith('http')
-        ? post.coverImage
-        : `${siteUrl}${post.coverImage}`
+    const coverImageSrc = post?.coverImage?.src
+    const coverImageUrl = coverImageSrc
+      ? coverImageSrc.startsWith('http')
+        ? coverImageSrc
+        : `${siteUrl}${coverImageSrc}`
       : undefined
     const meta: Array<Record<string, string>> = [
       { title },
@@ -49,10 +51,11 @@ export const Route = createFileRoute('/blog/$slug')({
 })
 
 function BlogPostJsonLd({ post }: { post: PostMeta }) {
-  const coverImageUrl = post.coverImage
-    ? post.coverImage.startsWith('http')
-      ? post.coverImage
-      : `${publicConfig.siteUrl}${post.coverImage}`
+  const coverImageSrc = post.coverImage?.src
+  const coverImageUrl = coverImageSrc
+    ? coverImageSrc.startsWith('http')
+      ? coverImageSrc
+      : `${publicConfig.siteUrl}${coverImageSrc}`
     : undefined
 
   const jsonLd = {
@@ -63,7 +66,7 @@ function BlogPostJsonLd({ post }: { post: PostMeta }) {
     datePublished: post.publishedDate,
     author: {
       '@type': 'Person',
-      name: 'Andrija Lazic',
+      name: post.author,
       url: publicConfig.siteUrl,
     },
     url: `${publicConfig.siteUrl}/blog/${post.slug}`,
@@ -125,14 +128,7 @@ function BlogPostPage() {
           </Link>
 
           <article className="space-y-6">
-            {post.coverImage ? (
-              <img
-                src={post.coverImage}
-                alt={post.title}
-                className="aspect-video w-full rounded-xl object-cover shadow-md"
-                loading="eager"
-              />
-            ) : null}
+            {post.coverImage && <BlogImage {...post.coverImage} />}
 
             <header className="space-y-3">
               <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">

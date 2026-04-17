@@ -10,7 +10,7 @@ import {
 } from '#/features/i18n/config'
 import { PostCard } from '#/features/blog/components'
 import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from '#/features/blog/types'
+import type { PostMeta } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 
 const allPostsByLanguage = Object.fromEntries(
@@ -181,7 +181,7 @@ function BlogList() {
         {/* Top - Hero Carousel */}
         {topPosts.length > 0 && !activeTag && (
           <section
-            aria-label={t('blogLatestPost') ?? 'Latest Posts'}
+            aria-label={t('blogLatestPost')}
             className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -200,12 +200,23 @@ function BlogList() {
                     className="flex h-[clamp(26rem,62svh,44rem)] flex-col"
                   >
                     {/* Image fraction */}
-                    <div className="relative h-[60%] w-full overflow-hidden">
-                      {post.coverImage || post.imageBackground ? (
+                    <div
+                      className="relative h-[60%] w-full overflow-hidden"
+                      style={{
+                        backgroundColor: post.coverImage?.bgColor ?? 'transparent',
+                      }}
+                    >
+                      {post.coverImage ? (
                         <img
-                          src={post.coverImage || post.imageBackground}
-                          alt={post.title}
-                          className="h-full w-full object-cover object-center"
+                          src={post.coverImage.src}
+                          alt={post.coverImage.alt}
+                          className="h-full w-full"
+                          loading="lazy"
+                          style={{
+                            objectFit: post.coverImage.fit ?? 'cover',
+                            objectPosition: post.coverImage.position ?? 'center',
+                            display: 'block',
+                          }}
                         />
                       ) : (
                         <div className="h-full w-full bg-slate-200 dark:bg-slate-700" />
