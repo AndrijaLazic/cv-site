@@ -1,31 +1,7 @@
 
 export default [
   {
-    "jobTitle": "Backend Software Engineer",
-    "summary": "Backend engineer focused on backend, AI development, and DevOps.",
-    "startDate": "2025-05-01",
-    "company": "DigitalLeather",
-    "location": "Kragujevac, Serbia",
-    "tags": [
-      "Backend Development",
-      "AI",
-      "DevOps",
-      "Spring Boot",
-      "Python",
-      "Docker"
-    ],
-    "content": "Working as a backend engineer focused on backend development, AI-related work, and DevOps.",
-    "blogSlug": "digitalleather-backend-engineering",
-    "_meta": {
-      "filePath": "digitalleather-backend-engineer.md",
-      "fileName": "digitalleather-backend-engineer.md",
-      "directory": ".",
-      "extension": "md",
-      "path": "digitalleather-backend-engineer"
-    }
-  },
-  {
-    "jobTitle": "Software Engineering Project - EzDeals",
+    "jobTitle": "Graduation Thesis - EzDeals",
     "summary": "Web application for finding the best deals on selected products, developed as a graduation thesis project.",
     "startDate": "2023-11-01",
     "endDate": "2024-06-30",
@@ -39,7 +15,7 @@ export default [
       "Web Application",
       "Graduation Thesis"
     ],
-    "content": "Web application that allows users to find the best deals on selected products.\n\nThis project was the culmination of my academic work and was developed as part of my graduation thesis.",
+    "content": "Web application that allows users to find the best deals on selected products.\n\nThis includes developing a web scraper, parallel programming, performance optimization, and implementing features for user accounts and personalized recommendations.",
     "_meta": {
       "filePath": "ezdeals-project.md",
       "fileName": "ezdeals-project.md",
@@ -49,22 +25,67 @@ export default [
     }
   },
   {
+    "jobTitle": "AI / Machine Learning Engineer",
+    "summary": "Worked on FMEA Excellence, a SaaS application that uses AI and machine learning to support risk evaluation and ROI-based decision-making.",
+    "startDate": "2025-05-01",
+    "company": "DigitalLeather",
+    "location": "Kragujevac",
+    "tags": [
+      "AI",
+      "Machine Learning",
+      "Python",
+      "FastAPI",
+      "Scikit-learn"
+    ],
+    "content": "- Implemented an algorithm for time-series forecasting that selects the best model for each scenario and uses real-time data.\n- Developed machine learning workflows for predicting costs, risk impact, and action-plan value.",
+    "blogSlug": "digitalleather-backend-engineering",
+    "_meta": {
+      "filePath": "fmea-excellence.md",
+      "fileName": "fmea-excellence.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "fmea-excellence"
+    }
+  },
+  {
+    "jobTitle": "Backend Software Engineer",
+    "summary": "Worked on FMEA Traditional, a SaaS application for industries where FMEA is part of the quality management standard.",
+    "startDate": "2025-05-01",
+    "company": "DigitalLeather",
+    "location": "Kragujevac",
+    "tags": [
+      "Backend Development",
+      "Spring Boot",
+      "Docker",
+      "MySQL",
+      "GitHub Actions"
+    ],
+    "content": "- Developed backend features and automated deployment processes for cloud/VPS environments.\n- Implemented AI-assisted translation features for easier use of documentation in foreign languages.\n- Built file export functionality that allows users to export application data into custom templates.\n- Created deployment orchestration using GitHub Actions and Docker.",
+    "blogSlug": "digitalleather-backend-engineering",
+    "_meta": {
+      "filePath": "fmea-traditional.md",
+      "fileName": "fmea-traditional.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "fmea-traditional"
+    }
+  },
+  {
     "jobTitle": "Backend Intern",
-    "summary": "Contributed to a web platform for non-technical employees by implementing core backend capabilities.",
+    "summary": "Worked on a web application designed to help non-technical employees manage daily tasks more efficiently.",
     "startDate": "2024-09-01",
     "endDate": "2024-10-31",
     "company": "HTEC",
-    "location": "Kragujevac, Serbia",
+    "location": "Kragujevac",
     "tags": [
       "Backend Development",
       "Spring Boot",
       "Docker",
       "MySQL",
       "Keycloak",
-      "RabbitMQ",
-      "Testing"
+      "RabbitMQ"
     ],
-    "content": "Worked on a web application designed to assist non-technical employees with daily tasks.\n\n- Developed automatic and manual report generation.\n- Implemented database auditing.\n- Built a notification system.\n- Wrote unit and integration tests.\n- Technologies used: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.",
+    "content": "- Developed automatic and manual report generation features as part of the backend team.\n- Implemented database auditing, a notification system, and backend tests.",
     "blogSlug": "htec-backend-internship",
     "_meta": {
       "filePath": "htec-backend-intern.md",

@@ -41,11 +41,11 @@ export function ImageCarousel({
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0]?.clientX ?? null
+    touchStartX.current = e.touches[0].clientX
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0]?.clientX ?? null
+    touchEndX.current = e.touches[0].clientX
   }
 
   const handleTouchEnd = () => {
@@ -62,7 +62,7 @@ export function ImageCarousel({
   if (images.length === 0) return null
 
   if (images.length === 1) {
-    const img = images[0]!
+    const img = images[0]
     return (
       <figure className={cn('w-full', className)}>
         <img

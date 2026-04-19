@@ -13,15 +13,3 @@ tags:
     'React',
   ]
 ---
-
-Bachelor of Computer Science | Software Engineering
-
-### Core Skills
-
-- Programming: React, Angular, Spring Boot, .NET, C, Kotlin, PHP, Python, SQL, Node.js, Selenium
-- Other: Git, Linux, Microsoft Office
-
-### Languages
-
-- English (fluent)
-- Serbian (native)

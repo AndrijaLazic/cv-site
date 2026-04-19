@@ -1,5 +1,5 @@
 ---
-jobTitle: Software Engineering Project - EzDeals
+jobTitle: Graduation Thesis - EzDeals
 company: Academic Project
 location: Kragujevac, Serbia
 startDate: 2023-11-01
@@ -18,4 +18,4 @@ tags:
 
 Web application that allows users to find the best deals on selected products.
 
-This project was the culmination of my academic work and was developed as part of my graduation thesis.
+This includes developing a web scraper, parallel programming, performance optimization, and implementing features for user accounts and personalized recommendations.

@@ -6,4 +6,4 @@ endDate: 2026-02-03
 tags: ['Sertifikat', 'ISO19011:2018', 'ISO/IEC 27001:2022', 'Issue 2']
 ---
 
-Internal Auditor Course for Information Security, Cybersecurity and Privacy Protection - Information Security Management Systems (ISO/IEC 27001:2022, Issue 2).
+Bio sam zadužen za postavljanje svih razvojnih okruženja i mreže u kancelariji, obezbeđujući robusne prakse informacione bezbednosti. Razvio sam praktično razumevanje implementacije i audita ISO/IEC 27001:2022 kontrola u realnim scenarijima.

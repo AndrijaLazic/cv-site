@@ -6,81 +6,67 @@ import {
   ImageCarousel,
 } from '#/features/blog/components'
 
-Kada sam u maju 2025. počeo da radim u DigitalLeather-u u Kragujevcu, prešao sam iz studentskih i internship projekata u okruženje gde backend kvalitet, brzina isporuke i operativna stabilnost moraju da postoje u isto vreme. Iako je moja pozicija Backend Software Engineer, svakodnevni posao je širi: backend razvoj, AI-orijentisane funkcionalnosti i DevOps odgovornosti.
+Kada sam se u maju 2025. godine pridružio kompaniji DigitalLeather u Kragujevcu, počeo sam da radim kao Backend Developer. Tokom prvih nekoliko nedelja fokusirao sam se na upoznavanje aplikacije, infrastrukture koja stoji iza nje i načina na koji ceo codebase funkcioniše kao celina.
 
-<ImageCarousel
-  images={[
-    {
-      src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
-      alt: 'DigitalLeather logo kompanije',
-      caption:
-        'DigitalLeather, kompanija u kojoj trenutno radim kao backend inženjer.',
-    },
-  ]}
-  interval={4000}
-  autoPlay={true}
-/>
+Vrlo brzo sam shvatio da je ova uloga mnogo šira od samog backend programiranja. Pored backend razvoja, radio sam i na infrastrukturi, deployment-u i funkcionalnostima povezanim sa AI-em. To je jedna od stvari u kojima najviše uživam kada radim u startup okruženju: blizu si proizvoda, blizu si stvarnih poslovnih problema i tvoj rad ima vidljiv uticaj.
 
-<ContentBlock title="Pregled uloge">
-  U DigitalLeather-u sam naučio da backend sisteme posmatram kao dugoročne proizvode, a ne kao kratke zadatke koji se završavaju merge-om koda. Tehnologije su mi poznate, pre svega Spring Boot, Python i Docker, ali je pravi izazov kombinacija klasičnih backend zahteva i AI funkcionalnosti gde su iteracije brže, a ponašanje često manje determinističko.
+<ContentBlock title="Moj prvi veći zadatak">
+  Moj prvi pravi zadatak bio je implementacija funkcionalnosti za import i export klijentskih dokumenata.
 
-Veliki deo vremena ulažem u to da servisi budu razumljivi drugim inženjerima, jednostavni za deployment i stabilni kada se zahtevi promene. Taj način razmišljanja je nastavak mog iskustva sa studija računarstva i EzDeals diplomskog projekta.
+Ovo je bilo važno zato što je jedna od glavnih prednosti naše aplikacije bila da klijentima omogući što lakši prelazak sa Excela, koji su mnogi od njih već koristili, na našu platformu. Izazov je bio u tome što je svaki klijent imao svoj format dokumenata, svoju strukturu i svoja pravila.
 
-  <Section title="Trenutni fokus">
-    - Razvoj i unapređenje backend servisa za ključne poslovne tokove.
-    - Implementacija AI-orijentisanih backend funkcionalnosti i integracija.
-    - DevOps rad oko kontejnerizacije i stabilnog izvršavanja servisa.
-  </Section>
-</ContentBlock>
+Pošto je ovaj proces bio složen i vremenski zahtevan, napravio sam Python mikroservis sa job queue sistemom. To nam je omogućilo da import i export dokumenata obrađujemo na kontrolisaniji i skalabilniji način, bez blokiranja glavnog toka aplikacije.
 
-<ContentBlock title="Tehnološki stack">
-  Moj rad najčešće počinje u servisu i poslovnoj logici, a zatim se brzo širi na integracije i deployment zahteve. Spring Boot koristim kada su struktura API-ja i stabilnost ključni, dok Python koristim tamo gde je potrebno brzo eksperimentisanje, posebno u AI delu.
-
-  <TwoColumn>
-    <div>
-      **Backend osnova**
-
-      - Spring Boot za arhitekturu servisa i API razvoj.
-      - Jasna organizacija poslovne logike i održiv kod.
-      - Pouzdane integracije kako sistem raste.
-    </div>
-    <div>
-      **AI i operativa**
-
-      - Python za AI-prateće tokove i brzu iteraciju.
-      - Docker za konzistentna razvojna i runtime okruženja.
-      - DevOps praksa koja čini isporuku ponovljivom i stabilnom.
-    </div>
-
-  </TwoColumn>
-</ContentBlock>
-
-<ContentBlock title="Ključne odgovornosti">
-  <Section title="Kako pristupam isporuci">
-    - Prvo definišem poslovnu nameru, pa tek onda backend ugovore.
-    - Rad delim na manje, bezbedne korake koji mogu rano da se validiraju.
-    - O runtime ponašanju i deployment-u razmišljam od početka razvoja.
-    - Beležim pretpostavke kako bi buduće izmene bile kontrolisane.
-  </Section>
-
-</ContentBlock>
-
-<ContentBlock title="DevOps i infrastruktura">
-  U ovoj ulozi DevOps nije odvojena faza nakon kodiranja. To je deo samog procesa razvoja. Kontejnerizaciju posmatram kao dizajnersko ograničenje, što znači da startup ponašanje servisa, konfiguracija i upravljanje zavisnostima moraju biti praktični u realnom okruženju, ne samo lokalno.
-
-Ovakav pristup se dobro nadovezuje i na internu auditor obuku po ISO 19011 i ISO/IEC 27001, koja mi je dodatno učvrstila razmišljanje o kontrolama, sledljivosti i odgovornom radu sistema. Čak i kada gradim funkcionalnosti, pokušavam da zadržim perspektivu auditabilnosti i operativne jasnoće.
-
-  <Callout type="tip" title="Operativna lekcija">
-    Najbrža funkcionalnost nije ona koja se prva spoji u granu, već ona koja i posle puštanja ostaje stabilna, merljiva i laka za održavanje.
+  <Callout type="info" title="Zašto je ovo bilo važno">
+    Ova funkcionalnost nije bila samo tehnički zadatak. Podržavala je jednu od ključnih poslovnih potreba proizvoda: da pomogne klijentima da sa manje poteškoća pređu sa poznatih Excel procesa na našu aplikaciju.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="AI rad u backend kontekstu">
-  Najzanimljiviji deo mog posla je povezivanje AI-orijentisanih funkcionalnosti sa standardima klasičnog backend inženjeringa. AI deo može da unese neizvesnost, ali backend i dalje mora da obezbedi jasne interfejse, predvidivo rukovanje greškama i razumljive performanse.
+<ContentBlock title="CI/CD i infrastruktura">
+  Moja sledeća velika odgovornost bila je izgradnja CI/CD pipeline-a.
 
-Upravo taj spoj mi najviše odgovara, jer traži i strukturnu disciplinu i spremnost na eksperiment. Cilj mi je da inovacija ne zaobiđe pouzdanost, već da obe strane rastu zajedno.
+To je uključivalo izbor odgovarajućeg VPS-a, podešavanje Ubuntu servera i pripremu okruženja za pouzdan deployment. Nakon toga radio sam na GitHub agentima i deployment skriptama koje su omogućile build, dockerizaciju i deployment svih servisa jednim klikom.
 
-  <Callout type="info" title="Zašto mi je ova uloga važna">
-    U DigitalLeather-u su se spojili znanje sa fakulteta, iskustvo sa prakse i samostalnost koju sam razvio kroz diplomski projekat.
+Ovaj posao je obuhvatao i infrastrukturna i bezbednosna podešavanja, kao što su firewall pravila, DNS konfiguracija i upravljanje subdomenima. Cilj nije bio samo da se deployment automatizuje, već da se to uradi na način koji prati dobre bezbednosne prakse i čini sistem lakšim za održavanje na duži rok.
+
+  <Section title="Šta je ovo obuhvatalo">
+    - Izbor i pripremu VPS okruženja.
+    - Instalaciju i konfiguraciju Ubuntu servera.
+    - Podešavanje GitHub agenata i deployment skripti.
+    - Automatizaciju build-a, dockerizacije i deployment-a.
+    - Konfiguraciju firewall-a, DNS-a i subdomena.
+    - Primenu bezbednosno usmerenih deployment praksi.
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="Funkcionalnost prevođenja">
+  Još jedna važna funkcionalnost na kojoj sam radio bila je prevođenje.
+
+Naši klijenti mogu imati pogone, timove i kupce u različitim državama, pa je važno da poslovni podaci mogu da se prevode na različite jezike. U prvoj iteraciji koristili smo AWS Translate i Google Translate. Ovi servisi su bili dobri za opšti prevod, ali nisu uvek bili dovoljno precizni za terminologiju specifičnu za naš domen.
+
+Da bismo to unapredili, prešli smo na specijalizovaniji pristup korišćenjem LangChain-a i OpenAI modela. To nam je dalo veću kontrolu i bolje rezultate za sadržaj specifičan za poslovni domen.
+
+Više o ovom delu sistema biće objašnjeno u mom sledećem blogu o FMEA Excellence.
+
+</ContentBlock>
+
+<ContentBlock title="AI billing i kontrola korišćenja">
+  Radio sam i na billing strani AI funkcionalnosti.
+
+Cilj je bio da obezbedimo da kompanije, pa čak i pojedinačni zaposleni, imaju definisan broj tokena za korišćenje AI funkcionalnosti unutar aplikacije. To je zahtevalo povezivanje pravila proizvoda, backend logike i praćenja potrošnje na način koji je praktičan i za biznis i za krajnje korisnike.
+
+Ovo je dobar primer da AI funkcionalnosti nisu samo pitanje integracije modela. Potrebne su i kontrole, ograničenja i jasna pravila kako bi one mogle da funkcionišu kao deo stvarnog proizvoda.
+
+</ContentBlock>
+
+<ContentBlock title="Šta mi se dopada u radu u startupu">
+  Jedna od stvari koje najviše cenim u radu u startupu jeste nivo odgovornosti i vlasništva nad poslom. Nisi ograničen na jednu usku ulogu. Imaš priliku da duboko razumeš proizvod, rešavaš važne probleme i doprinosiš u više oblasti.
+
+Rad u startupu takođe stvara jaku vezu između inženjerskog rada i poslovne vrednosti. Funkcionalnosti se ne grade izolovano. Jasno možeš da vidiš zašto je nešto važno, kome pomaže i kakav uticaj ima.
+
+To je okruženje u kojem se brzo uči. Napreduješ ne samo kao developer, već i u komunikaciji, donošenju odluka i razmišljanju o proizvodu. Za mene je to jedan od najvrednijih delova rada u DigitalLeather-u.
+
+  <Callout type="tip" title="Šta me je startup naučio">
+    U startupu napredak dolazi iz fleksibilnosti, brzog učenja i fokusa na ono što zaista donosi vrednost korisnicima.
   </Callout>
 </ContentBlock>

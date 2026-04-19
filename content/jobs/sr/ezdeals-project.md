@@ -1,21 +1,21 @@
 ---
-jobTitle: Softverski projekat - EzDeals
+jobTitle: Diplomski rad - EzDeals
 company: Akademski projekat
 location: Kragujevac, Srbija
 startDate: 2023-11-01
 endDate: 2024-06-30
-summary: Web aplikacija za pronalazenje najboljih ponuda za odabrane proizvode, razvijena kao diplomski projekat.
+summary: Razvoj web aplikacije za pronalaženje najboljih ponuda na odabranim proizvodima, razvijene kao projekat diplomskog rada.
 tags:
   [
-    'Python',
-    'Node.js',
-    'React',
-    'MongoDB',
-    'Web Application',
-    'Graduation Thesis',
+    'Backend Development',
+    'Spring Boot',
+    'PostgreSQL',
+    'Docker',
+    'Web Scraping',
+    'Redis',
   ]
 ---
 
-Web aplikacija koja korisnicima omogucava da pronadju najbolje ponude za odabrane proizvode.
+Web aplikacija koja omogućava korisnicima da pronađu najbolje ponude na odabranim proizvodima.
 
-Ovaj projekat je predstavljao zavrsnicu mog akademskog rada i razvijen je kao deo diplomskog rada.
+Ovo uključuje razvoj web scraper-a, paralelnog programiranja, optimizacije performansi i implementaciju funkcionalnosti za korisničke naloge i personalizovane preporuke.

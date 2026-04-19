@@ -11,7 +11,7 @@ export default [
       "ISO/IEC 27001:2022",
       "Issue 2"
     ],
-    "content": "Internal Auditor Course for Information Security, Cybersecurity and Privacy Protection - Information Security Management Systems (ISO/IEC 27001:2022, Issue 2).",
+    "content": "Bio sam zadužen za postavljanje svih razvojnih okruženja i mreže u kancelariji, obezbeđujući robusne prakse informacione bezbednosti. Razvio sam praktično razumevanje implementacije i audita ISO/IEC 27001:2022 kontrola u realnim scenarijima.",
     "_meta": {
       "filePath": "auditor-training-iso19011-iso27001.md",
       "fileName": "auditor-training-iso19011-iso27001.md",
@@ -22,24 +22,37 @@ export default [
   },
   {
     "school": "Prirodno-matematicki fakultet",
-    "summary": "Diplomirani informaticar sa fokusom na softversko inzenjerstvo.",
+    "summary": "Osnovne studije na Prirodno-matematičkom fakultetu, smer Računarstvo i softverski inženjering.",
     "startDate": "2019-10-01",
     "endDate": "2024-09-30",
     "tags": [
       "Computer Science",
-      "Software Engineering",
-      "Spring Boot",
-      "Python",
-      ".NET",
-      "React"
+      "Software Engineering"
     ],
-    "content": "Bachelor of Computer Science | Software Engineering\n\n### Kljucne vestine\n\n- Programiranje: React, Angular, Spring Boot, .NET, C, Kotlin, PHP, Python, SQL, Node.js, Selenium\n- Ostalo: Git, Linux, Microsoft Office\n\n### Jezici\n\n- Engleski (tecan)\n- Srpski (maternji)",
+    "content": "",
     "_meta": {
       "filePath": "faculty-natural-sciences-and-mathematics.md",
       "fileName": "faculty-natural-sciences-and-mathematics.md",
       "directory": ".",
       "extension": "md",
       "path": "faculty-natural-sciences-and-mathematics"
+    }
+  },
+  {
+    "school": "Jezičke veštine",
+    "summary": "Dvojezični komunikator.",
+    "startDate": "2019-10-01",
+    "tags": [
+      "Engleski",
+      "Srpski"
+    ],
+    "content": "- **Engleski**: Tečno u profesionalnim kontekstima.\n- **Srpski**: Maternji jezik.",
+    "_meta": {
+      "filePath": "languages.md",
+      "fileName": "languages.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "languages"
     }
   }
 ]

@@ -2,7 +2,7 @@
 export default [
   {
     "school": "Auditor Training",
-    "summary": "ISO19011:2018 and Internal Auditor Course for Information Security, Cybersecurity and Privacy Protection.",
+    "summary": "Internal Auditor Course for Information Security Management Systems (ISO/IEC 27001:2022) with practical implementation.",
     "startDate": "2026-02-03",
     "endDate": "2026-02-03",
     "tags": [
@@ -11,7 +11,7 @@ export default [
       "ISO/IEC 27001:2022",
       "Issue 2"
     ],
-    "content": "Internal Auditor Course for Information Security, Cybersecurity and Privacy Protection - Information Security Management Systems (ISO/IEC 27001:2022, Issue 2).",
+    "content": "I have been in charge of setting up all development environments and network in the office, ensuring robust information security practices. Developed practical understanding of implementing and auditing ISO/IEC 27001:2022 controls in real-world scenarios.",
     "_meta": {
       "filePath": "auditor-training-iso19011-iso27001.md",
       "fileName": "auditor-training-iso19011-iso27001.md",
@@ -33,13 +33,30 @@ export default [
       ".NET",
       "React"
     ],
-    "content": "Bachelor of Computer Science | Software Engineering\n\n### Core Skills\n\n- Programming: React, Angular, Spring Boot, .NET, C, Kotlin, PHP, Python, SQL, Node.js, Selenium\n- Other: Git, Linux, Microsoft Office\n\n### Languages\n\n- English (fluent)\n- Serbian (native)",
+    "content": "",
     "_meta": {
       "filePath": "faculty-natural-sciences-and-mathematics.md",
       "fileName": "faculty-natural-sciences-and-mathematics.md",
       "directory": ".",
       "extension": "md",
       "path": "faculty-natural-sciences-and-mathematics"
+    }
+  },
+  {
+    "school": "Language Proficiency",
+    "summary": "Bilingual communicator.",
+    "startDate": "2019-10-01",
+    "tags": [
+      "English",
+      "Serbian"
+    ],
+    "content": "- **English**: Fluent in professional contexts.\n- **Serbian**: Native speaker.",
+    "_meta": {
+      "filePath": "languages.md",
+      "fileName": "languages.md",
+      "directory": ".",
+      "extension": "md",
+      "path": "languages"
     }
   }
 ]

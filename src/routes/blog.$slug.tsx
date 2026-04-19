@@ -24,7 +24,9 @@ export const Route = createFileRoute('/blog/$slug')({
     const canonicalUrl = `${siteUrl}/blog/${params.slug}`
     const post =
       findPostMeta(params.slug, 'en') ?? findPostMeta(params.slug, 'sr')
-    const title = post ? `${post.title} | Andrija Lazic` : 'Blog | Andrija Lazic'
+    const title = post
+      ? `${post.title} | Andrija Lazic`
+      : 'Blog | Andrija Lazic'
     const description = post?.summary ?? 'Blog post by Andrija Lazic.'
     const coverImageSrc = post?.coverImage?.src
     const coverImageUrl = coverImageSrc

@@ -11,7 +11,7 @@ export const meta: PostMeta = {
     src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
     alt: 'DigitalLeather logo',
     fit: 'contain',
-    bgColor: '#f1f5f9',
+    bgColor: 'black',
     position: 'center',
     aspectRatio: '16/9',
   },

@@ -6,80 +6,67 @@ import {
   ImageCarousel,
 } from '#/features/blog/components'
 
-When I joined DigitalLeather in May 2025 in Kragujevac, I moved from project-driven student and internship work into a role where backend quality, iteration speed, and operational reliability all had to coexist. My official title is Backend Software Engineer, but the practical scope is broader: I work on backend development, AI-related implementation, and DevOps workflows.
+When I joined DigitalLeather in May 2025 in Kragujevac, I started working as a Backend Developer. In the first few weeks, I focused on understanding the application, the infrastructure behind it, and how the whole codebase worked together.
 
-<ImageCarousel
-  images={[
-    {
-      src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
-      alt: 'DigitalLeather company logo',
-      caption: 'DigitalLeather, where I currently work as a backend engineer.',
-    },
-  ]}
-  interval={4000}
-  autoPlay={true}
-/>
+Very quickly, I realized this role was much broader than just backend coding. Alongside backend development, I also worked on infrastructure, deployment, and AI-related features. That is one of the things I enjoy most about working in a startup environment: you are close to the product, close to real business problems, and your work has a visible impact.
 
-<ContentBlock title="Overview">
-  At DigitalLeather, I learned to treat backend systems as products with a long operational life, not as short project deliverables. The stack itself is familiar, mostly Spring Boot, Python, and Docker, but the challenge comes from the blend of deterministic backend requirements and AI-oriented behavior that often needs fast iterations and careful monitoring.
+<ContentBlock title="My First Major Task">
+  My first real task was implementing an import and export feature for client documents.
 
-I spend a lot of time making sure services are understandable by other engineers, easy to deploy, and resilient when requirements evolve. That mindset grew from my Computer Science background and my EzDeals graduation project, where I combined backend logic, data handling, and delivery constraints.
+This was important because one of the main selling points of our application was making the transition from Excel, which many clients were already using, into our platform as easy as possible. The challenge was that every client had their own document format, structure, and rules.
 
-  <Section title="Current scope">
-    - Build and evolve backend services that support core product workflows.
-    - Implement AI-related backend capabilities and integration points.
-    - Maintain practical DevOps responsibilities around containerized execution.
-  </Section>
-</ContentBlock>
+Since this process was complex and time-consuming, I built a Python microservice with a job queue. That allowed us to process document imports and exports in a more controlled and scalable way, without blocking the main application flow.
 
-<ContentBlock title="Tech Stack">
-  My daily work usually starts in the service layer and then moves quickly into integration and deployment concerns. I use Spring Boot where strong API structure and mature Java tooling are important, and Python for areas where speed of experimentation matters, especially when AI-related behavior is involved.
-
-  <TwoColumn>
-    <div>
-      **Backend Core**
-
-      - Spring Boot for service architecture and API development.
-      - Structured business logic with maintainable, testable boundaries.
-      - Reliable integration behavior as requirements expand.
-    </div>
-    <div>
-      **AI and Operations**
-
-      - Python for AI-adjacent workflows and implementation speed.
-      - Docker-based environments to reduce configuration drift.
-      - DevOps practices that keep releases repeatable and low-friction.
-    </div>
-
-  </TwoColumn>
-</ContentBlock>
-
-<ContentBlock title="Key Responsibilities">
-  <Section title="How I approach delivery">
-    - Start from business intent, then define clean backend contracts.
-    - Break work into safe increments that can be validated early.
-    - Keep deployment and runtime behavior in scope from day one.
-    - Document assumptions so future changes stay controlled.
-  </Section>
-
-</ContentBlock>
-
-<ContentBlock title="DevOps and Infrastructure">
-  DevOps in this role is not a separate phase after coding. I treat containerization as a design constraint, so service startup behavior, configuration strategy, and dependency management must be practical in real environments, not only locally.
-
-This perspective also aligns with my ISO 19011 and ISO/IEC 27001 internal auditor training, which strengthened how I think about controls, traceability, and responsible system operation. Even when I am implementing features, I try to keep auditability and operational clarity in mind.
-
-  <Callout type="tip" title="Operational lesson">
-    The fastest feature is not the one merged first; it is the one that remains stable, observable, and easy to support after release.
+  <Callout type="info" title="Why this mattered">
+    This feature was not just a technical task. It supported one of the key business needs of the product: helping clients move from familiar Excel-based workflows into our application with less friction.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="AI Work in a Backend Context">
-  The most interesting part of my current role is connecting AI-oriented functionality to conventional backend standards. AI-related features can introduce uncertainty, but backend services still need deterministic interfaces, clear failure handling, and predictable performance characteristics.
+<ContentBlock title="CI/CD and Infrastructure">
+  My next major responsibility was building the CI/CD pipeline.
 
-I enjoy that intersection because it rewards both structured engineering and experimentation. It pushes me to design systems where innovation does not bypass reliability, and where operational concerns remain visible from the first implementation draft.
+This included choosing an adequate VPS, setting up an Ubuntu server, and preparing the environment for reliable deployment. After that, I worked on GitHub agents and deployment scripts that made it possible to build, dockerize, and deploy all services with a single click.
 
-  <Callout type="info" title="Why this role matters to me">
-    DigitalLeather is where my education, internship experience, and thesis project work converged into full-time engineering ownership.
+The work also included infrastructure and security-related setup such as firewall rules, DNS configuration, and subdomain management. The goal was not only to automate deployment, but to do it in a way that followed good security practices and made the system easier to manage over time.
+
+  <Section title="What this included">
+    - Choosing and preparing the VPS environment.
+    - Installing and configuring Ubuntu server.
+    - Setting up GitHub agents and deployment scripts.
+    - Automating build, Dockerization, and deployment.
+    - Configuring firewall, DNS, and subdomains.
+    - Following security-focused deployment practices.
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="Translation Feature">
+  Another important feature I worked on was translation.
+
+Our clients can have facilities, teams, and customers in many different countries, so it is important that business data can be translated into different languages. In the first iteration, we used AWS Translate and Google Translate. These services worked well for general translation, but they were not always strong enough for domain-specific terminology.
+
+To improve that, we moved toward a more specialized approach using LangChain and OpenAI models. This gave us better control and better results for business-specific content.
+
+More about this part of the system will be covered in my next blog about FMEA Excellence.
+
+</ContentBlock>
+
+<ContentBlock title="AI Billing and Usage Control">
+  I also worked on the billing side of AI features.
+
+The goal was to make sure companies, or even individual employees, could have a defined number of tokens available for using AI functionality inside the application. This required connecting product rules, backend logic, and usage tracking in a way that was practical for both the business and the end users.
+
+It was a good example of how AI features are not only about model integration. They also need controls, limits, and clear rules so they can work as part of a real product.
+
+</ContentBlock>
+
+<ContentBlock title="What I Like About Startup Work">
+  One of the things I value most about working in a startup is the level of ownership. You are not limited to one narrow role. You get to understand the product deeply, solve important problems, and contribute in multiple areas.
+
+Startup work also creates a strong connection between engineering and business value. Features are not built in isolation. You can clearly see why something matters, who it helps, and what impact it has.
+
+It is a fast-learning environment. You improve not only as a developer, but also in communication, decision-making, and product thinking. For me, that has been one of the most rewarding parts of working at DigitalLeather.
+
+  <Callout type="tip" title="What startup work taught me">
+    In a startup, progress comes from being flexible, learning fast, and staying focused on what creates real value for users.
   </Callout>
 </ContentBlock>

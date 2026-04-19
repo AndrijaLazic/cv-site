@@ -1,10 +1,10 @@
 ---
 jobTitle: Backend Intern
 company: HTEC
-location: Kragujevac, Serbia
+location: Kragujevac
 startDate: 2024-09-01
 endDate: 2024-10-31
-summary: Contributed to a web platform for non-technical employees by implementing core backend capabilities.
+summary: Worked on a web application designed to help non-technical employees manage daily tasks more efficiently.
 tags:
   [
     'Backend Development',
@@ -13,15 +13,9 @@ tags:
     'MySQL',
     'Keycloak',
     'RabbitMQ',
-    'Testing',
   ]
 blogSlug: htec-backend-internship
 ---
 
-Worked on a web application designed to assist non-technical employees with daily tasks.
-
-- Developed automatic and manual report generation.
-- Implemented database auditing.
-- Built a notification system.
-- Wrote unit and integration tests.
-- Technologies used: Spring Boot, Docker, MySQL, Keycloak, RabbitMQ.
+- Developed automatic and manual report generation features as part of the backend team.
+- Implemented database auditing, a notification system, and backend tests.

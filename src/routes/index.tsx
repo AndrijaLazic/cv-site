@@ -501,26 +501,31 @@ function App() {
                           {job.summary}
                         </p>
 
-                        <div className="flex flex-wrap gap-2">
-                          {job.tags.map((tag) => (
-                            <Badge
-                              key={`${job.jobTitle}-${tag}`}
-                              variant="outline"
-                              className="rounded-full border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-
                         {job.content && (
                           <div
-                            className="prose prose-sm prose-slate max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                            className="prose prose-sm prose-slate max-w-none text-slate-700 dark:prose-invert dark:text-slate-300 [&>ul]:mt-2 [&>ul]:mb-0"
                             dangerouslySetInnerHTML={{
                               __html: marked(job.content),
                             }}
                           />
                         )}
+
+                        <div className="pt-2">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            {t('skillsFilter')}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {job.tags.map((tag) => (
+                              <Badge
+                                key={`${job.jobTitle}-${tag}`}
+                                variant="outline"
+                                className="rounded-full border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
 
                         {job.blogSlug && (
                           <Link
@@ -597,27 +602,29 @@ function App() {
                           {education.summary}
                         </p>
 
-                        {education.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {education.tags.map((tag) => (
-                              <Badge
-                                key={`${education.school}-${tag}`}
-                                variant="outline"
-                                className="rounded-full border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                        )}
-
                         {education.content && (
                           <div
-                            className="prose prose-sm prose-slate max-w-none text-slate-700 dark:prose-invert dark:text-slate-300"
+                            className="prose prose-sm prose-slate max-w-none text-slate-700 dark:prose-invert dark:text-slate-300 [&>ul]:mt-2 [&>ul]:mb-0"
                             dangerouslySetInnerHTML={{
                               __html: marked(education.content),
                             }}
                           />
+                        )}
+
+                        {education.tags.length > 0 && (
+                          <div className="pt-2">
+                            <div className="flex flex-wrap gap-2">
+                              {education.tags.map((tag) => (
+                                <Badge
+                                  key={`${education.school}-${tag}`}
+                                  variant="outline"
+                                  className="rounded-full border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
+                                >
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
                         )}
                       </CardContent>
                     </Card>
