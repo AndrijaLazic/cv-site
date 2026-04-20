@@ -6,7 +6,7 @@ export const meta: PostMeta = {
   title: 'Moja Backend Praksa u HTEC-u',
   author: 'Andrija Lazic',
   summary:
-    'Pogled na moje iskustvo kao backend stažista u HTEC-u — generisanje izveštaja, notifikacije i enterprise Java.',
+    'Pogled na moje iskustvo kao backend intern u HTEC-u — enterprise Java aplikacija.',
   publishedDate: '2026-04-12',
   coverImage: {
     src: '/blog/htec-backend-internship/htec-internship-kragujevac.webp',

@@ -6,90 +6,60 @@ import {
   ImageCarousel,
 } from '#/features/blog/components'
 
-Moja backend praksa u HTEC-u u Kragujevcu (septembar-oktobar 2024) bila je prvi ozbiljan susret sa enterprise razvojem gde kod odmah utiče na stvarne korisnike i njihove dnevne procese. U timu sam bio Backend Intern, ali sam vrlo brzo radio zadatke koji su zahtevali kombinaciju brzine, pouzdanosti i jasne komunikacije kroz backend funkcionalnosti.
+Moja backend praksa u kompaniji HTEC u Kragujevcu, od septembra do oktobra 2024. godine, bila je moje prvo pravo iskustvo sa backend razvojem u profesionalnom okruženju.
 
-<ImageCarousel
-  images={[
-    {
-      src: '/blog/htec-backend-internship/htec-internship-kragujevac.webp',
-      alt: 'HTEC praksa u Kragujevcu',
-      caption:
-        'Period u kome sam prešao iz akademskog koda u proizvodni backend rad.',
-    },
-  ]}
-  interval={4000}
-  autoPlay={true}
-/>
+<ContentBlock title="Projekat">
+  Radio sam na veb aplikaciji osmišljenoj da pomogne zaposlenima koji nisu tehničke struke da efikasnije upravljaju svojim svakodnevnim zadacima. To je značilo da backend mora da bude jasan, pouzdan i lak za održavanje.
 
-<ContentBlock title="Projekat i kontekst">
-  Radio sam na web platformi namenjenoj ne-tehničkim zaposlenima, sa ciljem da im olakša svakodnevne operativne zadatke. To je odmah definisalo prioritet: tokovi moraju biti jednostavni, izveštaji tačni i dosledni, a notifikacije pravovremene kako bi korisnici mogli da reaguju bez dodatnog ručnog usklađivanja.
-
-Za mene je ovo bio važan prelaz sa fakultetskih i samostalnih projekata u timsko okruženje gde odluke o implementaciji imaju direktan poslovni efekat. Umesto da razmišljam samo o "lepom kodu", morao sam da razmišljam i o dugoročnoj stabilnosti i održavanju.
-
-  <Section title="Najvažnije potrebe platforme">
-    - Jasni backend procesi za korisnike koji nisu tehnički profilisani.
-    - Automatsko i manuelno generisanje izveštaja sa pouzdanim rezultatima.
-    - Revizija podataka radi sledljivosti i odgovornosti.
-    - Sistem notifikacija koji podržava dnevne obaveze korisnika.
+  <Section title="Šta je platformi bilo najpotrebnije">
+    - Podrška za upravljanje svakodnevnim zadacima.
+    - Automatsko i ručno generisanje izveštaja.
+    - Audit baze podataka radi bolje sledljivosti.
+    - Notifikacije za važne događaje.
   </Section>
 </ContentBlock>
 
-<ContentBlock title="Šta sam implementirao">
-  Najveći deo mog rada bio je usmeren na backend funkcionalnosti koje rešavaju konkretne probleme u radu platforme.
+<ContentBlock title="Na čemu sam radio">
+  Bio sam deo backend tima koji je radio na funkcionalnostima koje su unapredile svakodnevno korišćenje aplikacije.
 
-<Section title="Izveštaji i tokovi podataka">
-  - Razvio sam automatsko i manuelno generisanje izveštaja. - Organizovao
-  backend logiku tako da ponašanje izveštaja bude predvidivo. - Podržao
-  različite potrebe timova kroz fleksibilnije tokove generisanja.
+<Section title="Izveštavanje i tokovi podataka">
+  - Radio na automatskom i ručnom generisanju izveštaja. - Pomagao u izgradnji
+  backend logike koja je podržavala potrebe izveštavanja.
 </Section>
 
 <Section title="Audit i notifikacije">
-  - Implementirao mehanizme revizije promena u bazi podataka. - Razvio sistem
-  notifikacija za relevantne događaje. - Vodio računa da se ponašanje sistema
-  lako razume i kada se zahtevi menjaju.
+  - Implementirao audit baze podataka. - Implementirao sistem notifikacija.
 </Section>
 
-  <Section title="Kvalitet i testiranje">
-    - Pisao unit testove za validaciju logike na nivou servisa.
-    - Dodao integracione testove za proveru saradnje između komponenti.
-    - Koristio testiranje kao zaštitu od regresija tokom brze iteracije.
+  <Section title="Kvalitet i validacija">
+    - Fokusirao se na backend funkcionalnosti koje su morale da budu pouzdane i lake za održavanje.
   </Section>
 </ContentBlock>
 
-<ContentBlock title="Tehnologije u praksi">
-  Stack koji sam koristio je standardan za enterprise backend, ali je stvarna vrednost bila u tome kako su se komponente uklapale pod realnim proizvodnim ograničenjima.
+<ContentBlock title="Tech Stack u praksi">
+  Ova praksa mi je pružila praktično iskustvo sa tehnologijama koje se često koriste u backend sistemima.
 
   <TwoColumn>
     <div>
-      **Aplikativni sloj**
+      **Aplikacioni sloj**
 
-      - Spring Boot za backend servise i API logiku.
-      - MySQL za transakcione podatke i podršku izveštavanju.
-      - Keycloak za autentikaciju i pristupne politike.
+      - Spring Boot
+      - MySQL
+      - Keycloak
     </div>
     <div>
       **Platformski sloj**
 
-      - Docker za konzistentno razvojno i runtime okruženje.
-      - RabbitMQ za asinhronu komunikaciju.
-      - Testovi kao osnova sigurnije isporuke.
+      - Docker
+      - RabbitMQ
     </div>
 
   </TwoColumn>
 
-  <Callout type="info" title="Realnost prakse">
-    U kratkom vremenskom periodu najviše sam napredovao tako što sam učio kako da isporučim produkciono korisne izmene bez nepotrebnog komplikovanja dizajna.
-  </Callout>
 </ContentBlock>
 
-<ContentBlock title="Lekcije koje sam poneo dalje">
-  Praksa u HTEC-u mi je dala navike koje i danas koristim u radu u DigitalLeather-u: jasno definisani backend ugovori, testovima potvrđeno ponašanje i stalno razmišljanje o operativnoj strani sistema. Takođe mi je pomogla da bolje komuniciram tehničke odluke u timu, što je jednako važno kao i sama implementacija.
-
-Fakultet prirodno-matematičkih nauka mi je dao širinu kroz različite tehnologije, a EzDeals diplomski projekat iskustvo end-to-end vlasništva nad rešenjem. HTEC praksa je te osnove povezala sa realnim timskim procesima i standardima isporuke.
-
-Kasnije mi je interna auditor obuka po ISO 19011 i ISO/IEC 27001 dala precizniji okvir za kontrole i sledljivost, ali su prvi praktični refleksi za te teme krenuli upravo kroz rad na audit funkcionalnostima tokom ove prakse.
-
-  <Callout type="tip" title="Glavna poruka">
-    Kvalitetan backend počinje razumevanjem korisničkog procesa, a završava se sistemom koji ostaje pouzdan i kada zahtevi postanu složeniji.
-  </Callout>
-</ContentBlock>
+<Callout type="tip" title="Glavna poruka">
+  Ovo iskustvo me je naučilo koliko je važno graditi backend sisteme koji su
+  praktični, pouzdani i laki za održavanje. Takođe mi je dalo bolje razumevanje
+  toga kako backend rad podržava svakodnevne korisnike i timske procese.
+</Callout>

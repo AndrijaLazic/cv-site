@@ -3,10 +3,9 @@ import type { PostMeta } from '#/features/blog/types/blog'
 export const meta: PostMeta = {
   slug: 'digitalleather-backend-engineering',
   locale: 'sr',
-  title: 'Backend Inženjering u DigitalLeather',
+  title: 'Backend Inženjering u DigitalLeather-u',
   author: 'Andrija Lazic',
-  summary:
-    'Uvidi iz rada kao backend inženjer u DigitalLeather-u — razvoj AI, DevOps i izgradnja skalabilnih servisa.',
+  summary: 'Razvoj AI, DevOps i izgradnja skalabilnih servisa.',
   coverImage: {
     src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
     alt: 'DigitalLeather logo',
