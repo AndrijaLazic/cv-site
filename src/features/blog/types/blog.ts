@@ -20,6 +20,7 @@ export interface BlogImageContent {
   fit?: ImageFit
   position?: ImagePosition
   bgColor?: string
+  padding?: string
   aspectRatio?: string
   rounded?: boolean
 }

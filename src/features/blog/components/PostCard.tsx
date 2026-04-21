@@ -32,17 +32,26 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
               'relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-slate-200/80 dark:border-slate-700/80',
               featured
                 ? 'h-64 sm:h-80 md:h-auto md:w-1/2 md:border-r md:border-b-0'
-                : 'h-56 sm:h-75',
+                : post.coverImage.aspectRatio
+                  ? ''
+                  : 'h-56 sm:h-75',
             )}
             style={{
               backgroundColor:
                 post.coverImage.bgColor ?? FALLBACK_IMAGE_BACKGROUND,
+              ...(post.coverImage.padding
+                ? { padding: post.coverImage.padding }
+                : {}),
+              ...(post.coverImage.rounded ? { borderRadius: '8px' } : {}),
+              ...(post.coverImage.aspectRatio
+                ? { aspectRatio: post.coverImage.aspectRatio }
+                : {}),
             }}
           >
             <img
               src={post.coverImage.src}
               alt={post.coverImage.alt}
-              className="block h-full w-auto max-w-none"
+              className="block h-full w-full"
               loading={featured ? 'eager' : 'lazy'}
               style={{
                 objectFit: post.coverImage.fit ?? 'contain',

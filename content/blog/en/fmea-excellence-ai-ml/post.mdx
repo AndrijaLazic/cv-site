@@ -1,0 +1,93 @@
+import {
+  Callout,
+  Section,
+  ContentBlock,
+  BlogImage,
+  ImageCarousel,
+} from '#/features/blog/components'
+
+This blog continues where my previous DigitalLeather story ended.
+
+After joining as a backend engineer in May 2025, I gradually moved into an AI / Machine Learning Engineer role on FMEA Excellence. It felt like a natural next step. I was already close to the product, close to client pain points, and closely involved in the systems where prediction could create real value.
+
+<ContentBlock title="What FMEA Excellence is solving">
+  FMEA Excellence is a SaaS product built for risk evaluation and ROI-based decision-making.
+
+Instead of teams making decisions only from static spreadsheets and assumptions, the platform helps them work with live data, estimate future outcomes, and prioritize actions that make financial and operational sense.
+
+  <Callout type="info" title="Why this matters in practice">
+    Risk decisions are often expensive. Better predictions mean teams can focus on actions that reduce losses and increase return, not only actions that look good on paper.
+  </Callout>
+</ContentBlock>
+
+<ContentBlock title="Building a time-series forecasting engine">
+  One of my main tasks was implementing a forecasting algorithm that could choose the best model for each scenario using real-time data.
+
+This was not a one-model-fits-all problem. Different facilities and processes behaved differently over time. Some series were stable, some had abrupt changes, and some had strong seasonal patterns.
+
+<Section title="How I approached it">
+  - Designed a pipeline that evaluates multiple forecasting candidates per
+  scenario. - Added scoring logic so the system selects the model with the best
+  recent performance. - Connected the workflow to real-time data updates so
+  forecasts stay relevant as conditions change. - Exposed forecasting endpoints
+  through FastAPI so product features could consume predictions reliably.
+</Section>
+
+The key was balancing model quality with production reliability. A slightly better offline score is not useful if the workflow is fragile in real product usage.
+
+</ContentBlock>
+
+<ContentBlock title="Prediction workflows for cost, risk, and action plans">
+  Beyond forecasting, I built machine learning workflows that predict costs, risk impact, and action-plan value.
+
+These workflows helped turn FMEA data into clear, decision-friendly outputs. Instead of manually estimating everything, users could compare options with model-supported numbers.
+
+<Section title="What these workflows delivered">
+  - Cost prediction for planned mitigation actions. - Risk impact estimation
+  based on current and historical signals. - Action-plan value scoring to
+  support ROI-focused prioritization. - Repeatable preprocessing and inference
+  pipelines for stable production behavior.
+</Section>
+
+  <ImageCarousel
+    autoPlay={false}
+    images={[
+      {
+        src: '/blog/fmea-excellence/excellence-prediction-table.webp',
+        alt: 'Prediction table in FMEA Excellence',
+        caption: 'Prediction outputs used for scenario comparison and decision support.',
+      },
+      {
+        src: '/blog/fmea-excellence/fmeai-ai-assistant.webp',
+        alt: 'AI assistant in FMEA Excellence',
+        caption: 'AI assistant interface that helps teams interpret risk and action recommendations.',
+      },
+    ]}
+  />
+</ContentBlock>
+
+<ContentBlock title="Tech stack and product impact">
+  The core stack for this work was Python, FastAPI, and Scikit-learn.
+
+Python gave us flexibility for feature engineering and model experimentation, FastAPI made model-serving APIs straightforward and fast, and Scikit-learn was practical for building reliable workflows that the team could maintain.
+
+On the business side, these features helped teams answer hard questions earlier:
+
+  <Section title="Questions users can now answer faster">
+    - Which risk scenario is likely to become expensive if we do nothing?
+    - Which action plan gives the strongest value for the cost?
+    - Where should we invest first to get measurable ROI?
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="What production ML taught me">
+  Working on ML in production reinforced a simple lesson: model quality is only one part of the job.
+
+The rest is engineering discipline, data consistency, and product integration. Good ML features are understandable to users, stable under real usage, and aligned with business decisions.
+
+For me, this role was a strong continuation of the startup path I described in the previous blog. I still work across product and engineering boundaries, but now with a stronger ML focus and an even clearer connection between technical work and business value.
+
+  <Callout type="tip" title="Main takeaway">
+    The best AI features are not just technically impressive. They help people make better decisions with confidence, at the moment those decisions matter.
+  </Callout>
+</ContentBlock>

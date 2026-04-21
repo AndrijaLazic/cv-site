@@ -130,7 +130,11 @@ function BlogPostPage() {
           </Link>
 
           <article className="space-y-6">
-            {post.coverImage && <BlogImage {...post.coverImage} />}
+            {post.coverImage ? (
+              <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 shadow-md ring-1 ring-slate-950/5 dark:border-slate-700/80 dark:bg-slate-900/70 dark:ring-white/10">
+                <BlogImage {...post.coverImage} />
+              </div>
+            ) : null}
 
             <header className="space-y-3">
               <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">

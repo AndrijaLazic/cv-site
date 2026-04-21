@@ -7,6 +7,7 @@ export function BlogImage({
   fit = 'cover',
   position = 'center',
   bgColor = 'transparent',
+  padding,
   aspectRatio = '16/9',
   rounded = false,
 }: BlogImageContent) {
@@ -14,6 +15,10 @@ export function BlogImage({
     width: '100%',
     aspectRatio,
     backgroundColor: bgColor,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...(padding ? { padding } : {}),
     borderRadius: rounded ? '8px' : 0,
     overflow: 'hidden',
   }

@@ -77,6 +77,10 @@ function HeroCarouselView({
                 className="relative h-[60%] w-full overflow-hidden"
                 style={{
                   backgroundColor: post.coverImage?.bgColor ?? 'transparent',
+                  ...(post.coverImage?.padding
+                    ? { padding: post.coverImage.padding }
+                    : {}),
+                  ...(post.coverImage?.rounded ? { borderRadius: '8px' } : {}),
                 }}
               >
                 {post.coverImage ? (
