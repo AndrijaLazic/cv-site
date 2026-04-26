@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import type { PostMeta } from '#/features/blog/types/blog'
+import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { cn } from '#/shared/utils'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 const FALLBACK_IMAGE_BACKGROUND = 'rgb(241 245 249)'
 
 type PostCardProps = {
-  post: PostMeta
+  post: BlogPostSummary
   featured?: boolean
   className?: string
 }

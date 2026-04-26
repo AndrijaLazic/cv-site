@@ -3,10 +3,10 @@ import { memo, useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '#/shared/utils'
 import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from '#/features/blog/types/blog'
+import type { BlogPostSummary } from '#/features/blog/types/blog'
 
 type HeroCarouselProps = {
-  posts: PostMeta[]
+  posts: BlogPostSummary[]
   activeLanguage: SupportedLanguage
   ariaLabel: string
 }

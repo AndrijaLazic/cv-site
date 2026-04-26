@@ -8,96 +8,85 @@ import {
 
 Ovaj blog se nastavlja tamo gde je stala moja prethodna priča o radu u DigitalLeather-u.
 
-Nakon što sam u maju 2025. počeo kao backend inženjer, postepeno sam prešao u ulogu AI / Machine Learning inženjera na proizvodu FMEA Excellence. Taj prelaz je došao prirodno. Već sam bio blizu proizvoda, blizu problema koje klijenti stvarno imaju i uključen u sisteme gde predikcija može da napravi konkretnu razliku.
+Nakon što sam u maju 2025. počeo kao backend inženjer, postepeno sam prešao u ulogu AI / Machine Learning inženjera na proizvodu FMEA Excellence. Taj prelaz mi je bio prirodan jer sam već bio blizu proizvoda, korisnika i delova sistema gde predikcija može da ukloni mnogo ručnog rada.
 
-<ContentBlock title="Šta rešava FMEA Excellence">
-  FMEA Excellence je SaaS proizvod za evaluaciju rizika i donošenje odluka zasnovanih na ROI-u.
+FMEA Excellence ima tri glavna AI feature-a: ROI predikcije, AI chatbot i AI automatsko popunjavanje polja u PFMEA tabelama. Svaki rešava drugačiji problem, ali cilj je isti: da korisnici donesu bolju odluku bez toga da moraju da razumeju sve detalje iza modela.
 
-Umesto da timovi odluke donose samo na osnovu statičnih tabela i pretpostavki, platforma im pomaže da rade sa aktuelnim podacima, procene buduće ishode i daju prioritet akcijama koje imaju finansijskog i operativnog smisla.
+<ContentBlock title="ROI predikcija kao glavni feature">
+  Najvažniji deo proizvoda je ROI predikcija. Ona pomaže menadžerima da odluče koje rizike treba rešavati prve, u zavisnosti od novca, vremena i resursa koje stvarno imaju na raspolaganju.
 
-<BlogImage
-  src="/blog/fmea-excellence/fmea-excellence-logo.webp"
-  alt="FMEA Excellence logo"
-  fit="contain"
-  bgColor="white"
-  position="center"
-  aspectRatio="16/9"
-/>
+U ovom slučaju menadžeri najčešće nisu tehničko osoblje. Njima nije potrebno da gledaju sirov output modela ili da razmišljaju o detaljima forecasting-a. Potrebno im je da znaju gde treba reagovati, koliko će akcija koštati, za koliko dana se investicija vraća i šta će se verovatno desiti ako se ne uradi ništa.
 
-  <Callout type="info" title="Zašto je ovo važno u praksi">
-    Odluke o riziku često imaju visoku cenu. Preciznije predikcije znače da timovi mogu da se fokusiraju na akcije koje zaista smanjuju gubitke i povećavaju povrat ulaganja, a ne samo na akcije koje dobro izgledaju na papiru.
+Pre ovog feature-a, takva analiza je mogla da traje nekoliko radnih dana. Sada korisnik u jednom flow-u dobija najvažnije informacije: očekivani ROI, broj dana za povrat investicije i grafik predikcije škarta za izabrani proizvodni proces.
+
+  <Callout type="info" title="Zašto je ovo važno">
+    Vrednost nije bila samo u tome da sistem predvidi brojeve. Veća vrednost je bila u tome da se spor proces planiranja pretvori u nešto što menadžeri mogu da koriste dok stvarno donose odluke.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="Izgradnja time-series forecasting sistema">
-  Jedan od glavnih zadataka bio mi je implementacija forecasting algoritma koji za svaki scenario bira najbolji model na osnovu real-time podataka.
+<ContentBlock title="Kako radi prediction workflow">
+  Iza interfejsa radi više ML koraka za predikciju.
 
-Ovde nije postojao pristup "jedan model za sve". Različiti pogoni i procesi su se različito ponašali kroz vreme. Neki nizovi su bili stabilni, neki su imali nagle promene, a neki izraženu sezonalnost.
+Modeli koriste podatke o škartu na izabranoj stanici da procene cenu, predvide trend podataka i izračunaju ROI. Na kraju se pomoću genetskih algoritama i linearnog programiranja bira najbolji skup akcija u odnosu na realna ograničenja korisnika.
 
-<Section title="Kako sam pristupio rešenju">
-  - Dizajnirao pipeline koji po scenariju evaluira više forecasting kandidata. -
-  Dodao scoring logiku tako da sistem bira model sa najboljim skorom na svežim
-  podacima. - Povezao workflow sa real-time update-ovima podataka kako bi
-  predikcije ostale relevantne kada se uslovi promene. - Izložio forecasting
-  endpoint-e kroz FastAPI kako bi ostatak proizvoda pouzdano koristio
-  predikcije.
+<Section title="Šta korisnik dobija">
+  - Procenu ROI-a za planirane akcije. - Broj dana za očekivani povrat
+  investicije. - Grafik predikcije škarta za dati proizvodni proces. -
+  Prioritizaciju akcija prema dostupnom budžetu i vremenu.
 </Section>
 
-Najvažnije je bilo naći balans između kvaliteta modela i pouzdanosti u produkciji. Malo bolji offline rezultat ne znači mnogo ako je workflow nestabilan u realnom radu.
+Teži deo nije bio samo napraviti model koji radi na malom primeru. Pravi izazov se pojavio kada je broj rizika počeo da raste. Što je više rizika, to je više proračuna, više rada sa bazom i duže vreme izvršavanja predikcija.
+
+To smo rešavali optimizacijom upita ka bazi, paralelizacijom izvršavanja proračuna i računanjem unapred za one delove workflow-a gde je to bilo moguće. Tako je feature postao mnogo upotrebljiviji u realnom radu.
 
 </ContentBlock>
 
-<ContentBlock title="ML workflow-i za troškove, uticaj rizika i vrednost akcija">
-  Pored forecasting-a, razvio sam ML workflow-e za predviđanje troškova, uticaja rizika i vrednosti akcionih planova.
+<ImageCarousel
+  autoPlay={false}
+  images={[
+    {
+      src: '/blog/fmea-excellence/fmea-scrap-prediction.webp',
+      alt: 'Predikcija defekata',
+      caption:
+        'Grafik predikcije škarta za izabrani proizvodni proces kroz vreme.',
+      zoomable: true,
+    },
+    {
+      src: '/blog/fmea-excellence/excellence-prediction-table.webp',
+      alt: 'Tabela predikcija u FMEA Excellence',
+      caption:
+        'Tabela ROI predikcija za poređenje rizika, akcija, troškova i očekivanog povrata.',
+      fit: 'contain',
+      zoomable: true,
+    },
+  ]}
+/>
 
-Ovi workflow-i su pomogli da se FMEA podaci pretvore u jasne izlaze za donošenje odluka. Umesto ručnog procenjivanja svega, korisnici mogu da porede opcije uz brojke podržane modelima.
+<ContentBlock title="AI chatbot za FMEA znanje">
+  Drugi feature je RAG chatbot koji odgovara na pitanja vezana za aplikaciju i za korišćenje FMEA metode u industriji.
 
-<Section title="Šta su ovi workflow-i doneli">
-  - Predikciju troškova planiranih mera mitigacije. - Procenu uticaja rizika na
-  osnovu aktuelnih i istorijskih signala. - Skoriranje vrednosti akcionih
-  planova radi ROI-prioritizacije. - Ponovljive pipeline-ove za pripremu
-  podataka i inferencu, sa stabilnim ponašanjem u produkciji.
-</Section>
+Cilj je bio da korisnici mogu da postave praktična pitanja bez napuštanja proizvoda. Kao osnovu smo koristili LangChain i GPT modele, a kao izvore znanja interni materijal proizvoda i istraživačke radove <a href="https://www.linkedin.com/in/nikola-banduka-phd-67b63ab1/" target="_blank" rel="noreferrer">dr Nikole Banduke</a> i <a href="https://www.linkedin.com/in/nikola-komatina-88b6b31a9/" target="_blank" rel="noreferrer">Nikole Komatine</a>, koji su doktorirali iz oblasti FMEA analize.
 
-  <ImageCarousel
-    autoPlay={false}
-    images={[
-      {
-        src: '/blog/fmea-excellence/excellence-prediction-table.webp',
-        alt: 'Tabela predikcija u FMEA Excellence',
-        caption: 'Predikcije koje timovima pomažu da uporede scenarije i donesu bolje odluke.',
-      },
-      {
-        src: '/blog/fmea-excellence/fmeai-ai-assistant.webp',
-        alt: 'AI asistent u FMEA Excellence',
-        caption: 'AI asistent koji pomaže tumačenje rizika i preporučenih akcija.',
-      },
-    ]}
-  />
+Ovaj feature je koristan jer FMEA može da bude kompleksna i iskusnim timovima. Dobar asistent može da objasni pojmove, pomogne korisniku da razume zašto je neko polje važno i da ga usmeri kroz način na koji aplikacija očekuje da analiza bude strukturirana.
+
 </ContentBlock>
 
-<ContentBlock title="Tehnologije i poslovni efekat">
-  Glavni stack za ovaj deo rada bio je Python, FastAPI i Scikit-learn.
+<BlogImage
+  src="/blog/fmea-excellence/fmeai-ai-assistant.webp"
+  alt="AI assistant in FMEA Excellence"
+  bgColor="transparent"
+  aspectRatio=""
+  zoomable={true}
+/>
 
-Python nam je dao fleksibilnost za feature engineering i eksperimentisanje sa modelima, FastAPI je pojednostavio i ubrzao izlaganje ML endpoint-a, a Scikit-learn je bio praktičan za izgradnju workflow-a koje tim može dugoročno da održava.
+<ContentBlock title="AI popunjavanje PFMEA tabela">
+  Treći feature je sličan RAG pristupu, ali pored baze znanja uzima u obzir i prethodne podatke korisnika.
 
-Sa poslovne strane, ove funkcionalnosti su pomogle timovima da ranije odgovore na teška pitanja:
+Umesto da samo odgovara na pitanja, model pomaže u popunjavanju polja u PFMEA tabelama. Može da pogleda prethodne analize, slične procese i postojeće korisničke podatke, pa da predloži vrednosti koje korisniku olakšavaju i ubrzavaju rad.
 
-  <Section title="Pitanja na koja korisnici sada brže odgovaraju">
-    - Koji scenario rizika će verovatno postati skup ako ne reagujemo?
-    - Koji akcioni plan daje najveću vrednost za uloženi trošak?
-    - Gde prvo investirati da bi ROI bio merljiv?
-  </Section>
-</ContentBlock>
-
-<ContentBlock title="Šta me je naučio ML u produkciji">
-  Rad na ML-u u produkciji mi je potvrdio jednostavnu stvar: kvalitet modela je samo jedan deo posla.
-
-Ostatak su inženjerska disciplina, konzistentnost podataka i dobra integracija u proizvod. Dobre ML funkcionalnosti su razumljive korisnicima, stabilne u realnoj upotrebi i direktno povezane sa poslovnim odlukama.
-
-Za mene je ova uloga bila prirodan nastavak startup puta koji sam opisao u prethodnom blogu. I dalje radim između granica proizvoda i inženjeringa, ali sada sa jačim ML fokusom i još jasnijom vezom između tehničkog rada i poslovne vrednosti.
+Ovo je deo gde AI postaje manje vidljiv, ali veoma praktičan. Korisnik i dalje donosi finalnu odluku, ali aplikacija uklanja ponavljanje i pomaže mu da ne kreće od prazne tabele.
 
   <Callout type="tip" title="Glavna poruka">
-    Najbolje AI funkcionalnosti nisu samo tehnički impresivne. Njihova vrednost je u tome što ljudima pomažu da donose bolje odluke onda kada je to najvažnije.
+    Najbolji AI feature-i u ovom proizvodu nisu bili odvojeni demo primeri. Bili su ugrađeni u postojeće workflow-e, tamo gde stvarno smanjuju ručni rad i ubrzavaju donošenje odluka.
   </Callout>
 </ContentBlock>

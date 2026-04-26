@@ -8,86 +8,85 @@ import {
 
 This blog continues where my previous DigitalLeather story ended.
 
-After joining as a backend engineer in May 2025, I gradually moved into an AI / Machine Learning Engineer role on FMEA Excellence. It felt like a natural next step. I was already close to the product, close to client pain points, and closely involved in the systems where prediction could create real value.
+After joining as a backend engineer in May 2025, I gradually moved into an AI / Machine Learning Engineer role on FMEA Excellence. That transition made sense to me because I was already close to the product, the users, and the parts of the system where prediction could remove a lot of manual work.
 
-<ContentBlock title="What FMEA Excellence is solving">
-  FMEA Excellence is a SaaS product built for risk evaluation and ROI-based decision-making.
+FMEA Excellence has three main AI features: ROI prediction, an AI chatbot, and AI-assisted field completion inside PFMEA tables. Each of them solves a different problem, but they all have the same goal: help people make better decisions without forcing them to become data scientists.
 
-Instead of teams making decisions only from static spreadsheets and assumptions, the platform helps them work with live data, estimate future outcomes, and prioritize actions that make financial and operational sense.
+<ContentBlock title="ROI prediction as the core feature">
+  The most important part of the product is ROI prediction. It helps managers decide which risks should be solved first based on the money, time, and resources they actually have available.
 
-  <Callout type="info" title="Why this matters in practice">
-    Risk decisions are often expensive. Better predictions mean teams can focus on actions that reduce losses and increase return, not only actions that look good on paper.
+In this case, managers are usually not technical users. They do not want to inspect raw model output or think about forecasting internals. They want to know where to act, how much an action will cost, when the investment will return, and what will probably happen if they do nothing.
+
+Before this feature, that kind of analysis could take several working days. With the prediction workflow, the user can get the important numbers in one flow: expected ROI, estimated number of days until the investment returns, and a scrap prediction chart for the selected production process.
+
+  <Callout type="info" title="Why this mattered">
+    The value was not only in predicting numbers. The bigger value was turning a slow planning process into something managers could use while they were actually making decisions.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="Building a time-series forecasting engine">
-  One of my main tasks was implementing a forecasting algorithm that could choose the best model for each scenario using real-time data.
+<ContentBlock title="How the prediction workflow works">
+  Behind the interface, the system combines multiple ML prediction steps.
 
-This was not a one-model-fits-all problem. Different facilities and processes behaved differently over time. Some series were stable, some had abrupt changes, and some had strong seasonal patterns.
+The models use scrap data from the selected station to estimate cost, predict the future trend, and calculate ROI. After that, genetic algorithms and linear programming are used to choose the best set of actions under the user's real constraints.
 
-<Section title="How I approached it">
-  - Designed a pipeline that evaluates multiple forecasting candidates per
-  scenario. - Added scoring logic so the system selects the model with the best
-  recent performance. - Connected the workflow to real-time data updates so
-  forecasts stay relevant as conditions change. - Exposed forecasting endpoints
-  through FastAPI so product features could consume predictions reliably.
+<Section title="What users get from the workflow">
+  - ROI estimation for planned actions. - Number of days until the investment is
+  expected to return. - Scrap trend prediction for a given production process. -
+  Prioritization of actions based on available budget and time.
 </Section>
 
-The key was balancing model quality with production reliability. A slightly better offline score is not useful if the workflow is fragile in real product usage.
+The difficult part was not just building a model that worked on a small example. The real challenge appeared when the number of risks started to grow. More risks meant more calculations, more database work, and longer prediction times.
+
+We solved that by optimizing database queries, parallelizing the calculation flow, and precomputing the parts of the workflow where that was possible. That made the feature much more practical in real product usage.
 
 </ContentBlock>
 
-<ContentBlock title="Prediction workflows for cost, risk, and action plans">
-  Beyond forecasting, I built machine learning workflows that predict costs, risk impact, and action-plan value.
+<ImageCarousel
+  autoPlay={false}
+  images={[
+    {
+      src: '/blog/fmea-excellence/fmea-scrap-prediction.webp',
+      alt: 'FMEA scrap prediction chart',
+      caption:
+        'Scrap prediction chart for a selected production process over time.',
+      zoomable: true,
+    },
+    {
+      src: '/blog/fmea-excellence/excellence-prediction-table.webp',
+      alt: 'Prediction table in FMEA Excellence',
+      caption:
+        'ROI prediction table used to compare risks, actions, costs, and expected return.',
+      fit: 'contain',
+      zoomable: true,
+    },
+  ]}
+/>
 
-These workflows helped turn FMEA data into clear, decision-friendly outputs. Instead of manually estimating everything, users could compare options with model-supported numbers.
+<ContentBlock title="AI chatbot for FMEA knowledge">
+  The second feature is a RAG chatbot that answers questions about the application and about FMEA usage in industry.
 
-<Section title="What these workflows delivered">
-  - Cost prediction for planned mitigation actions. - Risk impact estimation
-  based on current and historical signals. - Action-plan value scoring to
-  support ROI-focused prioritization. - Repeatable preprocessing and inference
-  pipelines for stable production behavior.
-</Section>
+The goal was to give users a place where they could ask practical questions without leaving the product. We used LangChain and GPT models as the foundation, with a knowledge base built from internal product material and research work by <a href="https://www.linkedin.com/in/nikola-banduka-phd-67b63ab1/" target="_blank" rel="noreferrer">Dr. Nikola Banduka</a> and <a href="https://www.linkedin.com/in/nikola-komatina-88b6b31a9/" target="_blank" rel="noreferrer">Nikola Komatina</a>, who both completed doctoral work in the field of FMEA analysis.
 
-  <ImageCarousel
-    autoPlay={false}
-    images={[
-      {
-        src: '/blog/fmea-excellence/excellence-prediction-table.webp',
-        alt: 'Prediction table in FMEA Excellence',
-        caption: 'Prediction outputs used for scenario comparison and decision support.',
-      },
-      {
-        src: '/blog/fmea-excellence/fmeai-ai-assistant.webp',
-        alt: 'AI assistant in FMEA Excellence',
-        caption: 'AI assistant interface that helps teams interpret risk and action recommendations.',
-      },
-    ]}
-  />
+This feature was useful because FMEA can be complex even for experienced teams. A good assistant can explain concepts, help users understand why a field matters, and guide them through the way the application expects the analysis to be structured.
+
 </ContentBlock>
 
-<ContentBlock title="Tech stack and product impact">
-  The core stack for this work was Python, FastAPI, and Scikit-learn.
+<BlogImage
+  src="/blog/fmea-excellence/fmeai-ai-assistant.webp"
+  alt="AI assistant in FMEA Excellence"
+  bgColor="transparent"
+  aspectRatio=""
+  zoomable={true}
+/>
 
-Python gave us flexibility for feature engineering and model experimentation, FastAPI made model-serving APIs straightforward and fast, and Scikit-learn was practical for building reliable workflows that the team could maintain.
+<ContentBlock title="AI-assisted PFMEA table completion">
+  The third feature is similar to a RAG workflow, but it also takes the user's previous data into account.
 
-On the business side, these features helped teams answer hard questions earlier:
+Instead of only answering questions, the model helps fill fields inside PFMEA tables. It can look at previous analyses, similar processes, and existing user data, then suggest values that make the table easier and faster to complete.
 
-  <Section title="Questions users can now answer faster">
-    - Which risk scenario is likely to become expensive if we do nothing?
-    - Which action plan gives the strongest value for the cost?
-    - Where should we invest first to get measurable ROI?
-  </Section>
-</ContentBlock>
-
-<ContentBlock title="What production ML taught me">
-  Working on ML in production reinforced a simple lesson: model quality is only one part of the job.
-
-The rest is engineering discipline, data consistency, and product integration. Good ML features are understandable to users, stable under real usage, and aligned with business decisions.
-
-For me, this role was a strong continuation of the startup path I described in the previous blog. I still work across product and engineering boundaries, but now with a stronger ML focus and an even clearer connection between technical work and business value.
+This is where AI becomes less visible but very useful. The user still owns the final decision, but the application removes repetitive typing and helps them start from something relevant instead of a blank table.
 
   <Callout type="tip" title="Main takeaway">
-    The best AI features are not just technically impressive. They help people make better decisions with confidence, at the moment those decisions matter.
+    The best AI features in this product were not separate demos. They were built into existing workflows, where they could reduce manual work and make decision-making faster.
   </Callout>
 </ContentBlock>

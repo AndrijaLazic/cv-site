@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 
 export type ImageFit = 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
@@ -23,6 +24,7 @@ export interface BlogImageContent {
   padding?: string
   aspectRatio?: string
   rounded?: boolean
+  zoomable?: boolean
 }
 
 export interface BlogPostMeta {
@@ -36,4 +38,20 @@ export interface BlogPostMeta {
   coverImage?: BlogImageContent
 }
 
-export type PostMeta = BlogPostMeta
+export type BlogPostSummary = BlogPostMeta
+
+export type BlogPostContent =
+  | {
+      format: 'compiled-mdx'
+      Component: ComponentType
+    }
+  | {
+      format: 'markdown-blocks'
+      body: string
+    }
+
+export interface BlogPostDetail extends BlogPostSummary {
+  content: BlogPostContent
+}
+
+export type PostMeta = BlogPostSummary
