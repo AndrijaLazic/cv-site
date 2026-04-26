@@ -214,3 +214,33 @@ code {
 *::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-thumb-hover);
 }
+
+/* react-medium-image-zoom background blur override */
+[data-rmiz-modal-overlay] {
+  transition:
+    background-color 0.3s,
+    backdrop-filter 0.3s !important;
+}
+
+[data-rmiz-modal-overlay='hidden'] {
+  background-color: transparent !important;
+  backdrop-filter: blur(0px) !important;
+}
+
+[data-rmiz-modal-overlay='visible'] {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.dark [data-rmiz-modal-overlay='visible'] {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.image-carousel-slide [data-rmiz],
+.image-carousel-slide [data-rmiz-content] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}

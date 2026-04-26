@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react'
 import type { BlogImageContent } from '#/features/blog/types/blog'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 export function BlogImage({
   src,
@@ -10,6 +12,7 @@ export function BlogImage({
   padding,
   aspectRatio = '16/9',
   rounded = false,
+  zoomable = false,
 }: BlogImageContent) {
   const wrapperStyle: CSSProperties = {
     width: '100%',
@@ -31,9 +34,13 @@ export function BlogImage({
     display: 'block',
   }
 
+  const imageElement = (
+    <img src={src} alt={alt} loading="lazy" style={imageStyle} />
+  )
+
   return (
     <div style={wrapperStyle}>
-      <img src={src} alt={alt} loading="lazy" style={imageStyle} />
+      {zoomable ? <Zoom>{imageElement}</Zoom> : imageElement}
     </div>
   )
 }

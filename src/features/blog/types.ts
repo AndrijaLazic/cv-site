@@ -1,6 +1,9 @@
 export type {
   BlogImageContent,
+  BlogPostContent,
+  BlogPostDetail,
   BlogPostMeta,
+  BlogPostSummary,
   ImageFit,
   ImagePosition,
   PostMeta,

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '#/shared/utils'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 export type CarouselImage = {
   src: string
@@ -10,6 +12,7 @@ export type CarouselImage = {
   padding?: string
   fit?: 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
   position?: string
+  zoomable?: boolean
 }
 
 export type ImageCarouselProps = {
@@ -76,21 +79,35 @@ export function ImageCarousel({
     return (
       <figure className={cn('w-full', className)}>
         <div
-          className="aspect-video w-full overflow-hidden rounded-xl shadow-md"
+          className="image-carousel-slide aspect-video w-full overflow-hidden rounded-xl shadow-md"
           style={{
             backgroundColor: img.bgColor,
             padding: img.padding,
           }}
         >
-          <img
-            src={img.src}
-            alt={img.alt}
-            className="h-full w-full rounded-xl"
-            style={{
-              objectFit: img.fit ?? 'cover',
-              objectPosition: img.position ?? 'center',
-            }}
-          />
+          {img.zoomable !== false ? (
+            <Zoom>
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="h-full w-full rounded-xl"
+                style={{
+                  objectFit: img.fit ?? 'cover',
+                  objectPosition: img.position ?? 'center',
+                }}
+              />
+            </Zoom>
+          ) : (
+            <img
+              src={img.src}
+              alt={img.alt}
+              className="h-full w-full rounded-xl"
+              style={{
+                objectFit: img.fit ?? 'cover',
+                objectPosition: img.position ?? 'center',
+              }}
+            />
+          )}
         </div>
         {img.caption && (
           <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
@@ -126,21 +143,35 @@ export function ImageCarousel({
           {images.map((img, i) => (
             <div
               key={i}
-              className="aspect-video w-full shrink-0"
+              className="image-carousel-slide aspect-video w-full shrink-0"
               style={{
                 backgroundColor: img.bgColor,
                 padding: img.padding,
               }}
             >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="h-full w-full"
-                style={{
-                  objectFit: img.fit ?? 'cover',
-                  objectPosition: img.position ?? 'center',
-                }}
-              />
+              {img.zoomable !== false ? (
+                <Zoom>
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="h-full w-full"
+                    style={{
+                      objectFit: img.fit ?? 'cover',
+                      objectPosition: img.position ?? 'center',
+                    }}
+                  />
+                </Zoom>
+              ) : (
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="h-full w-full"
+                  style={{
+                    objectFit: img.fit ?? 'cover',
+                    objectPosition: img.position ?? 'center',
+                  }}
+                />
+              )}
             </div>
           ))}
         </div>

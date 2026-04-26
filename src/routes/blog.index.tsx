@@ -2,19 +2,19 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useMemo, useState } from 'react'
 import { cn } from '#/shared/utils'
-import { getAllPostMetas } from '#/features/blog/registry'
+import { getBlogPostSummaries } from '#/features/blog/api'
 import {
   resolveSupportedLanguage,
   supportedLanguages,
 } from '#/features/i18n/config'
 import { HeroCarousel, PostCard } from '#/features/blog/components'
 import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from '#/features/blog/types/blog'
+import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 
 const allPostsByLanguage = Object.fromEntries(
-  supportedLanguages.map((lang) => [lang, getAllPostMetas(lang)]),
-) as Record<SupportedLanguage, PostMeta[]>
+  supportedLanguages.map((lang) => [lang, getBlogPostSummaries(lang)]),
+) as Record<SupportedLanguage, BlogPostSummary[]>
 
 export const Route = createFileRoute('/blog/')({
   component: BlogList,

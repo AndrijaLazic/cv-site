@@ -1,20 +1,26 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
-import { getPostComponent, getPostMeta } from '#/features/blog/registry'
-import { MdxRenderer } from '#/features/blog/MdxRenderer'
+import { getBlogPost } from '#/features/blog/api'
+import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
 import { BlogImage } from '#/features/blog/components'
-import { resolveSupportedLanguage } from '#/features/i18n/config'
-import type { SupportedLanguage } from '#/features/i18n/languages'
-import type { PostMeta } from '#/features/blog/types/blog'
+import {
+  resolveSupportedLanguage,
+  supportedLanguages,
+} from '#/features/i18n/config'
+import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 import { Badge } from '#/shared/ui/badge'
 
-function findPostMeta(
-  slug: string,
-  locale: SupportedLanguage,
-): PostMeta | undefined {
-  return getPostMeta(locale, slug)
+function findPostBySlug(slug: string): BlogPostSummary | undefined {
+  for (const locale of supportedLanguages) {
+    const post = getBlogPost(locale, slug)
+    if (post) {
+      return post
+    }
+  }
+
+  return undefined
 }
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -22,8 +28,7 @@ export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
     const siteUrl = publicConfig.siteUrl
     const canonicalUrl = `${siteUrl}/blog/${params.slug}`
-    const post =
-      findPostMeta(params.slug, 'en') ?? findPostMeta(params.slug, 'sr')
+    const post = findPostBySlug(params.slug)
     const title = post
       ? `${post.title} | Andrija Lazic`
       : 'Blog | Andrija Lazic'
@@ -52,7 +57,7 @@ export const Route = createFileRoute('/blog/$slug')({
   },
 })
 
-function BlogPostJsonLd({ post }: { post: PostMeta }) {
+function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
   const coverImageSrc = post.coverImage?.src
   const coverImageUrl = coverImageSrc
     ? coverImageSrc.startsWith('http')
@@ -91,10 +96,9 @@ function BlogPostPage() {
     i18n.resolvedLanguage ?? i18n.language,
   )
 
-  const post = getPostMeta(activeLanguage, slug)
-  const PostComponent = getPostComponent(activeLanguage, slug)
+  const post = getBlogPost(activeLanguage, slug)
 
-  if (!post || !PostComponent) {
+  if (!post) {
     return (
       <main className="px-4 py-10 sm:px-6 sm:py-14">
         <div className="mx-auto max-w-3xl text-center">
@@ -165,7 +169,7 @@ function BlogPostPage() {
             </header>
 
             <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
-              <MdxRenderer Component={PostComponent} />
+              <BlogContentRenderer content={post.content} />
             </div>
           </article>
         </div>
