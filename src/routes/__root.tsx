@@ -91,7 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang={language}
-      className={theme}
+      className={`${theme} snap-y snap-mandatory scroll-smooth scroll-pt-[var(--header-height)]`}
       data-theme={theme}
       style={{ colorScheme: theme }}
     >
