@@ -1,17 +1,10 @@
 {
   "name": "React Dev (cv-site)",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "../docker/dev/docker-compose.yml",
   "service": "react-dev",
   "workspaceFolder": "/workspace",
   "remoteUser": "devuser",
   "shutdownAction": "stopCompose",
-
-  "forwardPorts": [5173, 3000, 4173],
-  "portsAttributes": {
-    "5173": { "label": "Vite Dev Server" },
-    "3000": { "label": "CRA Dev Server" },
-    "4173": { "label": "Vite Preview" }
-  },
 
   "customizations": {
     "vscode": {
@@ -52,6 +45,7 @@
           "typescriptreact"
         ],
         "prettier.requireConfig": false,
+        "remote.autoForwardPorts": false,
         "terminal.integrated.defaultProfile.linux": "bash",
         "terminal.integrated.profiles.linux": {
           "bash": { "path": "/bin/bash" }

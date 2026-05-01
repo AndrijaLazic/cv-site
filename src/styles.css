@@ -176,10 +176,14 @@ code {
 
   html {
     scrollbar-gutter: stable both-edges;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
   }
 
   body {
     @apply bg-background text-foreground;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
   }
 }
 

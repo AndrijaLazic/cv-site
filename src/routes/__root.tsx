@@ -14,6 +14,7 @@ import i18n, {
   i18nReady,
   resolveSupportedLanguage,
 } from '#/features/i18n/config'
+import { scrollSnapContainerClassName } from '#/shared/ui/scroll-snap'
 
 import appCss from '../styles.css?url'
 
@@ -91,14 +92,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang={language}
-      className={`${theme} snap-y snap-mandatory scroll-smooth scroll-pt-[var(--header-height)]`}
+      className={`${theme} ${scrollSnapContainerClassName}`}
       data-theme={theme}
       style={{ colorScheme: theme }}
     >
       <head>
         <HeadContent />
       </head>
-      <body className="font-sans antialiased wrap-break-word min-h-screen flex flex-col selection:bg-rose-500/20">
+      <body
+        className={`font-sans antialiased wrap-break-word min-h-screen flex flex-col selection:bg-rose-500/20 ${scrollSnapContainerClassName}`}
+      >
         <ThemeProvider initialMode={theme}>
           <Header />
           <main className="flex-1 flex flex-col w-full bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_42%),linear-gradient(to_bottom,rgb(248_250_252),rgb(241_245_249))] dark:bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.18),transparent_45%),linear-gradient(to_bottom,rgb(2_6_23),rgb(3_7_18))]">

@@ -14,6 +14,7 @@ import mdx from '@mdx-js/rollup'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypePrettyCode from 'rehype-pretty-code'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 function resolveOptionalFilePath(filePath?: string) {
   if (!filePath) {
@@ -133,6 +134,12 @@ const config = defineConfig(({ mode }) => {
         }),
       },
       viteReact(),
+      visualizer({
+        filename: 'dist/stats.html',
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
+      }),
     ],
   }
 })
