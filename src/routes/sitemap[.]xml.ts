@@ -1,11 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import * as contentCollections from '../../.content-collections/generated/index.js'
+import { getBlogPostSummaries } from '#/features/blog/api'
 import { publicConfig } from '#/shared/config/public-env'
 
 function getBlogSlugs(): string[] {
-  const blogs = contentCollections.allBlogsEns
-  if (!Array.isArray(blogs)) return []
-  return blogs.map((post: { slug: string }) => post.slug)
+  return getBlogPostSummaries('en').map((post) => post.slug)
 }
 
 function buildSitemap(): string {

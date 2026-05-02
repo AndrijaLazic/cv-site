@@ -4,8 +4,8 @@ import {
   Scripts,
   createRootRoute,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { Suspense, lazy, useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 import Footer from '#/features/layout/Footer'
 import Header from '#/features/layout/Header'
 import { loadInitialPreferences } from '#/features/preferences/preference.functions'
@@ -17,6 +17,12 @@ import i18n, {
 import { scrollSnapContainerClassName } from '#/shared/ui/scroll-snap'
 
 import appCss from '../styles.css?url'
+
+const AppDevtools = lazy(() =>
+  import('#/features/devtools/AppDevtools').then((module) => ({
+    default: module.AppDevtools,
+  })),
+)
 
 export const Route = createRootRoute({
   loader: async () => {
@@ -86,8 +92,9 @@ export const Route = createRootRoute({
   notFoundComponent: NotFound,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: ReactNode }) {
   const { language, theme } = Route.useLoaderData()
+  const shouldRenderDevtools = useDeferredDevtools()
 
   return (
     <html
@@ -109,21 +116,35 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           </main>
           <Footer />
         </ThemeProvider>
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        {shouldRenderDevtools ? (
+          <Suspense fallback={null}>
+            <AppDevtools />
+          </Suspense>
+        ) : null}
         <Scripts />
       </body>
     </html>
   )
+}
+
+function useDeferredDevtools() {
+  const [shouldRenderDevtools, setShouldRenderDevtools] = useState(false)
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) {
+      return
+    }
+
+    const handle = window.setTimeout(() => {
+      setShouldRenderDevtools(true)
+    }, 1500)
+
+    return () => {
+      window.clearTimeout(handle)
+    }
+  }, [])
+
+  return shouldRenderDevtools
 }
 
 function NotFound() {
