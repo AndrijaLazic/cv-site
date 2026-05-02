@@ -1,23 +1,51 @@
+// Scroll snap setup:
+// 1. Define --header-height in CSS when a sticky header should be offset.
+// 2. Wrap each target block with <ScrollSnapSection id="...">.
+// 3. Call useOneTimeScrollSnap() once in the page component.
+// The hook listens for user scroll, waits until scrolling settles, then animates
+// to the nearest unsnapped section. Each section snaps only once per page mount.
 import type { ComponentPropsWithoutRef } from 'react'
 import { forwardRef, useEffect, useRef } from 'react'
-import { cn } from '#/shared/utils'
 
-type ScrollSnapSectionProps = ComponentPropsWithoutRef<'section'> & {
+type ScrollSnapClassName = string | false | null | undefined
+
+export type ScrollSnapDirection = 'down' | 'both'
+
+export type ScrollSnapSectionProps = ComponentPropsWithoutRef<'section'> & {
   snapOffset?: number
 }
+
+export type UseOneTimeScrollSnapOptions = {
+  animationDurationMs?: number
+  direction?: ScrollSnapDirection
+  enabled?: boolean
+  headerOffset?: number | (() => number)
+  selector?: string
+  settleDelayMs?: number
+  snapThreshold?: number
+}
+
+const scrollSnapSectionAttribute = 'data-scroll-snap-section'
+const scrollSnapSectionOffsetAttribute = 'data-scroll-snap-offset'
+
+export const scrollSnapSectionSelector = '[data-scroll-snap-section="true"]'
 
 export const scrollSnapContainerClassName =
   'scroll-smooth scroll-pt-[var(--header-height)]'
 
+function joinClassNames(...classNames: ScrollSnapClassName[]) {
+  return classNames.filter(Boolean).join(' ')
+}
+
 export function getScrollSnapContainerClassName(className?: string) {
-  return cn(
+  return joinClassNames(
     'h-[calc(100svh-var(--header-height))] overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth',
     className,
   )
 }
 
 export function getScrollSnapSectionClassName(className?: string) {
-  return cn(
+  return joinClassNames(
     'min-h-[calc(100svh-var(--header-height))] scroll-mt-[var(--header-height)]',
     className,
   )
@@ -30,9 +58,11 @@ export const ScrollSnapSection = forwardRef<
   return (
     <section
       ref={ref}
-      data-scroll-snap-section="true"
-      data-scroll-snap-offset={snapOffset}
       className={getScrollSnapSectionClassName(className)}
+      {...{
+        [scrollSnapSectionAttribute]: 'true',
+        [scrollSnapSectionOffsetAttribute]: snapOffset,
+      }}
       {...props}
     />
   )
@@ -51,22 +81,14 @@ export const ScrollSnapContainer = forwardRef<
   )
 })
 
-type UseOneTimeScrollSnapOptions = {
-  enabled?: boolean
-  selector?: string
-  settleDelayMs?: number
-  snapThreshold?: number
-  animationDurationMs?: number
-  direction?: 'down' | 'both'
-}
-
 export function useOneTimeScrollSnap({
-  enabled = true,
-  selector = '[data-scroll-snap-section="true"]',
-  settleDelayMs = 180,
-  snapThreshold = 0.42,
   animationDurationMs = 850,
   direction = 'down',
+  enabled = true,
+  headerOffset,
+  selector = scrollSnapSectionSelector,
+  settleDelayMs = 180,
+  snapThreshold = 0.42,
 }: UseOneTimeScrollSnapOptions = {}) {
   const snappedIdsRef = useRef(new Set<string>())
   const scrollTimeoutRef = useRef<number | null>(null)
@@ -92,6 +114,14 @@ export function useOneTimeScrollSnap({
     }
 
     const getHeaderOffset = () => {
+      if (typeof headerOffset === 'function') {
+        return headerOffset()
+      }
+
+      if (typeof headerOffset === 'number') {
+        return headerOffset
+      }
+
       const value = window
         .getComputedStyle(document.documentElement)
         .getPropertyValue('--header-height')
@@ -100,7 +130,7 @@ export function useOneTimeScrollSnap({
     }
 
     const getSectionSnapOffset = (section: HTMLElement) => {
-      const value = section.dataset.scrollSnapOffset
+      const value = section.getAttribute(scrollSnapSectionOffsetAttribute)
 
       if (!value) {
         return 0
@@ -191,7 +221,7 @@ export function useOneTimeScrollSnap({
         return null
       }
 
-      const headerOffset = getHeaderOffset()
+      const headerOffsetPx = getHeaderOffset()
       const threshold = window.innerHeight * snapThreshold
       const scrollDirection = scrollDirectionRef.current
 
@@ -201,7 +231,7 @@ export function useOneTimeScrollSnap({
       } | null>((nearest, section) => {
         const snapOffset = getSectionSnapOffset(section)
         const offsetFromSnapPoint =
-          section.getBoundingClientRect().top - headerOffset - snapOffset
+          section.getBoundingClientRect().top - headerOffsetPx - snapOffset
         const wouldSnapDown = offsetFromSnapPoint > 0
 
         if (scrollDirection === 'up' && wouldSnapDown) {
@@ -338,6 +368,7 @@ export function useOneTimeScrollSnap({
     animationDurationMs,
     direction,
     enabled,
+    headerOffset,
     selector,
     settleDelayMs,
     snapThreshold,

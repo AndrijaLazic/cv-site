@@ -11,6 +11,11 @@ import {
   ScrollSnapSection,
   useOneTimeScrollSnap,
 } from '#/shared/ui/scroll-snap'
+import {
+  AnimatedSection,
+  getRevealClassName,
+  useRevealOnFirstView,
+} from '#/shared/ui/reveal'
 import { cn } from '#/shared/utils'
 import {
   educationsByLanguage,
@@ -20,11 +25,6 @@ import {
   sortJobs,
 } from './data'
 import type { ResumeEducation, ResumeJob } from './data'
-import {
-  AnimatedSection,
-  getRevealClassName,
-  useRevealOnFirstView,
-} from './reveal'
 
 type Translation = ReturnType<typeof useTranslation<'resume'>>['t']
 
