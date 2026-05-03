@@ -1,5 +1,6 @@
 // Scroll snap setup:
-// 1. Define --header-height in CSS when a sticky header should be offset.
+// 1. Add data-app-header="true" to the sticky header, or define
+//    --header-height in CSS as a fallback offset.
 // 2. Wrap each target block with <ScrollSnapSection id="...">.
 // 3. Call useOneTimeScrollSnap() once in the page component.
 // The hook listens for user scroll, waits until scrolling settles, then animates
@@ -27,6 +28,7 @@ export type UseOneTimeScrollSnapOptions = {
 
 const scrollSnapSectionAttribute = 'data-scroll-snap-section'
 const scrollSnapSectionOffsetAttribute = 'data-scroll-snap-offset'
+const appHeaderSelector = '[data-app-header="true"]'
 
 export const scrollSnapSectionSelector = '[data-scroll-snap-section="true"]'
 
@@ -54,7 +56,7 @@ export function getScrollSnapSectionClassName(className?: string) {
 export const ScrollSnapSection = forwardRef<
   HTMLElement,
   ScrollSnapSectionProps
->(function ScrollSnapSectionBase({ className, snapOffset, ...props }, ref) {
+>(function ScrollSnapSectionBase({ className, snapOffset = 5, ...props }, ref) {
   return (
     <section
       ref={ref}
@@ -120,6 +122,13 @@ export function useOneTimeScrollSnap({
 
       if (typeof headerOffset === 'number') {
         return headerOffset
+      }
+
+      const header = document.querySelector<HTMLElement>(appHeaderSelector)
+      const measuredHeaderHeight = header?.getBoundingClientRect().height ?? 0
+
+      if (measuredHeaderHeight > 0) {
+        return measuredHeaderHeight
       }
 
       const value = window

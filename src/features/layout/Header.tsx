@@ -50,6 +50,7 @@ function Header() {
 
   return (
     <header
+      data-app-header="true"
       className={`sticky top-0 z-50 border-b border-(--line) px-4 ${
         isMenuOpen
           ? 'bg-slate-50 dark:bg-slate-950'

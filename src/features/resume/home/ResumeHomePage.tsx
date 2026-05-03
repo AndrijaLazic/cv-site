@@ -12,10 +12,10 @@ import {
   useOneTimeScrollSnap,
 } from '#/shared/ui/scroll-snap'
 import {
-  AnimatedSection,
   getRevealClassName,
   useRevealOnFirstView,
-} from '#/shared/ui/reveal'
+} from '#/shared/ui/reveal-section'
+import { PageBackground } from '#/shared/ui/page-background'
 import { cn } from '#/shared/utils'
 import {
   educationsByLanguage,
@@ -44,30 +44,21 @@ export function ResumeHomePage() {
   const isScrollHintVisible = useScrollHintVisible()
   useOneTimeScrollSnap({
     settleDelayMs: 0,
-    snapThreshold: 0.97,
+    snapThreshold: 0.95,
     animationDurationMs: 500,
   })
 
   return (
-    <div className="relative overflow-x-clip px-4 sm:px-6 lg:px-10">
-      <ResumeBackdrop />
-      <div className="mx-auto max-w-5xl">
-        <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
-        <ExperienceSection t={t} jobs={sortedJobs} />
-        <EducationSection t={t} educations={sortedEducations} />
-        <ContactSection />
+    <PageBackground>
+      <div className="px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-5xl">
+          <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
+        </div>
       </div>
-    </div>
-  )
-}
-
-function ResumeBackdrop() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-      <div className="absolute -top-16 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/28 blur-3xl dark:bg-cyan-500/22" />
-      <div className="absolute top-[24rem] -left-24 h-72 w-72 rounded-full bg-sky-200/50 blur-3xl dark:bg-sky-500/15" />
-      <div className="absolute top-[38rem] -right-24 h-80 w-80 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-500/15" />
-    </div>
+      <ExperienceSection t={t} jobs={sortedJobs} />
+      <EducationSection t={t} educations={sortedEducations} />
+      <ContactSection />
+    </PageBackground>
   )
 }
 
@@ -79,9 +70,12 @@ function HeroSection({
   isScrollHintVisible: boolean
 }) {
   const heroSummary = limitToSentences(t('careerSummaryText'), 2)
+  const { elementRef: heroRevealRef, isVisible: isHeroVisible } =
+    useRevealOnFirstView<HTMLElement>()
 
   return (
     <section
+      ref={heroRevealRef}
       id="about"
       className={getScrollSnapSectionClassName(
         'relative flex flex-col justify-center',
@@ -92,14 +86,22 @@ function HeroSection({
           <div className="space-y-4">
             <h1
               id="about-heading"
-              className="text-balance text-center text-4xl font-extrabold tracking-tight text-slate-900 motion-safe:animate-appear-blur sm:text-5xl md:text-left lg:text-6xl dark:text-slate-100"
-              style={{ animationDelay: '50ms', animationFillMode: 'both' }}
+              className={cn(
+                getRevealClassName(
+                  'text-balance text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-left lg:text-6xl dark:text-slate-100',
+                ),
+                isHeroVisible && 'translate-y-0 opacity-100',
+              )}
+              style={{ transitionDelay: '0ms' }}
             >
               Andrija Lazic
             </h1>
             <div
-              className="motion-safe:animate-appear-blur"
-              style={{ animationDelay: '250ms', animationFillMode: 'both' }}
+              className={cn(
+                getRevealClassName(),
+                isHeroVisible && 'translate-y-0 opacity-100',
+              )}
+              style={{ transitionDelay: '100ms' }}
             >
               <Badge
                 variant="outline"
@@ -111,22 +113,37 @@ function HeroSection({
           </div>
 
           <h2
-            className="text-center text-xl font-medium text-slate-800 motion-safe:animate-appear-blur sm:text-2xl dark:text-slate-200 md:text-left"
-            style={{ animationDelay: '400ms', animationFillMode: 'both' }}
+            className={cn(
+              getRevealClassName(
+                'text-center text-xl font-medium text-slate-800 sm:text-2xl dark:text-slate-200 md:text-left',
+              ),
+              isHeroVisible && 'translate-y-0 opacity-100',
+            )}
+            style={{ transitionDelay: '200ms' }}
           >
             {t('careerSummary')}
           </h2>
 
           <p
-            className="text-pretty text-center text-base leading-relaxed text-slate-600 motion-safe:animate-appear-blur sm:text-lg dark:text-slate-400 md:text-left"
-            style={{ animationDelay: '550ms', animationFillMode: 'both' }}
+            className={cn(
+              getRevealClassName(
+                'text-pretty text-center text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400 md:text-left',
+              ),
+              isHeroVisible && 'translate-y-0 opacity-100',
+            )}
+            style={{ transitionDelay: '300ms' }}
           >
             {heroSummary}
           </p>
 
           <div
-            className="flex flex-col justify-center gap-4 motion-safe:animate-appear-blur sm:flex-row md:justify-start"
-            style={{ animationDelay: '700ms', animationFillMode: 'both' }}
+            className={cn(
+              getRevealClassName(
+                'flex flex-col justify-center gap-4 sm:flex-row md:justify-start',
+              ),
+              isHeroVisible && 'translate-y-0 opacity-100',
+            )}
+            style={{ transitionDelay: '400ms' }}
           >
             <a
               href="#experience"
@@ -136,7 +153,7 @@ function HeroSection({
               Experience
             </a>
             <a
-              href="/CV_Andrija_Lazic.pdf"
+              href="/docs/Andrija_Lazic_Resume.docx"
               download
               className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-8 text-sm font-medium text-slate-900 shadow-sm transition-colors hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-50"
             >
@@ -147,8 +164,13 @@ function HeroSection({
         </div>
 
         <div
-          className="relative order-1 mx-auto w-fit motion-safe:animate-appear-blur md:order-2 md:mx-0"
-          style={{ animationDelay: '50ms', animationFillMode: 'both' }}
+          className={cn(
+            getRevealClassName(
+              'relative order-1 mx-auto w-fit md:order-2 md:mx-0',
+            ),
+            isHeroVisible && 'translate-y-0 opacity-100',
+          )}
+          style={{ transitionDelay: '100ms' }}
         >
           <div
             aria-hidden="true"
@@ -183,18 +205,16 @@ function ExperienceSection({
   jobs: Array<ResumeJob>
 }) {
   return (
-    <div className="relative mx-auto w-full md:max-w-4xl">
-      <div className="relative flex w-full flex-col items-center">
-        {jobs.map((job, index) => (
-          <JobSection
-            key={`${job.company}-${job.jobTitle}-${job.startDate}`}
-            t={t}
-            job={job}
-            index={index}
-            id={index === 0 ? 'experience' : `experience-${index + 1}`}
-          />
-        ))}
-      </div>
+    <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 lg:px-10">
+      {jobs.map((job, index) => (
+        <JobSection
+          key={`${job.company}-${job.jobTitle}-${job.startDate}`}
+          t={t}
+          job={job}
+          index={index}
+          id={index === 0 ? 'experience' : `experience-${index + 1}`}
+        />
+      ))}
     </div>
   )
 }
@@ -210,30 +230,49 @@ function JobSection({
   index: number
   id: string
 }) {
+  const { elementRef: headingRevealRef, isVisible: isHeadingRevealVisible } =
+    useRevealOnFirstView<HTMLDivElement>()
+  const { elementRef: jobRevealRef, isVisible: isJobRevealVisible } =
+    useRevealOnFirstView<HTMLDivElement>()
+
   return (
     <ScrollSnapSection
       id={id}
       className={cn(
-        'relative z-10 flex w-full flex-col items-center justify-center px-4 py-16 sm:px-6 sm:py-20',
-        index === 0 && 'justify-start pt-24 sm:justify-center sm:pt-10',
+        'relative z-10 flex w-full flex-col items-center justify-start pt-8 pb-16 sm:justify-center sm:py-20',
+        index === 0 && 'pt-5 sm:pt-5',
       )}
     >
       {index === 0 ? (
-        <AnimatedSection className="mb-8 space-y-2 text-center sm:mt-0">
+        <div
+          ref={headingRevealRef}
+          className={cn(
+            getRevealClassName('mb-8 space-y-2 text-center sm:mt-0'),
+            isHeadingRevealVisible && 'translate-y-0 opacity-100',
+          )}
+        >
           <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl dark:text-slate-100">
             {t('workExperience')}
           </h2>
           <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
             {t('experienceLeadIn')}
           </p>
-        </AnimatedSection>
+        </div>
       ) : null}
 
-      <AnimatedSection className="relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4">
+      <div
+        ref={jobRevealRef}
+        className={cn(
+          getRevealClassName(
+            'relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4',
+          ),
+          isJobRevealVisible && 'translate-y-0 opacity-100',
+        )}
+      >
         <div className="relative z-30 w-full transition-transform duration-300">
           <JobCard t={t} job={job} />
         </div>
-      </AnimatedSection>
+      </div>
     </ScrollSnapSection>
   )
 }
@@ -313,30 +352,31 @@ function EducationSection({
   return (
     <ScrollSnapSection
       id="education"
-      snapOffset={99}
-      className="relative flex flex-col justify-center py-18"
+      className="relative flex w-full flex-col justify-center py-18 pt-5 sm:pt-5"
     >
-      <div className="rounded-3xl border border-(--line) bg-white/62 p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm dark:bg-slate-950/55 sm:p-7">
-        <div className="mb-6 space-y-2 sm:mb-8">
-          <h2
-            id="education-heading"
-            className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
-          >
-            {t('educationWithCertifications')}
-          </h2>
-        </div>
+      <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10">
+        <div className="rounded-3xl border border-(--line) bg-white/62 p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm dark:bg-slate-950/55 sm:p-7">
+          <div className="mb-6 space-y-2 sm:mb-8">
+            <h2
+              id="education-heading"
+              className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+            >
+              {t('educationWithCertifications')}
+            </h2>
+          </div>
 
-        <div className="space-y-4 sm:space-y-5" ref={eduListRef}>
-          {educations.map((education, index) => (
-            <EducationCard
-              key={`${education.school}-${education.startDate}`}
-              t={t}
-              education={education}
-              index={index}
-              isVisible={isEduListVisible}
-              isLast={index === educations.length - 1}
-            />
-          ))}
+          <div className="space-y-4 sm:space-y-5" ref={eduListRef}>
+            {educations.map((education, index) => (
+              <EducationCard
+                key={`${education.school}-${education.startDate}`}
+                t={t}
+                education={education}
+                index={index}
+                isVisible={isEduListVisible}
+                isLast={index === educations.length - 1}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </ScrollSnapSection>
@@ -450,26 +490,46 @@ function TagList({
 }
 
 function ContactSection() {
+  const { elementRef: contactRevealRef, isVisible: isContactRevealVisible } =
+    useRevealOnFirstView<HTMLDivElement>()
+
   return (
-    <ScrollSnapSection
-      id="contact"
-      className="flex flex-col items-center justify-center py-14 pb-24 text-center"
-    >
-      <h2 className="mb-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
-        Let's build something great.
-      </h2>
-      <p className="mb-8 max-w-xl text-lg text-slate-600 dark:text-slate-400">
-        I'm always open to discussing product design work or partnership
-        opportunities. Feel free to reach out.
-      </p>
-      <Link
-        to="/contact"
-        className="inline-flex h-12 items-center justify-center rounded-xl bg-cyan-600 px-8 text-base font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 dark:bg-cyan-600 dark:text-white dark:hover:bg-cyan-500"
+    <div className="relative w-full overflow-hidden bg-slate-950 text-white ring-y ring-white/10">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_82%_70%,rgba(99,102,241,0.22),transparent_34%),linear-gradient(135deg,rgb(15,23,42),rgb(8,47,73)_52%,rgb(17,24,39))]"
+      />
+      <ScrollSnapSection
+        id="contact"
+        snapOffset={0}
+        className="relative mx-auto flex max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
       >
-        <Mail className="mr-2 h-5 w-5" />
-        Contact Me
-      </Link>
-    </ScrollSnapSection>
+        <div
+          ref={contactRevealRef}
+          className={cn(
+            getRevealClassName('flex flex-col items-center', {
+              durationClassName: 'duration-600',
+            }),
+            isContactRevealVisible && 'translate-y-0 opacity-100',
+          )}
+        >
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Let's build something great.
+          </h2>
+          <p className="mb-8 max-w-xl text-lg text-slate-300">
+            I'm always open to discussing product design work or partnership
+            opportunities. Feel free to reach out.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-flex h-12 items-center justify-center rounded-xl bg-cyan-500 px-8 text-base font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
+          >
+            <Mail className="mr-2 h-5 w-5" />
+            Contact Me
+          </Link>
+        </div>
+      </ScrollSnapSection>
+    </div>
   )
 }
 

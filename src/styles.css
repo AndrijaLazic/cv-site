@@ -61,7 +61,7 @@ code {
   --chip-line: oklch(0.87 0.015 226);
   --link-bg-hover: rgb(14 165 233 / 0.1);
   --card-bg: rgb(255 255 255 / 0.95);
-  --header-height: 4.25rem;
+  --header-height: 6.25rem;
 
   --scrollbar-track: rgb(148 163 184 / 0.15);
   --scrollbar-thumb: rgb(71 85 105 / 0.5);

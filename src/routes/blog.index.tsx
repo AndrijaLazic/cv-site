@@ -11,6 +11,7 @@ import { HeroCarousel, PostCard } from '#/features/blog/components'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
+import { PageBackground } from '#/shared/ui/page-background'
 
 const allPostsByLanguage = Object.fromEntries(
   supportedLanguages.map((lang) => [lang, getBlogPostSummaries(lang)]),
@@ -134,7 +135,7 @@ function BlogList() {
   }
 
   return (
-    <div className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
+    <PageBackground className="flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
       <div className="mx-auto max-w-5xl space-y-10">
         {/* Page header */}
         <div className="space-y-2">
@@ -252,6 +253,6 @@ function BlogList() {
           </p>
         )}
       </div>
-    </div>
+    </PageBackground>
   )
 }

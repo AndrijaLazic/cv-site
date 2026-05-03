@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer
       id="contacts"
-      className="mt-20 border-t border-(--line) px-4 pb-14 pt-10 text-(--sea-ink-soft)"
+      className="m-0 border-t border-(--line) px-4 pb-14 pt-10 text-(--sea-ink-soft)"
     >
       <div className="page-wrap flex flex-col items-center gap-5 text-center">
         <div className="flex items-center justify-center gap-2">
