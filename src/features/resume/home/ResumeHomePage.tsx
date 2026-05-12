@@ -7,15 +7,13 @@ import { resolveSupportedLanguage } from '#/features/i18n/config'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader } from '#/shared/ui/card'
 import {
-  getScrollSnapSectionClassName,
+  ScrollSnapPage,
   ScrollSnapSection,
+  useInitialScrollSnapDisabled,
   useOneTimeScrollSnap,
 } from '#/shared/ui/scroll-snap'
-import {
-  getRevealClassName,
-  useRevealOnFirstView,
-} from '#/shared/ui/reveal-section'
-import { PageBackground } from '#/shared/ui/page-background'
+import { BackgroundSection } from '#/shared/ui/background-section'
+import { Reveal } from '#/shared/ui/reveal'
 import { cn } from '#/shared/utils'
 import {
   educationsByLanguage,
@@ -42,23 +40,27 @@ export function ResumeHomePage() {
     [educations],
   )
   const isScrollHintVisible = useScrollHintVisible()
+  const isInitialSnapDisabled = useInitialScrollSnapDisabled()
   useOneTimeScrollSnap({
+    enabled: !isInitialSnapDisabled,
     settleDelayMs: 0,
     snapThreshold: 0.95,
     animationDurationMs: 500,
   })
 
   return (
-    <PageBackground>
-      <div className="px-4 sm:px-6 lg:px-10">
-        <div className="mx-auto max-w-5xl">
-          <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
+    <ScrollSnapPage disabled={isInitialSnapDisabled}>
+      <BackgroundSection variant="radial-layered">
+        <div className="px-4 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
+          </div>
         </div>
-      </div>
-      <ExperienceSection t={t} jobs={sortedJobs} />
-      <EducationSection t={t} educations={sortedEducations} />
-      <ContactSection />
-    </PageBackground>
+        <ExperienceSection t={t} jobs={sortedJobs} />
+        <EducationSection t={t} educations={sortedEducations} />
+        <ContactSection />
+      </BackgroundSection>
+    </ScrollSnapPage>
   )
 }
 
@@ -70,80 +72,48 @@ function HeroSection({
   isScrollHintVisible: boolean
 }) {
   const heroSummary = limitToSentences(t('careerSummaryText'), 2)
-  const { elementRef: heroRevealRef, isVisible: isHeroVisible } =
-    useRevealOnFirstView<HTMLElement>()
 
   return (
-    <section
-      ref={heroRevealRef}
+    <ScrollSnapSection
       id="about"
-      className={getScrollSnapSectionClassName(
-        'relative flex flex-col justify-center',
-      )}
+      className="relative flex flex-col justify-center"
     >
       <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
         <div className="order-2 space-y-6 md:order-1 md:space-y-8">
           <div className="space-y-4">
-            <h1
-              id="about-heading"
-              className={cn(
-                getRevealClassName(
-                  'text-balance text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-left lg:text-6xl dark:text-slate-100',
-                ),
-                isHeroVisible && 'translate-y-0 opacity-100',
-              )}
-              style={{ transitionDelay: '0ms' }}
-            >
-              Andrija Lazic
-            </h1>
-            <div
-              className={cn(
-                getRevealClassName(),
-                isHeroVisible && 'translate-y-0 opacity-100',
-              )}
-              style={{ transitionDelay: '100ms' }}
-            >
+            <Reveal delayMs={0}>
+              <h1
+                id="about-heading"
+                className="text-balance text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-left lg:text-6xl dark:text-slate-100"
+              >
+                Andrija Lazic
+              </h1>
+            </Reveal>
+            <Reveal delayMs={100}>
               <Badge
                 variant="outline"
                 className="mx-auto flex w-fit rounded-full border-cyan-200/70 bg-cyan-50/70 px-3 py-1 text-sm tracking-[0.14em] text-cyan-700 uppercase dark:border-cyan-800/60 dark:bg-cyan-950/40 dark:text-cyan-200 md:mx-0"
               >
                 {t('subtitle')}
               </Badge>
-            </div>
+            </Reveal>
           </div>
 
-          <h2
-            className={cn(
-              getRevealClassName(
-                'text-center text-xl font-medium text-slate-800 sm:text-2xl dark:text-slate-200 md:text-left',
-              ),
-              isHeroVisible && 'translate-y-0 opacity-100',
-            )}
-            style={{ transitionDelay: '200ms' }}
-          >
-            {t('careerSummary')}
-          </h2>
+          <Reveal delayMs={200}>
+            <h2 className="text-center text-xl font-medium text-slate-800 sm:text-2xl dark:text-slate-200 md:text-left">
+              {t('careerSummary')}
+            </h2>
+          </Reveal>
 
-          <p
-            className={cn(
-              getRevealClassName(
-                'text-pretty text-center text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400 md:text-left',
-              ),
-              isHeroVisible && 'translate-y-0 opacity-100',
-            )}
-            style={{ transitionDelay: '300ms' }}
-          >
-            {heroSummary}
-          </p>
+          <Reveal delayMs={300}>
+            <p className="text-pretty text-center text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400 md:text-left">
+              {heroSummary}
+            </p>
+          </Reveal>
 
-          <div
-            className={cn(
-              getRevealClassName(
-                'flex flex-col justify-center gap-4 sm:flex-row md:justify-start',
-              ),
-              isHeroVisible && 'translate-y-0 opacity-100',
-            )}
-            style={{ transitionDelay: '400ms' }}
+          <Reveal
+            delayMs={400}
+            className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start"
           >
             <a
               href="#experience"
@@ -160,17 +130,12 @@ function HeroSection({
               <Download className="mr-2 h-5 w-5" />
               Download CV
             </a>
-          </div>
+          </Reveal>
         </div>
 
-        <div
-          className={cn(
-            getRevealClassName(
-              'relative order-1 mx-auto w-fit md:order-2 md:mx-0',
-            ),
-            isHeroVisible && 'translate-y-0 opacity-100',
-          )}
-          style={{ transitionDelay: '100ms' }}
+        <Reveal
+          delayMs={100}
+          className="relative order-1 mx-auto w-fit md:order-2 md:mx-0"
         >
           <div
             aria-hidden="true"
@@ -184,7 +149,7 @@ function HeroSection({
             height="374"
             loading="eager"
           />
-        </div>
+        </Reveal>
       </div>
 
       {isScrollHintVisible ? (
@@ -193,7 +158,7 @@ function HeroSection({
           <ChevronDown className="size-4" aria-hidden="true" />
         </div>
       ) : null}
-    </section>
+    </ScrollSnapSection>
   )
 }
 
@@ -230,11 +195,6 @@ function JobSection({
   index: number
   id: string
 }) {
-  const { elementRef: headingRevealRef, isVisible: isHeadingRevealVisible } =
-    useRevealOnFirstView<HTMLDivElement>()
-  const { elementRef: jobRevealRef, isVisible: isJobRevealVisible } =
-    useRevealOnFirstView<HTMLDivElement>()
-
   return (
     <ScrollSnapSection
       id={id}
@@ -244,35 +204,21 @@ function JobSection({
       )}
     >
       {index === 0 ? (
-        <div
-          ref={headingRevealRef}
-          className={cn(
-            getRevealClassName('mb-8 space-y-2 text-center sm:mt-0'),
-            isHeadingRevealVisible && 'translate-y-0 opacity-100',
-          )}
-        >
+        <Reveal className="mb-8 space-y-2 text-center sm:mt-0">
           <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl dark:text-slate-100">
             {t('workExperience')}
           </h2>
           <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
             {t('experienceLeadIn')}
           </p>
-        </div>
+        </Reveal>
       ) : null}
 
-      <div
-        ref={jobRevealRef}
-        className={cn(
-          getRevealClassName(
-            'relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4',
-          ),
-          isJobRevealVisible && 'translate-y-0 opacity-100',
-        )}
-      >
+      <Reveal className="relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4">
         <div className="relative z-30 w-full transition-transform duration-300">
           <JobCard t={t} job={job} />
         </div>
-      </div>
+      </Reveal>
     </ScrollSnapSection>
   )
 }
@@ -346,9 +292,6 @@ function EducationSection({
   t: Translation
   educations: Array<ResumeEducation>
 }) {
-  const { elementRef: eduListRef, isVisible: isEduListVisible } =
-    useRevealOnFirstView()
-
   return (
     <ScrollSnapSection
       id="education"
@@ -365,14 +308,13 @@ function EducationSection({
             </h2>
           </div>
 
-          <div className="space-y-4 sm:space-y-5" ref={eduListRef}>
+          <div className="space-y-4 sm:space-y-5">
             {educations.map((education, index) => (
               <EducationCard
                 key={`${education.school}-${education.startDate}`}
                 t={t}
                 education={education}
                 index={index}
-                isVisible={isEduListVisible}
                 isLast={index === educations.length - 1}
               />
             ))}
@@ -387,24 +329,15 @@ function EducationCard({
   t,
   education,
   index,
-  isVisible,
   isLast,
 }: {
   t: Translation
   education: ResumeEducation
   index: number
-  isVisible: boolean
   isLast: boolean
 }) {
   return (
-    <article
-      className={cn(
-        'relative pl-5 sm:pl-7',
-        getRevealClassName(),
-        isVisible && 'translate-y-0 opacity-100',
-      )}
-      style={{ transitionDelay: `${index * 150}ms` }}
-    >
+    <Reveal delayMs={index * 150} className="relative pl-5 sm:pl-7">
       <span
         aria-hidden="true"
         className="absolute top-8 left-0 h-2.5 w-2.5 rounded-full bg-slate-500 ring-4 ring-slate-400/15 dark:bg-slate-300 dark:ring-slate-300/15"
@@ -454,7 +387,7 @@ function EducationCard({
           ) : null}
         </CardContent>
       </Card>
-    </article>
+    </Reveal>
   )
 }
 
@@ -490,46 +423,29 @@ function TagList({
 }
 
 function ContactSection() {
-  const { elementRef: contactRevealRef, isVisible: isContactRevealVisible } =
-    useRevealOnFirstView<HTMLDivElement>()
-
   return (
-    <div className="relative w-full overflow-hidden bg-slate-950 text-white ring-y ring-white/10">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_82%_70%,rgba(99,102,241,0.22),transparent_34%),linear-gradient(135deg,rgb(15,23,42),rgb(8,47,73)_52%,rgb(17,24,39))]"
-      />
-      <ScrollSnapSection
-        id="contact"
-        snapOffset={0}
-        className="relative mx-auto flex max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
+    <BackgroundSection
+      id="contact"
+      snap={{ settledThreshold: { desktop: 0.8 } }}
+      reveal={{ duration: 'duration-600' }}
+      className="flex w-full items-center justify-center bg-[radial-gradient(circle_at_22%_20%,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_82%_70%,rgba(99,102,241,0.22),transparent_34%),linear-gradient(135deg,rgb(15,23,42),rgb(8,47,73)_52%,rgb(17,24,39))] text-white ring-y ring-white/10"
+      contentClassName="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
+    >
+      <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        Let's build something great.
+      </h2>
+      <p className="mb-8 max-w-xl text-lg text-slate-300">
+        I'm always open to discussing product design work or partnership
+        opportunities. Feel free to reach out.
+      </p>
+      <Link
+        to="/contact"
+        className="inline-flex h-12 items-center justify-center rounded-xl bg-cyan-500 px-8 text-base font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
       >
-        <div
-          ref={contactRevealRef}
-          className={cn(
-            getRevealClassName('flex flex-col items-center', {
-              durationClassName: 'duration-600',
-            }),
-            isContactRevealVisible && 'translate-y-0 opacity-100',
-          )}
-        >
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Let's build something great.
-          </h2>
-          <p className="mb-8 max-w-xl text-lg text-slate-300">
-            I'm always open to discussing product design work or partnership
-            opportunities. Feel free to reach out.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex h-12 items-center justify-center rounded-xl bg-cyan-500 px-8 text-base font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
-          >
-            <Mail className="mr-2 h-5 w-5" />
-            Contact Me
-          </Link>
-        </div>
-      </ScrollSnapSection>
-    </div>
+        <Mail className="mr-2 h-5 w-5" />
+        Contact Me
+      </Link>
+    </BackgroundSection>
   )
 }
 

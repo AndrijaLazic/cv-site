@@ -1,0 +1,341 @@
+/*
+ * backgrounds.css
+ * ---------------------------------------------------------------
+ * Background preset classes and keyframe animations.
+ * All colors reference CSS custom property design tokens so that
+ * both light and dark modes are handled automatically.
+ *
+ * Presets:
+ *   .bg-preset-radial-simple   - static single radial gradient
+ *   .bg-preset-radial-layered  - static multi-layer gradient
+ *   .bg-preset-grid-pattern    - static grid lines over gradient base
+ *   .bg-preset-aurora          - animated shifting aurora gradient
+ *   .bg-preset-mesh-blobs      - animated drifting glow blobs
+ *
+ * Animation is toggled by adding .bg-animated to the element.
+ * All keyframes are defined here, with no JavaScript injection.
+ * ---------------------------------------------------------------
+ */
+
+/* ================================================================
+   1. STATIC - Radial Simple
+   A single soft elliptical gradient rising from the top center.
+   ================================================================ */
+.bg-preset-radial-simple {
+  background:
+    radial-gradient(
+      ellipse 85% 55% at 50% -5%,
+      color-mix(in srgb, var(--color-primary) 14%, transparent),
+      transparent 68%
+    ),
+    var(--color-bg);
+}
+
+/* ================================================================
+   2. STATIC - Radial Layered
+   Multiple overlapping radial gradients plus a diagonal linear
+   gradient for premium depth.
+   ================================================================ */
+.bg-preset-radial-layered {
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 18% 18%,
+      color-mix(in srgb, var(--color-primary) 16%, transparent),
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 45% 38% at 82% 85%,
+      color-mix(in srgb, var(--color-accent) 9%, transparent),
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 65% 50% at 50% 50%,
+      color-mix(in srgb, var(--color-primary) 7%, transparent),
+      transparent 100%
+    ),
+    linear-gradient(
+      155deg,
+      var(--color-bg) 0%,
+      var(--color-surface-soft) 48%,
+      var(--color-bg) 100%
+    );
+}
+
+/* ================================================================
+   3. STATIC - Grid Pattern
+   Subtle grid lines rendered via repeating linear gradients, with
+   a radial glow at the top to anchor the layout visually.
+   ================================================================ */
+.bg-preset-grid-pattern {
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      125% 61% at 50% 46%,
+      color-mix(in srgb, var(--color-primary) 20%, var(--color-surface-soft)) 0%,
+      color-mix(in srgb, var(--color-primary) 10%, var(--color-bg)) 36%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--header-bg) 0%,
+      color-mix(in srgb, var(--header-bg) 82%, var(--color-bg)) 46%,
+      var(--color-surface-soft) 100%
+    );
+
+  background-size:
+    44px 44px,
+    44px 44px,
+    auto,
+    auto;
+}
+
+.dark .bg-preset-grid-pattern {
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--color-text) 8%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-text) 8%, transparent) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      125% 61% at 50% 46%,
+      color-mix(in srgb, var(--color-primary) 34%, var(--color-surface)) 0%,
+      color-mix(in srgb, var(--color-primary) 20%, var(--color-surface)) 34%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--header-bg) 0%,
+      color-mix(in srgb, var(--header-bg) 82%, var(--color-surface)) 48%,
+      var(--color-surface) 100%
+    );
+
+  background-size:
+    44px 44px,
+    44px 44px,
+    auto,
+    auto;
+}
+
+.bg-preset-hero-gradient {
+  background:
+    radial-gradient(
+      125% 80% at 50% 65%,
+      color-mix(in srgb, var(--color-primary) 22%, var(--color-surface-soft)) 0%,
+      color-mix(in srgb, var(--color-primary) 12%, var(--color-bg)) 38%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--header-bg) 0%,
+      color-mix(in srgb, var(--header-bg) 80%, var(--color-bg)) 42%,
+      var(--color-surface-soft) 100%
+    );
+}
+
+.dark .bg-preset-hero-gradient {
+  background:
+    radial-gradient(
+      125% 80% at 50% 85%,
+      color-mix(in srgb, var(--color-primary) 42%, var(--color-surface)) 0%,
+      color-mix(in srgb, var(--color-primary) 24%, var(--color-surface)) 34%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--header-bg) 0%,
+      color-mix(in srgb, var(--header-bg) 82%, var(--color-surface)) 48%,
+      var(--color-surface) 100%
+    );
+}
+
+.bg-preset-features-gradient {
+  background:
+    radial-gradient(
+      ellipse 82% 34% at 50% 0%,
+      color-mix(in srgb, var(--color-primary) 11%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 54% 30% at 12% 32%,
+      color-mix(in srgb, var(--color-accent) 8%, transparent),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 58% 36% at 92% 68%,
+      color-mix(in srgb, var(--color-primary) 12%, transparent),
+      transparent 78%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-bg) 92%, var(--color-primary-soft)) 0%,
+      var(--color-bg) 42%,
+      color-mix(in srgb, var(--color-surface-soft) 70%, var(--color-bg)) 100%
+    );
+}
+
+.bg-preset-contact-gradient {
+  background:
+    radial-gradient(
+      ellipse 80% 56% at 0% 8%,
+      color-mix(in srgb, var(--color-primary) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 70% 52% at 100% 70%,
+      color-mix(in srgb, var(--color-accent) 11%, transparent),
+      transparent 72%
+    ),
+    linear-gradient(
+      135deg,
+      var(--color-bg) 0%,
+      color-mix(
+          in srgb,
+          var(--color-surface-soft) 82%,
+          var(--color-primary-soft)
+        )
+        48%,
+      var(--color-bg) 100%
+    );
+}
+
+/* ================================================================
+   4. ANIMATED - Aurora Gradient
+   A wide-spectrum diagonal gradient that shifts its position,
+   creating a slow luminous aurora effect.
+   Animation is enabled by .bg-animated.
+   ================================================================ */
+
+@keyframes bg-aurora-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  33% {
+    background-position: 65% 22%;
+  }
+  66% {
+    background-position: 35% 78%;
+  }
+}
+
+.bg-preset-aurora {
+  background: linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--color-primary) 24%, var(--color-bg)),
+    var(--color-bg),
+    color-mix(in srgb, var(--color-accent) 10%, var(--color-bg)),
+    color-mix(in srgb, var(--color-primary) 20%, var(--color-surface-soft)),
+    color-mix(in srgb, var(--color-primary-soft) 38%, var(--color-bg))
+  );
+  background-size: 400% 400%;
+}
+
+.bg-preset-aurora.bg-animated {
+  animation: bg-aurora-shift 15s ease infinite;
+}
+
+/* ================================================================
+   5. ANIMATED - Mesh Blobs
+   Absolute-positioned radial blobs that drift slowly around the
+   section, creating a soft glowing mesh gradient effect.
+   The section itself has a solid background-color.
+   Blob elements are .bg-blob-orb children rendered by the
+   BackgroundSection component.
+   ================================================================ */
+
+.bg-preset-mesh-blobs {
+  background-color: var(--color-bg);
+}
+
+/* ---- Blob base styles ---- */
+.bg-blob-orb {
+  border-radius: 9999px;
+  filter: blur(88px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.bg-blob-orb-primary {
+  background: color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+
+.bg-blob-orb-accent {
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+}
+
+.bg-blob-orb-soft {
+  background: color-mix(in srgb, var(--color-primary-soft) 55%, transparent);
+}
+
+/* ---- Blob keyframes ---- */
+@keyframes bg-blob-drift-1 {
+  0%,
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  30% {
+    transform: translate(18%, -22%) scale(1.18);
+  }
+  65% {
+    transform: translate(-15%, 16%) scale(0.94);
+  }
+}
+
+@keyframes bg-blob-drift-2 {
+  0%,
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  35% {
+    transform: translate(-20%, 16%) scale(0.9);
+  }
+  70% {
+    transform: translate(22%, -18%) scale(1.16);
+  }
+}
+
+@keyframes bg-blob-drift-3 {
+  0%,
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(14%, 20%) scale(1.12);
+  }
+}
+
+/* ---- Animated blob children ---- */
+.bg-animated .bg-blob-drift-1 {
+  animation: bg-blob-drift-1 12s ease-in-out infinite;
+}
+
+.bg-animated .bg-blob-drift-2 {
+  animation: bg-blob-drift-2 15s ease-in-out infinite;
+}
+
+.bg-animated .bg-blob-drift-3 {
+  animation: bg-blob-drift-3 10s ease-in-out infinite;
+}
+
+/* ================================================================
+   ACCESSIBILITY - Reduced motion
+   Disable all background animations for users who prefer it.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .bg-preset-aurora.bg-animated,
+  .bg-animated .bg-blob-orb {
+    animation: none !important;
+  }
+}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { publicConfig } from '#/shared/config/public-env'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
-import { PageBackground } from '#/shared/ui/page-background'
+import { BackgroundSection } from '#/shared/ui/background-section'
 
 export const Route = createFileRoute('/contact')({
   component: Contact,
@@ -38,7 +38,10 @@ function Contact() {
   const { t } = useTranslation('common')
 
   return (
-    <PageBackground className="flex-1 px-4 py-10 sm:px-6 sm:py-14">
+    <BackgroundSection
+      variant="radial-layered"
+      className="flex-1 px-4 py-10 sm:px-6 sm:py-14"
+    >
       <section className="mx-auto w-full max-w-3xl">
         <Card className="border-slate-200/80 bg-white/75 shadow-lg backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/65">
           <CardHeader className="space-y-3">
@@ -79,6 +82,6 @@ function Contact() {
           </CardContent>
         </Card>
       </section>
-    </PageBackground>
+    </BackgroundSection>
   )
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useRef, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { cn } from '#/shared/utils'
 import { getBlogPostSummaries } from '#/features/blog/api'
 import {
@@ -11,7 +11,8 @@ import { HeroCarousel, PostCard } from '#/features/blog/components'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
-import { PageBackground } from '#/shared/ui/page-background'
+import { BackgroundSection } from '#/shared/ui/background-section'
+import { Reveal } from '#/shared/ui/reveal'
 
 const allPostsByLanguage = Object.fromEntries(
   supportedLanguages.map((lang) => [lang, getBlogPostSummaries(lang)]),
@@ -45,42 +46,6 @@ export const Route = createFileRoute('/blog/')({
     }
   },
 })
-
-function useScrollReveal(deps: unknown[]) {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const articles = container.querySelectorAll<HTMLElement>(
-      '[data-reveal="true"]',
-    )
-    articles.forEach((el) => {
-      el.classList.add('opacity-0', 'translate-y-4')
-      el.classList.remove('opacity-100', 'translate-y-0')
-    })
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-4')
-            entry.target.classList.add('opacity-100', 'translate-y-0')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { rootMargin: '0px 0px -60px 0px', threshold: 0.08 },
-    )
-
-    articles.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, deps)
-
-  return containerRef
-}
 
 function BlogList() {
   const { t, i18n } = useTranslation('resume')
@@ -124,8 +89,6 @@ function BlogList() {
     return result
   }, [posts, activeTag, sortOrder])
 
-  const gridRef = useScrollReveal([activeTag, activeLanguage, sortOrder])
-
   function handleTagClick(tag: string) {
     if (tag === activeTag) {
       void navigate({ search: {} })
@@ -135,7 +98,10 @@ function BlogList() {
   }
 
   return (
-    <PageBackground className="flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
+    <BackgroundSection
+      variant="radial-layered"
+      className="flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14"
+    >
       <div className="mx-auto max-w-5xl space-y-10">
         {/* Page header */}
         <div className="space-y-2">
@@ -227,23 +193,18 @@ function BlogList() {
 
         {/* Post grid with scroll-reveal */}
         {filteredPosts.length > 0 ? (
-          <div
-            ref={gridRef}
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          >
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPosts.map((post, index) => {
               const isFirstRow = index < 3
               return (
-                <article
+                <Reveal
                   key={`${post.slug}-${index}`}
-                  data-reveal={isFirstRow ? undefined : 'true'}
-                  className={cn(
-                    'transition-all duration-500 ease-out',
-                    isFirstRow ? 'opacity-100 translate-y-0' : '',
-                  )}
+                  disabled={isFirstRow}
+                  duration="duration-500"
+                  className="h-full"
                 >
                   <PostCard post={post} />
-                </article>
+                </Reveal>
               )
             })}
           </div>
@@ -253,6 +214,6 @@ function BlogList() {
           </p>
         )}
       </div>
-    </PageBackground>
+    </BackgroundSection>
   )
 }

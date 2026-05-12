@@ -63,6 +63,14 @@ code {
   --card-bg: rgb(255 255 255 / 0.95);
   --header-height: 6.25rem;
 
+  --color-bg: var(--background);
+  --color-surface: rgb(255 255 255);
+  --color-surface-soft: rgb(241 245 249);
+  --color-text: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-soft: rgb(224 242 254);
+  --color-accent: var(--accent);
+
   --scrollbar-track: rgb(148 163 184 / 0.15);
   --scrollbar-thumb: rgb(71 85 105 / 0.5);
   --scrollbar-thumb-hover: rgb(51 65 85 / 0.68);
@@ -110,6 +118,13 @@ code {
   --chip-line: oklch(0.39 0.015 248);
   --link-bg-hover: rgb(56 189 248 / 0.16);
   --card-bg: rgb(3 7 18 / 0.95);
+  --color-bg: var(--background);
+  --color-surface: rgb(2 6 23);
+  --color-surface-soft: rgb(15 23 42);
+  --color-text: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-soft: rgb(14 116 144);
+  --color-accent: var(--accent);
 
   --scrollbar-track: rgb(71 85 105 / 0.22);
   --scrollbar-thumb: rgb(148 163 184 / 0.5);
