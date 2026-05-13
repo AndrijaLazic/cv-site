@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
-import { Briefcase, ChevronDown, Download, Mail, Sparkles } from 'lucide-react'
+import { ChevronDown, ExternalLink, Mail, Sparkles } from 'lucide-react'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader } from '#/shared/ui/card'
@@ -80,55 +80,79 @@ function HeroSection({
     >
       <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
         <div className="order-2 space-y-6 md:order-1 md:space-y-8">
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Reveal delayMs={0}>
+              <p
+                className="font-mono text-sm tracking-widest"
+                style={{ color: 'var(--color-muted)' }}
+              >
+                {t('heroIntro')}{' '}
+                <span className="cursor-blink" aria-hidden="true">
+                  _
+                </span>
+              </p>
+            </Reveal>
+
+            <Reveal delayMs={50}>
               <h1
                 id="about-heading"
-                className="text-balance text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-left lg:text-6xl dark:text-slate-100"
+                className="text-balance text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-left lg:text-6xl"
+                style={{ color: 'var(--color-text)' }}
               >
                 Andrija Lazic
               </h1>
             </Reveal>
-            <Reveal delayMs={100}>
-              <Badge
-                variant="outline"
-                className="mx-auto flex w-fit rounded-full border-cyan-200/70 bg-cyan-50/70 px-3 py-1 text-sm tracking-[0.14em] text-cyan-700 uppercase dark:border-cyan-800/60 dark:bg-cyan-950/40 dark:text-cyan-200 md:mx-0"
+
+            <Reveal delayMs={150}>
+              <p
+                className="text-center text-base font-semibold tracking-[0.12em] uppercase md:text-left"
+                style={{ color: 'var(--color-accent)' }}
               >
                 {t('subtitle')}
-              </Badge>
+              </p>
             </Reveal>
           </div>
 
-          <Reveal delayMs={200}>
-            <h2 className="text-center text-xl font-medium text-slate-800 sm:text-2xl dark:text-slate-200 md:text-left">
-              {t('careerSummary')}
-            </h2>
-          </Reveal>
-
-          <Reveal delayMs={300}>
-            <p className="text-pretty text-center text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400 md:text-left">
+          <Reveal delayMs={250}>
+            <p
+              className="text-pretty text-center text-base leading-relaxed sm:text-lg md:text-left"
+              style={{ color: 'var(--color-muted)' }}
+            >
               {heroSummary}
             </p>
           </Reveal>
 
           <Reveal
-            delayMs={400}
+            delayMs={350}
             className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start"
           >
             <a
               href="#experience"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-cyan-600 px-8 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 dark:bg-cyan-600 dark:text-white dark:hover:bg-cyan-500"
+              className="inline-flex h-11 items-center justify-center rounded-xl px-8 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
+              style={{
+                backgroundColor: 'var(--color-primary)',
+                boxShadow:
+                  '0 4px 18px 0 color-mix(in srgb, var(--color-primary) 40%, transparent)',
+                ['--tw-ring-color' as string]: 'var(--color-primary)',
+              }}
             >
-              <Briefcase className="mr-2 h-5 w-5" />
-              Experience
+              View Projects
             </a>
             <a
-              href="/docs/Andrija_Lazic_Resume.docx"
-              download
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-8 text-sm font-medium text-slate-900 shadow-sm transition-colors hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-50"
+              href="https://github.com/AndrijaLazic"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-8 text-sm font-semibold transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
+              style={{
+                borderColor: 'var(--color-primary)',
+                color: 'var(--color-primary)',
+                backgroundColor:
+                  'color-mix(in srgb, var(--color-primary) 8%, transparent)',
+                ['--tw-ring-color' as string]: 'var(--color-primary)',
+              }}
             >
-              <Download className="mr-2 h-5 w-5" />
-              Download CV
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              View GitHub
             </a>
           </Reveal>
         </div>
@@ -139,12 +163,16 @@ function HeroSection({
         >
           <div
             aria-hidden="true"
-            className="absolute -inset-2 rounded-[1.75rem] bg-gradient-to-b from-cyan-300/55 via-white/20 to-blue-300/55 blur-sm dark:from-cyan-500/30 dark:via-transparent dark:to-blue-600/25"
+            className="absolute -inset-2 rounded-[1.75rem] blur-sm"
+            style={{
+              background:
+                'linear-gradient(to bottom, color-mix(in srgb, var(--color-primary) 40%, transparent), color-mix(in srgb, var(--color-accent) 30%, transparent))',
+            }}
           />
           <img
             src="/headshot-on-white.jpg"
             alt={t('headshot')}
-            className="relative h-[22rem] w-[16rem] rounded-[1.35rem] object-cover shadow-[0_20px_45px_-30px_rgba(15,23,42,0.95)] ring-1 ring-slate-900/10 dark:ring-slate-100/15 md:h-[26rem] md:w-[19rem]"
+            className="relative h-[22rem] w-[16rem] rounded-[1.35rem] object-cover shadow-[0_20px_45px_-30px_rgba(15,23,42,0.95)] ring-1 ring-white/10 md:h-[26rem] md:w-[19rem]"
             width="292"
             height="374"
             loading="eager"
@@ -153,7 +181,15 @@ function HeroSection({
       </div>
 
       {isScrollHintVisible ? (
-        <div className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-slate-200/70 bg-white/75 px-4 py-2 text-slate-600 shadow-sm backdrop-blur-sm motion-safe:animate-pulse dark:border-slate-700/80 dark:bg-slate-900/75 dark:text-slate-300 sm:flex">
+        <div
+          className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border px-4 py-2 shadow-sm backdrop-blur-sm motion-safe:animate-pulse sm:flex"
+          style={{
+            borderColor: 'var(--line)',
+            backgroundColor:
+              'color-mix(in srgb, var(--color-surface) 80%, transparent)',
+            color: 'var(--color-muted)',
+          }}
+        >
           <p className="text-sm font-semibold">{t('scrollHint')}</p>
           <ChevronDown className="size-4" aria-hidden="true" />
         </div>

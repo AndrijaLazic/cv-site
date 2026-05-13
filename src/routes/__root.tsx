@@ -9,7 +9,7 @@ import type { ReactNode } from 'react'
 import Footer from '#/features/layout/Footer'
 import Header from '#/features/layout/Header'
 import { loadInitialPreferences } from '#/features/preferences/preference.functions'
-import { ThemeProvider } from '#/features/theme/ThemeContext'
+import { ThemeProvider, isDarkTheme } from '#/features/theme/ThemeContext'
 import i18n, {
   i18nReady,
   resolveSupportedLanguage,
@@ -94,13 +94,15 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: ReactNode }) {
   const { language, theme } = Route.useLoaderData()
   const shouldRenderDevtools = useDeferredDevtools()
+  const dark = isDarkTheme(theme)
+  const htmlClassName = `${theme} ${dark ? 'dark' : 'light'}`
 
   return (
     <html
       lang={language}
-      className={theme}
+      className={htmlClassName}
       data-theme={theme}
-      style={{ colorScheme: theme }}
+      style={{ colorScheme: dark ? 'dark' : 'light' }}
     >
       <head>
         <HeadContent />
@@ -108,7 +110,10 @@ function RootDocument({ children }: { children: ReactNode }) {
       <body className="font-sans antialiased wrap-break-word min-h-screen flex flex-col selection:bg-rose-500/20">
         <ThemeProvider initialMode={theme}>
           <Header />
-          <main className="flex-1 flex flex-col w-full bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_42%),linear-gradient(to_bottom,rgb(248_250_252),rgb(241_245_249))] dark:bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.18),transparent_45%),linear-gradient(to_bottom,rgb(2_6_23),rgb(3_7_18))]">
+          <main
+            className="flex-1 flex flex-col w-full"
+            style={{ backgroundColor: 'var(--color-bg)' }}
+          >
             {children}
           </main>
           <Footer />

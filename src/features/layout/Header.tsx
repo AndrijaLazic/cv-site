@@ -2,14 +2,14 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Menu, ArrowLeft } from 'lucide-react'
 import { memo, useEffect, useState } from 'react'
-import ThemeToggle from '#/features/theme/ThemeToggle'
+import ThemeSelector from '#/features/theme/ThemeSelector'
 import LanguageSwitcher from '#/features/i18n/LanguageSwitcher'
 
 const HeaderControls = memo(function HeaderControlsView() {
   return (
     <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
       <LanguageSwitcher />
-      <ThemeToggle />
+      <ThemeSelector />
     </div>
   )
 })

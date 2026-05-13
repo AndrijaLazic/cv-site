@@ -14,10 +14,11 @@
     "blog": "Blog"
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
     "modeLabel": "Theme",
-    "setTo": "Set theme to {{mode}}"
+    "midnightEditor": "Midnight Editor",
+    "graphiteNeon": "Graphite Neon",
+    "paperTerminal": "Paper Terminal",
+    "selectTheme": "Select theme"
   },
   "language": {
     "switchLabel": "Switch language",

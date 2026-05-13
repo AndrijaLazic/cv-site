@@ -1,6 +1,9 @@
 {
   "title": "CV Andrije Lazica",
   "subtitle": "Bekend inzenjering, AI i DevOps",
+  "heroIntro": "Zdravo, ja sam",
+  "viewProjects": "Pogledaj projekte",
+  "viewGitHub": "GitHub profil",
   "careerSummary": "Profesionalni rezime",
   "careerSummaryText": "Bekend softverski inzenjer sa prakticnim iskustvom u razvoju i odrzavanju web aplikacija i servisa uz Spring Boot, Python, .NET i Node.js. Radim na backend inzenjeringu, AI funkcionalnostima i DevOps procesima, sa fokusom na pouzdanu isporuku i kvalitet softvera.",
   "headshot": "Profesionalna fotografija",

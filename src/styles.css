@@ -277,3 +277,160 @@ code {
   align-items: center;
   justify-content: center;
 }
+
+/* ================================================================
+   THEME TOKENS — 3-theme system
+   Each [data-theme] block overrides the key design tokens so that
+   backgrounds, text, and accent colors shift per theme.
+   The .dark class is still applied for dark themes so that all
+   existing dark: Tailwind variants continue to work.
+   ================================================================ */
+
+[data-theme='midnight-editor'] {
+  --background: #0b1020;
+  --foreground: #e6edf7;
+  --card: #151b2e;
+  --card-foreground: #e6edf7;
+  --popover: #151b2e;
+  --popover-foreground: #e6edf7;
+  --primary: #4f8cff;
+  --primary-foreground: #ffffff;
+  --secondary: #1e2740;
+  --secondary-foreground: #e6edf7;
+  --muted: #1e2740;
+  --muted-foreground: #8fa1c7;
+  --accent: #22d3ee;
+  --accent-foreground: #0b1020;
+  --border: #1e2740;
+  --input: #1e2740;
+  --ring: #4f8cff;
+  --destructive: #f87171;
+  --destructive-foreground: #0b1020;
+
+  --color-bg: #0b1020;
+  --color-surface: #151b2e;
+  --color-surface-soft: #1e2740;
+  --color-primary: #4f8cff;
+  --color-primary-soft: #1a2e5a;
+  --color-accent: #22d3ee;
+  --color-text: #e6edf7;
+  --color-muted: #8fa1c7;
+
+  --header-bg: rgb(11 16 32 / 0.85);
+  --chip-bg: rgb(21 27 46 / 0.9);
+  --chip-line: #1e2740;
+  --line: #1e2740;
+  --sea-ink: #e6edf7;
+  --sea-ink-soft: #8fa1c7;
+  --link-bg-hover: rgb(79 140 255 / 0.15);
+  --card-bg: rgb(21 27 46 / 0.95);
+
+  --scrollbar-track: rgb(79 140 255 / 0.12);
+  --scrollbar-thumb: rgb(143 161 199 / 0.45);
+  --scrollbar-thumb-hover: rgb(230 237 247 / 0.6);
+}
+
+[data-theme='graphite-neon'] {
+  --background: #111315;
+  --foreground: #f3f4f6;
+  --card: #1b1f24;
+  --card-foreground: #f3f4f6;
+  --popover: #1b1f24;
+  --popover-foreground: #f3f4f6;
+  --primary: #a78bfa;
+  --primary-foreground: #111315;
+  --secondary: #252930;
+  --secondary-foreground: #f3f4f6;
+  --muted: #252930;
+  --muted-foreground: #9ca3af;
+  --accent: #34d399;
+  --accent-foreground: #111315;
+  --border: #252930;
+  --input: #252930;
+  --ring: #a78bfa;
+  --destructive: #f87171;
+  --destructive-foreground: #111315;
+
+  --color-bg: #111315;
+  --color-surface: #1b1f24;
+  --color-surface-soft: #252930;
+  --color-primary: #a78bfa;
+  --color-primary-soft: #2e2547;
+  --color-accent: #34d399;
+  --color-text: #f3f4f6;
+  --color-muted: #9ca3af;
+
+  --header-bg: rgb(17 19 21 / 0.85);
+  --chip-bg: rgb(27 31 36 / 0.9);
+  --chip-line: #252930;
+  --line: #252930;
+  --sea-ink: #f3f4f6;
+  --sea-ink-soft: #9ca3af;
+  --link-bg-hover: rgb(167 139 250 / 0.15);
+  --card-bg: rgb(27 31 36 / 0.95);
+
+  --scrollbar-track: rgb(167 139 250 / 0.12);
+  --scrollbar-thumb: rgb(156 163 175 / 0.45);
+  --scrollbar-thumb-hover: rgb(243 244 246 / 0.6);
+}
+
+[data-theme='paper-terminal'] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #eff6ff;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #14b8a6;
+  --accent-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #2563eb;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f1f5f9;
+  --color-primary: #2563eb;
+  --color-primary-soft: #dbeafe;
+  --color-accent: #14b8a6;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
+
+  --header-bg: rgb(248 250 252 / 0.88);
+  --chip-bg: rgb(255 255 255 / 0.9);
+  --chip-line: #e2e8f0;
+  --line: #e2e8f0;
+  --sea-ink: #0f172a;
+  --sea-ink-soft: #64748b;
+  --link-bg-hover: rgb(37 99 235 / 0.08);
+  --card-bg: rgb(255 255 255 / 0.95);
+
+  --scrollbar-track: rgb(37 99 235 / 0.08);
+  --scrollbar-thumb: rgb(100 116 139 / 0.4);
+  --scrollbar-thumb-hover: rgb(15 23 42 / 0.55);
+}
+
+/* ================================================================
+   CURSOR BLINK — used in hero "Hi, I'm _" animation
+   ================================================================ */
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1.1s step-end infinite;
+}

@@ -6,10 +6,16 @@ import type { SupportedLanguage } from '#/features/i18n/languages'
 
 import { LANGUAGE_COOKIE_KEY, THEME_COOKIE_KEY } from './cookies'
 
-const defaultTheme: ThemeMode = 'dark'
+const defaultTheme: ThemeMode = 'graphite-neon'
+
+const validThemes: ReadonlyArray<string> = [
+  'midnight-editor',
+  'graphite-neon',
+  'paper-terminal',
+]
 
 function resolveThemeMode(theme?: string): ThemeMode {
-  return theme === 'light' || theme === 'dark' ? theme : defaultTheme
+  return validThemes.includes(theme ?? '') ? (theme as ThemeMode) : defaultTheme
 }
 
 export type InitialPreferences = {

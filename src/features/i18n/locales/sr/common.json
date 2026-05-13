@@ -14,10 +14,11 @@
     "blog": "Blog"
   },
   "theme": {
-    "light": "Svetlo",
-    "dark": "Tamno",
     "modeLabel": "Tema",
-    "setTo": "Podesi temu na {{mode}}"
+    "midnightEditor": "Midnight Editor",
+    "graphiteNeon": "Graphite Neon",
+    "paperTerminal": "Paper Terminal",
+    "selectTheme": "Izaberi temu"
   },
   "language": {
     "switchLabel": "Promeni jezik",
