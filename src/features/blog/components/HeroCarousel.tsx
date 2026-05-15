@@ -56,7 +56,7 @@ function HeroCarouselView({
   return (
     <section
       aria-label={ariaLabel}
-      className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800"
+      className="group relative w-full overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-card) shadow-[0_24px_70px_-38px_rgba(15,23,42,0.65)] ring-1 ring-(--color-border)"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -96,22 +96,22 @@ function HeroCarouselView({
                     }}
                   />
                 ) : (
-                  <div className="h-full w-full bg-slate-200 dark:bg-slate-700" />
+                  <div className="h-full w-full bg-(--color-surface-soft)" />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 flex flex-wrap gap-2 text-white">
                   {post.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-cyan-600/80 px-2 py-0.5 text-xs font-medium backdrop-blur-sm"
+                      className="rounded-full bg-(--color-primary) px-2 py-0.5 text-xs font-medium text-(--color-button-text) backdrop-blur-sm"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="flex h-[40%] flex-col justify-center bg-white p-4 sm:p-6 dark:bg-slate-800">
-                <time className="mb-2 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex h-[40%] flex-col justify-center bg-(--color-card) p-4 sm:p-6">
+                <time className="mb-2 text-xs text-(--color-muted)">
                   {new Date(post.publishedDate).toLocaleDateString(
                     activeLanguage === 'sr' ? 'sr-RS' : 'en-US',
                     {
@@ -121,10 +121,10 @@ function HeroCarouselView({
                     },
                   )}
                 </time>
-                <h2 className="line-clamp-1 text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">
+                <h2 className="line-clamp-1 text-xl font-bold text-(--color-text) sm:text-2xl">
                   {post.title}
                 </h2>
-                <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
+                <p className="mt-2 line-clamp-2 text-sm text-(--color-muted)">
                   {post.summary}
                 </p>
               </div>
@@ -169,8 +169,8 @@ function HeroCarouselView({
                 className={cn(
                   'h-2 w-2 rounded-full transition-colors',
                   i === carouselIndex
-                    ? 'bg-cyan-500'
-                    : 'bg-slate-300/50 hover:bg-slate-400',
+                    ? 'bg-(--color-primary)'
+                    : 'bg-(--color-muted)/45 hover:bg-(--color-muted)',
                 )}
                 aria-label={`Go to slide ${i + 1}`}
               />

@@ -1,7 +1,6 @@
 import { memo } from 'react'
-import { useTheme } from './ThemeContext'
-import { isDarkTheme } from './ThemeContext'
 import { Moon, Sun } from 'lucide-react'
+import { isDarkTheme, useTheme } from './ThemeContext'
 import type { ThemeMode } from './ThemeContext'
 
 function ThemeToggle() {

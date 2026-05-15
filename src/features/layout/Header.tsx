@@ -53,7 +53,7 @@ function Header() {
       data-app-header="true"
       className={`sticky top-0 z-50 px-4 ${
         isMenuOpen
-          ? 'bg-slate-50 dark:bg-slate-950'
+          ? 'bg-(--color-bg)'
           : 'bg-(--header-bg) backdrop-blur-lg'
       }`}
     >
@@ -64,7 +64,7 @@ function Header() {
         <div className="flex items-center sm:hidden">
           <button
             type="button"
-            className="relative z-70 inline-flex size-10 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="relative z-70 inline-flex size-10 items-center justify-center rounded-lg text-(--color-muted) transition-colors hover:bg-(--link-bg-hover) hover:text-(--color-text)"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             aria-expanded={isMenuOpen}
@@ -135,7 +135,7 @@ function Header() {
       >
         <div
           id="mobile-nav-drawer"
-          className={`fixed inset-y-0 left-0 z-70 h-screen w-[min(95vw,27rem)] border-r border-(--line) bg-slate-50 p-4 pt-[calc(var(--header-height)+0.75rem)] shadow-xl transition-transform duration-150 ease-out dark:bg-slate-950 ${
+          className={`fixed inset-y-0 left-0 z-70 h-screen w-[min(95vw,27rem)] border-r border-(--line) bg-(--color-bg) p-4 pt-[calc(var(--header-height)+0.75rem)] shadow-xl transition-transform duration-150 ease-out ${
             isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
           onClick={(event) => event.stopPropagation()}
@@ -144,7 +144,7 @@ function Header() {
             <Link
               to="/"
               hash="about"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-(--color-text) transition-colors hover:bg-(--link-bg-hover)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.about')}
@@ -152,7 +152,7 @@ function Header() {
             <Link
               to="/"
               hash="experience"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-(--color-text) transition-colors hover:bg-(--link-bg-hover)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.experience')}
@@ -160,21 +160,21 @@ function Header() {
             <Link
               to="/"
               hash="education"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-(--color-text) transition-colors hover:bg-(--link-bg-hover)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.education')}
             </Link>
             <Link
               to="/blog"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-(--color-text) transition-colors hover:bg-(--link-bg-hover)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.blog')}
             </Link>
             <Link
               to="/contact"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-(--color-text) transition-colors hover:bg-(--link-bg-hover)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.contact')}

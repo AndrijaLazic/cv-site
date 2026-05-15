@@ -4,7 +4,7 @@ import { cn } from '#/shared/utils'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
 
-const FALLBACK_IMAGE_BACKGROUND = 'rgb(241 245 249)'
+const FALLBACK_IMAGE_BACKGROUND = 'var(--color-surface-soft)'
 
 type PostCardProps = {
   post: BlogPostSummary
@@ -21,7 +21,7 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
     >
       <Card
         className={cn(
-          'flex h-full min-h-[26rem] flex-col gap-0 overflow-hidden border-slate-200/85 bg-linear-to-br from-white via-white to-slate-50/70 py-0 shadow-md ring-1 ring-slate-950/5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-xl group-hover:ring-cyan-500/25 dark:border-slate-700/80 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/90 dark:ring-white/10 dark:group-hover:ring-cyan-400/30',
+          'flex h-full min-h-[26rem] flex-col gap-0 overflow-hidden border-(--color-border) bg-(--color-card) py-0 shadow-md ring-1 ring-(--color-border) transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-(--color-primary) group-hover:shadow-xl group-hover:ring-(--color-primary)',
           featured && 'md:min-h-[24rem] md:flex-row',
           className,
         )}
@@ -29,7 +29,7 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
         {post.coverImage ? (
           <div
             className={cn(
-              'relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-slate-200/80 dark:border-slate-700/80',
+              'relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-(--color-border)',
               featured
                 ? 'h-64 sm:h-80 md:h-auto md:w-1/2 md:border-r md:border-b-0'
                 : post.coverImage.aspectRatio
@@ -74,7 +74,7 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
 
             <CardTitle
               className={cn(
-                'line-clamp-2 leading-tight font-semibold text-slate-900 transition-colors group-hover:text-cyan-700 dark:text-slate-100 dark:group-hover:text-cyan-300',
+                'line-clamp-2 leading-tight font-semibold text-(--color-text) transition-colors group-hover:text-(--color-primary)',
                 featured ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl',
               )}
             >
@@ -85,19 +85,19 @@ export function PostCard({ post, featured = false, className }: PostCardProps) {
           <CardContent className="flex min-h-0 flex-1 flex-col space-y-4 px-4 pb-4 sm:px-5 sm:pb-5 lg:px-6">
             <p
               className={cn(
-                'text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300',
+                'text-sm leading-relaxed text-(--color-muted) sm:text-base',
                 featured ? 'line-clamp-4' : 'line-clamp-3',
               )}
             >
               {post.summary}
             </p>
 
-            <div className="mt-auto flex flex-wrap gap-2 border-t border-slate-200/80 pt-4 dark:border-slate-700/80">
+            <div className="mt-auto flex flex-wrap gap-2 border-t border-(--color-border) pt-4">
               {post.tags.map((tag) => (
                 <Badge
                   key={`${post.slug}-${tag}`}
                   variant="outline"
-                  className="border-slate-300/70 bg-white/70 text-xs text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
+                  className="border-(--color-border) bg-(--color-surface-soft) text-xs text-(--color-muted)"
                 >
                   {tag}
                 </Badge>

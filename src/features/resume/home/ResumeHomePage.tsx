@@ -241,10 +241,10 @@ function JobSection({
     >
       {index === 0 ? (
         <Reveal className="mb-8 space-y-2 text-center sm:mt-0">
-          <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl dark:text-slate-100">
+          <h2 className="text-4xl font-extrabold text-(--color-text) sm:text-5xl">
             {t('workExperience')}
           </h2>
-          <p className="text-sm text-slate-600 sm:text-base dark:text-slate-400">
+          <p className="text-sm text-(--color-muted) sm:text-base">
             {t('experienceLeadIn')}
           </p>
         </Reveal>
@@ -261,25 +261,29 @@ function JobSection({
 
 function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
   return (
-    <Card className="group relative overflow-hidden border-[1.5px] border-slate-200/80 bg-white/70 py-0 shadow-xl shadow-cyan-900/5 backdrop-blur-xl transition-all duration-500 hover:border-cyan-300/60 hover:shadow-2xl hover:shadow-cyan-900/10 md:mx-auto dark:border-slate-700/60 dark:bg-slate-900/70 dark:shadow-cyan-950/30 dark:hover:border-cyan-700/60">
+    <Card className="group relative overflow-hidden border-[1.5px] border-(--color-border) bg-(--color-card) py-0 shadow-xl backdrop-blur-xl transition-all duration-500 hover:border-(--color-primary) hover:shadow-2xl md:mx-auto">
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-100/30 via-transparent to-blue-100/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-cyan-900/20 dark:to-blue-900/20"
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 48%, color-mix(in srgb, var(--color-accent) 5%, transparent))',
+        }}
         aria-hidden="true"
       />
-      <CardHeader className="relative z-10 space-y-4 border-b border-slate-200/75 py-6 dark:border-slate-800/80">
+      <CardHeader className="relative z-10 space-y-4 border-b border-(--color-border) py-6">
         <div className="flex flex-col gap-3 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
           <div className="flex-1 space-y-1.5">
-            <h3 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-50">
+            <h3 className="text-xl font-bold text-(--color-text) sm:text-2xl">
               {job.jobTitle}
             </h3>
-            <p className="text-base font-semibold text-cyan-700 dark:text-cyan-400">
+            <p className="text-base font-semibold text-(--color-primary)">
               {job.company} · {job.location}
             </p>
           </div>
 
           <Badge
             variant="secondary"
-            className="mx-auto shrink-0 rounded-full bg-slate-100/80 text-sm font-semibold text-slate-700 sm:mx-0 sm:self-start dark:bg-slate-800/80 dark:text-slate-200"
+            className="mx-auto shrink-0 rounded-full border border-(--color-border) bg-(--color-surface-soft) text-sm font-semibold text-(--color-muted) sm:mx-0 sm:self-start"
           >
             <time>{job.startDate}</time> -{' '}
             {job.endDate ? <time>{job.endDate}</time> : t('present')}
@@ -288,13 +292,13 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
       </CardHeader>
 
       <CardContent className="relative z-10 space-y-5 py-6 text-left">
-        <p className="text-base leading-relaxed font-medium text-slate-700 dark:text-slate-300">
+        <p className="text-base leading-relaxed font-medium text-(--color-muted)">
           {job.summary}
         </p>
 
         {job.content ? (
           <div
-            className="prose prose-slate prose-base max-w-none text-slate-600 dark:prose-invert dark:text-slate-300 [&>ul]:mt-2 [&>ul]:mb-0"
+            className="prose prose-slate prose-base max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0"
             dangerouslySetInnerHTML={{ __html: marked(job.content) }}
           />
         ) : null}
@@ -306,10 +310,10 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
             <Link
               to="/blog/$slug"
               params={{ slug: job.blogSlug }}
-              className="group inline-flex h-11 items-center justify-center rounded-xl bg-cyan-50/50 px-6 text-sm font-semibold text-cyan-900 shadow-sm ring-1 ring-cyan-200/50 transition-all hover:bg-cyan-100 hover:ring-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 dark:bg-cyan-950/30 dark:text-cyan-100 dark:ring-cyan-800/40 dark:hover:bg-cyan-900/50 dark:hover:ring-cyan-700"
+              className="group/read-more inline-flex h-11 items-center justify-center rounded-xl border border-(--color-primary) bg-(--color-button) px-6 text-sm font-semibold text-(--color-button-text) shadow-[0_10px_24px_-14px_var(--color-primary)] ring-1 ring-(--color-primary)/20 transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
             >
               <Sparkles
-                className="mr-2 h-4 w-4 text-cyan-500 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110 dark:text-cyan-400"
+                className="mr-2 h-4 w-4 text-(--color-button-text) transition-transform duration-500 group-hover/read-more:-rotate-12 group-hover/read-more:scale-110"
                 aria-hidden="true"
               />
               {t('blogReadMore')}
@@ -334,11 +338,11 @@ function EducationSection({
       className="relative flex w-full flex-col justify-center py-18 pt-5 sm:pt-5"
     >
       <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10">
-        <div className="rounded-3xl border border-(--line) bg-white/62 p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm dark:bg-slate-950/55 sm:p-7">
+        <div className="rounded-3xl border border-(--color-border) bg-(--color-card) p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm sm:p-7">
           <div className="mb-6 space-y-2 sm:mb-8">
             <h2
               id="education-heading"
-              className="text-2xl font-semibold text-slate-900 sm:text-3xl dark:text-slate-100"
+              className="text-2xl font-semibold text-(--color-text) sm:text-3xl"
             >
               {t('educationWithCertifications')}
             </h2>
@@ -376,25 +380,29 @@ function EducationCard({
     <Reveal delayMs={index * 150} className="relative pl-5 sm:pl-7">
       <span
         aria-hidden="true"
-        className="absolute top-8 left-0 h-2.5 w-2.5 rounded-full bg-slate-500 ring-4 ring-slate-400/15 dark:bg-slate-300 dark:ring-slate-300/15"
+        className="absolute top-8 left-0 h-2.5 w-2.5 rounded-full bg-(--color-accent) ring-4 ring-(--color-accent)/15"
       />
       {!isLast ? (
         <span
           aria-hidden="true"
-          className="absolute top-11 left-[4px] h-[calc(100%-0.75rem)] w-px bg-gradient-to-b from-slate-400/45 to-slate-300/30 dark:from-slate-500/45 dark:to-slate-700/45"
+          className="absolute top-11 left-[4px] h-[calc(100%-0.75rem)] w-px"
+          style={{
+            background:
+              'linear-gradient(to bottom, color-mix(in srgb, var(--color-accent) 55%, transparent), color-mix(in srgb, var(--color-border) 70%, transparent))',
+          }}
         />
       ) : null}
 
-      <Card className="border-slate-200/90 bg-white/88 py-0 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700/70 dark:bg-slate-900/82">
-        <CardHeader className="space-y-3 border-b border-slate-200/75 py-5 dark:border-slate-800/80">
+      <Card className="border-(--color-border) bg-(--color-card) py-0 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:shadow-md">
+        <CardHeader className="space-y-3 border-b border-(--color-border) py-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <h3 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+            <h3 className="text-lg font-semibold text-(--color-text) sm:text-xl">
               {education.school}
             </h3>
 
             <Badge
               variant="secondary"
-              className="rounded-full bg-slate-100 text-xs font-medium text-slate-700 sm:text-sm dark:bg-slate-800 dark:text-slate-200"
+              className="rounded-full border border-(--color-border) bg-(--color-surface-soft) text-xs font-medium text-(--color-muted) sm:text-sm"
             >
               <time>{education.startDate}</time> -{' '}
               {education.endDate ? (
@@ -407,13 +415,13 @@ function EducationCard({
         </CardHeader>
 
         <CardContent className="space-y-4 py-5">
-          <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+          <p className="text-sm leading-relaxed text-(--color-muted) sm:text-base">
             {education.summary}
           </p>
 
           {education.content ? (
             <div
-              className="prose prose-slate prose-sm max-w-none text-slate-700 dark:prose-invert dark:text-slate-300 [&>ul]:mt-2 [&>ul]:mb-0"
+              className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0"
               dangerouslySetInnerHTML={{ __html: marked(education.content) }}
             />
           ) : null}
@@ -448,7 +456,7 @@ function TagList({
           <Badge
             key={`${idPrefix}-${tag}`}
             variant="outline"
-            className="rounded-full border-slate-300/80 bg-white/80 text-slate-700 dark:border-slate-600/80 dark:bg-slate-800/80 dark:text-slate-200"
+            className="rounded-full border-(--color-border) bg-(--color-surface-soft) text-(--color-muted)"
           >
             {tag}
           </Badge>
@@ -464,19 +472,23 @@ function ContactSection() {
       id="contact"
       snap={{ settledThreshold: { desktop: 0.8 } }}
       reveal={{ duration: 'duration-600' }}
-      className="flex w-full items-center justify-center bg-[radial-gradient(circle_at_22%_20%,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_82%_70%,rgba(99,102,241,0.22),transparent_34%),linear-gradient(135deg,rgb(15,23,42),rgb(8,47,73)_52%,rgb(17,24,39))] text-white ring-y ring-white/10"
+      className="flex w-full items-center justify-center ring-y ring-(--color-border)"
+      style={{
+        background:
+          'radial-gradient(circle at 22% 20%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 32%), radial-gradient(circle at 82% 70%, color-mix(in srgb, var(--color-primary) 24%, transparent), transparent 34%), linear-gradient(135deg, var(--color-surface), var(--color-bg))',
+      }}
       contentClassName="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
     >
-      <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      <h2 className="mb-4 text-3xl font-bold tracking-tight text-(--color-text) sm:text-4xl">
         Let's build something great.
       </h2>
-      <p className="mb-8 max-w-xl text-lg text-slate-300">
+      <p className="mb-8 max-w-xl text-lg text-(--color-muted)">
         I'm always open to discussing product design work or partnership
         opportunities. Feel free to reach out.
       </p>
       <Link
         to="/contact"
-        className="inline-flex h-12 items-center justify-center rounded-xl bg-cyan-500 px-8 text-base font-semibold text-white shadow-[0_4px_14px_0_rgba(8,145,178,0.39)] transition-colors hover:-translate-y-0.5 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex h-12 items-center justify-center rounded-xl bg-(--color-button) px-8 text-base font-semibold text-(--color-button-text) shadow-[0_4px_14px_0_color-mix(in_srgb,var(--color-primary)_38%,transparent)] transition-colors hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
       >
         <Mail className="mr-2 h-5 w-5" />
         Contact Me
