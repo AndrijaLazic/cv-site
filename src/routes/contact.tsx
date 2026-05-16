@@ -91,7 +91,8 @@ function Contact() {
 
   return (
     <BackgroundSection
-      className="contact-animated-bg relative flex-1 overflow-hidden px-4 py-10 sm:px-6 sm:py-14 lg:py-18"
+      variant="mesh-blobs"
+      className="flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:py-18"
     >
       <section className="relative z-10 mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
         <div className="flex min-h-[32rem] flex-col justify-between rounded-2xl border border-(--color-border) bg-(--color-card)/92 p-6 shadow-[0_26px_80px_-46px_rgba(15,23,42,0.8)] backdrop-blur-xl sm:p-8 lg:p-10">

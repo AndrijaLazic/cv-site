@@ -11,6 +11,7 @@
  *   .bg-preset-grid-pattern    - static grid lines over gradient base
  *   .bg-preset-aurora          - animated shifting aurora gradient
  *   .bg-preset-mesh-blobs      - animated drifting glow blobs
+ *   .bg-preset-contact-animated - animated IDE grid and scanline
  *
  * Animation is toggled by adding .bg-animated to the element.
  * All keyframes are defined here, with no JavaScript injection.
@@ -211,6 +212,90 @@
 }
 
 /* ================================================================
+   ANIMATED - Contact IDE Grid
+   A diagonal token-aware gradient with a drifting editor grid and
+   soft scanline. Animation is enabled by .bg-animated.
+   ================================================================ */
+.bg-preset-contact-animated {
+  background:
+    linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--color-bg) 92%, var(--color-primary)) 0%,
+      var(--color-bg) 44%,
+      color-mix(in srgb, var(--color-bg) 90%, var(--color-accent)) 100%
+    );
+}
+
+.bg-preset-contact-animated::before,
+.bg-preset-contact-animated::after {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  content: '';
+}
+
+.bg-preset-contact-animated::before {
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
+      transparent 1px
+    );
+  background-position: 0 0;
+  background-size: 3.5rem 3.5rem;
+  mask-image: radial-gradient(circle at 50% 35%, black, transparent 72%);
+}
+
+.bg-preset-contact-animated::after {
+  background:
+    linear-gradient(
+      100deg,
+      transparent 28%,
+      color-mix(in srgb, var(--color-primary) 11%, transparent) 46%,
+      color-mix(in srgb, var(--color-accent) 11%, transparent) 50%,
+      transparent 66%
+    );
+  filter: blur(1px);
+  opacity: 0.9;
+}
+
+@keyframes bg-contact-grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(3.5rem, 3.5rem, 0);
+  }
+}
+
+@keyframes bg-contact-scanline {
+  0%,
+  100% {
+    transform: translateX(-34%);
+    opacity: 0;
+  }
+  22%,
+  72% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(34%);
+  }
+}
+
+.bg-preset-contact-animated.bg-animated::before {
+  animation: bg-contact-grid-drift 24s linear infinite;
+}
+
+.bg-preset-contact-animated.bg-animated::after {
+  animation: bg-contact-scanline 7s ease-in-out infinite;
+}
+
+/* ================================================================
    4. ANIMATED - Aurora Gradient
    A wide-spectrum diagonal gradient that shifts its position,
    creating a slow luminous aurora effect.
@@ -335,7 +420,9 @@
    ================================================================ */
 @media (prefers-reduced-motion: reduce) {
   .bg-preset-aurora.bg-animated,
-  .bg-animated .bg-blob-orb {
+  .bg-animated .bg-blob-orb,
+  .bg-preset-contact-animated.bg-animated::before,
+  .bg-preset-contact-animated.bg-animated::after {
     animation: none !important;
   }
 }

@@ -11,6 +11,7 @@ export type BackgroundVariant =
   | 'hero-gradient'
   | 'features-gradient'
   | 'contact-gradient'
+  | 'contact-animated'
   | 'aurora'
   | 'mesh-blobs'
 
@@ -36,6 +37,7 @@ export type BackgroundPreset = {
  * 3. grid-pattern    - dot/grid lines over a gradient base
  * 4. aurora          - shifting gradient aurora (animated via .bg-animated)
  * 5. mesh-blobs      - drifting blurred glow orbs (animated via .bg-animated)
+ * 6. contact-animated - animated IDE grid and scanline
  */
 export const backgroundPresets: Record<BackgroundVariant, BackgroundPreset> = {
   'radial-simple': {
@@ -66,6 +68,11 @@ export const backgroundPresets: Record<BackgroundVariant, BackgroundPreset> = {
   'contact-gradient': {
     sectionClassName: 'bg-preset-contact-gradient',
     supportsAnimation: false,
+  },
+
+  'contact-animated': {
+    sectionClassName: 'bg-preset-contact-animated',
+    supportsAnimation: true,
   },
 
   aurora: {

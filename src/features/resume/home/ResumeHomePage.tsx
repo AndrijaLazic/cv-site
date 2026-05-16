@@ -473,10 +473,6 @@ function ContactSection() {
       snap={{ settledThreshold: { desktop: 0.8 } }}
       reveal={{ duration: 'duration-600' }}
       className="flex w-full items-center justify-center ring-y ring-(--color-border)"
-      style={{
-        background:
-          'radial-gradient(circle at 22% 20%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 32%), radial-gradient(circle at 82% 70%, color-mix(in srgb, var(--color-primary) 24%, transparent), transparent 34%), linear-gradient(135deg, var(--color-surface), var(--color-bg))',
-      }}
       contentClassName="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
     >
       <h2 className="mb-4 text-3xl font-bold tracking-tight text-(--color-text) sm:text-4xl">
