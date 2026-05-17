@@ -2,7 +2,6 @@ import { cn } from '#/shared/utils'
 import { Reveal } from '#/shared/ui/reveal'
 import { buildScrollSnapSectionProps } from '#/shared/ui/scroll-snap/scrollSnap.utils'
 import { backgroundPresets } from './backgroundPresets'
-import './backgrounds.css'
 import type {
   BackgroundSectionProps,
   BackgroundSectionRevealOptions,
@@ -53,13 +52,12 @@ export function BackgroundSection({
   const shouldAnimate = animated && (preset?.supportsAnimation ?? false)
   const snapOpts = resolveSnapOptions(snap)
   const revealOpts = resolveRevealOptions(reveal)
-  const baseClassName = [
-    cn('relative overflow-hidden', className),
+  const baseClassName = cn(
+    'relative overflow-hidden',
     preset?.sectionClassName,
-    shouldAnimate ? 'bg-animated' : null,
-  ]
-    .filter(Boolean)
-    .join(' ')
+    shouldAnimate && 'bg-animated',
+    className,
+  )
   const sectionProps = snapOpts
     ? buildBackgroundSnapProps(snapOpts, baseClassName, style)
     : {
@@ -73,7 +71,7 @@ export function BackgroundSection({
         <div
           key={i}
           aria-hidden="true"
-          className={['absolute', overlay.className].filter(Boolean).join(' ')}
+          className={cn('absolute', overlay.className)}
         />
       ))}
 

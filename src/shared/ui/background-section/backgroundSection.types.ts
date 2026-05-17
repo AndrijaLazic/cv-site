@@ -16,8 +16,7 @@ export type BackgroundSectionSnapOptions = {
   /** Data attribute offset forwarded to the scroll snap handler. Default: 0. */
   snapOffset?: number
   /**
-   * Per-section snap threshold. Values are viewport-height multipliers.
-   * Custom values also cap direct wheel/touch snap reach for this section.
+   * Per-section settled snap threshold. Values are viewport-height multipliers.
    */
   settledThreshold?: ResponsiveSnapThreshold
 }

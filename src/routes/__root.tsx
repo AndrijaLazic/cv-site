@@ -133,7 +133,9 @@ function useDeferredDevtools() {
   const [shouldRenderDevtools, setShouldRenderDevtools] = useState(false)
 
   useEffect(() => {
-    if (!import.meta.env.DEV) {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+
+    if (!import.meta.env.DEV || !mediaQuery.matches) {
       return
     }
 

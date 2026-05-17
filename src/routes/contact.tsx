@@ -4,7 +4,6 @@ import type { ComponentType } from 'react'
 import {
   ArrowUpRight,
   BriefcaseBusiness,
-  Code2,
   FileText,
   MapPin,
   MessageSquare,
@@ -78,11 +77,6 @@ function Contact() {
       value: t('contact.focusValue'),
     },
     {
-      icon: Code2,
-      label: t('contact.stackLabel'),
-      value: t('contact.stackValue'),
-    },
-    {
       icon: MapPin,
       label: t('contact.locationLabel'),
       value: t('contact.locationValue'),
@@ -117,7 +111,7 @@ function Contact() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-3 sm:grid-cols-3">
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
             {profileItems.map((item) => {
               const Icon = item.icon
               return (

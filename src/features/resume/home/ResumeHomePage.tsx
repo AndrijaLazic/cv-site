@@ -2,7 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
-import { ChevronDown, ExternalLink, Mail, Sparkles } from 'lucide-react'
+import {
+  ChevronDown,
+  Code2,
+  FolderCheck,
+  Mail,
+  MonitorCog,
+  Rocket,
+  Sparkles,
+} from 'lucide-react'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader } from '#/shared/ui/card'
@@ -13,6 +21,7 @@ import {
   useOneTimeScrollSnap,
 } from '#/shared/ui/scroll-snap'
 import { BackgroundSection } from '#/shared/ui/background-section'
+import { CodeLine, CodeSnippet, CodeToken } from '#/shared/ui/code-snippet'
 import { Reveal } from '#/shared/ui/reveal'
 import { cn } from '#/shared/utils'
 import {
@@ -52,7 +61,7 @@ export function ResumeHomePage() {
     <ScrollSnapPage disabled={isInitialSnapDisabled}>
       <BackgroundSection variant="radial-layered">
         <div className="px-4 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-6xl">
             <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
           </div>
         </div>
@@ -76,46 +85,55 @@ function HeroSection({
   return (
     <ScrollSnapSection
       id="about"
-      className="relative flex flex-col justify-center"
+      className="relative flex flex-col justify-center gap-6 py-5 sm:gap-8 sm:py-8 md:gap-10"
     >
-      <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
-        <div className="order-2 space-y-6 md:order-1 md:space-y-8">
-          <div className="space-y-3">
-            <Reveal delayMs={0}>
-              <p
-                className="font-mono text-sm tracking-widest"
+      <div className="grid gap-6 sm:gap-8 md:grid-cols-[minmax(0,1fr)_minmax(24rem,30rem)] md:items-start md:gap-10">
+        {/* Left: text content */}
+        <div className="order-2 flex flex-col items-center gap-4 text-center sm:gap-5 md:order-1 md:items-start md:gap-7 md:pt-6 md:text-left">
+          {/* <Reveal delayMs={0}>
+            <div className="flex items-center gap-2">
+              <span
+                className="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
+                aria-hidden="true"
+              />
+              <span
+                className="font-mono text-xs font-semibold tracking-[0.18em] uppercase"
                 style={{ color: 'var(--color-muted)' }}
               >
-                {t('heroIntro')}{' '}
-                <span className="cursor-blink" aria-hidden="true">
-                  _
-                </span>
-              </p>
-            </Reveal>
+                {t('softwareDeveloper')}
+              </span>
+            </div>
+          </Reveal> */}
 
-            <Reveal delayMs={50}>
-              <h1
-                id="about-heading"
-                className="text-balance text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-left lg:text-6xl"
-                style={{ color: 'var(--color-text)' }}
+          <Reveal delayMs={60}>
+            <h1
+              id="about-heading"
+              className="text-balance text-3xl font-extrabold leading-[1.08] tracking-tight min-[380px]:text-[2.45rem] sm:text-5xl lg:text-[3.25rem]"
+              style={{ color: 'var(--color-text)' }}
+            >
+              {t('heroTaglinePre')}{' '}
+              <span style={{ color: 'var(--color-primary)' }}>
+                {t('heroTaglineHighlight1')}
+              </span>{' '}
+              {t('heroTaglineMid')}{' '}
+              <span
+                style={{
+                  background:
+                    'linear-gradient(90deg, var(--color-primary), var(--color-accent))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
               >
-                Andrija Lazic
-              </h1>
-            </Reveal>
+                {t('heroTaglineHighlight2')}
+              </span>
+              .
+            </h1>
+          </Reveal>
 
-            <Reveal delayMs={150}>
-              <p
-                className="text-center text-base font-semibold tracking-[0.12em] uppercase md:text-left"
-                style={{ color: 'var(--color-accent)' }}
-              >
-                {t('subtitle')}
-              </p>
-            </Reveal>
-          </div>
-
-          <Reveal delayMs={250}>
+          <Reveal delayMs={160}>
             <p
-              className="text-pretty text-center text-base leading-relaxed sm:text-lg md:text-left"
+              className="text-pretty text-sm leading-relaxed sm:text-lg"
               style={{ color: 'var(--color-muted)' }}
             >
               {heroSummary}
@@ -123,12 +141,12 @@ function HeroSection({
           </Reveal>
 
           <Reveal
-            delayMs={350}
-            className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start"
+            delayMs={260}
+            className="flex w-full flex-col gap-3 sm:flex-row md:w-auto"
           >
             <a
               href="#experience"
-              className="inline-flex h-11 items-center justify-center rounded-xl px-8 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-8 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
               style={{
                 backgroundColor: 'var(--color-primary)',
                 boxShadow:
@@ -136,47 +154,70 @@ function HeroSection({
                 ['--tw-ring-color' as string]: 'var(--color-primary)',
               }}
             >
-              View Projects
+              <Rocket className="h-4 w-4" aria-hidden="true" />
+              {t('viewProjects')}
             </a>
-            <a
-              href="https://github.com/AndrijaLazic"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/contact"
               className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-8 text-sm font-semibold transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
               style={{
-                borderColor: 'var(--color-primary)',
-                color: 'var(--color-primary)',
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-text)',
                 backgroundColor:
-                  'color-mix(in srgb, var(--color-primary) 8%, transparent)',
+                  'color-mix(in srgb, var(--color-surface) 80%, transparent)',
                 ['--tw-ring-color' as string]: 'var(--color-primary)',
               }}
             >
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              View GitHub
-            </a>
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              {t('contactMe')}
+            </Link>
           </Reveal>
         </div>
 
+        {/* Right: photo + code editor */}
         <Reveal
-          delayMs={100}
-          className="relative order-1 mx-auto w-fit md:order-2 md:mx-0"
+          delayMs={80}
+          className="relative order-1 mx-auto flex w-full max-w-[13.5rem] flex-col items-start gap-2 sm:max-w-[16rem] md:order-2 md:mx-0 md:w-[84%] md:max-w-none md:justify-self-end md:items-center"
         >
+          <div className="relative w-full">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-5 rounded-[2rem] opacity-80 blur-2xl md:-inset-7 md:rounded-[2.25rem]"
+              style={{
+                background:
+                  'radial-gradient(70% 72% at 52% 38%, color-mix(in srgb, var(--color-primary) 30%, transparent), color-mix(in srgb, var(--color-accent) 12%, transparent) 48%, transparent 76%)',
+              }}
+            />
+            <img
+              src="/hero-headshot-placeholder.png"
+              alt={t('headshot')}
+              className="relative z-10 h-54 w-full rounded-[1.35rem] object-cover shadow-[0_20px_45px_-30px_rgba(15,23,42,0.95)] ring-1 ring-white/10 sm:h-88 md:h-72 md:rounded-[1.35rem] lg:h-76"
+              width="480"
+              height="304"
+              loading="eager"
+              onError={(event) => {
+                event.currentTarget.onerror = null
+                event.currentTarget.src = '/headshot-on-white.jpg'
+              }}
+            />
+          </div>
+
+          {/* Code editor card */}
           <div
-            aria-hidden="true"
-            className="absolute -inset-2 rounded-[1.75rem] blur-sm"
+            className="relative z-20 hidden w-full rounded-xl border p-3 shadow-xl backdrop-blur-sm sm:block md:p-4"
             style={{
-              background:
-                'linear-gradient(to bottom, color-mix(in srgb, var(--color-primary) 40%, transparent), color-mix(in srgb, var(--color-accent) 30%, transparent))',
+              borderColor: 'var(--color-border)',
+              backgroundColor:
+                'color-mix(in srgb, var(--color-surface) 95%, transparent)',
             }}
-          />
-          <img
-            src="/headshot-on-white.jpg"
-            alt={t('headshot')}
-            className="relative h-[22rem] w-[16rem] rounded-[1.35rem] object-cover shadow-[0_20px_45px_-30px_rgba(15,23,42,0.95)] ring-1 ring-white/10 md:h-[26rem] md:w-[19rem]"
-            width="292"
-            height="374"
-            loading="eager"
-          />
+          >
+            <div className="mb-2 flex items-center gap-1.5" aria-hidden="true">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            </div>
+            <HeroCodeSnippet />
+          </div>
         </Reveal>
       </div>
 
@@ -198,6 +239,38 @@ function HeroSection({
   )
 }
 
+function HeroCodeSnippet() {
+  return (
+    <CodeSnippet
+      className="leading-5 md:text-xs md:leading-6"
+      aria-hidden="true"
+    >
+      <CodeLine number={1}>
+        <CodeToken variant="keyword">const</CodeToken>{' '}
+        <CodeToken variant="identifier">developer</CodeToken>{' '}
+        <CodeToken variant="punctuation">=</CodeToken>{' '}
+        <CodeToken variant="punctuation">{'{'}</CodeToken>
+      </CodeLine>
+      <CodeLine number={2}>
+        {'    '}
+        <CodeToken variant="property">name</CodeToken>
+        <CodeToken variant="punctuation">:</CodeToken>{' '}
+        <CodeToken variant="string">'Andrija Lazic'</CodeToken>
+        <CodeToken variant="punctuation">,</CodeToken>
+      </CodeLine>
+      <CodeLine number={3}>
+        {'    '}
+        <CodeToken variant="property">role</CodeToken>
+        <CodeToken variant="punctuation">:</CodeToken>{' '}
+        <CodeToken variant="string">'Full Stack Developer'</CodeToken>
+      </CodeLine>
+      <CodeLine number={4}>
+        <CodeToken variant="punctuation">{'};'}</CodeToken>
+      </CodeLine>
+    </CodeSnippet>
+  )
+}
+
 function ExperienceSection({
   t,
   jobs,
@@ -207,16 +280,111 @@ function ExperienceSection({
 }) {
   return (
     <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 lg:px-10">
+      <ExperienceIntroSection t={t} />
       {jobs.map((job, index) => (
         <JobSection
           key={`${job.company}-${job.jobTitle}-${job.startDate}`}
           t={t}
           job={job}
           index={index}
-          id={index === 0 ? 'experience' : `experience-${index + 1}`}
+          id={`experience-${index + 1}`}
         />
       ))}
     </div>
+  )
+}
+
+function ExperienceIntroSection({ t }: { t: Translation }) {
+  const highlights = [
+    {
+      icon: MonitorCog,
+      value: t('experienceIntroItValue'),
+      label: t('experienceIntroItLabel'),
+      description: t('experienceIntroItDescription'),
+      className:
+        'border-emerald-400/25 bg-emerald-500/10 text-emerald-300 shadow-emerald-500/10',
+    },
+    {
+      icon: Code2,
+      value: t('experienceIntroAppsValue'),
+      label: t('experienceIntroAppsLabel'),
+      description: t('experienceIntroAppsDescription'),
+      className:
+        'border-sky-400/25 bg-sky-500/10 text-sky-300 shadow-sky-500/10',
+    },
+    {
+      icon: FolderCheck,
+      value: t('experienceIntroProjectsValue'),
+      label: t('experienceIntroProjectsLabel'),
+      description: t('experienceIntroProjectsDescription'),
+      className:
+        'border-violet-400/25 bg-violet-500/10 text-violet-300 shadow-violet-500/10',
+    },
+  ]
+
+  return (
+    <ScrollSnapSection
+      id="experience"
+      className="relative z-10 flex w-full flex-col justify-center py-14 sm:py-18"
+    >
+      <Reveal className="mx-auto w-full max-w-5xl">
+        <div className="mb-8 space-y-3 text-center sm:mb-10 md:text-left">
+          <h2 className="text-4xl font-extrabold text-(--color-text) sm:text-5xl">
+            {t('workExperience')}
+          </h2>
+          <p className="text-base font-semibold text-(--color-primary) sm:text-lg">
+            {t('experienceLeadIn')}
+          </p>
+          <p className="mx-auto max-w-2xl text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7 md:mx-0">
+            {t('experienceIntroDescription')}
+          </p>
+        </div>
+      </Reveal>
+
+      <div className="grid w-full gap-4 md:grid-cols-3">
+        {highlights.map((highlight, index) => {
+          const Icon = highlight.icon
+
+          return (
+            <Reveal
+              key={highlight.label}
+              delayMs={index * 120}
+              className="h-full"
+            >
+              <Card className="group h-full overflow-hidden border-(--color-border) bg-(--color-card) py-0 shadow-lg backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-(--color-primary) hover:shadow-xl">
+                <CardContent className="relative flex h-full flex-col gap-5 p-6 sm:p-7">
+                  <div className="flex h-24 items-center gap-4">
+                    <div
+                      className={cn(
+                        'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border shadow-lg',
+                        highlight.className,
+                      )}
+                    >
+                      <Icon className="h-7 w-7" aria-hidden="true" />
+                    </div>
+
+                    <div className="min-w-0 space-y-1">
+                      <p className="text-3xl font-extrabold tracking-tight text-(--color-text) sm:text-4xl">
+                        {highlight.value}
+                      </p>
+                      <p className="text-sm font-semibold text-(--color-primary) sm:text-base">
+                        {highlight.label}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="h-px w-full bg-(--color-border)" />
+
+                  <p className="text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7">
+                    {highlight.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </Reveal>
+          )
+        })}
+      </div>
+    </ScrollSnapSection>
   )
 }
 
@@ -238,18 +406,12 @@ function JobSection({
         'relative z-10 flex w-full flex-col items-center justify-start pt-8 pb-16 sm:justify-center sm:py-20',
         index === 0 && 'pt-5 sm:pt-5',
       )}
+      settledThreshold={
+        index === 0
+          ? { desktop: 0.9, mobile: 0.7 }
+          : { desktop: 0.95, mobile: 0.95 }
+      }
     >
-      {index === 0 ? (
-        <Reveal className="mb-8 space-y-2 text-center sm:mt-0">
-          <h2 className="text-4xl font-extrabold text-(--color-text) sm:text-5xl">
-            {t('workExperience')}
-          </h2>
-          <p className="text-sm text-(--color-muted) sm:text-base">
-            {t('experienceLeadIn')}
-          </p>
-        </Reveal>
-      ) : null}
-
       <Reveal className="relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4">
         <div className="relative z-30 w-full transition-transform duration-300">
           <JobCard t={t} job={job} />
@@ -270,20 +432,20 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
         }}
         aria-hidden="true"
       />
-      <CardHeader className="relative z-10 space-y-4 border-b border-(--color-border) py-6">
-        <div className="flex flex-col gap-3 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
+      <CardHeader className="relative z-10 space-y-3 border-b border-(--color-border) px-5 py-4 sm:space-y-4 sm:px-6 sm:py-6">
+        <div className="flex flex-col gap-2 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-3 sm:text-left">
           <div className="flex-1 space-y-1.5">
-            <h3 className="text-xl font-bold text-(--color-text) sm:text-2xl">
+            <h3 className="text-lg leading-tight font-bold text-(--color-text) sm:text-2xl">
               {job.jobTitle}
             </h3>
-            <p className="text-base font-semibold text-(--color-primary)">
+            <p className="text-sm font-semibold text-(--color-primary) sm:text-base">
               {job.company} · {job.location}
             </p>
           </div>
 
           <Badge
             variant="secondary"
-            className="mx-auto shrink-0 rounded-full border border-(--color-border) bg-(--color-surface-soft) text-sm font-semibold text-(--color-muted) sm:mx-0 sm:self-start"
+            className="mx-auto shrink-0 rounded-full border border-(--color-border) bg-(--color-surface-soft) text-xs font-semibold text-(--color-muted) sm:mx-0 sm:self-start sm:text-sm"
           >
             <time>{job.startDate}</time> -{' '}
             {job.endDate ? <time>{job.endDate}</time> : t('present')}
@@ -291,26 +453,24 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
         </div>
       </CardHeader>
 
-      <CardContent className="relative z-10 space-y-5 py-6 text-left">
-        <p className="text-base leading-relaxed font-medium text-(--color-muted)">
+      <CardContent className="relative z-10 space-y-3 px-5 py-4 text-left sm:space-y-5 sm:px-6 sm:py-6">
+        <p className="text-sm leading-6 font-medium text-(--color-muted) sm:text-base sm:leading-relaxed">
           {job.summary}
         </p>
 
         {job.content ? (
           <div
-            className="prose prose-slate prose-base max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0"
+            className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert sm:prose-base [&>p]:my-2 [&>ul]:my-0 [&>ul]:pl-5 [&>ul>li]:my-0"
             dangerouslySetInnerHTML={{ __html: marked(job.content) }}
           />
         ) : null}
 
-        <TagList tags={job.tags} idPrefix={job.jobTitle} centered />
-
         {job.blogSlug ? (
-          <div className="mt-6 flex justify-center">
+          <div className="mt-3 flex justify-center sm:mt-6">
             <Link
               to="/blog/$slug"
               params={{ slug: job.blogSlug }}
-              className="group/read-more inline-flex h-11 items-center justify-center rounded-xl border border-(--color-primary) bg-(--color-button) px-6 text-sm font-semibold text-(--color-button-text) shadow-[0_10px_24px_-14px_var(--color-primary)] ring-1 ring-(--color-primary)/20 transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
+              className="group/read-more inline-flex h-10 items-center justify-center rounded-xl border border-(--color-primary) bg-(--color-button) px-5 text-sm font-semibold text-(--color-button-text) shadow-[0_10px_24px_-14px_var(--color-primary)] ring-1 ring-(--color-primary)/20 transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) sm:h-11 sm:px-6"
             >
               <Sparkles
                 className="mr-2 h-4 w-4 text-(--color-button-text) transition-transform duration-500 group-hover/read-more:-rotate-12 group-hover/read-more:scale-110"
@@ -425,44 +585,9 @@ function EducationCard({
               dangerouslySetInnerHTML={{ __html: marked(education.content) }}
             />
           ) : null}
-
-          {education.tags.length > 0 ? (
-            <TagList tags={education.tags} idPrefix={education.school} />
-          ) : null}
         </CardContent>
       </Card>
     </Reveal>
-  )
-}
-
-function TagList({
-  tags,
-  idPrefix,
-  centered = false,
-}: {
-  tags: Array<string>
-  idPrefix: string
-  centered?: boolean
-}) {
-  return (
-    <div className="pt-4">
-      <div
-        className={cn(
-          'flex flex-wrap gap-2',
-          centered && 'justify-center sm:justify-start',
-        )}
-      >
-        {tags.map((tag) => (
-          <Badge
-            key={`${idPrefix}-${tag}`}
-            variant="outline"
-            className="rounded-full border-(--color-border) bg-(--color-surface-soft) text-(--color-muted)"
-          >
-            {tag}
-          </Badge>
-        ))}
-      </div>
-    </div>
   )
 }
 
@@ -470,7 +595,12 @@ function ContactSection() {
   return (
     <BackgroundSection
       id="contact"
-      snap={{ settledThreshold: { desktop: 0.8 } }}
+      snap={{
+        settledThreshold: {
+          desktop: 0.75,
+          mobile: 0.6,
+        },
+      }}
       reveal={{ duration: 'duration-600' }}
       className="flex w-full items-center justify-center ring-y ring-(--color-border)"
       contentClassName="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
