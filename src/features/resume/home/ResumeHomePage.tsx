@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 import {
   ChevronDown,
   Code2,
@@ -37,6 +37,9 @@ type Translation = ReturnType<typeof useTranslation<'resume'>>['t']
 
 export function ResumeHomePage() {
   const { t, i18n } = useTranslation('resume')
+  const locationHash = useLocation({
+    select: (location) => location.hash,
+  })
   const activeLanguage = resolveSupportedLanguage(
     i18n.resolvedLanguage ?? i18n.language,
   )
@@ -50,11 +53,14 @@ export function ResumeHomePage() {
   )
   const isScrollHintVisible = useScrollHintVisible()
   const isInitialSnapDisabled = useInitialScrollSnapDisabled()
+  const isHashNavigationActive = Boolean(locationHash)
+
   useOneTimeScrollSnap({
-    enabled: !isInitialSnapDisabled,
+    enabled: !isInitialSnapDisabled && !isHashNavigationActive,
     settleDelayMs: 0,
     snapThreshold: 0.95,
     animationDurationMs: 500,
+    snapCooldownMs: 200,
   })
 
   return (

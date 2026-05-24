@@ -83,22 +83,34 @@ function Header() {
 
         {/* Desktop Left: Logo */}
         <div className="hidden flex-1 shrink-0 items-center gap-2 lg:flex">
-          <span className="font-mono text-xl font-bold text-[var(--color-primary)]">
-            {'</>'}
-          </span>
-          <span className="text-lg font-semibold text-(--color-text)">
-            Andrija Lazic
-          </span>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            activeProps={noActiveClassName}
+          >
+            <span className="font-mono text-xl font-bold text-[var(--color-primary)]">
+              {'</>'}
+            </span>
+            <span className="text-lg font-semibold text-(--color-text)">
+              Andrija Lazic
+            </span>
+          </Link>
         </div>
 
         {/* Mobile Center: Title */}
         <div className="flex shrink-0 gap-2 items-center justify-center font-semibold text-(--color-text) lg:hidden">
-          <span className="font-mono text-lg font-bold text-[var(--color-primary)] sm:text-xl">
-            {'</> '}
-          </span>
-          <span className="text-base font-semibold text-(--color-text) sm:text-lg">
-            Andrija Lazic
-          </span>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            activeProps={noActiveClassName}
+          >
+            <span className="font-mono text-lg font-bold text-[var(--color-primary)] sm:text-xl">
+              {'</> '}
+            </span>
+            <span className="text-base font-semibold text-(--color-text) sm:text-lg">
+              Andrija Lazic
+            </span>
+          </Link>
         </div>
 
         {/* Desktop Center: Nav */}
