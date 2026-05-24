@@ -25,6 +25,15 @@ export function ScrollSnapPage({
       return
     }
 
+    // On touch devices use mandatory snap so the browser always completes the
+    // snap without any JS assistance. proximity can leave the user between
+    // sections if the swipe didn't carry far enough.
+    const resolvedSnapType = window.matchMedia(
+      '(hover: none) and (pointer: coarse)',
+    ).matches
+      ? 'mandatory'
+      : snapType
+
     const html = document.documentElement
     const body = document.body
     const scrollingElement = document.scrollingElement as HTMLElement | null
@@ -37,13 +46,13 @@ export function ScrollSnapPage({
 
     // scrollPaddingTop shifts the snap point below the sticky header, so a
     // snap-start section lands visually below the nav instead of underneath it.
-    html.style.scrollSnapType = `y ${snapType}`
+    html.style.scrollSnapType = `y ${resolvedSnapType}`
     html.style.scrollPaddingTop = headerOffset
-    body.style.scrollSnapType = `y ${snapType}`
+    body.style.scrollSnapType = `y ${resolvedSnapType}`
     body.style.scrollPaddingTop = headerOffset
 
     if (scrollingElement) {
-      scrollingElement.style.scrollSnapType = `y ${snapType}`
+      scrollingElement.style.scrollSnapType = `y ${resolvedSnapType}`
       scrollingElement.style.scrollPaddingTop = headerOffset
     }
 

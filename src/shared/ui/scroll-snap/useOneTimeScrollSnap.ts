@@ -114,6 +114,18 @@ export function useOneTimeScrollSnap({
       return
     }
 
+    // On touch devices the browser's native CSS scroll-snap handles snapping
+    // smoothly with full momentum. The JS-assisted snap fights that momentum
+    // (via event.preventDefault on touchmove) and produces jerkiness, so we
+    // leave it entirely to CSS snap on mobile.
+    const isTouchDevice = window.matchMedia(
+      '(hover: none) and (pointer: coarse)',
+    ).matches
+
+    if (isTouchDevice) {
+      return
+    }
+
     // Prefer an explicit offset, otherwise measure the sticky app header and
     // fall back to the CSS --header-height token. The larger value wins because
     // dynamic header layout can exceed the token during responsive states.
