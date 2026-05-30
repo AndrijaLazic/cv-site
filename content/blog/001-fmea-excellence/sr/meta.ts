@@ -15,7 +15,7 @@ export const meta: PostMeta = {
     bgColor: 'black',
     position: 'center',
     aspectRatio: '16/9',
-    padding: '5%',
+    padding: '0 5%',
   },
   tags: ['Python', 'FastAPI', 'Mašinsko učenje', 'Scikit-learn', 'AI'],
 }

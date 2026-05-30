@@ -8,6 +8,7 @@
  * Presets:
  *   .bg-preset-radial-simple   - static single radial gradient
  *   .bg-preset-radial-layered  - static multi-layer gradient
+ *   .bg-preset-sunset-gradient - warm sunset tones for contact section
  *   .bg-preset-grid-pattern    - static grid lines over gradient base
  *   .bg-preset-aurora          - animated shifting aurora gradient
  *   .bg-preset-mesh-blobs      - animated drifting glow blobs
@@ -161,6 +162,84 @@
     );
 }
 
+/* ================================================================
+   ANIMATED - Resume Hero
+   Slow glow drift behind the hero and a left-to-right fill line at
+   the transition into the experience section.
+   ================================================================ */
+.resume-hero-background::before {
+  position: absolute;
+  z-index: 0;
+  inset: -28%;
+  pointer-events: none;
+  content: '';
+  background:
+    radial-gradient(
+      ellipse 44% 42% at 24% 44%,
+      color-mix(in srgb, var(--color-primary) 24%, transparent),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 42% 40% at 78% 48%,
+      color-mix(in srgb, var(--color-accent) 16%, transparent),
+      transparent 76%
+    );
+  opacity: 0.78;
+  animation: resume-hero-glow-drift 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+.resume-hero-fill-line {
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.resume-hero-fill-line::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-primary)
+  );
+  box-shadow: 0 0 16px color-mix(in srgb, var(--color-primary) 70%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: resume-hero-line-fill 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes resume-hero-glow-drift {
+  0%,
+  100% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, 3%, 0) scale(1.08);
+  }
+}
+
+@keyframes resume-hero-line-fill {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  12% {
+    opacity: 1;
+  }
+  78%,
+  92% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
 .bg-preset-features-gradient {
   background:
     radial-gradient(
@@ -217,13 +296,12 @@
    soft scanline. Animation is enabled by .bg-animated.
    ================================================================ */
 .bg-preset-contact-animated {
-  background:
-    linear-gradient(
-      115deg,
-      color-mix(in srgb, var(--color-bg) 92%, var(--color-primary)) 0%,
-      var(--color-bg) 44%,
-      color-mix(in srgb, var(--color-bg) 90%, var(--color-accent)) 100%
-    );
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--color-bg) 92%, var(--color-primary)) 0%,
+    var(--color-bg) 44%,
+    color-mix(in srgb, var(--color-bg) 90%, var(--color-accent)) 100%
+  );
 }
 
 .bg-preset-contact-animated::before,
@@ -251,14 +329,13 @@
 }
 
 .bg-preset-contact-animated::after {
-  background:
-    linear-gradient(
-      100deg,
-      transparent 28%,
-      color-mix(in srgb, var(--color-primary) 11%, transparent) 46%,
-      color-mix(in srgb, var(--color-accent) 11%, transparent) 50%,
-      transparent 66%
-    );
+  background: linear-gradient(
+    100deg,
+    transparent 28%,
+    color-mix(in srgb, var(--color-primary) 11%, transparent) 46%,
+    color-mix(in srgb, var(--color-accent) 11%, transparent) 50%,
+    transparent 66%
+  );
   filter: blur(1px);
   opacity: 0.9;
 }
@@ -415,6 +492,21 @@
 }
 
 /* ================================================================
+   STATIC - Sunset Gradient
+   Same base as the jobs/education sections with one bottom glow.
+   ================================================================ */
+.bg-preset-sunset-gradient {
+  background:
+    radial-gradient(
+      circle at 50% 118%,
+      color-mix(in srgb, var(--chart-5) 46%, transparent) 0%,
+      color-mix(in srgb, var(--chart-1) 22%, transparent) 28%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg) 100%);
+}
+
+/* ================================================================
    ACCESSIBILITY - Reduced motion
    Disable all background animations for users who prefer it.
    ================================================================ */
@@ -422,7 +514,14 @@
   .bg-preset-aurora.bg-animated,
   .bg-animated .bg-blob-orb,
   .bg-preset-contact-animated.bg-animated::before,
-  .bg-preset-contact-animated.bg-animated::after {
+  .bg-preset-contact-animated.bg-animated::after,
+  .resume-hero-background::before,
+  .resume-hero-fill-line::after {
     animation: none !important;
+  }
+
+  .resume-hero-fill-line::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }

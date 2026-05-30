@@ -39,5 +39,94 @@
   "blogSections": "Sekcije",
   "blogAllPosts": "Sve",
   "blogLatestPost": "Najnovije",
-  "blogFilterByTag": "Filtriraj po tagu"
+  "blogFilterByTag": "Filtriraj po tagu",
+  "jobs": [
+    {
+      "jobTitle": "AI / Machine Learning Engineer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2025-05-01",
+      "summary": "Radio na FMEA Excellence, SaaS aplikaciji koja koristi AI i mašinsko učenje za podršku proceni rizika i donošenju odluka zasnovanih na ROI.",
+      "tags": ["AI", "Mašinsko učenje", "Python", "FastAPI", "Scikit-learn"],
+      "blogSlug": "fmea-excellence-ai-ml",
+      "content": "- Implementirao algoritam za prognozu vremenskih serija koji bira najbolji model za svaki scenario i koristi podatke u realnom vremenu.\n- Razvio workflow-ove za mašinsko učenje za predviđanje troškova, uticaja rizika i vrednosti akcionih planova."
+    },
+    {
+      "jobTitle": "Backend Software Engineer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2025-05-01",
+      "summary": "Radio na FMEA Traditional, SaaS aplikaciji za industrije gde je FMEA deo standarda upravljanja kvalitetom.",
+      "tags": [
+        "Backend Development",
+        "Spring Boot",
+        "Docker",
+        "MySQL",
+        "GitHub Actions"
+      ],
+      "blogSlug": "digitalleather-backend-engineering",
+      "content": "- Razvio backend funkcionalnosti i automatizovane procese za deployment u cloud/VPS okruženjima.\n- Implementirao AI-asistirane funkcionalnosti za prevođenje dokumentacije na strane jezike.\n- Razvio funkcionalnost za izvoz podataka aplikacije u prilagođene šablone.\n- Kreirao orkestraciju deploy-a koristeći GitHub Actions i Docker."
+    },
+    {
+      "jobTitle": "Bekend praktikant",
+      "company": "HTEC",
+      "location": "Kragujevac, Srbija",
+      "startDate": "2024-09-01",
+      "endDate": "2024-10-31",
+      "summary": "Doprinos web platformi za netehničke zaposlene kroz implementaciju ključnih backend funkcionalnosti.",
+      "tags": [
+        "Backend Development",
+        "Spring Boot",
+        "Docker",
+        "MySQL",
+        "Keycloak",
+        "RabbitMQ",
+        "Testing"
+      ],
+      "blogSlug": "htec-backend-internship",
+      "content": "- Razvio automatsko i manuelno generisanje izveštaja.\n- Implementirao auditing baze podataka.\n- Napravio sistem notifikacija.\n- Pisao unit i integracione testove."
+    },
+    {
+      "jobTitle": "Diplomski rad - EzDeals",
+      "company": "Akademski projekat",
+      "location": "Kragujevac, Srbija",
+      "startDate": "2023-11-01",
+      "endDate": "2024-06-30",
+      "summary": "Razvoj web aplikacije za pronalaženje najboljih ponuda na odabranim proizvodima, razvijene kao projekat diplomskog rada.",
+      "tags": [
+        "Backend Development",
+        "Spring Boot",
+        "PostgreSQL",
+        "Docker",
+        "Web Scraping",
+        "Redis"
+      ],
+      "content": "Web aplikacija koja omogućava korisnicima da pronađu najbolje ponude na odabranim proizvodima.\n\nOvo uključuje razvoj web scraper-a, paralelnog programiranja, optimizacije performansi i implementaciju funkcionalnosti za korisničke naloge i personalizovane preporuke."
+    }
+  ],
+  "educations": [
+    {
+      "school": "Prirodno-matematicki fakultet",
+      "summary": "Osnovne studije na Prirodno-matematičkom fakultetu, smer Računarstvo i softverski inženjering.",
+      "startDate": "2019-10-01",
+      "endDate": "2024-09-30",
+      "tags": ["Computer Science", "Software Engineering"],
+      "content": ""
+    },
+    {
+      "school": "Auditor Training",
+      "summary": "ISO19011:2018 i kurs internog auditora za bezbednost informacija, sajber bezbednost i zastitu privatnosti.",
+      "startDate": "2026-02-03",
+      "endDate": "2026-02-03",
+      "tags": ["Sertifikat", "ISO19011:2018", "ISO/IEC 27001:2022", "Issue 2"],
+      "content": "Bio sam zadužen za postavljanje svih razvojnih okruženja i mreže u kancelariji, obezbeđujući robusne prakse informacione bezbednosti. Razvio sam praktično razumevanje implementacije i audita ISO/IEC 27001:2022 kontrola u realnim scenarijima."
+    },
+    {
+      "school": "Jezičke veštine",
+      "summary": "Dvojezični komunikator.",
+      "startDate": "2019-10-01",
+      "tags": ["Engleski", "Srpski"],
+      "content": "- **Engleski**: Tečno u profesionalnim kontekstima.\n- **Srpski**: Maternji jezik."
+    }
+  ]
 }

@@ -49,7 +49,7 @@ export function useInitialScrollSnapDisabled({
     }
 
     const updateDisabled = () => {
-      if (getPageScrollProgress() >= scrollProgressThreshold) {
+      if (getPageScrollProgress() > scrollProgressThreshold) {
         setIsDisabled(true)
       }
     }

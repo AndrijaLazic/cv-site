@@ -1,18 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '#/shared/utils'
+import type { BlogImageContent } from '#/features/blog/types/blog'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
+import { POST_CONTENT_IMAGE_SIZES } from '../contentImages'
+import { ResponsiveImage } from './ResponsiveImage'
 
-export type CarouselImage = {
-  src: string
-  alt: string
+export type CarouselImage = BlogImageContent & {
   caption?: string
-  bgColor?: string
-  padding?: string
-  fit?: 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
-  position?: string
-  zoomable?: boolean
 }
 
 export type ImageCarouselProps = {
@@ -76,6 +72,20 @@ export function ImageCarousel({
 
   if (images.length === 1) {
     const img = images[0]
+    const imageElement = (
+      <ResponsiveImage
+        src={img.src}
+        alt={img.alt}
+        className="h-full w-full rounded-xl"
+        pictureClassName="block h-full w-full"
+        sizes={POST_CONTENT_IMAGE_SIZES}
+        style={{
+          objectFit: img.fit ?? 'cover',
+          objectPosition: img.position ?? 'center',
+        }}
+      />
+    )
+
     return (
       <figure className={cn('w-full', className)}>
         <div
@@ -85,29 +95,7 @@ export function ImageCarousel({
             padding: img.padding,
           }}
         >
-          {img.zoomable !== false ? (
-            <Zoom>
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="h-full w-full rounded-xl"
-                style={{
-                  objectFit: img.fit ?? 'cover',
-                  objectPosition: img.position ?? 'center',
-                }}
-              />
-            </Zoom>
-          ) : (
-            <img
-              src={img.src}
-              alt={img.alt}
-              className="h-full w-full rounded-xl"
-              style={{
-                objectFit: img.fit ?? 'cover',
-                objectPosition: img.position ?? 'center',
-              }}
-            />
-          )}
+          {img.zoomable !== false ? <Zoom>{imageElement}</Zoom> : imageElement}
         </div>
         {img.caption && (
           <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
@@ -151,10 +139,12 @@ export function ImageCarousel({
             >
               {img.zoomable !== false ? (
                 <Zoom>
-                  <img
+                  <ResponsiveImage
                     src={img.src}
                     alt={img.alt}
                     className="h-full w-full"
+                    pictureClassName="block h-full w-full"
+                    sizes={POST_CONTENT_IMAGE_SIZES}
                     style={{
                       objectFit: img.fit ?? 'cover',
                       objectPosition: img.position ?? 'center',
@@ -162,10 +152,12 @@ export function ImageCarousel({
                   />
                 </Zoom>
               ) : (
-                <img
+                <ResponsiveImage
                   src={img.src}
                   alt={img.alt}
                   className="h-full w-full"
+                  pictureClassName="block h-full w-full"
+                  sizes={POST_CONTENT_IMAGE_SIZES}
                   style={{
                     objectFit: img.fit ?? 'cover',
                     objectPosition: img.position ?? 'center',
@@ -182,7 +174,7 @@ export function ImageCarousel({
             e.preventDefault()
             goToPrev()
           }}
-          className="absolute left-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-cyan-500"
+          className="absolute left-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-blue-500"
           aria-label="Previous image"
         >
           <ChevronLeft className="size-5" />
@@ -193,7 +185,7 @@ export function ImageCarousel({
             e.preventDefault()
             goToNext()
           }}
-          className="absolute right-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-cyan-500"
+          className="absolute right-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-blue-500"
           aria-label="Next image"
         >
           <ChevronRight className="size-5" />
@@ -210,7 +202,7 @@ export function ImageCarousel({
               }}
               className={cn(
                 'size-2 rounded-full transition-colors',
-                i === currentIndex ? 'bg-cyan-400' : 'bg-white/50',
+                i === currentIndex ? 'bg-blue-400' : 'bg-white/50',
               )}
               aria-label={`Go to slide ${i + 1}`}
             />

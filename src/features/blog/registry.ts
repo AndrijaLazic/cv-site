@@ -1,55 +1,64 @@
 import type { ComponentType } from 'react'
-import type { SupportedLanguage } from '#/features/i18n/languages'
+import type { SupportedLanguage } from '#/app/i18n/languages'
 import type { BlogPostDetail, BlogPostSummary, PostMeta } from './types/blog'
+import { resolvePostImages } from './postImages'
 
-// Eagerly loaded meta modules - keyed by path like "/content/blog/en/my-post/meta.ts"
+type MdxModule = {
+  default: ComponentType
+}
+
+// Metadata is eagerly loaded so SEO head generation and sitemap data stay synchronous.
 const metaModules = import.meta.glob<{ meta: PostMeta }>(
   '/content/blog/**/meta.ts',
-  { eager: true },
+  {
+    eager: true,
+  },
 )
 
-// Eagerly loaded MDX components
-const postModules = import.meta.glob<{ default: ComponentType }>(
-  '/content/blog/**/post.mdx',
-  { eager: true },
-)
+// Post content modules stay lazy and are loaded only when a blog post route requests them.
+const postModules = import.meta.glob<MdxModule>('/content/blog/**/post.mdx')
 
-function parseLocaleSlug(
+function parseContentPath(
   filePath: string,
-): { locale: SupportedLanguage; slug: string } | null {
-  // Path format: /content/blog/{locale}/{slug}/meta.ts or post.mdx
+): { articleFolder: string; locale: SupportedLanguage } | null {
   const match = filePath.match(
     /\/content\/blog\/([^/]+)\/([^/]+)\/(?:meta\.ts|post\.mdx)$/,
   )
   if (!match) return null
-  return { locale: match[1] as SupportedLanguage, slug: match[2] }
+  return { articleFolder: match[1], locale: match[2] as SupportedLanguage }
 }
 
 function buildIndex() {
   const summaryByLocaleSlug = new Map<string, BlogPostSummary>()
-  const contentByLocaleSlug = new Map<string, BlogPostDetail['content']>()
+  const slugByArticleLocale = new Map<string, string>()
+  const postLoaderByLocaleSlug = new Map<string, () => Promise<MdxModule>>()
 
   for (const [filePath, module] of Object.entries(metaModules)) {
-    const parsed = parseLocaleSlug(filePath)
+    const parsed = parseContentPath(filePath)
     if (!parsed) continue
-    const key = `${parsed.locale}:${parsed.slug}`
-    summaryByLocaleSlug.set(key, module.meta)
+    const key = `${parsed.locale}:${module.meta.slug}`
+    summaryByLocaleSlug.set(key, resolvePostImages(module.meta))
+    slugByArticleLocale.set(
+      `${parsed.articleFolder}:${parsed.locale}`,
+      module.meta.slug,
+    )
   }
 
-  for (const [filePath, module] of Object.entries(postModules)) {
-    const parsed = parseLocaleSlug(filePath)
+  for (const [filePath, loadModule] of Object.entries(postModules)) {
+    const parsed = parseContentPath(filePath)
     if (!parsed) continue
-    const key = `${parsed.locale}:${parsed.slug}`
-    contentByLocaleSlug.set(key, {
-      format: 'compiled-mdx',
-      Component: module.default,
-    })
+    const slug = slugByArticleLocale.get(
+      `${parsed.articleFolder}:${parsed.locale}`,
+    )
+    if (!slug) continue
+    const key = `${parsed.locale}:${slug}`
+    postLoaderByLocaleSlug.set(key, loadModule)
   }
 
-  return { summaryByLocaleSlug, contentByLocaleSlug }
+  return { summaryByLocaleSlug, postLoaderByLocaleSlug }
 }
 
-const { summaryByLocaleSlug, contentByLocaleSlug } = buildIndex()
+const { summaryByLocaleSlug, postLoaderByLocaleSlug } = buildIndex()
 
 export function getRegistryBlogPostSummaries(
   locale: SupportedLanguage,
@@ -68,19 +77,34 @@ export function getRegistryBlogPostSummaries(
     })
 }
 
-export function getRegistryBlogPost(
+export function getRegistryBlogPostMeta(
   locale: SupportedLanguage,
   slug: string,
-): BlogPostDetail | undefined {
+): BlogPostSummary | undefined {
+  return summaryByLocaleSlug.get(`${locale}:${slug}`)
+}
+
+export async function loadRegistryBlogPost(
+  locale: SupportedLanguage,
+  slug: string,
+): Promise<BlogPostDetail | undefined> {
   const key = `${locale}:${slug}`
   const summary = summaryByLocaleSlug.get(key)
-  const content = contentByLocaleSlug.get(key)
+  const loadModule = postLoaderByLocaleSlug.get(key)
 
-  if (!summary || !content) {
+  if (!summary || !loadModule) {
     return undefined
   }
 
-  return { ...summary, content }
+  return {
+    ...summary,
+    content: {
+      format: 'compiled-mdx',
+      collection: 'blog',
+      locale,
+      slug,
+    },
+  }
 }
 
 // Backward-compatible exports kept during refactor.
@@ -92,17 +116,18 @@ export function getPostMeta(
   locale: SupportedLanguage,
   slug: string,
 ): PostMeta | undefined {
-  return summaryByLocaleSlug.get(`${locale}:${slug}`)
+  return getRegistryBlogPostMeta(locale, slug)
 }
 
-export function getPostComponent(
+export async function getPostComponent(
   locale: SupportedLanguage,
   slug: string,
-): ComponentType | undefined {
-  const content = contentByLocaleSlug.get(`${locale}:${slug}`)
-  if (!content || content.format !== 'compiled-mdx') {
+): Promise<ComponentType | undefined> {
+  const loadModule = postLoaderByLocaleSlug.get(`${locale}:${slug}`)
+  if (!loadModule) {
     return undefined
   }
 
-  return content.Component
+  const module = await loadModule()
+  return module.default
 }

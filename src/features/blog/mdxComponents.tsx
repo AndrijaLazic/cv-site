@@ -9,8 +9,10 @@ import {
   TwoColumn,
   ImageCarousel,
   ContentBlock,
+  ResponsiveImage,
 } from './components'
 import { cn } from '#/shared/utils'
+import { POST_CONTENT_IMAGE_SIZES } from './contentImages'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
@@ -77,12 +79,34 @@ export const mdxComponents: MDXComponents = {
   a: ({ className, ...props }) => (
     <a
       className={cn(
-        'text-cyan-700 underline underline-offset-2 hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300',
+        'text-blue-700 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300',
         className,
       )}
       {...props}
     />
   ),
+  img: ({ alt, className, loading, decoding, src, ...props }) =>
+    typeof src === 'string' ? (
+      <ResponsiveImage
+        {...props}
+        alt={alt ?? ''}
+        className={cn('h-auto max-w-full rounded-xl', className)}
+        decoding={decoding ?? 'async'}
+        loading={loading ?? 'lazy'}
+        pictureClassName="my-6 block"
+        sizes={POST_CONTENT_IMAGE_SIZES}
+        src={src}
+      />
+    ) : (
+      <img
+        {...props}
+        alt={alt}
+        className={cn('my-6 h-auto max-w-full rounded-xl', className)}
+        decoding={decoding ?? 'async'}
+        loading={loading ?? 'lazy'}
+        src={src}
+      />
+    ),
   ul: ({ className, ...props }) => (
     <ul
       className={cn(

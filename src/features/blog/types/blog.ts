@@ -1,5 +1,4 @@
-import type { ComponentType } from 'react'
-import type { SupportedLanguage } from '#/features/i18n/languages'
+import type { SupportedLanguage } from '#/app/i18n/languages'
 
 export type ImageFit = 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
 
@@ -27,6 +26,11 @@ export interface BlogImageContent {
   zoomable?: boolean
 }
 
+export interface BlogFaqItem {
+  question: string
+  answer: string
+}
+
 export interface BlogPostMeta {
   slug: string
   locale: SupportedLanguage
@@ -35,15 +39,29 @@ export interface BlogPostMeta {
   publishedDate: string
   author: string
   tags: string[]
+  heroImage?: BlogImageContent
   coverImage?: BlogImageContent
+  socialImage?: BlogImageContent
+  faqItems?: BlogFaqItem[]
 }
 
-export type BlogPostSummary = BlogPostMeta
+export interface BlogPostSummary extends Omit<
+  BlogPostMeta,
+  'heroImage' | 'coverImage' | 'socialImage'
+> {
+  heroImage: BlogImageContent
+  coverImage: BlogImageContent
+  socialImage: BlogImageContent
+}
+
+export type BlogPostCollection = 'blog'
 
 export type BlogPostContent =
   | {
       format: 'compiled-mdx'
-      Component: ComponentType
+      collection: BlogPostCollection
+      locale: SupportedLanguage
+      slug: string
     }
   | {
       format: 'markdown-blocks'
@@ -54,4 +72,4 @@ export interface BlogPostDetail extends BlogPostSummary {
   content: BlogPostContent
 }
 
-export type PostMeta = BlogPostSummary
+export type PostMeta = BlogPostMeta

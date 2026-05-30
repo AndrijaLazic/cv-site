@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
-import { getBlogPost } from '#/features/blog/api'
+import { getBlogPostMeta, loadBlogPost } from '#/features/blog/api'
 import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
 import { BlogImage } from '#/features/blog/components'
 import {
@@ -15,7 +15,7 @@ import { BackgroundSection } from '#/shared/ui/background-section'
 
 function findPostBySlug(slug: string): BlogPostSummary | undefined {
   for (const locale of supportedLanguages) {
-    const post = getBlogPost(locale, slug)
+    const post = getBlogPostMeta(locale, slug)
     if (post) {
       return post
     }
@@ -26,6 +26,15 @@ function findPostBySlug(slug: string): BlogPostSummary | undefined {
 
 export const Route = createFileRoute('/blog/$slug')({
   component: BlogPostPage,
+  loader: async ({ params }) =>
+    Object.fromEntries(
+      await Promise.all(
+        supportedLanguages.map(async (locale) => [
+          locale,
+          await loadBlogPost(locale, params.slug),
+        ]),
+      ),
+    ),
   head: ({ params }) => {
     const siteUrl = publicConfig.siteUrl
     const canonicalUrl = `${siteUrl}/blog/${params.slug}`
@@ -34,7 +43,7 @@ export const Route = createFileRoute('/blog/$slug')({
       ? `${post.title} | Andrija Lazic`
       : 'Blog | Andrija Lazic'
     const description = post?.summary ?? 'Blog post by Andrija Lazic.'
-    const coverImageSrc = post?.coverImage?.src
+    const coverImageSrc = post?.coverImage.src
     const coverImageUrl = coverImageSrc
       ? coverImageSrc.startsWith('http')
         ? coverImageSrc
@@ -59,7 +68,7 @@ export const Route = createFileRoute('/blog/$slug')({
 })
 
 function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
-  const coverImageSrc = post.coverImage?.src
+  const coverImageSrc = post.coverImage.src
   const coverImageUrl = coverImageSrc
     ? coverImageSrc.startsWith('http')
       ? coverImageSrc
@@ -91,13 +100,13 @@ function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
 }
 
 function BlogPostPage() {
-  const { slug } = Route.useParams()
+  const postsByLanguage = Route.useLoaderData()
   const { t, i18n } = useTranslation('resume')
   const activeLanguage = resolveSupportedLanguage(
     i18n.resolvedLanguage ?? i18n.language,
   )
 
-  const post = getBlogPost(activeLanguage, slug)
+  const post = postsByLanguage[activeLanguage]
 
   if (!post) {
     return (

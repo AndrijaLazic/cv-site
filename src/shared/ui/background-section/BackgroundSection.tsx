@@ -1,3 +1,4 @@
+import './backgrounds.css'
 import { cn } from '#/shared/utils'
 import { Reveal } from '#/shared/ui/reveal'
 import { buildScrollSnapSectionProps } from '#/shared/ui/scroll-snap/scrollSnap.utils'

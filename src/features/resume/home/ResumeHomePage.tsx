@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from '@tanstack/react-router'
 import {
-  ChevronDown,
   Code2,
   FolderCheck,
   Mail,
@@ -51,26 +50,41 @@ export function ResumeHomePage() {
     () => sortEducations(educations),
     [educations],
   )
-  const isScrollHintVisible = useScrollHintVisible()
   const isInitialSnapDisabled = useInitialScrollSnapDisabled()
   const isHashNavigationActive = Boolean(locationHash)
 
   useOneTimeScrollSnap({
     enabled: !isInitialSnapDisabled && !isHashNavigationActive,
-    settleDelayMs: 0,
-    snapThreshold: 0.95,
-    animationDurationMs: 500,
-    snapCooldownMs: 200,
+    snapThreshold: 0.99,
+    settleDelayMs: 300,
+    snapCooldownMs: 300,
   })
 
   return (
     <ScrollSnapPage disabled={isInitialSnapDisabled}>
-      <BackgroundSection variant="radial-layered">
-        <div className="px-4 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-6xl">
-            <HeroSection t={t} isScrollHintVisible={isScrollHintVisible} />
+      <BackgroundSection variant="hero-gradient">
+        {/* Hero wrapper — relative so the bottom gradient strip is full-bleed */}
+        <div className="resume-hero-background relative isolate overflow-hidden">
+          <div className="relative z-[1] px-4 sm:px-6 lg:px-10">
+            <div className="mx-auto max-w-6xl">
+              <HeroSection t={t} />
+            </div>
           </div>
+          {/* Gradient strip: hero → ExperienceIntroSection color */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20"
+            aria-hidden="true"
+            style={{
+              background:
+                'linear-gradient(to bottom, transparent, var(--color-surface-soft))',
+            }}
+          />
+          <div
+            className="resume-hero-fill-line pointer-events-none absolute inset-x-0 bottom-0 z-20 h-px"
+            aria-hidden="true"
+          />
         </div>
+        <ExperienceIntroSection t={t} />
         <ExperienceSection t={t} jobs={sortedJobs} />
         <EducationSection t={t} educations={sortedEducations} />
         <ContactSection />
@@ -79,13 +93,7 @@ export function ResumeHomePage() {
   )
 }
 
-function HeroSection({
-  t,
-  isScrollHintVisible,
-}: {
-  t: Translation
-  isScrollHintVisible: boolean
-}) {
+function HeroSection({ t }: { t: Translation }) {
   const heroSummary = limitToSentences(t('careerSummaryText'), 2)
 
   return (
@@ -226,21 +234,6 @@ function HeroSection({
           </div>
         </Reveal>
       </div>
-
-      {isScrollHintVisible ? (
-        <div
-          className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border px-4 py-2 shadow-sm backdrop-blur-sm motion-safe:animate-pulse sm:flex"
-          style={{
-            borderColor: 'var(--line)',
-            backgroundColor:
-              'color-mix(in srgb, var(--color-surface) 80%, transparent)',
-            color: 'var(--color-muted)',
-          }}
-        >
-          <p className="text-sm font-semibold">{t('scrollHint')}</p>
-          <ChevronDown className="size-4" aria-hidden="true" />
-        </div>
-      ) : null}
     </ScrollSnapSection>
   )
 }
@@ -285,17 +278,26 @@ function ExperienceSection({
   jobs: Array<ResumeJob>
 }) {
   return (
-    <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 lg:px-10">
-      <ExperienceIntroSection t={t} />
-      {jobs.map((job, index) => (
-        <JobSection
-          key={`${job.company}-${job.jobTitle}-${job.startDate}`}
-          t={t}
-          job={job}
-          index={index}
-          id={`experience-${index + 1}`}
-        />
-      ))}
+    <div className="relative w-full bg-(--color-bg)">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 sm:h-8"
+        aria-hidden="true"
+        style={{
+          background:
+            'linear-gradient(to bottom, var(--color-surface-soft), var(--color-bg))',
+        }}
+      />
+      <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 lg:px-10">
+        {jobs.map((job, index) => (
+          <JobSection
+            key={`${job.company}-${job.jobTitle}-${job.startDate}`}
+            t={t}
+            job={job}
+            index={index}
+            id={`experience-${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -332,63 +334,66 @@ function ExperienceIntroSection({ t }: { t: Translation }) {
     <ScrollSnapSection
       id="experience"
       className="relative z-10 flex w-full flex-col justify-center py-14 sm:py-18"
+      style={{ backgroundColor: 'var(--color-surface-soft)' }}
     >
-      <Reveal className="mx-auto w-full max-w-5xl">
-        <div className="mb-8 space-y-3 text-center sm:mb-10 md:text-left">
-          <h2 className="text-4xl font-extrabold text-(--color-text) sm:text-5xl">
-            {t('workExperience')}
-          </h2>
-          <p className="text-base font-semibold text-(--color-primary) sm:text-lg">
-            {t('experienceLeadIn')}
-          </p>
-          <p className="mx-auto max-w-2xl text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7 md:mx-0">
-            {t('experienceIntroDescription')}
-          </p>
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10">
+        <Reveal>
+          <div className="mb-8 space-y-3 text-center sm:mb-10 md:text-left">
+            <h2 className="text-4xl font-extrabold text-(--color-text) sm:text-5xl">
+              {t('workExperience')}
+            </h2>
+            <p className="text-base font-semibold text-(--color-primary) sm:text-lg">
+              {t('experienceLeadIn')}
+            </p>
+            <p className="mx-auto max-w-2xl text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7 md:mx-0">
+              {t('experienceIntroDescription')}
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid w-full gap-4 md:grid-cols-3">
+          {highlights.map((highlight, index) => {
+            const Icon = highlight.icon
+
+            return (
+              <Reveal
+                key={highlight.label}
+                delayMs={index * 120}
+                className="h-full"
+              >
+                <Card className="group h-full overflow-hidden border-(--color-border) bg-(--color-card) py-0 shadow-lg backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-(--color-primary) hover:shadow-xl">
+                  <CardContent className="relative flex h-full flex-col gap-5 p-6 sm:p-7">
+                    <div className="flex h-24 items-center gap-4">
+                      <div
+                        className={cn(
+                          'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border shadow-lg',
+                          highlight.className,
+                        )}
+                      >
+                        <Icon className="h-7 w-7" aria-hidden="true" />
+                      </div>
+
+                      <div className="min-w-0 space-y-1">
+                        <p className="text-3xl font-extrabold tracking-tight text-(--color-text) sm:text-4xl">
+                          {highlight.value}
+                        </p>
+                        <p className="text-sm font-semibold text-(--color-primary) sm:text-base">
+                          {highlight.label}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="h-px w-full bg-(--color-border)" />
+
+                    <p className="text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7">
+                      {highlight.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Reveal>
+            )
+          })}
         </div>
-      </Reveal>
-
-      <div className="grid w-full gap-4 md:grid-cols-3">
-        {highlights.map((highlight, index) => {
-          const Icon = highlight.icon
-
-          return (
-            <Reveal
-              key={highlight.label}
-              delayMs={index * 120}
-              className="h-full"
-            >
-              <Card className="group h-full overflow-hidden border-(--color-border) bg-(--color-card) py-0 shadow-lg backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-(--color-primary) hover:shadow-xl">
-                <CardContent className="relative flex h-full flex-col gap-5 p-6 sm:p-7">
-                  <div className="flex h-24 items-center gap-4">
-                    <div
-                      className={cn(
-                        'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border shadow-lg',
-                        highlight.className,
-                      )}
-                    >
-                      <Icon className="h-7 w-7" aria-hidden="true" />
-                    </div>
-
-                    <div className="min-w-0 space-y-1">
-                      <p className="text-3xl font-extrabold tracking-tight text-(--color-text) sm:text-4xl">
-                        {highlight.value}
-                      </p>
-                      <p className="text-sm font-semibold text-(--color-primary) sm:text-base">
-                        {highlight.label}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="h-px w-full bg-(--color-border)" />
-
-                  <p className="text-sm leading-6 text-(--color-muted) sm:text-base sm:leading-7">
-                    {highlight.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </Reveal>
-          )
-        })}
       </div>
     </ScrollSnapSection>
   )
@@ -501,7 +506,7 @@ function EducationSection({
   return (
     <ScrollSnapSection
       id="education"
-      className="relative flex w-full flex-col justify-center py-18 pt-5 sm:pt-5"
+      className="relative flex w-full flex-col justify-center bg-(--color-bg) py-18 pt-5 sm:pt-5"
     >
       <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10">
         <div className="rounded-3xl border border-(--color-border) bg-(--color-card) p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm sm:p-7">
@@ -601,53 +606,37 @@ function ContactSection() {
   return (
     <BackgroundSection
       id="contact"
+      variant="sunset-gradient"
       snap={{
         settledThreshold: {
           desktop: 0.75,
           mobile: 0.6,
         },
       }}
-      reveal={{ duration: 'duration-600' }}
-      className="flex w-full items-center justify-center ring-y ring-(--color-border)"
-      contentClassName="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 py-14 pb-24 text-center sm:px-6 lg:px-10"
+      reveal={{ duration: 'duration-800' }}
+      className="flex w-full items-center justify-center"
+      contentClassName="relative mx-auto flex min-h-[calc(100svh-var(--header-height))] w-full max-w-5xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-10"
     >
-      <h2 className="mb-4 text-3xl font-bold tracking-tight text-(--color-text) sm:text-4xl">
+      <h2
+        className="max-w-3xl text-6xl leading-[0.92] font-extrabold tracking-normal text-balance sm:text-7xl md:text-8xl"
+        style={{ color: 'var(--color-text)' }}
+      >
         Let's build something great.
       </h2>
-      <p className="mb-8 max-w-xl text-lg text-(--color-muted)">
-        I'm always open to discussing product design work or partnership
-        opportunities. Feel free to reach out.
-      </p>
       <Link
         to="/contact"
-        className="inline-flex h-12 items-center justify-center rounded-xl bg-(--color-button) px-8 text-base font-semibold text-(--color-button-text) shadow-[0_4px_14px_0_color-mix(in_srgb,var(--color-primary)_38%,transparent)] transition-colors hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 disabled:pointer-events-none disabled:opacity-50"
+        className="relative mt-6 inline-flex h-20 rotate-12 items-center justify-center rounded-xl border px-9 text-3xl font-extrabold shadow-2xl backdrop-blur-md transition hover:-translate-y-1 hover:rotate-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 sm:mt-8 sm:h-24 sm:px-11 sm:text-4xl"
+        style={{
+          borderColor: 'var(--color-border)',
+          backgroundColor: 'var(--color-button)',
+          color: 'var(--color-button-text)',
+          boxShadow:
+            '0 24px 70px -30px color-mix(in srgb, var(--color-primary) 70%, transparent)',
+        }}
       >
-        <Mail className="mr-2 h-5 w-5" />
-        Contact Me
+        <Mail className="mr-3 h-7 w-7 sm:h-9 sm:w-9" aria-hidden="true" />
+        Say hi!
       </Link>
     </BackgroundSection>
   )
-}
-
-function useScrollHintVisible() {
-  const [isScrollHintVisible, setIsScrollHintVisible] = useState(true)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const onScroll = () => {
-      setIsScrollHintVisible((isVisible) => isVisible && window.scrollY < 40)
-    }
-
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-    }
-  }, [])
-
-  return isScrollHintVisible
 }

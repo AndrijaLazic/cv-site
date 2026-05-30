@@ -2,6 +2,8 @@ import type { CSSProperties } from 'react'
 import type { BlogImageContent } from '#/features/blog/types/blog'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
+import { POST_CONTENT_IMAGE_SIZES } from '../contentImages'
+import { ResponsiveImage } from './ResponsiveImage'
 
 export function BlogImage({
   src,
@@ -35,7 +37,15 @@ export function BlogImage({
   }
 
   const imageElement = (
-    <img src={src} alt={alt} loading="lazy" style={imageStyle} />
+    <ResponsiveImage
+      src={src}
+      alt={alt}
+      className="block h-full w-full"
+      loading="lazy"
+      pictureClassName="block h-full w-full"
+      sizes={POST_CONTENT_IMAGE_SIZES}
+      style={imageStyle}
+    />
   )
 
   return (

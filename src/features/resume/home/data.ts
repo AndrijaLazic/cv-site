@@ -1,45 +1,67 @@
-import * as contentCollections from '../../../../.content-collections/generated/index.js'
 import type { SupportedLanguage } from '#/features/i18n/config'
 import { supportedLanguages } from '#/features/i18n/config'
 
-type ContentCollections = typeof contentCollections
-type ResumeCollectionItem = ContentCollections[keyof ContentCollections][number]
-type CollectionPrefix = 'allJobs' | 'allEducations'
-
-export type ResumeJob = Extract<ResumeCollectionItem, { company: string }>
-export type ResumeEducation = Extract<ResumeCollectionItem, { school: string }>
-
-type CollectionItem<TPrefix extends CollectionPrefix> =
-  TPrefix extends 'allJobs' ? ResumeJob : ResumeEducation
-
-function toCollectionSuffix(language: SupportedLanguage) {
-  return `${language.charAt(0).toUpperCase()}${language.slice(1)}s`
+type ResumeEntry = {
+  summary: string
+  startDate: string
+  endDate?: string
+  tags: Array<string>
+  content: string
 }
 
-function getLocalizedCollection<TPrefix extends CollectionPrefix>(
-  prefix: TPrefix,
-  language: SupportedLanguage,
-) {
-  const key =
-    `${prefix}${toCollectionSuffix(language)}` as keyof ContentCollections
-  const collection = contentCollections[key]
-
-  return (Array.isArray(collection) ? collection : []) as Array<
-    CollectionItem<TPrefix>
-  >
+export type ResumeJob = ResumeEntry & {
+  jobTitle: string
+  company: string
+  location: string
+  blogSlug?: string
 }
+
+export type ResumeEducation = ResumeEntry & {
+  school: string
+}
+
+type ResumeLocaleNamespace = {
+  jobs?: Array<ResumeJob>
+  educations?: Array<ResumeEducation>
+}
+
+type ResumeLocaleModule = {
+  default: ResumeLocaleNamespace
+}
+
+const resumeLocaleModules = import.meta.glob<ResumeLocaleModule>(
+  '../../i18n/locales/*/resume.json',
+  {
+    eager: true,
+  },
+)
+
+function getLocaleModuleKey(language: SupportedLanguage) {
+  return `../../i18n/locales/${language}/resume.json`
+}
+
+function getLocalizedEntries<TEntry>(entries?: Array<TEntry>) {
+  return Array.isArray(entries) ? entries : []
+}
+
+const resumeNamespacesByLanguage = Object.fromEntries(
+  supportedLanguages.map((language) => [
+    language,
+    resumeLocaleModules[getLocaleModuleKey(language)]?.default ?? {},
+  ]),
+) as Record<SupportedLanguage, ResumeLocaleNamespace>
 
 export const jobsByLanguage = Object.fromEntries(
   supportedLanguages.map((language) => [
     language,
-    getLocalizedCollection('allJobs', language),
+    getLocalizedEntries(resumeNamespacesByLanguage[language].jobs),
   ]),
 ) as Record<SupportedLanguage, Array<ResumeJob>>
 
 export const educationsByLanguage = Object.fromEntries(
   supportedLanguages.map((language) => [
     language,
-    getLocalizedCollection('allEducations', language),
+    getLocalizedEntries(resumeNamespacesByLanguage[language].educations),
   ]),
 ) as Record<SupportedLanguage, Array<ResumeEducation>>
 

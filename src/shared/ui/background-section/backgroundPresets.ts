@@ -14,6 +14,7 @@ export type BackgroundVariant =
   | 'contact-animated'
   | 'aurora'
   | 'mesh-blobs'
+  | 'sunset-gradient'
 
 export type OverlayDef = {
   /** Tailwind/CSS classes applied to the overlay element */
@@ -100,5 +101,10 @@ export const backgroundPresets: Record<BackgroundVariant, BackgroundPreset> = {
           'bg-blob-orb bg-blob-orb-soft bg-blob-drift-3 absolute top-[35%] left-[40%] h-[45%] w-[40%] opacity-45',
       },
     ],
+  },
+
+  'sunset-gradient': {
+    sectionClassName: 'bg-preset-sunset-gradient',
+    supportsAnimation: false,
   },
 }

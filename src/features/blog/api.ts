@@ -1,6 +1,12 @@
-import type { SupportedLanguage } from '#/features/i18n/languages'
+import type { SupportedLanguage } from '#/app/i18n/languages'
+import type { ComponentType } from 'react'
 import type { BlogPostDetail, BlogPostSummary } from './types/blog'
-import { getRegistryBlogPost, getRegistryBlogPostSummaries } from './registry'
+import {
+  getPostComponent,
+  getRegistryBlogPostMeta,
+  getRegistryBlogPostSummaries,
+  loadRegistryBlogPost,
+} from './registry'
 
 export function getBlogPostSummaries(
   locale: SupportedLanguage,
@@ -8,9 +14,23 @@ export function getBlogPostSummaries(
   return getRegistryBlogPostSummaries(locale)
 }
 
-export function getBlogPost(
+export function getBlogPostMeta(
   locale: SupportedLanguage,
   slug: string,
-): BlogPostDetail | undefined {
-  return getRegistryBlogPost(locale, slug)
+): BlogPostSummary | undefined {
+  return getRegistryBlogPostMeta(locale, slug)
+}
+
+export async function loadBlogPost(
+  locale: SupportedLanguage,
+  slug: string,
+): Promise<BlogPostDetail | undefined> {
+  return loadRegistryBlogPost(locale, slug)
+}
+
+export async function loadBlogPostComponent(
+  locale: SupportedLanguage,
+  slug: string,
+): Promise<ComponentType | undefined> {
+  return getPostComponent(locale, slug)
 }

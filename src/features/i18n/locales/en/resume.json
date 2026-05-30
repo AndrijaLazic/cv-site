@@ -39,5 +39,105 @@
   "blogSections": "Sections",
   "blogAllPosts": "All",
   "blogLatestPost": "Latest",
-  "blogFilterByTag": "Filter by tag"
+  "blogFilterByTag": "Filter by tag",
+  "jobs": [
+    {
+      "jobTitle": "AI / Machine Learning Engineer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2025-05-01",
+      "summary": "Worked on FMEA Excellence, a SaaS application that uses AI and machine learning to support risk evaluation and ROI-based decision-making.",
+      "tags": ["AI", "Machine Learning", "Python", "FastAPI", "Scikit-learn"],
+      "blogSlug": "fmea-excellence-ai-ml",
+      "content": "- Implemented an algorithm for time-series forecasting that selects the best model for each scenario and uses real-time data.\n- Developed machine learning workflows for predicting costs, risk impact, and action-plan value."
+    },
+    {
+      "jobTitle": "Backend Software Engineer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2025-05-01",
+      "summary": "Worked on FMEA Traditional, a SaaS application for industries where FMEA is part of the quality management standard.",
+      "tags": [
+        "Backend Development",
+        "Spring Boot",
+        "Docker",
+        "MySQL",
+        "GitHub Actions"
+      ],
+      "blogSlug": "digitalleather-backend-engineering",
+      "content": "- Developed backend features and automated deployment processes for cloud/VPS environments.\n- Implemented AI-assisted translation features for easier use of documentation in foreign languages.\n- Built file export functionality that allows users to export application data into custom templates.\n- Created deployment orchestration using GitHub Actions and Docker."
+    },
+    {
+      "jobTitle": "Backend Intern",
+      "company": "HTEC",
+      "location": "Kragujevac",
+      "startDate": "2024-09-01",
+      "endDate": "2024-10-31",
+      "summary": "Worked on a web application designed to help non-technical employees manage daily tasks more efficiently.",
+      "tags": [
+        "Backend Development",
+        "Spring Boot",
+        "Docker",
+        "MySQL",
+        "Keycloak",
+        "RabbitMQ"
+      ],
+      "blogSlug": "htec-backend-internship",
+      "content": "- Developed automatic and manual report generation features as part of the backend team.\n- Implemented database auditing, a notification system, and backend tests."
+    },
+    {
+      "jobTitle": "Graduation Thesis - EzDeals",
+      "company": "Academic Project",
+      "location": "Kragujevac, Serbia",
+      "startDate": "2023-11-01",
+      "endDate": "2024-06-30",
+      "summary": "Web application for finding the best deals on selected products, developed as a graduation thesis project.",
+      "tags": [
+        "Python",
+        "Node.js",
+        "React",
+        "MongoDB",
+        "Web Application",
+        "Graduation Thesis"
+      ],
+      "content": "Web application that allows users to find the best deals on selected products.\n\nThis includes developing a web scraper, parallel programming, performance optimization, and implementing features for user accounts and personalized recommendations."
+    }
+  ],
+  "educations": [
+    {
+      "school": "Faculty of Natural Sciences and Mathematics",
+      "summary": "Bachelor of Computer Science with a focus on Software Engineering.",
+      "startDate": "2019-10-01",
+      "endDate": "2024-09-30",
+      "tags": [
+        "Computer Science",
+        "Software Engineering",
+        "Spring Boot",
+        "Python",
+        ".NET",
+        "React"
+      ],
+      "content": ""
+    },
+    {
+      "school": "Auditor Training",
+      "summary": "Internal Auditor Course for Information Security Management Systems (ISO/IEC 27001:2022) with practical implementation.",
+      "startDate": "2026-02-03",
+      "endDate": "2026-02-03",
+      "tags": [
+        "Certification",
+        "ISO19011:2018",
+        "ISO/IEC 27001:2022",
+        "Issue 2"
+      ],
+      "content": "I have been in charge of setting up all development environments and network in the office, ensuring robust information security practices. Developed practical understanding of implementing and auditing ISO/IEC 27001:2022 controls in real-world scenarios."
+    },
+    {
+      "school": "Language Proficiency",
+      "summary": "Bilingual communicator.",
+      "startDate": "2019-10-01",
+      "tags": ["English", "Serbian"],
+      "content": "- **English**: Fluent in professional contexts.\n- **Serbian**: Native speaker."
+    }
+  ]
 }
