@@ -64,7 +64,7 @@ export function ResumeHomePage() {
     <ScrollSnapPage disabled={isInitialSnapDisabled}>
       <BackgroundSection variant="hero-gradient">
         {/* Hero wrapper — relative so the bottom gradient strip is full-bleed */}
-        <div className="resume-hero-background relative isolate overflow-hidden">
+        <div className="relative isolate overflow-hidden">
           <div className="relative z-[1] px-4 sm:px-6 lg:px-10">
             <div className="mx-auto max-w-6xl">
               <HeroSection t={t} />
@@ -78,10 +78,6 @@ export function ResumeHomePage() {
               background:
                 'linear-gradient(to bottom, transparent, var(--color-surface-soft))',
             }}
-          />
-          <div
-            className="resume-hero-fill-line pointer-events-none absolute inset-x-0 bottom-0 z-20 h-px"
-            aria-hidden="true"
           />
         </div>
         <ExperienceIntroSection t={t} />

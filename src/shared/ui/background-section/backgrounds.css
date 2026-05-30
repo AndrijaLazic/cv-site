@@ -162,84 +162,6 @@
     );
 }
 
-/* ================================================================
-   ANIMATED - Resume Hero
-   Slow glow drift behind the hero and a left-to-right fill line at
-   the transition into the experience section.
-   ================================================================ */
-.resume-hero-background::before {
-  position: absolute;
-  z-index: 0;
-  inset: -28%;
-  pointer-events: none;
-  content: '';
-  background:
-    radial-gradient(
-      ellipse 44% 42% at 24% 44%,
-      color-mix(in srgb, var(--color-primary) 24%, transparent),
-      transparent 74%
-    ),
-    radial-gradient(
-      ellipse 42% 40% at 78% 48%,
-      color-mix(in srgb, var(--color-accent) 16%, transparent),
-      transparent 76%
-    );
-  opacity: 0.78;
-  animation: resume-hero-glow-drift 14s ease-in-out infinite;
-  will-change: transform;
-}
-
-.resume-hero-fill-line {
-  overflow: hidden;
-  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
-}
-
-.resume-hero-fill-line::after {
-  position: absolute;
-  inset: 0;
-  content: '';
-  background: linear-gradient(
-    90deg,
-    var(--color-primary),
-    var(--color-accent),
-    var(--color-primary)
-  );
-  box-shadow: 0 0 16px color-mix(in srgb, var(--color-primary) 70%, transparent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: resume-hero-line-fill 5.5s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes resume-hero-glow-drift {
-  0%,
-  100% {
-    transform: translate3d(-4%, -2%, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(5%, 3%, 0) scale(1.08);
-  }
-}
-
-@keyframes resume-hero-line-fill {
-  0% {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  12% {
-    opacity: 1;
-  }
-  78%,
-  92% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scaleX(1);
-  }
-}
-
 .bg-preset-features-gradient {
   background:
     radial-gradient(
@@ -514,14 +436,7 @@
   .bg-preset-aurora.bg-animated,
   .bg-animated .bg-blob-orb,
   .bg-preset-contact-animated.bg-animated::before,
-  .bg-preset-contact-animated.bg-animated::after,
-  .resume-hero-background::before,
-  .resume-hero-fill-line::after {
+  .bg-preset-contact-animated.bg-animated::after {
     animation: none !important;
-  }
-
-  .resume-hero-fill-line::after {
-    opacity: 1;
-    transform: scaleX(1);
   }
 }
