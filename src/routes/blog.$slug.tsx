@@ -11,7 +11,6 @@ import {
 import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 import { Badge } from '#/shared/ui/badge'
-import { BackgroundSection } from '#/shared/ui/background-section'
 
 function findPostBySlug(slug: string): BlogPostSummary | undefined {
   for (const locale of supportedLanguages) {
@@ -110,10 +109,7 @@ function BlogPostPage() {
 
   if (!post) {
     return (
-      <BackgroundSection
-        variant="radial-layered"
-        className="flex-1 px-4 py-10 sm:px-6 sm:py-14"
-      >
+      <div className="flex-1 bg-(--color-bg) px-4 py-10 sm:px-6 sm:py-14">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
             404
@@ -129,17 +125,14 @@ function BlogPostPage() {
             {t('blogBackToList')}
           </Link>
         </div>
-      </BackgroundSection>
+      </div>
     )
   }
 
   return (
     <>
       <BlogPostJsonLd post={post} />
-      <BackgroundSection
-        variant="radial-layered"
-        className="flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14"
-      >
+      <div className="flex-1 bg-(--color-bg) px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
         <div className="mx-auto max-w-3xl space-y-6">
           <Link
             to="/blog"
@@ -189,7 +182,7 @@ function BlogPostPage() {
             </div>
           </article>
         </div>
-      </BackgroundSection>
+      </div>
     </>
   )
 }
