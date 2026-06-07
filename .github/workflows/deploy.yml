@@ -1,63 +1,63 @@
-name: Deploy
+# name: Deploy
 
-run-name: Deploy ${{ inputs.commit_sha || inputs.branch || github.ref_name }}
+# run-name: Deploy ${{ inputs.commit_sha || inputs.branch || github.ref_name }}
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to deploy. Leave empty if deploying a commit SHA.'
-        required: false
-        default: ''
-        type: string
+#   workflow_dispatch:
+#     inputs:
+#       branch:
+#         description: 'Branch to deploy. Leave empty if deploying a commit SHA.'
+#         required: false
+#         default: ''
+#         type: string
 
-      commit_sha:
-        description: 'Commit SHA to deploy. Leave empty if deploying a branch.'
-        required: false
-        default: ''
-        type: string
+#       commit_sha:
+#         description: 'Commit SHA to deploy. Leave empty if deploying a branch.'
+#         required: false
+#         default: ''
+#         type: string
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
 
-concurrency:
-  group: deploy
-  cancel-in-progress: false
+# concurrency:
+#   group: deploy
+#   cancel-in-progress: false
 
-jobs:
-  deploy:
-    runs-on: [self-hosted, stage-ssh-runner]
+# jobs:
+#   deploy:
+#     runs-on: [self-hosted, stage-ssh-runner]
 
-    steps:
-      - name: Validate deployment target
-        shell: bash
-        run: |
-          set -euo pipefail
+#     steps:
+#       - name: Validate deployment target
+#         shell: bash
+#         run: |
+#           set -euo pipefail
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            BRANCH="${{ inputs.branch }}"
-            COMMIT_SHA="${{ inputs.commit_sha }}"
+#           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+#             BRANCH="${{ inputs.branch }}"
+#             COMMIT_SHA="${{ inputs.commit_sha }}"
 
-            if [ -n "$BRANCH" ] && [ -n "$COMMIT_SHA" ]; then
-              echo "Use either branch or commit_sha, not both."
-              exit 1
-            fi
+#             if [ -n "$BRANCH" ] && [ -n "$COMMIT_SHA" ]; then
+#               echo "Use either branch or commit_sha, not both."
+#               exit 1
+#             fi
 
-            if [ -z "$BRANCH" ] && [ -z "$COMMIT_SHA" ]; then
-              echo "You must provide either branch or commit_sha."
-              exit 1
-            fi
-          fi
+#             if [ -z "$BRANCH" ] && [ -z "$COMMIT_SHA" ]; then
+#               echo "You must provide either branch or commit_sha."
+#               exit 1
+#             fi
+#           fi
 
-      - name: Run deploy script over SSH
-        shell: bash
-        run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            ssh root@168.231.126.84 '/root/scripts/fmea-site/deploy.sh "main" ""'
-          else
-            ssh root@168.231.126.84 '/root/scripts/fmea-site/deploy.sh "${{ inputs.branch }}" "${{ inputs.commit_sha }}"'
-          fi
+#       - name: Run deploy script over SSH
+#         shell: bash
+#         run: |
+#           if [ "${{ github.event_name }}" = "push" ]; then
+#             ssh root@168.231.126.84 '/root/scripts/fmea-site/deploy.sh "main" ""'
+#           else
+#             ssh root@168.231.126.84 '/root/scripts/fmea-site/deploy.sh "${{ inputs.branch }}" "${{ inputs.commit_sha }}"'
+#           fi
