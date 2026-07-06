@@ -26,6 +26,11 @@
   "experienceIntroProjectsValue": "4+",
   "experienceIntroProjectsLabel": "Projects completed",
   "experienceIntroProjectsDescription": "Delivered practical applications and features across resume, business, AI, and automation-focused projects.",
+  "roleSnapshot": "Role snapshot",
+  "productScope": "Product / scope",
+  "productImpact": "Impact",
+  "techStack": "Tech stack",
+  "selectedWork": "Selected work",
   "education": "Education",
   "educationWithCertifications": "Education & Certifications",
   "present": "Present",
@@ -34,6 +39,7 @@
   "blogTitle": "Blog",
   "blogSubtitle": "Experiments, findings, and technical write-ups.",
   "blogReadMore": "Read more",
+  "projectCheckOut": "Check out project",
   "blogBackToList": "Back to all posts",
   "blogPublished": "Published",
   "blogSections": "Sections",
@@ -44,7 +50,7 @@
     {
       "jobTitle": "DevOps Engineer",
       "company": "DigitalLeather",
-      "location": "Kragujevac",
+      "location": "Kragujevac, Serbia",
       "startDate": "2025-05-01",
       "summary": "Responsible for infrastructure, deployment automation, and production reliability across VPS and on-premises deployment environments.",
       "tags": [
@@ -58,6 +64,21 @@
         "CI/CD"
       ],
       "blogSlug": "digitalleather-backend-engineering",
+      "product": {
+        "name": "DigitalLeather deployments",
+        "logoSrc": "/blog/digitalleather-backend-engineering/digitalleather-logo.webp",
+        "logoAlt": "DigitalLeather logo"
+      },
+      "impact": [
+        "Production-ready VPS and on-premises environments for client-facing product deployments.",
+        "Repeatable demo, development, and production setups that reduced environment drift.",
+        "Operational visibility through monitoring, logging, SSL/TLS, firewall rules, and Nginx hardening."
+      ],
+      "selectedWork": [
+        "Designed the deployment architecture for VPS and on-premises environments from a blank slate.",
+        "Owned CI/CD strategy with GitHub Actions, Docker Compose, release paths, and environment configuration.",
+        "Led production hardening across Nginx, SSL/TLS, firewall rules, monitoring, logging, and server access."
+      ],
       "content": "- Designed and set up the full infrastructure from scratch for VPS and on-premises deployments.\n- Containerized services using Docker and Docker Compose across development, demo, and production environments.\n- Built and maintained CI/CD pipelines with GitHub Actions, automating the full build and deployment lifecycle.\n- Configured Nginx, SSL/TLS, firewall rules, and security hardening across the stack.\n- Set up monitoring and logging for system health visibility and faster incident response."
     },
     {
@@ -76,6 +97,23 @@
         "Docker"
       ],
       "blogSlug": "fmea-excellence-ai-ml",
+      "product": {
+        "name": "FMEA Excellence",
+        "logoSrc": "/blog/fmea-excellence/fmea-excellence-logo.webp",
+        "logoAlt": "FMEA Excellence logo",
+        "websiteUrl": "https://fmea-excellence.com"
+      },
+      "impact": [
+        "AI-powered FMEA platform for automotive risk, quality, and compliance workflows.",
+        "Validated through pilot projects with Tier 2 automotive suppliers.",
+        "Public product website delivered independently at fmea-excellence.com."
+      ],
+      "selectedWork": [
+        "Owned core backend services and domain logic for FMEA risk analysis, data processing, and file workflows.",
+        "Designed AI/ML modules for cost prediction, action-plan value forecasting, and risk-action optimization.",
+        "Architected product features in a small team, balancing backend design, MySQL data flows, Docker environments, and user-facing workflows.",
+        "Delivered the public FMEA Excellence product website independently, from implementation to production launch."
+      ],
       "content": "- Developed core backend services, including APIs and business logic for risk analysis and data processing.\n- Developed backend features for user file import/export workflows, including exports into custom templates.\n- Designed AI-powered modules for predicting future risk costs using historical data, real-time data, and user-defined parameters.\n- Built machine learning workflows for forecasting costs, risk impact, and action-plan value.\n- Built an optimization engine that analyzes risk action combinations and recommends the most effective option based on user goals.\n- Implemented AI-assisted translation features for easier use of documentation in foreign languages.\n- Independently created the FMEA Excellence product website, including the public product page at fmea-excellence.com."
     },
     {
@@ -94,6 +132,21 @@
         "RabbitMQ"
       ],
       "blogSlug": "htec-backend-internship",
+      "product": {
+        "name": "HTEC backend project",
+        "logoSrc": "/blog/htec-backend-internship/htec-logo.webp",
+        "logoAlt": "HTEC logo"
+      },
+      "impact": [
+        "Internal web application for non-technical employees managing daily tasks and reports.",
+        "Backend workflows for report generation, notifications, database auditing, and testing.",
+        "Enterprise-style stack exposure with identity, messaging, persistence, and Dockerized services."
+      ],
+      "selectedWork": [
+        "Implemented backend reporting workflows with automatic and manual generation paths.",
+        "Built audit and notification logic across database, messaging, and service boundaries.",
+        "Added backend tests around delivered workflows to support maintainability and team handoff."
+      ],
       "content": "- Developed automatic and manual report generation features as part of the backend team.\n- Implemented database auditing, a notification system, and backend tests."
     }
   ],

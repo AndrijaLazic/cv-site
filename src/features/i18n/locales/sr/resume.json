@@ -26,6 +26,11 @@
   "experienceIntroProjectsValue": "4+",
   "experienceIntroProjectsLabel": "Završena projekta",
   "experienceIntroProjectsDescription": "Isporučene praktične aplikacije i funkcionalnosti kroz resume, poslovne, AI i automatizacione projekte.",
+  "roleSnapshot": "Pregled uloge",
+  "productScope": "Proizvod / scope",
+  "productImpact": "Uticaj",
+  "techStack": "Tech stack",
+  "selectedWork": "Odabrani rad",
   "education": "Obrazovanje",
   "educationWithCertifications": "Obrazovanje i sertifikati",
   "present": "Trenutno",
@@ -34,6 +39,7 @@
   "blogTitle": "Blog",
   "blogSubtitle": "Eksperimenti, nalazi i tehnicki tekstovi.",
   "blogReadMore": "Citaj vise",
+  "projectCheckOut": "Pogledaj projekat",
   "blogBackToList": "Nazad na sve postove",
   "blogPublished": "Objavljeno",
   "blogSections": "Sekcije",
@@ -44,7 +50,7 @@
     {
       "jobTitle": "DevOps inženjer",
       "company": "DigitalLeather",
-      "location": "Kragujevac",
+      "location": "Kragujevac, Srbija",
       "startDate": "2025-05-01",
       "summary": "Odgovoran za infrastrukturu, automatizaciju deployment-a i pouzdanost produkcije u VPS i on-premises deployment okruženjima.",
       "tags": [
@@ -58,6 +64,21 @@
         "CI/CD"
       ],
       "blogSlug": "digitalleather-backend-engineering",
+      "product": {
+        "name": "DigitalLeather deployment-i",
+        "logoSrc": "/blog/digitalleather-backend-engineering/digitalleather-logo.webp",
+        "logoAlt": "DigitalLeather logo"
+      },
+      "impact": [
+        "Produkcijski spremna VPS i on-premises okruženja za client-facing product deployment-e.",
+        "Ponovljiva demo, razvojna i produkciona podešavanja koja smanjuju razlike između okruženja.",
+        "Bolja operativna vidljivost kroz monitoring, logging, SSL/TLS, firewall pravila i Nginx hardening."
+      ],
+      "selectedWork": [
+        "Dizajnirao deployment arhitekturu za VPS i on-premises okruženja od nule.",
+        "Preuzeo ownership nad CI/CD strategijom kroz GitHub Actions, Docker Compose, release tokove i konfiguraciju okruženja.",
+        "Vodio production hardening kroz Nginx, SSL/TLS, firewall pravila, monitoring, logging i server access."
+      ],
       "content": "- Dizajnirao i postavio kompletnu infrastrukturu od nule za VPS i on-premises deployment-e.\n- Kontejnerizovao servise koristeći Docker i Docker Compose kroz razvojno, demo i produkciono okruženje.\n- Izgradio i održavao CI/CD pipeline-ove koristeći GitHub Actions, automatizujući ceo build i deployment životni ciklus.\n- Konfigurisao Nginx, SSL/TLS, firewall pravila i security hardening kroz ceo stack.\n- Postavio monitoring i logging za bolju vidljivost stanja sistema i brži incident response."
     },
     {
@@ -76,6 +97,23 @@
         "Docker"
       ],
       "blogSlug": "fmea-excellence-ai-ml",
+      "product": {
+        "name": "FMEA Excellence",
+        "logoSrc": "/blog/fmea-excellence/fmea-excellence-logo.webp",
+        "logoAlt": "FMEA Excellence logo",
+        "websiteUrl": "https://fmea-excellence.com"
+      },
+      "impact": [
+        "AI-powered FMEA platforma za automotive risk, quality i compliance workflow-e.",
+        "Validirana kroz pilot projekte sa Tier 2 dobavljačima u automobilskoj industriji.",
+        "Javni product website samostalno isporučen na fmea-excellence.com."
+      ],
+      "selectedWork": [
+        "Preuzeo ownership nad ključnim backend servisima i domenskom logikom za FMEA analizu rizika, obradu podataka i file workflow-e.",
+        "Dizajnirao AI/ML module za predikciju troškova, prognozu vrednosti akcionih planova i optimizaciju risk-action kombinacija.",
+        "Arhitektovao product funkcionalnosti u malom timu, povezujući backend dizajn, MySQL tokove podataka, Docker okruženja i korisničke workflow-e.",
+        "Samostalno isporučio javni FMEA Excellence product website, od implementacije do produkcionog launch-a."
+      ],
       "content": "- Razvijao ključne backend servise, uključujući API-je i poslovnu logiku za analizu rizika i obradu podataka.\n- Razvio backend funkcionalnosti za import/export korisničkih fajlova, uključujući export u prilagođene šablone.\n- Dizajnirao AI module za predviđanje budućih troškova rizika koristeći istorijske podatke, podatke u realnom vremenu i korisnički definisane parametre.\n- Izgradio machine learning workflow-ove za prognozu troškova, uticaja rizika i vrednosti akcionih planova.\n- Razvio optimization engine koji analizira kombinacije risk action-a i preporučuje najefikasniju opciju na osnovu korisničkih ciljeva.\n- Implementirao AI-asistirane funkcionalnosti za lakše korišćenje dokumentacije na stranim jezicima.\n- Samostalno kreirao FMEA Excellence product website, uključujući javnu product stranicu na fmea-excellence.com."
     },
     {
@@ -85,14 +123,23 @@
       "startDate": "2024-09-01",
       "endDate": "2024-10-31",
       "summary": "Radio na web aplikaciji dizajniranoj da pomogne netehničkim zaposlenima da efikasnije upravljaju svakodnevnim zadacima.",
-      "tags": [
-        "Spring Boot",
-        "Docker",
-        "MySQL",
-        "Keycloak",
-        "RabbitMQ"
-      ],
+      "tags": ["Spring Boot", "Docker", "MySQL", "Keycloak", "RabbitMQ"],
       "blogSlug": "htec-backend-internship",
+      "product": {
+        "name": "HTEC backend projekat",
+        "logoSrc": "/blog/htec-backend-internship/htec-logo.webp",
+        "logoAlt": "HTEC logo"
+      },
+      "impact": [
+        "Interna web aplikacija za netehničke zaposlene koji upravljaju dnevnim zadacima i izveštajima.",
+        "Backend workflow-i za generisanje izveštaja, notifikacije, audit baze i testiranje.",
+        "Iskustvo sa enterprise-style stack-om: identity, messaging, persistence i Docker servisi."
+      ],
+      "selectedWork": [
+        "Implementirao backend reporting workflow-e sa automatskim i manuelnim tokovima generisanja.",
+        "Izgradio audit i notification logiku kroz bazu, messaging i service boundary-je.",
+        "Dodao backend testove za isporučene workflow-e radi lakšeg održavanja i handoff-a timu."
+      ],
       "content": "- Razvio funkcionalnosti za automatsko i manuelno generisanje izveštaja kao deo backend tima.\n- Implementirao auditing baze podataka, sistem notifikacija i backend testove."
     }
   ],

@@ -3,14 +3,32 @@ import { marked } from 'marked'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from '@tanstack/react-router'
 import {
+  ArrowUpRight,
+  Box,
+  Building2,
+  Calendar,
+  CheckCircle2,
   Code2,
+  Database,
   FolderCheck,
+  GitBranch,
+  Github,
+  Layers3,
+  Lock,
   Mail,
+  MapPin,
   MonitorCog,
+  Network,
+  Repeat2,
   Rocket,
-  Sparkles,
+  Server,
+  ShieldCheck,
+  Terminal,
+  Workflow,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
+import type { SupportedLanguage } from '#/features/i18n/config'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader } from '#/shared/ui/card'
 import {
@@ -81,7 +99,7 @@ export function ResumeHomePage() {
           />
         </div>
         <ExperienceIntroSection t={t} />
-        <ExperienceSection t={t} jobs={sortedJobs} />
+        <ExperienceSection t={t} jobs={sortedJobs} language={activeLanguage} />
         <EducationSection t={t} educations={sortedEducations} />
         <ContactSection />
       </BackgroundSection>
@@ -260,12 +278,14 @@ function HeroCodeSnippet() {
 function ExperienceSection({
   t,
   jobs,
+  language,
 }: {
   t: Translation
   jobs: Array<ResumeJob>
+  language: SupportedLanguage
 }) {
   return (
-    <div className="relative w-full bg-(--color-bg)">
+    <div className="relative w-full overflow-x-hidden bg-(--color-bg)">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 sm:h-8"
         aria-hidden="true"
@@ -274,7 +294,7 @@ function ExperienceSection({
             'linear-gradient(to bottom, var(--color-surface-soft), var(--color-bg))',
         }}
       />
-      <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 lg:px-10">
+      <div className="relative mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center px-3 min-[380px]:px-4 sm:px-6 lg:px-8">
         {jobs.map((job, index) => (
           <JobSection
             key={`${job.company}-${job.jobTitle}-${job.startDate}`}
@@ -282,6 +302,7 @@ function ExperienceSection({
             job={job}
             index={index}
             id={`experience-${index + 1}`}
+            language={language}
           />
         ))}
       </div>
@@ -391,101 +412,416 @@ function JobSection({
   job,
   index,
   id,
+  language,
 }: {
   t: Translation
   job: ResumeJob
   index: number
   id: string
+  language: SupportedLanguage
 }) {
+  const className = cn(
+    'relative z-10 flex w-full flex-col items-center justify-start pt-8 pb-16 sm:justify-center sm:py-20',
+    index === 0 && 'mt-6 pt-5 sm:mt-8 sm:pt-5',
+  )
+  const content = (
+    <Reveal className="relative flex w-full max-w-6xl min-w-0 flex-col items-center py-2 sm:py-4">
+      <div className="relative z-30 w-full min-w-0 transition-transform duration-300">
+        <JobCard t={t} job={job} language={language} />
+      </div>
+    </Reveal>
+  )
+
+  if (index !== 0) {
+    return (
+      <section id={id} className={className}>
+        {content}
+      </section>
+    )
+  }
+
   return (
     <ScrollSnapSection
       id={id}
-      className={cn(
-        'relative z-10 flex w-full flex-col items-center justify-start pt-8 pb-16 sm:justify-center sm:py-20',
-        index === 0 && 'pt-5 sm:pt-5',
-      )}
-      settledThreshold={
-        index === 0
-          ? { desktop: 0.9, mobile: 0.7 }
-          : { desktop: 0.95, mobile: 0.95 }
-      }
+      className={className}
+      settledThreshold={{ desktop: 0.9, mobile: 0.7 }}
     >
-      <Reveal className="relative flex w-full max-w-3xl flex-col items-center py-2 sm:py-4">
-        <div className="relative z-30 w-full transition-transform duration-300">
-          <JobCard t={t} job={job} />
-        </div>
-      </Reveal>
+      {content}
     </ScrollSnapSection>
   )
 }
 
-function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
-  const jobContentPreview = getJobContentPreview(job.content)
+function JobCard({
+  t,
+  job,
+  language,
+}: {
+  t: Translation
+  job: ResumeJob
+  language: SupportedLanguage
+}) {
+  const selectedWorkItems =
+    job.selectedWork ?? getJobContentPreviewItems(job.content)
+  const impactItems = job.impact ?? []
 
   return (
-    <Card className="group relative gap-0 overflow-hidden border-[1.5px] border-(--color-border) bg-(--color-card) py-0 shadow-xl backdrop-blur-xl transition-all duration-500 hover:border-(--color-primary) hover:shadow-2xl md:mx-auto">
+    <Card className="group relative w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-[rgba(100,140,210,0.18)] bg-[#070d1a] py-0 text-[#f4f7fb] shadow-[0_30px_90px_-55px_rgba(47,128,255,0.65)] transition-all duration-300 hover:border-[rgba(74,144,255,0.48)] md:mx-auto">
       <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 opacity-80"
         style={{
           background:
-            'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 48%, color-mix(in srgb, var(--color-accent) 5%, transparent))',
+            'radial-gradient(70% 52% at 72% 0%, rgba(47, 211, 255, 0.12), transparent 58%), radial-gradient(44% 44% at 0% 18%, rgba(79, 140, 255, 0.12), transparent 64%), linear-gradient(135deg, rgba(16, 27, 49, 0.92), rgba(7, 13, 26, 0.96) 48%, rgba(11, 20, 38, 0.96))',
         }}
         aria-hidden="true"
       />
-      <CardHeader className="relative z-10 space-y-2 border-b border-(--color-border) px-5 py-4 !pb-3 sm:px-6 sm:py-5 sm:!pb-4">
-        <div className="flex flex-col gap-2 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-3 sm:text-left">
-          <div className="flex-1 space-y-1.5">
-            <h3 className="text-lg leading-tight font-bold text-(--color-text) sm:text-2xl">
-              {job.jobTitle}
-            </h3>
-            <p className="text-sm font-semibold text-(--color-primary) sm:text-base">
-              {job.company} · {job.location}
+      <div
+        className="pointer-events-none absolute inset-px rounded-[15px] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),inset_0_0_48px_rgba(79,140,255,0.06)]"
+        aria-hidden="true"
+      />
+
+      <CardContent className="relative z-10 grid w-full min-w-0 p-0 lg:grid-cols-[20rem_minmax(0,1fr)]">
+        <aside className="flex min-w-0 flex-col gap-5 border-b border-[rgba(100,140,210,0.18)] p-4 sm:p-6 lg:gap-6 lg:border-b-0 lg:p-7">
+          <div className="flex min-w-0 flex-col gap-4 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between lg:block lg:space-y-6">
+            <BrandMark job={job} />
+
+            <Badge
+              variant="secondary"
+              className="min-h-8 max-w-full shrink-0 gap-1.5 rounded-full border border-[rgba(100,140,210,0.22)] bg-[rgba(16,27,49,0.78)] px-3 py-1.5 text-xs font-semibold whitespace-normal text-[#a9b7d0] shadow-[0_8px_22px_-18px_rgba(47,128,255,0.8)]"
+            >
+              <Calendar className="h-3.5 w-3.5 text-[#4f8cff]" />
+              <time dateTime={job.startDate}>
+                {formatResumeDate(job.startDate, language)}
+              </time>{' '}
+              -{' '}
+              {job.endDate ? (
+                <time dateTime={job.endDate}>
+                  {formatResumeDate(job.endDate, language)}
+                </time>
+              ) : (
+                t('present')
+              )}
+            </Badge>
+          </div>
+
+          <div className="min-w-0 space-y-4">
+            <p className="flex min-w-0 items-center gap-2 text-xs font-bold break-words text-[#4f8cff] uppercase">
+              <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
+              {job.company}
+            </p>
+            <div className="space-y-3">
+              <div>
+                <h3 className="text-3xl leading-tight font-extrabold break-words text-[#f4f7fb] sm:text-4xl lg:text-[2.45rem]">
+                  {job.jobTitle}
+                </h3>
+              </div>
+              <p className="flex min-w-0 items-center gap-2 text-sm font-medium break-words text-[#a9b7d0]">
+                <MapPin
+                  className="h-4 w-4 shrink-0 text-[#2fd3ff]"
+                  aria-hidden="true"
+                />
+                <span className="min-w-0 flex-1 break-words">
+                  {job.location}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div className="min-w-0 border-l border-[rgba(47,211,255,0.34)] py-1 pl-4">
+            <p className="text-sm leading-6 font-semibold break-words text-[#f4f7fb]">
+              {job.product?.name ?? job.company}
+            </p>
+            <p className="mt-2 text-sm leading-6 break-words text-[#a9b7d0]">
+              {job.summary}
             </p>
           </div>
 
-          <Badge
-            variant="secondary"
-            className="mx-auto shrink-0 rounded-full border border-(--color-border) bg-(--color-surface-soft) text-xs font-semibold text-(--color-muted) sm:mx-0 sm:self-start sm:text-sm"
-          >
-            <time>{job.startDate}</time> -{' '}
-            {job.endDate ? <time>{job.endDate}</time> : t('present')}
-          </Badge>
-        </div>
-      </CardHeader>
+          {job.product?.websiteUrl || job.blogSlug ? (
+            <div className="flex flex-col gap-3">
+              {job.product?.websiteUrl ? (
+                <a
+                  href={job.product.websiteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group/project inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-[rgba(74,144,255,0.42)] bg-[linear-gradient(135deg,#2f80ff,#4f8cff)] px-5 text-sm font-semibold text-white shadow-[0_16px_36px_-22px_rgba(47,128,255,0.95)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4f8cff] active:translate-y-0"
+                >
+                  {t('projectCheckOut')}
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-200 group-hover/project:translate-x-0.5 group-hover/project:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : null}
 
-      <CardContent className="relative z-10 space-y-3 px-5 pt-3 pb-4 text-left sm:px-6 sm:pt-4 sm:pb-5">
-        <p className="text-sm leading-6 font-medium text-(--color-muted) sm:text-base sm:leading-relaxed">
-          {job.summary}
-        </p>
+              {job.blogSlug ? (
+                <Link
+                  to="/blog/$slug"
+                  params={{ slug: job.blogSlug }}
+                  className="group/read-more inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-[rgba(100,140,210,0.22)] bg-[rgba(16,27,49,0.54)] px-5 text-sm font-semibold text-[#f4f7fb] shadow-[0_12px_30px_-24px_rgba(47,128,255,0.72)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(74,144,255,0.42)] hover:bg-[rgba(19,32,57,0.84)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4f8cff] active:translate-y-0"
+                >
+                  {t('blogReadMore')}
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-200 group-hover/read-more:translate-x-0.5 group-hover/read-more:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              ) : null}
+            </div>
+          ) : null}
+        </aside>
 
-        {jobContentPreview ? (
-          <div
-            className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>p]:my-1.5 [&>ul]:my-0 [&>ul]:list-disc [&>ul]:space-y-1 [&>ul]:pl-5 [&>ul>li]:my-0 [&>ul>li]:leading-6"
-            dangerouslySetInnerHTML={{ __html: marked(jobContentPreview) }}
-          />
-        ) : null}
-
-        {job.blogSlug ? (
-          <div className="mt-3 flex justify-center sm:mt-4">
-            <Link
-              to="/blog/$slug"
-              params={{ slug: job.blogSlug }}
-              className="group/read-more inline-flex h-10 items-center justify-center rounded-xl border border-(--color-primary) bg-(--color-button) px-5 text-sm font-semibold text-(--color-button-text) shadow-[0_10px_24px_-14px_var(--color-primary)] ring-1 ring-(--color-primary)/20 transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) sm:h-11 sm:px-6"
-            >
-              <Sparkles
-                className="mr-2 h-4 w-4 text-(--color-button-text) transition-transform duration-500 group-hover/read-more:-rotate-12 group-hover/read-more:scale-110"
-                aria-hidden="true"
+        <div className="min-w-0 space-y-5 p-4 sm:space-y-6 sm:p-6 lg:p-7">
+          {job.tags.length > 0 ? (
+            <section className="min-w-0">
+              <SectionHeading
+                icon={Layers3}
+                label={t('techStack')}
+                accentColor="#2fd3ff"
               />
-              {t('blogReadMore')}
-            </Link>
-          </div>
-        ) : null}
+              <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:flex-wrap">
+                {job.tags.map((tag) => {
+                  const Icon = getTechIcon(tag)
+
+                  return (
+                    <Badge
+                      key={tag}
+                      variant="outline"
+                      className="h-11 w-full justify-start gap-2 rounded-xl border-[rgba(100,140,210,0.18)] bg-[rgba(16,27,49,0.76)] px-3 text-sm font-semibold text-[#f4f7fb] shadow-sm transition-all duration-200 hover:border-[rgba(74,144,255,0.55)] hover:bg-[rgba(19,32,57,0.95)] md:w-auto"
+                    >
+                      <Icon
+                        className="h-4 w-4 shrink-0 text-[#2fd3ff]"
+                        aria-hidden="true"
+                      />
+                      {tag}
+                    </Badge>
+                  )
+                })}
+              </div>
+            </section>
+          ) : null}
+
+          {selectedWorkItems.length > 0 ? (
+            <section className="min-w-0 rounded-2xl border border-[rgba(74,144,255,0.42)] bg-[linear-gradient(145deg,rgba(16,27,49,0.86),rgba(11,20,38,0.7))] p-4 shadow-[0_18px_44px_-38px_rgba(47,128,255,0.9),inset_0_1px_0_rgba(255,255,255,0.045)] sm:p-5">
+              <SectionHeading
+                icon={CheckCircle2}
+                label={t('selectedWork')}
+                accentColor="#4f8cff"
+              />
+              <ul
+                className={cn(
+                  'mt-4 grid gap-3',
+                  selectedWorkItems.length === 3
+                    ? 'min-[960px]:grid-cols-3 min-[960px]:gap-0'
+                    : 'sm:grid-cols-2',
+                )}
+              >
+                {selectedWorkItems.map((item, itemIndex) => {
+                  const { title, detail } = splitWorkItem(item)
+
+                  return (
+                    <li
+                      key={item}
+                      className={cn(
+                        'flex gap-3 rounded-xl border border-[rgba(100,140,210,0.16)] bg-[rgba(7,13,26,0.42)] p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(74,144,255,0.42)] hover:bg-[rgba(16,27,49,0.72)] sm:p-4',
+                        selectedWorkItems.length === 3 &&
+                          'min-[960px]:rounded-none min-[960px]:border-y-0 min-[960px]:border-r-0 min-[960px]:bg-transparent min-[960px]:px-5 min-[960px]:py-1 min-[960px]:hover:translate-y-0 min-[960px]:hover:bg-transparent',
+                        selectedWorkItems.length === 3 &&
+                          itemIndex > 0 &&
+                          'min-[960px]:border-l-[rgba(100,140,210,0.18)]',
+                        selectedWorkItems.length === 3 &&
+                          itemIndex === 0 &&
+                          'min-[960px]:border-l-0 min-[960px]:pl-0',
+                      )}
+                    >
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[rgba(74,144,255,0.36)] bg-[rgba(47,128,255,0.14)] text-[#4f8cff]">
+                        <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <strong className="block text-sm leading-6 font-bold break-words text-[#f4f7fb]">
+                          {title}
+                        </strong>
+                        {detail ? (
+                          <span className="mt-1 block text-sm leading-6 break-words text-[#a9b7d0]">
+                            {detail}
+                          </span>
+                        ) : null}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
+          ) : null}
+
+          <ExperienceImpactList label={t('productImpact')} items={impactItems} />
+        </div>
       </CardContent>
     </Card>
   )
 }
 
-function getJobContentPreview(content: string, itemLimit = 3) {
+function BrandMark({ job }: { job: ResumeJob }) {
+  const logoSrc = job.product?.logoSrc
+  const logoAlt = job.product?.logoAlt ?? `${job.company} logo`
+  const label = job.product?.name ?? job.company
+
+  return (
+    <div className="flex min-w-0 max-w-full items-center gap-4">
+      <div className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-2xl border border-[rgba(100,140,210,0.2)] bg-[rgba(16,27,49,0.82)] p-3 shadow-[0_18px_42px_-28px_rgba(47,128,255,0.75),inset_0_1px_0_rgba(255,255,255,0.05)] lg:h-24 lg:w-24">
+        {logoSrc ? (
+          <img
+            src={logoSrc}
+            alt={logoAlt}
+            className="max-h-full max-w-full object-contain"
+            loading="lazy"
+          />
+        ) : (
+          <span className="text-lg font-extrabold text-[#4f8cff]">
+            {getInitials(label)}
+          </span>
+        )}
+      </div>
+      <div className="min-w-0 lg:hidden">
+        <p className="truncate text-sm font-bold text-[#f4f7fb]">
+          {label}
+        </p>
+        <p className="truncate text-xs text-[#a9b7d0]">{job.company}</p>
+      </div>
+    </div>
+  )
+}
+
+function ExperienceImpactList({
+  label,
+  items,
+}: {
+  label: string
+  items: Array<string>
+}) {
+  if (items.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="min-w-0 border-t border-[rgba(100,140,210,0.14)] pt-5">
+      <SectionHeading
+        icon={ShieldCheck}
+        label={label}
+        accentColor="#34d399"
+      />
+      <ul className="mt-4 divide-y divide-[rgba(100,140,210,0.14)]">
+        {items.map((item, index) => {
+          const Icon = getImpactIcon(index)
+
+          return (
+            <li
+              key={item}
+              className="flex min-w-0 gap-3 py-4 first:pt-0 last:pb-0"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(52,211,153,0.24)] bg-[rgba(52,211,153,0.08)] text-[#34d399]">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1 text-sm leading-6 break-words text-[#a9b7d0] sm:text-[0.95rem]">
+                {item}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
+
+type ExperienceIcon = LucideIcon
+
+function SectionHeading({
+  icon: Icon,
+  label,
+  accentColor = '#4f8cff',
+}: {
+  icon: ExperienceIcon
+  label: string
+  accentColor?: string
+}) {
+  return (
+    <h4
+      className="flex items-center gap-2 text-xs font-bold uppercase"
+      style={{ color: accentColor }}
+    >
+      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+      {label}
+    </h4>
+  )
+}
+
+function getTechIcon(tag: string): ExperienceIcon {
+  const normalizedTag = tag.toLowerCase()
+
+  if (normalizedTag.includes('github')) {
+    return Github
+  }
+
+  if (normalizedTag.includes('ci/cd') || normalizedTag.includes('pipeline')) {
+    return Workflow
+  }
+
+  if (normalizedTag.includes('docker') || normalizedTag.includes('compose')) {
+    return Box
+  }
+
+  if (normalizedTag.includes('nginx') || normalizedTag.includes('vps')) {
+    return Server
+  }
+
+  if (normalizedTag.includes('ssl') || normalizedTag.includes('tls')) {
+    return Lock
+  }
+
+  if (normalizedTag.includes('linux')) {
+    return Terminal
+  }
+
+  if (normalizedTag.includes('mysql')) {
+    return Database
+  }
+
+  if (normalizedTag.includes('keycloak')) {
+    return ShieldCheck
+  }
+
+  if (normalizedTag.includes('rabbit')) {
+    return Network
+  }
+
+  if (normalizedTag.includes('spring') || normalizedTag.includes('fastapi')) {
+    return GitBranch
+  }
+
+  return Code2
+}
+
+function getImpactIcon(index: number): ExperienceIcon {
+  return [Rocket, Repeat2, ShieldCheck][index] ?? ShieldCheck
+}
+
+function splitWorkItem(item: string) {
+  const splitPattern =
+    /\s+(for|with|across|through|including|from|to|using)\s+/i
+  const match = splitPattern.exec(item)
+
+  if (!match || match.index < 12) {
+    return {
+      title: item,
+      detail: '',
+    }
+  }
+
+  return {
+    title: item.slice(0, match.index).replace(/[.,]$/, ''),
+    detail: item.slice(match.index).trim(),
+  }
+}
+
+function getJobContentPreviewItems(content: string, itemLimit = 4) {
   const lines = content
     .split('\n')
     .map((line) => line.trim())
@@ -494,10 +830,37 @@ function getJobContentPreview(content: string, itemLimit = 3) {
   const listItems = lines.filter((line) => /^[-*]\s+/.test(line))
 
   if (listItems.length > 0) {
-    return listItems.slice(0, itemLimit).join('\n')
+    return listItems
+      .slice(0, itemLimit)
+      .map((item) => item.replace(/^[-*]\s+/, ''))
   }
 
-  return limitToSentences(content, 2)
+  const preview = limitToSentences(content, 2)
+
+  return preview ? [preview] : []
+}
+
+function getInitials(label: string) {
+  return label
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('')
+}
+
+function formatResumeDate(value: string, language: SupportedLanguage) {
+  const parsed = new Date(`${value}T00:00:00.000Z`)
+
+  if (Number.isNaN(parsed.getTime())) {
+    return value
+  }
+
+  return new Intl.DateTimeFormat(language === 'sr' ? 'sr-Latn-RS' : 'en-US', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(parsed)
 }
 
 function EducationSection({

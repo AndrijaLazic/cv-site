@@ -14,6 +14,14 @@ export type ResumeJob = ResumeEntry & {
   company: string
   location: string
   blogSlug?: string
+  product?: {
+    name: string
+    logoSrc?: string
+    logoAlt?: string
+    websiteUrl?: string
+  }
+  impact?: Array<string>
+  selectedWork?: Array<string>
 }
 
 export type ResumeEducation = ResumeEntry & {
@@ -47,7 +55,7 @@ function getLocalizedEntries<TEntry>(entries?: Array<TEntry>) {
 const resumeNamespacesByLanguage = Object.fromEntries(
   supportedLanguages.map((language) => [
     language,
-    resumeLocaleModules[getLocaleModuleKey(language)]?.default ?? {},
+    resumeLocaleModules[getLocaleModuleKey(language)].default,
   ]),
 ) as Record<SupportedLanguage, ResumeLocaleNamespace>
 
