@@ -5,6 +5,7 @@ export const meta: PostMeta = {
   locale: 'en',
   title: 'FMEA Traditional and FMEA Excellence',
   author: 'Andrija Lazic',
+  authorUrl: 'https://www.linkedin.com/in/andrija-lazic-dev/',
   summary:
     'Work on FMEA Traditional, FMEA Excellence, AI-assisted prediction, optimization, and the public product website.',
   publishedDate: '2026-04-21',

@@ -5,6 +5,7 @@ export const meta: PostMeta = {
   locale: 'sr',
   title: 'Moja Backend Praksa u HTEC-u',
   author: 'Andrija Lazic',
+  authorUrl: 'https://www.linkedin.com/in/andrija-lazic-dev/',
   summary:
     'Pogled na moje iskustvo kao backend intern u HTEC-u — enterprise Java aplikacija.',
   publishedDate: '2026-04-12',

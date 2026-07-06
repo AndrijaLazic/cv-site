@@ -5,6 +5,7 @@ export const meta: PostMeta = {
   locale: 'en',
   title: 'My Backend Internship at HTEC',
   author: 'Andrija Lazic',
+  authorUrl: 'https://www.linkedin.com/in/andrija-lazic-dev/',
   summary:
     'A look at my experience as a backend intern at HTEC — building enterprise Java application.',
   publishedDate: '2026-04-12',

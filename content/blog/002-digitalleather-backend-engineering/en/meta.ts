@@ -5,6 +5,7 @@ export const meta: PostMeta = {
   locale: 'en',
   title: 'DevOps Engineering at DigitalLeather',
   author: 'Andrija Lazic',
+  authorUrl: 'https://www.linkedin.com/in/andrija-lazic-dev/',
   summary:
     'Infrastructure, deployment automation, CI/CD, Docker, Nginx, and production reliability work at DigitalLeather.',
   publishedDate: '2026-04-12',

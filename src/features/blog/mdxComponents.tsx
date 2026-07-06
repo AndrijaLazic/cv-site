@@ -18,7 +18,7 @@ export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        'mb-4 mt-8 first:mt-0 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100',
+        'mb-5 mt-10 first:mt-0 text-3xl font-bold leading-tight tracking-tight text-slate-950 dark:text-slate-50',
         className,
       )}
       {...props}
@@ -33,7 +33,7 @@ export const mdxComponents: MDXComponents = {
     <h2
       id={id}
       className={cn(
-        'mb-3 mt-8 scroll-mt-24 text-2xl font-semibold text-slate-900 dark:text-slate-100',
+        'mb-4 mt-11 scroll-mt-28 border-t border-slate-200/80 pt-8 text-2xl font-semibold leading-tight text-slate-950 first:border-t-0 first:pt-0 dark:border-slate-800 dark:text-slate-50',
         className,
       )}
       {...props}
@@ -50,7 +50,7 @@ export const mdxComponents: MDXComponents = {
     <h3
       id={id}
       className={cn(
-        'mb-2 mt-6 scroll-mt-24 text-xl font-semibold text-slate-800 dark:text-slate-200',
+        'mb-3 mt-8 scroll-mt-28 text-xl font-semibold leading-snug text-slate-900 dark:text-slate-100',
         className,
       )}
       {...props}
@@ -70,7 +70,7 @@ export const mdxComponents: MDXComponents = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        'my-4 text-base leading-7 text-slate-700 first:mt-0 dark:text-slate-300',
+        'my-5 text-[1.03rem] leading-8 text-slate-700 first:mt-0 dark:text-slate-300',
         className,
       )}
       {...props}
@@ -110,7 +110,7 @@ export const mdxComponents: MDXComponents = {
   ul: ({ className, ...props }) => (
     <ul
       className={cn(
-        'my-4 ml-6 list-disc space-y-1 text-slate-700 dark:text-slate-300',
+        'my-5 ml-6 list-disc space-y-2 text-slate-700 dark:text-slate-300',
         className,
       )}
       {...props}
@@ -119,19 +119,19 @@ export const mdxComponents: MDXComponents = {
   ol: ({ className, ...props }) => (
     <ol
       className={cn(
-        'my-4 ml-6 list-decimal space-y-1 text-slate-700 dark:text-slate-300',
+        'my-5 ml-6 list-decimal space-y-2 text-slate-700 dark:text-slate-300',
         className,
       )}
       {...props}
     />
   ),
   li: ({ className, ...props }) => (
-    <li className={cn('text-base leading-7', className)} {...props} />
+    <li className={cn('text-[1.03rem] leading-8', className)} {...props} />
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        'my-6 border-l-4 border-slate-300 pl-4 italic text-slate-600 dark:border-slate-600 dark:text-slate-400',
+        'my-7 border-l-4 border-slate-300 pl-5 text-lg italic leading-8 text-slate-600 dark:border-slate-600 dark:text-slate-400',
         className,
       )}
       {...props}

@@ -21,3 +21,8 @@ declare module '*.mdx' {
   const MDXComponent: ComponentType
   export default MDXComponent
 }
+
+declare module 'virtual:blog-post-sources' {
+  const sources: Record<string, string>
+  export default sources
+}

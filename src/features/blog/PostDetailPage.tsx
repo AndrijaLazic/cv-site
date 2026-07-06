@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, CalendarDays } from 'lucide-react'
 import { BlogContentRenderer } from './BlogContentRenderer'
-import { BlogImage } from './components'
+import { BlogImage, BlogTableOfContents } from './components'
 import type { BlogPostDetail, BlogPostSummary } from './types/blog'
 import type { PostListRouteTo } from './types/routes'
 import { publicConfig } from '#/shared/config/public-env'
@@ -53,7 +53,7 @@ function PostJsonLd({
     author: {
       '@type': 'Organization',
       name: post.author,
-      url: siteUrl,
+      url: post.authorUrl ?? siteUrl,
     },
     publisher: {
       '@type': 'Organization',
@@ -168,6 +168,7 @@ export function PostDetailPage({
   }
 
   const canonicalUrl = `${publicConfig.siteUrl}${canonicalBasePath}/${post.slug}`
+  const showTableOfContents = post.showTableOfContents !== false
 
   return (
     <>
@@ -177,8 +178,8 @@ export function PostDetailPage({
         structuredDataType={structuredDataType}
       />
       <div className="relative min-h-screen overflow-hidden bg-(--color-bg)">
-        <main className="relative px-4 py-16 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
-          <div className="mx-auto max-w-4xl space-y-8">
+        <main className="relative px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+          <div className="mx-auto max-w-7xl">
             <Link
               to={listRouteTo}
               search={{ tag: undefined }}
@@ -188,45 +189,59 @@ export function PostDetailPage({
               {copy.backToListLabel}
             </Link>
 
-            <article className="space-y-10">
-              <div className="relative overflow-hidden rounded-2xl border border-slate-200/50 bg-white/5 p-2 shadow-2xl backdrop-blur-xl md:rounded-3xl md:p-3 dark:border-slate-800/50 dark:bg-slate-900/40">
-                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-tr from-fmea-brand-red/10 via-transparent to-fmea-brand-blue/10 opacity-50" />
-                <div className="relative z-10 flex h-auto w-full aspect-video flex-col overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-inner md:rounded-xl dark:border-slate-800 dark:bg-slate-900">
-                  <BlogImage {...post.coverImage} />
+            <article className="mt-8">
+              <header className="max-w-4xl space-y-5">
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <TagLink key={tag} tag={tag} />
+                  ))}
                 </div>
-              </div>
-
-              <header className="space-y-4 text-center">
-                <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-balance text-slate-900 md:text-5xl lg:text-6xl dark:text-white">
+                <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-6xl dark:text-slate-50">
                   {post.title}
                 </h1>
-                <div className="flex flex-wrap items-center justify-center gap-4 border-t border-slate-200/60 pt-4 dark:border-slate-800/60">
-                  <span className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                    {copy.publishedLabel}
-                    <time
-                      dateTime={post.publishedDate}
-                      className="font-bold text-slate-900 dark:text-slate-100"
-                    >
+                <p className="max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
+                  {post.summary}
+                </p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-slate-200/80 pt-5 text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+                  <AuthorLink post={post} />
+                  <span className="inline-flex items-center gap-1.5">
+                    <CalendarDays className="size-4" aria-hidden="true" />
+                    <span className="sr-only">{copy.publishedLabel}</span>
+                    <time dateTime={post.publishedDate}>
                       {post.publishedDate}
                     </time>
                   </span>
-                  <div className="hidden h-4 w-px bg-slate-300 dark:bg-slate-700 sm:block"></div>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="border-fmea-brand-blue/30 bg-fmea-brand-blue/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-fmea-brand-blue backdrop-blur-md dark:border-fmea-brand-blue/40 dark:text-blue-300"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
                 </div>
               </header>
 
-              <div className="pt-2">
-                <BlogContentRenderer content={post.content} />
+              <div className="mt-10 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <BlogImage {...post.coverImage} />
+              </div>
+
+              <div
+                className={
+                  showTableOfContents
+                    ? 'mx-auto mt-10 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,640px)_minmax(240px,280px)] lg:items-start lg:justify-center'
+                    : 'mx-auto mt-10 max-w-[640px]'
+                }
+              >
+                <div className="min-w-0">
+                  {showTableOfContents ? (
+                    <BlogTableOfContents
+                      className="mb-9 lg:hidden"
+                      items={post.tableOfContents}
+                      locale={post.locale}
+                    />
+                  ) : null}
+                  <BlogContentRenderer content={post.content} />
+                </div>
+                {showTableOfContents ? (
+                  <BlogTableOfContents
+                    className="hidden lg:block"
+                    items={post.tableOfContents}
+                    locale={post.locale}
+                  />
+                ) : null}
               </div>
 
               <PostFaq faqItems={post.faqItems} locale={post.locale} />
@@ -235,5 +250,39 @@ export function PostDetailPage({
         </main>
       </div>
     </>
+  )
+}
+
+function AuthorLink({ post }: { post: BlogPostSummary }) {
+  if (!post.authorUrl) {
+    return (
+      <span className="font-semibold text-slate-700 dark:text-slate-200">
+        {post.author}
+      </span>
+    )
+  }
+
+  return (
+    <a
+      href={post.authorUrl}
+      target="_blank"
+      rel="noreferrer"
+      className="font-semibold text-slate-700 underline-offset-4 transition-colors hover:text-cyan-700 hover:underline dark:text-slate-200 dark:hover:text-cyan-300"
+    >
+      {post.author}
+    </a>
+  )
+}
+
+function TagLink({ tag }: { tag: string }) {
+  return (
+    <Link to="/blog" search={{ tag }}>
+      <Badge
+        variant="outline"
+        className="border-slate-300/80 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition-colors hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
+      >
+        {tag}
+      </Badge>
+    </Link>
   )
 }

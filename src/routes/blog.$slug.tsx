@@ -1,9 +1,9 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, CalendarDays, Clock3 } from 'lucide-react'
 import { getBlogPostMeta, loadBlogPost } from '#/features/blog/api'
 import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
-import { BlogImage } from '#/features/blog/components'
+import { BlogImage, BlogTableOfContents } from '#/features/blog/components'
 import {
   resolveSupportedLanguage,
   supportedLanguages,
@@ -83,7 +83,7 @@ function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
     author: {
       '@type': 'Person',
       name: post.author,
-      url: publicConfig.siteUrl,
+      url: post.authorUrl ?? publicConfig.siteUrl,
     },
     url: `${publicConfig.siteUrl}/blog/${post.slug}`,
     keywords: post.tags.join(', '),
@@ -106,6 +106,7 @@ function BlogPostPage() {
   )
 
   const post = postsByLanguage[activeLanguage]
+  const showTableOfContents = post?.showTableOfContents !== false
 
   if (!post) {
     return (
@@ -132,57 +133,119 @@ function BlogPostPage() {
   return (
     <>
       <BlogPostJsonLd post={post} />
-      <div className="flex-1 bg-(--color-bg) px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
-        <div className="mx-auto max-w-3xl space-y-6">
+      <div className="flex-1 bg-(--color-bg) px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-18">
+        <div className="mx-auto max-w-7xl">
           <Link
             to="/blog"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-700 hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-700 transition-colors hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
           >
             <ArrowLeft className="size-4" />
             {t('blogBackToList')}
           </Link>
 
-          <article className="space-y-6">
+          <article className="mt-8">
+            <header className="max-w-4xl space-y-5">
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <TagLink key={tag} tag={tag} />
+                ))}
+              </div>
+              <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-6xl dark:text-slate-50">
+                {post.title}
+              </h1>
+              <p className="max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
+                {post.summary}
+              </p>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-slate-200/80 pt-5 text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+                <AuthorLink post={post} />
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays className="size-4" aria-hidden="true" />
+                  <span className="sr-only">{t('blogPublished')}</span>
+                  <time dateTime={post.publishedDate}>
+                    {post.publishedDate}
+                  </time>
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Clock3 className="size-4" aria-hidden="true" />
+                  {estimateReadingTime(post)}
+                </span>
+              </div>
+            </header>
+
             {post.coverImage ? (
-              <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 shadow-md ring-1 ring-slate-950/5 dark:border-slate-700/80 dark:bg-slate-900/70 dark:ring-white/10">
+              <div className="mt-10 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
                 <BlogImage {...post.coverImage} />
               </div>
             ) : null}
 
-            <header className="space-y-3">
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
-                {post.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-sm text-slate-500 dark:text-slate-400">
-                  {t('blogPublished')}{' '}
-                  <time
-                    dateTime={post.publishedDate}
-                    className="font-medium text-slate-700 dark:text-slate-300"
-                  >
-                    {post.publishedDate}
-                  </time>
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className="border-slate-300/70 bg-white/65 text-slate-700 dark:border-slate-600/70 dark:bg-slate-800/75 dark:text-slate-200"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+            <div
+              className={
+                showTableOfContents
+                  ? 'mx-auto mt-10 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,640px)_minmax(240px,280px)] lg:items-start lg:justify-center'
+                  : 'mx-auto mt-10 max-w-[640px]'
+              }
+            >
+              <div className="min-w-0">
+                {showTableOfContents ? (
+                  <BlogTableOfContents
+                    className="mb-9 lg:hidden"
+                    items={post.tableOfContents}
+                    locale={post.locale}
+                  />
+                ) : null}
+                <BlogContentRenderer content={post.content} />
               </div>
-            </header>
-
-            <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
-              <BlogContentRenderer content={post.content} />
+              {showTableOfContents ? (
+                <BlogTableOfContents
+                  className="hidden lg:block"
+                  items={post.tableOfContents}
+                  locale={post.locale}
+                />
+              ) : null}
             </div>
           </article>
         </div>
       </div>
     </>
   )
+}
+
+function AuthorLink({ post }: { post: BlogPostSummary }) {
+  if (!post.authorUrl) {
+    return (
+      <span className="font-semibold text-slate-700 dark:text-slate-200">
+        {post.author}
+      </span>
+    )
+  }
+
+  return (
+    <a
+      href={post.authorUrl}
+      target="_blank"
+      rel="noreferrer"
+      className="font-semibold text-slate-700 underline-offset-4 transition-colors hover:text-cyan-700 hover:underline dark:text-slate-200 dark:hover:text-cyan-300"
+    >
+      {post.author}
+    </a>
+  )
+}
+
+function TagLink({ tag }: { tag: string }) {
+  return (
+    <Link to="/blog" search={{ tag }}>
+      <Badge
+        variant="outline"
+        className="border-slate-300/80 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition-colors hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
+      >
+        {tag}
+      </Badge>
+    </Link>
+  )
+}
+
+function estimateReadingTime(post: BlogPostSummary) {
+  const sectionCount = Math.max(post.tableOfContents.length, 1)
+  const minutes = Math.max(2, Math.round(sectionCount * 0.7))
+  return post.locale === 'sr' ? `${minutes} min čitanja` : `${minutes} min read`
 }

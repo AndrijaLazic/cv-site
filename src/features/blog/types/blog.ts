@@ -31,6 +31,12 @@ export interface BlogFaqItem {
   answer: string
 }
 
+export interface BlogTableOfContentsItem {
+  id: string
+  title: string
+  level: 2 | 3
+}
+
 export interface BlogPostMeta {
   slug: string
   locale: SupportedLanguage
@@ -38,6 +44,8 @@ export interface BlogPostMeta {
   summary: string
   publishedDate: string
   author: string
+  authorUrl?: string
+  showTableOfContents?: boolean
   tags: string[]
   heroImage?: BlogImageContent
   coverImage?: BlogImageContent
@@ -52,6 +60,7 @@ export interface BlogPostSummary extends Omit<
   heroImage: BlogImageContent
   coverImage: BlogImageContent
   socialImage: BlogImageContent
+  tableOfContents: BlogTableOfContentsItem[]
 }
 
 export type BlogPostCollection = 'blog'

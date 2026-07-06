@@ -1,7 +1,9 @@
 import type { ComponentType } from 'react'
+import postSourceModules from 'virtual:blog-post-sources'
 import type { SupportedLanguage } from '#/app/i18n/languages'
 import type { BlogPostDetail, BlogPostSummary, PostMeta } from './types/blog'
 import { resolvePostImages } from './postImages'
+import { extractTableOfContents } from './tableOfContents'
 
 type MdxModule = {
   default: ComponentType
@@ -17,7 +19,6 @@ const metaModules = import.meta.glob<{ meta: PostMeta }>(
 
 // Post content modules stay lazy and are loaded only when a blog post route requests them.
 const postModules = import.meta.glob<MdxModule>('/content/blog/**/post.mdx')
-
 function parseContentPath(
   filePath: string,
 ): { articleFolder: string; locale: SupportedLanguage } | null {
@@ -32,12 +33,30 @@ function buildIndex() {
   const summaryByLocaleSlug = new Map<string, BlogPostSummary>()
   const slugByArticleLocale = new Map<string, string>()
   const postLoaderByLocaleSlug = new Map<string, () => Promise<MdxModule>>()
+  const tocByArticleLocale = new Map<
+    string,
+    BlogPostSummary['tableOfContents']
+  >()
+
+  for (const [filePath, source] of Object.entries(postSourceModules)) {
+    const parsed = parseContentPath(filePath)
+    if (!parsed) continue
+    tocByArticleLocale.set(
+      `${parsed.articleFolder}:${parsed.locale}`,
+      extractTableOfContents(source),
+    )
+  }
 
   for (const [filePath, module] of Object.entries(metaModules)) {
     const parsed = parseContentPath(filePath)
     if (!parsed) continue
     const key = `${parsed.locale}:${module.meta.slug}`
-    summaryByLocaleSlug.set(key, resolvePostImages(module.meta))
+    summaryByLocaleSlug.set(key, {
+      ...resolvePostImages(module.meta),
+      tableOfContents:
+        tocByArticleLocale.get(`${parsed.articleFolder}:${parsed.locale}`) ??
+        [],
+    })
     slugByArticleLocale.set(
       `${parsed.articleFolder}:${parsed.locale}`,
       module.meta.slug,

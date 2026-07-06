@@ -11,7 +11,9 @@ content/blog/{article-folder}/{locale}/post.mdx
 The public route URL is controlled by `meta.slug`, not by the folder name.
 
 `meta.ts` must export `meta: PostMeta` with:
-`slug`, `locale`, `title`, `summary`, `publishedDate`, optional `coverImage`, optional `socialImage`, `tags`.
+`slug`, `locale`, `title`, `summary`, `publishedDate`, `author`, `tags`, optional `authorUrl`, optional `coverImage`, optional `socialImage`, optional `faqItems`, and optional `showTableOfContents`.
+
+`showTableOfContents` defaults to visible. Set `showTableOfContents: false` in `meta.ts` to hide the article table of contents for a specific post.
 
 ## How posts are loaded
 

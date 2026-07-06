@@ -1,30 +1,36 @@
 import type React from 'react'
 import { cn } from '#/shared/utils'
+import { createHeadingId } from '../tableOfContents'
 
 export type ContentBlockProps = {
+  id?: string
   title?: string
   className?: string
   children: React.ReactNode
 }
 
 export function ContentBlock({
+  id,
   title,
   className,
   children,
 }: ContentBlockProps) {
+  const sectionId = id ?? (title ? createHeadingId(title) : undefined)
+
   return (
-    <div
+    <section
+      id={sectionId}
       className={cn(
-        'my-8 rounded-xl border border-slate-200/85 bg-white/80 px-5 py-4 shadow-md backdrop-blur-sm dark:border-slate-700/75 dark:bg-slate-900/70 sm:px-6 sm:py-5',
+        'my-11 scroll-mt-28 border-t border-slate-200/80 pt-8 first:mt-0 first:border-t-0 first:pt-0 dark:border-slate-800',
         className,
       )}
     >
       {title && (
-        <h3 className="mb-3 text-lg font-semibold text-slate-900 dark:text-slate-100">
+        <h2 className="mb-4 text-2xl font-semibold leading-tight text-slate-950 dark:text-slate-50">
           {title}
-        </h3>
+        </h2>
       )}
       {children}
-    </div>
+    </section>
   )
 }

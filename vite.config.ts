@@ -62,6 +62,82 @@ function readHttpsConfig(env: Record<string, string>) {
   }
 }
 
+function rawBlogMdxContent() {
+  return {
+    name: 'raw-blog-mdx-content',
+    enforce: 'pre' as const,
+    load(id: string) {
+      const [filePath, query] = id.split('?')
+
+      if (
+        query !== 'raw' ||
+        !filePath.endsWith('.mdx') ||
+        !filePath.includes('/content/blog/')
+      ) {
+        return null
+      }
+
+      return `export default ${JSON.stringify(fs.readFileSync(filePath, 'utf8'))}`
+    },
+  }
+}
+
+function blogPostSourceManifest() {
+  const virtualModuleId = 'virtual:blog-post-sources'
+  const resolvedVirtualModuleId = `\0${virtualModuleId}`
+
+  return {
+    name: 'blog-post-source-manifest',
+    resolveId(id: string) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId
+      }
+
+      return null
+    },
+    load(id: string) {
+      if (id !== resolvedVirtualModuleId) {
+        return null
+      }
+
+      const root = process.cwd()
+      const blogContentDir = path.join(root, 'content', 'blog')
+      const sources: Record<string, string> = {}
+
+      for (const filePath of findPostFiles(blogContentDir)) {
+        this.addWatchFile(filePath)
+        const relativePath = path
+          .relative(root, filePath)
+          .split(path.sep)
+          .join('/')
+        sources[`/${relativePath}`] = fs.readFileSync(filePath, 'utf8')
+      }
+
+      return `export default ${JSON.stringify(sources)}`
+    },
+  }
+}
+
+function findPostFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) {
+    return []
+  }
+
+  const files: string[] = []
+
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const entryPath = path.join(dir, entry.name)
+
+    if (entry.isDirectory()) {
+      files.push(...findPostFiles(entryPath))
+    } else if (entry.name === 'post.mdx') {
+      files.push(entryPath)
+    }
+  }
+
+  return files
+}
+
 async function openSourceInEditor(
   filePath: string,
   lineNumber?: string,
@@ -116,9 +192,12 @@ const config = defineConfig(({ mode }) => {
       tsconfigPaths({ projects: ['./tsconfig.json'] }),
       tailwindcss(),
       tanstackStart(),
+      rawBlogMdxContent(),
+      blogPostSourceManifest(),
       {
         enforce: 'pre',
         ...mdx({
+          include: /\.mdx$/,
           providerImportSource: '@mdx-js/react',
           remarkPlugins: [remarkGfm],
           rehypePlugins: [
