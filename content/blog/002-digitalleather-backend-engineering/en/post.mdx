@@ -1,72 +1,60 @@
-import {
-  Callout,
-  Section,
-  TwoColumn,
-  ContentBlock,
-  ImageCarousel,
-} from '#/features/blog/components'
+import { Callout, Section, ContentBlock } from '#/features/blog/components'
 
-When I joined DigitalLeather in May 2025 in Kragujevac, I started working as a Backend Developer. In the first few weeks, I focused on understanding the application, the infrastructure behind it, and how the whole codebase worked together.
+My DigitalLeather work grew into a DevOps-focused role where I was responsible for infrastructure, deployment automation, and production reliability across VPS and on-premises environments.
 
-Very quickly, I realized this role was much broader than just backend coding. Alongside backend development, I also worked on infrastructure, deployment, and AI-related features. That is one of the things I enjoy most about working in a startup environment: you are close to the product, close to real business problems, and your work has a visible impact.
+That work fit naturally with my background because it connected practical IT experience with software engineering: Linux servers, networking, application deployment, containerized services, security configuration, and the day-to-day discipline of keeping systems understandable and repeatable.
 
-<ContentBlock title="My First Major Task">
-  My first real task was implementing an import and export feature for client documents.
+<ContentBlock title="Infrastructure from scratch">
+  I designed and set up the full infrastructure for both VPS and on-premises deployment environments.
 
-This was important because one of the main selling points of our application was making the transition from Excel, which many clients were already using, into our platform as easy as possible. The challenge was that every client had their own document format, structure, and rules.
+The work started with preparing Linux servers and grew into the full deployment foundation around the application: domains, subdomains, firewall rules, Nginx configuration, SSL/TLS, application runtime configuration, and deployment paths for multiple environments.
 
-Since this process was complex and time-consuming, I built a Python microservice with a job queue. That allowed us to process document imports and exports in a more controlled and scalable way, without blocking the main application flow.
-
-  <Callout type="info" title="Why this mattered">
-    This feature was not just a technical task. It supported one of the key business needs of the product: helping clients move from familiar Excel-based workflows into our application with less friction.
-  </Callout>
-</ContentBlock>
-
-<ContentBlock title="CI/CD and Infrastructure">
-  My next major responsibility was building the CI/CD pipeline.
-
-This included choosing an adequate VPS, setting up an Ubuntu server, and preparing the environment for reliable deployment. After that, I worked on GitHub agents and deployment scripts that made it possible to build, dockerize, and deploy all services with a single click.
-
-The work also included infrastructure and security-related setup such as firewall rules, DNS configuration, and subdomain management. The goal was not only to automate deployment, but to do it in a way that followed good security practices and made the system easier to manage over time.
-
-  <Section title="What this included">
-    - Choosing and preparing the VPS environment.
-    - Installing and configuring Ubuntu server.
-    - Setting up GitHub agents and deployment scripts.
-    - Automating build, Dockerization, and deployment.
-    - Configuring firewall, DNS, and subdomains.
-    - Following security-focused deployment practices.
+  <Section title="Core responsibilities">
+    - Set up VPS and on-premises environments from the ground up.
+    - Prepared Linux servers for application deployments.
+    - Configured Nginx, SSL/TLS, DNS, subdomains, and firewall rules.
+    - Applied security hardening across the deployment stack.
   </Section>
 </ContentBlock>
 
-<ContentBlock title="Translation Feature">
-  Another important feature I worked on was translation.
+<ContentBlock title="Dockerized environments">
+  A major part of the role was making the application easier to run consistently.
 
-Our clients can have facilities, teams, and customers in many different countries, so it is important that business data can be translated into different languages. In the first iteration, we used AWS Translate and Google Translate. These services worked well for general translation, but they were not always strong enough for domain-specific terminology.
+I containerized services with Docker and Docker Compose across development, demo, and production environments. This made deployments more predictable and helped reduce differences between local development, testing, demos, and production usage.
 
-To improve that, we moved toward a more specialized approach using LangChain and OpenAI models. This gave us better control and better results for business-specific content.
+  <Callout type="info" title="Why this mattered">
+    The goal was repeatability. When services are packaged and configured consistently, the team spends less time debugging environment differences and more time improving the product.
+  </Callout>
+</ContentBlock>
 
-More about this part of the system will be covered in my next blog about FMEA Excellence.
+<ContentBlock title="CI/CD with GitHub Actions">
+  I built and maintained CI/CD pipelines with GitHub Actions, automating the build and deployment lifecycle.
+
+The pipelines handled the practical work that every production system needs: building services, preparing Docker images, pushing changes through the deployment flow, and making releases less dependent on manual server work.
+
+  <Section title="What the pipelines supported">
+    - Automated builds for application services.
+    - Docker-based deployment workflows.
+    - Repeatable deployment steps for demo and production environments.
+    - Faster and safer releases through GitHub Actions.
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="Production reliability">
+  DevOps work is not only about deploying code. It is also about understanding what happens after deployment.
+
+I set up monitoring and logging so the team had better visibility into system health and could respond faster when something needed attention. I also worked on the operational details around server access, configuration, network rules, certificates, and service behavior across environments.
+
+This part of the work required careful thinking because small infrastructure decisions can create large maintenance costs later. I tried to keep the setup practical, secure, and easy enough for the team to operate.
 
 </ContentBlock>
 
-<ContentBlock title="AI Billing and Usage Control">
-  I also worked on the billing side of AI features.
+<ContentBlock title="How this shaped my engineering">
+  This experience made me stronger as a backend engineer because it gave me more ownership over the full lifecycle of an application.
 
-The goal was to make sure companies, or even individual employees, could have a defined number of tokens available for using AI functionality inside the application. This required connecting product rules, backend logic, and usage tracking in a way that was practical for both the business and the end users.
+Writing application code is one part of the job. Running it reliably is another. Working across both sides helped me think more clearly about configuration, observability, deployment risk, and the operational reality of software after it leaves a developer machine.
 
-It was a good example of how AI features are not only about model integration. They also need controls, limits, and clear rules so they can work as part of a real product.
-
-</ContentBlock>
-
-<ContentBlock title="What I Like About Startup Work">
-  One of the things I value most about working in a startup is the level of ownership. You are not limited to one narrow role. You get to understand the product deeply, solve important problems, and contribute in multiple areas.
-
-Startup work also creates a strong connection between engineering and business value. Features are not built in isolation. You can clearly see why something matters, who it helps, and what impact it has.
-
-It is a fast-learning environment. You improve not only as a developer, but also in communication, decision-making, and product thinking. For me, that has been one of the most rewarding parts of working at DigitalLeather.
-
-  <Callout type="tip" title="What startup work taught me">
-    In a startup, progress comes from being flexible, learning fast, and staying focused on what creates real value for users.
+  <Callout type="tip" title="Main takeaway">
+    My DevOps work at DigitalLeather connected backend engineering with infrastructure ownership: Docker, GitHub Actions, Nginx, Linux, VPS deployments, SSL/TLS, CI/CD, monitoring, and production reliability.
   </Callout>
 </ContentBlock>

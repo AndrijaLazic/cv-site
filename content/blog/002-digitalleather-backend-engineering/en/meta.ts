@@ -3,10 +3,10 @@ import type { PostMeta } from '#/features/blog/types/blog'
 export const meta: PostMeta = {
   slug: 'digitalleather-backend-engineering',
   locale: 'en',
-  title: 'Backend Engineering at DigitalLeather',
+  title: 'DevOps Engineering at DigitalLeather',
   author: 'Andrija Lazic',
   summary:
-    'Insights from working as a backend engineer at DigitalLeather — AI development, DevOps, and building scalable services.',
+    'Infrastructure, deployment automation, CI/CD, Docker, Nginx, and production reliability work at DigitalLeather.',
   publishedDate: '2026-04-12',
   coverImage: {
     src: '/blog/digitalleather-backend-engineering/digitalleather-logo.webp',
@@ -16,5 +16,12 @@ export const meta: PostMeta = {
     position: 'center',
     aspectRatio: '16/9',
   },
-  tags: ['Spring Boot', 'Python', 'AI', 'DevOps', 'Backend Development'],
+  tags: [
+    'Docker',
+    'Docker Compose',
+    'GitHub Actions',
+    'Nginx',
+    'Linux',
+    'CI/CD',
+  ],
 }

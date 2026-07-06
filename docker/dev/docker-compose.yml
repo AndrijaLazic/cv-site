@@ -10,11 +10,13 @@ services:
     volumes:
       # Project files
       - ../..:/workspace
-      # Codex: auth.json, config.toml, skills, memories, rules — live mount = auto-logged-in
-      # On Windows with Docker Desktop ${USERPROFILE} resolves to C:\Users\<you>
-      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.codex:/home/devuser/.codex
-      # Copilot: copilot-instructions.md + Explore/Plan/Ask agents
-      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.copilot:/home/devuser/.copilot
+      # Codex: Docker named volume (host path bind mounts cause SQLite lock/permission issues)
+      - codex_home:/home/devuser/.codex
+      # Copilot: Docker named volume
+      - copilot_home:/home/devuser/.copilot
+      # OpenCode: data dir must be writable because the CLI writes logs/sessions there
+      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.local/share/opencode:/home/devuser/.local/share/opencode
+      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.config/opencode:/home/devuser/.config/opencode:ro
       # Named volume for node_modules keeps installs fast and off the bind mount
       - node_modules_cache:/workspace/node_modules
     environment:
@@ -25,9 +27,11 @@ services:
       VITE_USE_POLLING: 'true'
       VITE_WATCH_POLL_INTERVAL: '120'
     ports:
-      - '${HOST_VITE_PORT:-5173}:5173' # Vite dev server
-      - '${HOST_CRA_PORT:-3000}:3000' # Create React App / alternative dev server
-      - '${HOST_PREVIEW_PORT:-4173}:4173' # Vite preview
+      - '${HOST_BIND:-0.0.0.0}:${HOST_VITE_PORT:-5173}:5173' # Optional Vite default port
+      - '${HOST_BIND:-0.0.0.0}:${HOST_CRA_PORT:-3000}:3000' # App dev server for browser/LAN access
+      - '${HOST_BIND:-0.0.0.0}:${HOST_PREVIEW_PORT:-4173}:4173' # Vite preview
+      - '${HOST_BIND:-0.0.0.0}:${HOST_CODESERVER_PORT:-8080}:8080' # Code-server web UI for remote access
+      - '${HOST_BIND:-0.0.0.0}:${HOST_OPENCODE_PORT:-24936}:24936' # OpenCode web UI
     security_opt:
       - no-new-privileges:true
     cap_drop:
@@ -53,3 +57,5 @@ services:
 
 volumes:
   node_modules_cache:
+  codex_home:
+  copilot_home:

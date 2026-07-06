@@ -3,10 +3,10 @@ import type { PostMeta } from '#/features/blog/types/blog'
 export const meta: PostMeta = {
   slug: 'fmea-excellence-ai-ml',
   locale: 'sr',
-  title: 'AI i Mašinsko Učenje u FMEA Excellence',
+  title: 'FMEA Traditional i FMEA Excellence',
   author: 'Andrija Lazic',
   summary:
-    'Izgradnja inteligentnih sistema za predviđanje i evaluaciju rizika.',
+    'Rad na FMEA Traditional, FMEA Excellence, AI predikcijama, optimizaciji i javnom product website-u.',
   publishedDate: '2026-04-21',
   coverImage: {
     src: '/blog/fmea-excellence/fmea-excellence-logo.webp',
@@ -17,5 +17,5 @@ export const meta: PostMeta = {
     aspectRatio: '16/9',
     padding: '0 5%',
   },
-  tags: ['Python', 'FastAPI', 'Mašinsko učenje', 'Scikit-learn', 'AI'],
+  tags: ['Python', 'FastAPI', 'Mašinsko učenje', 'Scikit-learn', 'AI', 'FMEA'],
 }

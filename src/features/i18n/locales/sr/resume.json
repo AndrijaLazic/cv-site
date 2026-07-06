@@ -42,66 +42,58 @@
   "blogFilterByTag": "Filtriraj po tagu",
   "jobs": [
     {
-      "jobTitle": "AI / Machine Learning Engineer",
+      "jobTitle": "DevOps inženjer",
       "company": "DigitalLeather",
       "location": "Kragujevac",
       "startDate": "2025-05-01",
-      "summary": "Radio na FMEA Excellence, SaaS aplikaciji koja koristi AI i mašinsko učenje za podršku proceni rizika i donošenju odluka zasnovanih na ROI.",
-      "tags": ["AI", "Mašinsko učenje", "Python", "FastAPI", "Scikit-learn"],
-      "blogSlug": "fmea-excellence-ai-ml",
-      "content": "- Implementirao algoritam za prognozu vremenskih serija koji bira najbolji model za svaki scenario i koristi podatke u realnom vremenu.\n- Razvio workflow-ove za mašinsko učenje za predviđanje troškova, uticaja rizika i vrednosti akcionih planova."
-    },
-    {
-      "jobTitle": "Backend Software Engineer",
-      "company": "DigitalLeather",
-      "location": "Kragujevac",
-      "startDate": "2025-05-01",
-      "summary": "Radio na FMEA Traditional, SaaS aplikaciji za industrije gde je FMEA deo standarda upravljanja kvalitetom.",
+      "summary": "Odgovoran za infrastrukturu, automatizaciju deployment-a i pouzdanost produkcije u VPS i on-premises deployment okruženjima.",
       "tags": [
-        "Backend Development",
-        "Spring Boot",
         "Docker",
-        "MySQL",
-        "GitHub Actions"
+        "Docker Compose",
+        "GitHub Actions",
+        "Nginx",
+        "Linux",
+        "VPS",
+        "SSL/TLS",
+        "CI/CD"
       ],
       "blogSlug": "digitalleather-backend-engineering",
-      "content": "- Razvio backend funkcionalnosti i automatizovane procese za deployment u cloud/VPS okruženjima.\n- Implementirao AI-asistirane funkcionalnosti za prevođenje dokumentacije na strane jezike.\n- Razvio funkcionalnost za izvoz podataka aplikacije u prilagođene šablone.\n- Kreirao orkestraciju deploy-a koristeći GitHub Actions i Docker."
+      "content": "- Dizajnirao i postavio kompletnu infrastrukturu od nule za VPS i on-premises deployment-e.\n- Kontejnerizovao servise koristeći Docker i Docker Compose kroz razvojno, demo i produkciono okruženje.\n- Izgradio i održavao CI/CD pipeline-ove koristeći GitHub Actions, automatizujući ceo build i deployment životni ciklus.\n- Konfigurisao Nginx, SSL/TLS, firewall pravila i security hardening kroz ceo stack.\n- Postavio monitoring i logging za bolju vidljivost stanja sistema i brži incident response."
+    },
+    {
+      "jobTitle": "Softverski inženjer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2024-11-01",
+      "endDate": "2026-06-30",
+      "summary": "Radio na FMEA Excellence, real-time platformi za upravljanje rizicima zasnovanoj na FMEA metodologiji za potrebe automobilske industrije.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Scikit-learn",
+        "Spring Boot",
+        "MySQL",
+        "Docker"
+      ],
+      "blogSlug": "fmea-excellence-ai-ml",
+      "content": "- Razvijao ključne backend servise, uključujući API-je i poslovnu logiku za analizu rizika i obradu podataka.\n- Razvio backend funkcionalnosti za import/export korisničkih fajlova, uključujući export u prilagođene šablone.\n- Dizajnirao AI module za predviđanje budućih troškova rizika koristeći istorijske podatke, podatke u realnom vremenu i korisnički definisane parametre.\n- Izgradio machine learning workflow-ove za prognozu troškova, uticaja rizika i vrednosti akcionih planova.\n- Razvio optimization engine koji analizira kombinacije risk action-a i preporučuje najefikasniju opciju na osnovu korisničkih ciljeva.\n- Implementirao AI-asistirane funkcionalnosti za lakše korišćenje dokumentacije na stranim jezicima.\n- Samostalno kreirao FMEA Excellence product website, uključujući javnu product stranicu na fmea-excellence.com."
     },
     {
       "jobTitle": "Bekend praktikant",
       "company": "HTEC",
-      "location": "Kragujevac, Srbija",
+      "location": "Kragujevac",
       "startDate": "2024-09-01",
       "endDate": "2024-10-31",
-      "summary": "Doprinos web platformi za netehničke zaposlene kroz implementaciju ključnih backend funkcionalnosti.",
+      "summary": "Radio na web aplikaciji dizajniranoj da pomogne netehničkim zaposlenima da efikasnije upravljaju svakodnevnim zadacima.",
       "tags": [
-        "Backend Development",
         "Spring Boot",
         "Docker",
         "MySQL",
         "Keycloak",
-        "RabbitMQ",
-        "Testing"
+        "RabbitMQ"
       ],
       "blogSlug": "htec-backend-internship",
-      "content": "- Razvio automatsko i manuelno generisanje izveštaja.\n- Implementirao auditing baze podataka.\n- Napravio sistem notifikacija.\n- Pisao unit i integracione testove."
-    },
-    {
-      "jobTitle": "Diplomski rad - EzDeals",
-      "company": "Akademski projekat",
-      "location": "Kragujevac, Srbija",
-      "startDate": "2023-11-01",
-      "endDate": "2024-06-30",
-      "summary": "Razvoj web aplikacije za pronalaženje najboljih ponuda na odabranim proizvodima, razvijene kao projekat diplomskog rada.",
-      "tags": [
-        "Backend Development",
-        "Spring Boot",
-        "PostgreSQL",
-        "Docker",
-        "Web Scraping",
-        "Redis"
-      ],
-      "content": "Web aplikacija koja omogućava korisnicima da pronađu najbolje ponude na odabranim proizvodima.\n\nOvo uključuje razvoj web scraper-a, paralelnog programiranja, optimizacije performansi i implementaciju funkcionalnosti za korisničke naloge i personalizovane preporuke."
+      "content": "- Razvio funkcionalnosti za automatsko i manuelno generisanje izveštaja kao deo backend tima.\n- Implementirao auditing baze podataka, sistem notifikacija i backend testove."
     }
   ],
   "educations": [

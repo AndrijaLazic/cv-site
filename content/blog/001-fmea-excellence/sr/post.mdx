@@ -5,40 +5,83 @@ import {
   BlogImage,
   ImageCarousel,
 } from '#/features/blog/components'
+import { ExternalLink } from 'lucide-react'
 
-Ovaj blog se nastavlja tamo gde je stala moja prethodna priča o radu u DigitalLeather-u.
+U DigitalLeather-u sam radio na dva blisko povezana FMEA proizvoda: FMEA Traditional i FMEA Excellence. Oba proizvoda imaju isti praktičan cilj: da pomognu timovima u automobilskoj industriji da upravljaju rizicima na strukturisan način, bez oslanjanja na razbacane spreadsheet-ove i nepovezanu dokumentaciju.
 
-Nakon što sam u maju 2025. počeo kao backend inženjer, postepeno sam prešao u ulogu AI / Machine Learning inženjera na proizvodu FMEA Excellence. Taj prelaz mi je bio prirodan jer sam već bio blizu proizvoda, korisnika i delova sistema gde predikcija može da ukloni mnogo ručnog rada.
+Važna razlika je u obimu proizvoda. FMEA Traditional je fokusiran na standardni FMEA workflow i rad sa dokumentima. FMEA Excellence je napredniji proizvod, u kome se nalaze AI, machine learning, predikcije, optimizacija i AI-asistirane funkcionalnosti za prevođenje.
 
-FMEA Excellence ima tri glavna AI feature-a: ROI predikcije, AI chatbot i AI automatsko popunjavanje polja u PFMEA tabelama. Svaki rešava drugačiji problem, ali cilj je isti: da korisnici donesu bolju odluku bez toga da moraju da razumeju sve detalje iza modela.
+<a
+  href="https://fmea-excellence.com"
+  target="_blank"
+  rel="noreferrer"
+  className="mx-auto my-8 flex w-fit min-h-11 items-center justify-center gap-2 rounded-md bg-(--color-button) px-5 py-2.5 text-sm font-semibold text-(--color-button-text) no-underline shadow-sm ring-1 ring-(--color-primary)/25 transition hover:bg-(--color-primary) hover:text-white hover:brightness-110"
+>
+  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+  <span>Pogledaj product site</span>
+</a>
 
-<ContentBlock title="ROI predikcija kao glavni feature">
-  Najvažniji deo proizvoda je ROI predikcija. Ona pomaže menadžerima da odluče koje rizike treba rešavati prve, u zavisnosti od novca, vremena i resursa koje stvarno imaju na raspolaganju.
+<ContentBlock title="FMEA Traditional">
+  FMEA Traditional je bio fokusiran na prebacivanje poznatog FMEA načina rada u pouzdaniji aplikativni tok.
 
-U ovom slučaju menadžeri najčešće nisu tehničko osoblje. Njima nije potrebno da gledaju sirov output modela ili da razmišljaju o detaljima forecasting-a. Potrebno im je da znaju gde treba reagovati, koliko će akcija koštati, za koliko dana se investicija vraća i šta će se verovatno desiti ako se ne uradi ništa.
+Mnogi timovi već imaju postojeće Excel dokumente, prilagođene formate i interne šablone. Jedna od mojih odgovornosti bila je izgradnja backend workflow-a za import i export fajlova, uključujući export u prilagođene šablone. To je bilo važno zato što usvajanje proizvoda zavisi od toga koliko dobro podržava način rada koji korisnici već imaju.
 
-Pre ovog feature-a, takva analiza je mogla da traje nekoliko radnih dana. Sada korisnik u jednom flow-u dobija najvažnije informacije: očekivani ROI, broj dana za povrat investicije i grafik predikcije škarta za izabrani proizvodni proces.
+Tehnički rad je najviše bio vezan za pouzdanost i strukturu: parsiranje korisničkih fajlova, čuvanje konzistentnosti podataka, generisanje dokumenata u očekivanim formatima i pravljenje workflow-a koji mogu da se koriste u realnom radu sa klijentima.
 
-  <Callout type="info" title="Zašto je ovo važno">
-    Vrednost nije bila samo u tome da sistem predvidi brojeve. Veća vrednost je bila u tome da se spor proces planiranja pretvori u nešto što menadžeri mogu da koriste dok stvarno donose odluke.
+<Section title="Na čemu sam radio">
+  <ul className="my-4 ml-6 list-disc space-y-1 text-slate-700 dark:text-slate-300">
+    <li className="text-base leading-7">
+      {'Backend servisi za import i export fajlova.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Podrška za prilagođene export šablone.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Obrada podataka vezanih za FMEA dokumente i korisničke fajlove.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Praktičan prelazak sa spreadsheet procesa u aplikaciju.'}
+    </li>
+  </ul>
+</Section>
+
+  <Callout type="info" title="Važna razlika">
+    FMEA Traditional nije sadržao AI funkcionalnosti. Fokus je bio na osnovnom FMEA workflow-u, radu sa dokumentima i lakšem prebacivanju postojećih procesa klijenata u aplikaciju.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="Kako radi prediction workflow">
-  Iza interfejsa radi više ML koraka za predikciju.
+<ContentBlock title="FMEA Excellence">
+  FMEA Excellence je napredna platforma za upravljanje rizicima na kojoj sam radio kao softverski inženjer u malom timu. Preuzeo sam odgovornost za backend arhitekturu i vodio razvoj ključnih servisa u Python-u, uz rad na Spring Boot-u, MySQL-u, Docker okruženjima i funkcionalnostima okrenutim ka proizvodu.
 
-Modeli koriste podatke o škartu na izabranoj stanici da procene cenu, predvide trend podataka i izračunaju ROI. Na kraju se pomoću genetskih algoritama i linearnog programiranja bira najbolji skup akcija u odnosu na realna ograničenja korisnika.
+Ovo je deo gde pripada AI rad. Proizvod koristi istorijske podatke, podatke u realnom vremenu i korisnički definisane parametre da pomogne u predviđanju budućih troškova rizika, prognozi vrednosti akcionih planova i donošenju boljih odluka u FMEA procesima za automobilsku industriju.
 
-<Section title="Šta korisnik dobija">
-  - Procenu ROI-a za planirane akcije. - Broj dana za očekivani povrat
-  investicije. - Grafik predikcije škarta za dati proizvodni proces. -
-  Prioritizaciju akcija prema dostupnom budžetu i vremenu.
+<Section title="AI i optimizacione funkcionalnosti">
+  <ul className="my-4 ml-6 list-disc space-y-1 text-slate-700 dark:text-slate-300">
+    <li className="text-base leading-7">
+      {'Prognoza troškova, uticaja rizika i vrednosti akcionih planova.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Predikcija budućih troškova iz istorijskih i real-time podataka.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Optimization engine za poređenje kombinacija risk action-a.'}
+    </li>
+    <li className="text-base leading-7">
+      {'AI-asistirane funkcionalnosti za dokumentaciju na različitim jezicima.'}
+    </li>
+  </ul>
 </Section>
 
-Teži deo nije bio samo napraviti model koji radi na malom primeru. Pravi izazov se pojavio kada je broj rizika počeo da raste. Što je više rizika, to je više proračuna, više rada sa bazom i duže vreme izvršavanja predikcija.
+</ContentBlock>
 
-To smo rešavali optimizacijom upita ka bazi, paralelizacijom izvršavanja proračuna i računanjem unapred za one delove workflow-a gde je to bilo moguće. Tako je feature postao mnogo upotrebljiviji u realnom radu.
+<ContentBlock title="Predikcije i podrška odlučivanju">
+  Glavni AI workflow pomaže korisnicima da porede rizike, akcije, troškove i očekivani povrat. Umesto ručne evaluacije velikog broja mogućih akcija, menadžeri mogu da vide procenjeni ROI, očekivano vreme povrata i prognozu škarta za izabrani proizvodni proces.
 
+Iza interfejsa radi više koraka predikcije. Modeli koriste podatke o škartu na nivou stanice da procene cenu i budući trend, a zatim optimizacione tehnike pomažu da se izabere najbolji skup akcija u odnosu na budžet, vreme i poslovna ograničenja korisnika.
+
+  <Callout type="tip" title="Zašto je ovo vredno">
+    Cilj nije bio da AI bude vidljiv sam za sebe. Vrednost je u tome da predikcija bude direktno u workflow-u odlučivanja, tamo gde može da smanji ručnu analizu i ubrza planiranje rizika.
+  </Callout>
 </ContentBlock>
 
 <ImageCarousel
@@ -46,7 +89,7 @@ To smo rešavali optimizacijom upita ka bazi, paralelizacijom izvršavanja prora
   images={[
     {
       src: '/blog/fmea-excellence/fmea-scrap-prediction.webp',
-      alt: 'Predikcija defekata',
+      alt: 'Predikcija škarta u FMEA Excellence',
       caption:
         'Grafik predikcije škarta za izabrani proizvodni proces kroz vreme.',
       zoomable: true,
@@ -62,31 +105,29 @@ To smo rešavali optimizacijom upita ka bazi, paralelizacijom izvršavanja prora
   ]}
 />
 
-<ContentBlock title="AI chatbot za FMEA znanje">
-  Drugi feature je RAG chatbot koji odgovara na pitanja vezana za aplikaciju i za korišćenje FMEA metode u industriji.
+<ContentBlock title="AI asistent i prevođenje">
+  Radio sam i na AI-asistiranim funkcionalnostima koje podržavaju FMEA znanje i dokumentaciju na više jezika.
 
-Cilj je bio da korisnici mogu da postave praktična pitanja bez napuštanja proizvoda. Kao osnovu smo koristili LangChain i GPT modele, a kao izvore znanja interni materijal proizvoda i istraživačke radove <a href="https://www.linkedin.com/in/nikola-banduka-phd-67b63ab1/" target="_blank" rel="noreferrer">dr Nikole Banduke</a> i <a href="https://www.linkedin.com/in/nikola-komatina-88b6b31a9/" target="_blank" rel="noreferrer">Nikole Komatine</a>, koji su doktorirali iz oblasti FMEA analize.
+Deo vezan za asistenta koristio je RAG-style workflow za odgovore na praktična pitanja o aplikaciji i FMEA metodologiji. Deo vezan za prevođenje pomagao je da se poslovna dokumentacija lakše koristi na različitim jezicima, što je važno kada klijenti imaju pogone, timove i kupce u različitim državama.
 
-Ovaj feature je koristan jer FMEA može da bude kompleksna i iskusnim timovima. Dobar asistent može da objasni pojmove, pomogne korisniku da razume zašto je neko polje važno i da ga usmeri kroz način na koji aplikacija očekuje da analiza bude strukturirana.
+Ove funkcionalnosti su korisne zato što FMEA može da bude kompleksan čak i za iskusne timove. Dobra AI podrška treba da smanji trenje, objasni domenske pojmove i pomogne korisnicima da nastave kroz workflow bez oduzimanja kontrole nad finalnom odlukom.
 
 </ContentBlock>
 
 <BlogImage
   src="/blog/fmea-excellence/fmeai-ai-assistant.webp"
-  alt="AI assistant in FMEA Excellence"
+  alt="AI asistent u FMEA Excellence"
   bgColor="transparent"
   aspectRatio=""
   zoomable={true}
 />
 
-<ContentBlock title="AI popunjavanje PFMEA tabela">
-  Treći feature je sličan RAG pristupu, ali pored baze znanja uzima u obzir i prethodne podatke korisnika.
+<ContentBlock title="Product website">
+  Pored rada na aplikaciji, samostalno sam kreirao javni FMEA Excellence product website.
 
-Umesto da samo odgovara na pitanja, model pomaže u popunjavanju polja u PFMEA tabelama. Može da pogleda prethodne analize, slične procese i postojeće korisničke podatke, pa da predloži vrednosti koje korisniku olakšavaju i ubrzavaju rad.
+Sajt je imao drugačiju odgovornost od same aplikacije: trebalo je jasno objasniti proizvod, predstaviti vrednost FMEA Excellence-a i dati ljudima direktan način da razumeju projekat pre detaljnog prikaza platforme.
 
-Ovo je deo gde AI postaje manje vidljiv, ali veoma praktičan. Korisnik i dalje donosi finalnu odluku, ali aplikacija uklanja ponavljanje i pomaže mu da ne kreće od prazne tabele.
-
-  <Callout type="tip" title="Glavna poruka">
-    Najbolji AI feature-i u ovom proizvodu nisu bili odvojeni demo primeri. Bili su ugrađeni u postojeće workflow-e, tamo gde stvarno smanjuju ručni rad i ubrzavaju donošenje odluka.
+  <Callout type="info" title="Obim projekta">
+    Moj rad je obuhvatio i product engineering unutar platforme i javni website na fmea-excellence.com.
   </Callout>
 </ContentBlock>

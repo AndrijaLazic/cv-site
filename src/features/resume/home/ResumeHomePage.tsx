@@ -184,35 +184,19 @@ function HeroSection({ t }: { t: Translation }) {
           </Reveal>
         </div>
 
-        {/* Right: photo + code editor */}
+        {/* Right: code editor */}
         <Reveal
           delayMs={80}
-          className="relative order-1 mx-auto flex w-full max-w-[13.5rem] flex-col items-start gap-2 sm:max-w-[16rem] md:order-2 md:mx-0 md:w-[84%] md:max-w-none md:justify-self-end md:items-center"
+          className="relative order-1 mx-auto flex w-full max-w-[18rem] flex-col items-center gap-2 md:order-2 md:w-[90%] md:max-w-[26rem] md:self-center md:justify-self-center"
         >
-          <div className="relative w-full">
-            <div
-              aria-hidden="true"
-              className="absolute -inset-5 rounded-[2rem] opacity-80 blur-2xl md:-inset-7 md:rounded-[2.25rem]"
-              style={{
-                background:
-                  'radial-gradient(70% 72% at 52% 38%, color-mix(in srgb, var(--color-primary) 30%, transparent), color-mix(in srgb, var(--color-accent) 12%, transparent) 48%, transparent 76%)',
-              }}
-            />
-            <img
-              src="/hero-headshot-placeholder.png"
-              alt={t('headshot')}
-              className="relative z-10 h-54 w-full rounded-[1.35rem] object-cover shadow-[0_20px_45px_-30px_rgba(15,23,42,0.95)] ring-1 ring-white/10 sm:h-88 md:h-72 md:rounded-[1.35rem] lg:h-76"
-              width="480"
-              height="304"
-              loading="eager"
-              onError={(event) => {
-                event.currentTarget.onerror = null
-                event.currentTarget.src = '/headshot-on-white.jpg'
-              }}
-            />
-          </div>
-
-          {/* Code editor card */}
+          <div
+            aria-hidden="true"
+            className="absolute -inset-5 rounded-[2rem] opacity-80 blur-2xl md:-inset-7 md:rounded-[2.25rem]"
+            style={{
+              background:
+                'radial-gradient(70% 72% at 52% 38%, color-mix(in srgb, var(--color-primary) 30%, transparent), color-mix(in srgb, var(--color-accent) 12%, transparent) 48%, transparent 76%)',
+            }}
+          />
           <div
             className="relative z-20 hidden w-full rounded-xl border p-3 shadow-xl backdrop-blur-sm sm:block md:p-4"
             style={{
@@ -257,9 +241,16 @@ function HeroCodeSnippet() {
         {'    '}
         <CodeToken variant="property">role</CodeToken>
         <CodeToken variant="punctuation">:</CodeToken>{' '}
-        <CodeToken variant="string">'Full Stack Developer'</CodeToken>
+        <CodeToken variant="string">'Software Engineer & DevOps'</CodeToken>
+        <CodeToken variant="punctuation">,</CodeToken>
       </CodeLine>
       <CodeLine number={4}>
+        {'    '}
+        <CodeToken variant="property">location</CodeToken>
+        <CodeToken variant="punctuation">:</CodeToken>{' '}
+        <CodeToken variant="string">'Serbia'</CodeToken>
+      </CodeLine>
+      <CodeLine number={5}>
         <CodeToken variant="punctuation">{'};'}</CodeToken>
       </CodeLine>
     </CodeSnippet>
@@ -429,8 +420,10 @@ function JobSection({
 }
 
 function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
+  const jobContentPreview = getJobContentPreview(job.content)
+
   return (
-    <Card className="group relative overflow-hidden border-[1.5px] border-(--color-border) bg-(--color-card) py-0 shadow-xl backdrop-blur-xl transition-all duration-500 hover:border-(--color-primary) hover:shadow-2xl md:mx-auto">
+    <Card className="group relative gap-0 overflow-hidden border-[1.5px] border-(--color-border) bg-(--color-card) py-0 shadow-xl backdrop-blur-xl transition-all duration-500 hover:border-(--color-primary) hover:shadow-2xl md:mx-auto">
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
@@ -439,7 +432,7 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
         }}
         aria-hidden="true"
       />
-      <CardHeader className="relative z-10 space-y-3 border-b border-(--color-border) px-5 py-4 sm:space-y-4 sm:px-6 sm:py-6">
+      <CardHeader className="relative z-10 space-y-2 border-b border-(--color-border) px-5 py-4 !pb-3 sm:px-6 sm:py-5 sm:!pb-4">
         <div className="flex flex-col gap-2 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-3 sm:text-left">
           <div className="flex-1 space-y-1.5">
             <h3 className="text-lg leading-tight font-bold text-(--color-text) sm:text-2xl">
@@ -460,20 +453,20 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
         </div>
       </CardHeader>
 
-      <CardContent className="relative z-10 space-y-3 px-5 py-4 text-left sm:space-y-5 sm:px-6 sm:py-6">
+      <CardContent className="relative z-10 space-y-3 px-5 pt-3 pb-4 text-left sm:px-6 sm:pt-4 sm:pb-5">
         <p className="text-sm leading-6 font-medium text-(--color-muted) sm:text-base sm:leading-relaxed">
           {job.summary}
         </p>
 
-        {job.content ? (
+        {jobContentPreview ? (
           <div
-            className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert sm:prose-base [&>p]:my-2 [&>ul]:my-0 [&>ul]:pl-5 [&>ul>li]:my-0"
-            dangerouslySetInnerHTML={{ __html: marked(job.content) }}
+            className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>p]:my-1.5 [&>ul]:my-0 [&>ul]:list-disc [&>ul]:space-y-1 [&>ul]:pl-5 [&>ul>li]:my-0 [&>ul>li]:leading-6"
+            dangerouslySetInnerHTML={{ __html: marked(jobContentPreview) }}
           />
         ) : null}
 
         {job.blogSlug ? (
-          <div className="mt-3 flex justify-center sm:mt-6">
+          <div className="mt-3 flex justify-center sm:mt-4">
             <Link
               to="/blog/$slug"
               params={{ slug: job.blogSlug }}
@@ -490,6 +483,21 @@ function JobCard({ t, job }: { t: Translation; job: ResumeJob }) {
       </CardContent>
     </Card>
   )
+}
+
+function getJobContentPreview(content: string, itemLimit = 3) {
+  const lines = content
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  const listItems = lines.filter((line) => /^[-*]\s+/.test(line))
+
+  if (listItems.length > 0) {
+    return listItems.slice(0, itemLimit).join('\n')
+  }
+
+  return limitToSentences(content, 2)
 }
 
 function EducationSection({
@@ -588,7 +596,7 @@ function EducationCard({
 
           {education.content ? (
             <div
-              className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0"
+              className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0 [&>ul]:list-disc [&>ul]:pl-5"
               dangerouslySetInnerHTML={{ __html: marked(education.content) }}
             />
           ) : null}

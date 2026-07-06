@@ -1,72 +1,60 @@
-import {
-  Callout,
-  Section,
-  TwoColumn,
-  ContentBlock,
-  ImageCarousel,
-} from '#/features/blog/components'
+import { Callout, Section, ContentBlock } from '#/features/blog/components'
 
-Kada sam se u maju 2025. godine pridružio kompaniji DigitalLeather u Kragujevcu, počeo sam da radim kao Backend Developer. Tokom prvih nekoliko nedelja fokusirao sam se na upoznavanje aplikacije, infrastrukture koja stoji iza nje i načina na koji ceo codebase funkcioniše kao celina.
+Moj rad u DigitalLeather-u prerastao je u DevOps ulogu u kojoj sam bio odgovoran za infrastrukturu, automatizaciju deployment-a i pouzdanost produkcije kroz VPS i on-premises okruženja.
 
-Vrlo brzo sam shvatio da je ova uloga mnogo šira od samog backend programiranja. Pored backend razvoja, radio sam i na infrastrukturi, deployment-u i funkcionalnostima povezanim sa AI-em. To je jedna od stvari u kojima najviše uživam kada radim u startup okruženju: blizu si proizvoda, blizu si stvarnih poslovnih problema i tvoj rad ima vidljiv uticaj.
+Ovaj posao se prirodno nadovezao na moje prethodno iskustvo jer spaja praktičan IT rad sa softverskim inženjeringom: Linux servere, mreže, deployment aplikacija, kontejnerizovane servise, bezbednosnu konfiguraciju i svakodnevnu disciplinu održavanja sistema koji su razumljivi i ponovljivi.
 
-<ContentBlock title="Moj prvi veći zadatak">
-  Moj prvi pravi zadatak bio je implementacija funkcionalnosti za import i export klijentskih dokumenata.
+<ContentBlock title="Infrastruktura od nule">
+  Dizajnirao sam i postavio kompletnu infrastrukturu za VPS i on-premises deployment okruženja.
 
-Ovo je bilo važno zato što je jedna od glavnih prednosti naše aplikacije bila da klijentima omogući što lakši prelazak sa Excela, koji su mnogi od njih već koristili, na našu platformu. Izazov je bio u tome što je svaki klijent imao svoj format dokumenata, svoju strukturu i svoja pravila.
+Rad je počeo pripremom Linux servera, a zatim prerastao u kompletnu osnovu za deployment aplikacije: domene, subdomene, firewall pravila, Nginx konfiguraciju, SSL/TLS, runtime konfiguraciju aplikacije i deployment tokove za više okruženja.
 
-Pošto je ovaj proces bio složen i vremenski zahtevan, napravio sam Python mikroservis sa job queue sistemom. To nam je omogućilo da import i export dokumenata obrađujemo na kontrolisaniji i skalabilniji način, bez blokiranja glavnog toka aplikacije.
-
-  <Callout type="info" title="Zašto je ovo bilo važno">
-    Ova funkcionalnost nije bila samo tehnički zadatak. Podržavala je jednu od ključnih poslovnih potreba proizvoda: da pomogne klijentima da sa manje poteškoća pređu sa poznatih Excel procesa na našu aplikaciju.
-  </Callout>
-</ContentBlock>
-
-<ContentBlock title="CI/CD i infrastruktura">
-  Moja sledeća velika odgovornost bila je izgradnja CI/CD pipeline-a.
-
-To je uključivalo izbor odgovarajućeg VPS-a, podešavanje Ubuntu servera i pripremu okruženja za pouzdan deployment. Nakon toga radio sam na GitHub agentima i deployment skriptama koje su omogućile build, dockerizaciju i deployment svih servisa jednim klikom.
-
-Ovaj posao je obuhvatao i infrastrukturna i bezbednosna podešavanja, kao što su firewall pravila, DNS konfiguracija i upravljanje subdomenima. Cilj nije bio samo da se deployment automatizuje, već da se to uradi na način koji prati dobre bezbednosne prakse i čini sistem lakšim za održavanje na duži rok.
-
-  <Section title="Šta je ovo obuhvatalo">
-    - Izbor i pripremu VPS okruženja.
-    - Instalaciju i konfiguraciju Ubuntu servera.
-    - Podešavanje GitHub agenata i deployment skripti.
-    - Automatizaciju build-a, dockerizacije i deployment-a.
-    - Konfiguraciju firewall-a, DNS-a i subdomena.
-    - Primenu bezbednosno usmerenih deployment praksi.
+  <Section title="Glavne odgovornosti">
+    - Postavljanje VPS i on-premises okruženja od nule.
+    - Priprema Linux servera za deployment aplikacije.
+    - Konfiguracija Nginx-a, SSL/TLS-a, DNS-a, subdomena i firewall pravila.
+    - Security hardening kroz deployment stack.
   </Section>
 </ContentBlock>
 
-<ContentBlock title="Funkcionalnost prevođenja">
-  Još jedna važna funkcionalnost na kojoj sam radio bila je prevođenje.
+<ContentBlock title="Docker okruženja">
+  Veliki deo uloge bio je da aplikacija može konzistentno da se pokreće i deploy-uje.
 
-Naši klijenti mogu imati pogone, timove i kupce u različitim državama, pa je važno da poslovni podaci mogu da se prevode na različite jezike. U prvoj iteraciji koristili smo AWS Translate i Google Translate. Ovi servisi su bili dobri za opšti prevod, ali nisu uvek bili dovoljno precizni za terminologiju specifičnu za naš domen.
+Kontejnerizovao sam servise koristeći Docker i Docker Compose kroz razvojno, demo i produkciono okruženje. To je deployment učinilo predvidljivijim i pomoglo da se smanje razlike između lokalnog razvoja, testiranja, demo okruženja i produkcije.
 
-Da bismo to unapredili, prešli smo na specijalizovaniji pristup korišćenjem LangChain-a i OpenAI modela. To nam je dalo veću kontrolu i bolje rezultate za sadržaj specifičan za poslovni domen.
+  <Callout type="info" title="Zašto je ovo važno">
+    Cilj je bila ponovljivost. Kada su servisi upakovani i konfigurisani konzistentno, tim troši manje vremena na razlike između okruženja, a više vremena na unapređenje proizvoda.
+  </Callout>
+</ContentBlock>
 
-Više o ovom delu sistema biće objašnjeno u mom sledećem blogu o FMEA Excellence.
+<ContentBlock title="CI/CD kroz GitHub Actions">
+  Izgradio sam i održavao CI/CD pipeline-ove koristeći GitHub Actions, automatizujući build i deployment životni ciklus.
+
+Pipeline-ovi su pokrivali praktičan rad koji je potreban svakom produkcionom sistemu: build servisa, pripremu Docker image-a, prolazak promena kroz deployment tok i smanjenje zavisnosti release procesa od ručnog rada na serverima.
+
+  <Section title="Šta su pipeline-ovi podržavali">
+    - Automatizovan build aplikacionih servisa.
+    - Docker-based deployment workflow-e.
+    - Ponovljive deployment korake za demo i produkciono okruženje.
+    - Brže i sigurnije release-ove kroz GitHub Actions.
+  </Section>
+</ContentBlock>
+
+<ContentBlock title="Pouzdanost produkcije">
+  DevOps nije samo deployment koda. Važno je razumeti i šta se dešava nakon deployment-a.
+
+Postavio sam monitoring i logging kako bi tim imao bolju vidljivost stanja sistema i mogao brže da reaguje kada nešto zahteva pažnju. Radio sam i na operativnim detaljima oko pristupa serverima, konfiguracije, mrežnih pravila, sertifikata i ponašanja servisa kroz različita okruženja.
+
+Ovaj deo posla zahteva pažljivo razmišljanje jer male infrastrukturne odluke mogu kasnije napraviti velike troškove održavanja. Trudio sam se da setup bude praktičan, bezbedan i dovoljno jasan da tim može da ga koristi i održava.
 
 </ContentBlock>
 
-<ContentBlock title="AI billing i kontrola korišćenja">
-  Radio sam i na billing strani AI funkcionalnosti.
+<ContentBlock title="Kako me je ovo oblikovalo kao inženjera">
+  Ovo iskustvo me je ojačalo kao backend inženjera jer mi je dalo više vlasništva nad celim životnim ciklusom aplikacije.
 
-Cilj je bio da obezbedimo da kompanije, pa čak i pojedinačni zaposleni, imaju definisan broj tokena za korišćenje AI funkcionalnosti unutar aplikacije. To je zahtevalo povezivanje pravila proizvoda, backend logike i praćenja potrošnje na način koji je praktičan i za biznis i za krajnje korisnike.
+Pisanje aplikacionog koda je jedan deo posla. Pouzdano pokretanje tog koda je drugi. Rad na obe strane pomogao mi je da jasnije razmišljam o konfiguraciji, observability-ju, deployment riziku i realnosti softvera nakon što napusti lokalnu developersku mašinu.
 
-Ovo je dobar primer da AI funkcionalnosti nisu samo pitanje integracije modela. Potrebne su i kontrole, ograničenja i jasna pravila kako bi one mogle da funkcionišu kao deo stvarnog proizvoda.
-
-</ContentBlock>
-
-<ContentBlock title="Šta mi se dopada u radu u startupu">
-  Jedna od stvari koje najviše cenim u radu u startupu jeste nivo odgovornosti i vlasništva nad poslom. Nisi ograničen na jednu usku ulogu. Imaš priliku da duboko razumeš proizvod, rešavaš važne probleme i doprinosiš u više oblasti.
-
-Rad u startupu takođe stvara jaku vezu između inženjerskog rada i poslovne vrednosti. Funkcionalnosti se ne grade izolovano. Jasno možeš da vidiš zašto je nešto važno, kome pomaže i kakav uticaj ima.
-
-To je okruženje u kojem se brzo uči. Napreduješ ne samo kao developer, već i u komunikaciji, donošenju odluka i razmišljanju o proizvodu. Za mene je to jedan od najvrednijih delova rada u DigitalLeather-u.
-
-  <Callout type="tip" title="Šta me je startup naučio">
-    U startupu napredak dolazi iz fleksibilnosti, brzog učenja i fokusa na ono što zaista donosi vrednost korisnicima.
+  <Callout type="tip" title="Glavna poruka">
+    Moj DevOps rad u DigitalLeather-u povezao je backend inženjering sa infrastrukturnim vlasništvom: Docker, GitHub Actions, Nginx, Linux, VPS deployment, SSL/TLS, CI/CD, monitoring i pouzdanost produkcije.
   </Callout>
 </ContentBlock>

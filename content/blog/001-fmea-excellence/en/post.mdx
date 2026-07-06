@@ -5,40 +5,83 @@ import {
   BlogImage,
   ImageCarousel,
 } from '#/features/blog/components'
+import { ExternalLink } from 'lucide-react'
 
-This blog continues where my previous DigitalLeather story ended.
+At DigitalLeather I worked on two closely related FMEA products: FMEA Traditional and FMEA Excellence. Both are built around the same practical goal: helping automotive teams manage risk in a structured way, without forcing them to live inside scattered spreadsheets and disconnected documents.
 
-After joining as a backend engineer in May 2025, I gradually moved into an AI / Machine Learning Engineer role on FMEA Excellence. That transition made sense to me because I was already close to the product, the users, and the parts of the system where prediction could remove a lot of manual work.
+The important difference is scope. FMEA Traditional focuses on the standard FMEA workflow and document-heavy parts of the process. FMEA Excellence is the more advanced product, where the AI, machine learning, prediction, optimization, and AI-assisted translation features live.
 
-FMEA Excellence has three main AI features: ROI prediction, an AI chatbot, and AI-assisted field completion inside PFMEA tables. Each of them solves a different problem, but they all have the same goal: help people make better decisions without forcing them to become data scientists.
+<a
+  href="https://fmea-excellence.com"
+  target="_blank"
+  rel="noreferrer"
+  className="mx-auto my-8 flex w-fit min-h-11 items-center justify-center gap-2 rounded-md bg-(--color-button) px-5 py-2.5 text-sm font-semibold text-(--color-button-text) no-underline shadow-sm ring-1 ring-(--color-primary)/25 transition hover:bg-(--color-primary) hover:text-white hover:brightness-110"
+>
+  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+  <span>Check product site</span>
+</a>
 
-<ContentBlock title="ROI prediction as the core feature">
-  The most important part of the product is ROI prediction. It helps managers decide which risks should be solved first based on the money, time, and resources they actually have available.
+<ContentBlock title="FMEA Traditional">
+  FMEA Traditional was centered on bringing familiar FMEA work into a more reliable application flow.
 
-In this case, managers are usually not technical users. They do not want to inspect raw model output or think about forecasting internals. They want to know where to act, how much an action will cost, when the investment will return, and what will probably happen if they do nothing.
+Many teams already had existing Excel-based documents, custom layouts, and internal templates. One of my responsibilities was building backend workflows that could support file import and export, including exports into custom templates. That mattered because adoption depends on meeting users where they already are.
 
-Before this feature, that kind of analysis could take several working days. With the prediction workflow, the user can get the important numbers in one flow: expected ROI, estimated number of days until the investment returns, and a scrap prediction chart for the selected production process.
+The technical work was mostly about reliability and structure: parsing user files, keeping data consistent, generating documents that matched expected formats, and making those workflows practical for real client usage.
 
-  <Callout type="info" title="Why this mattered">
-    The value was not only in predicting numbers. The bigger value was turning a slow planning process into something managers could use while they were actually making decisions.
+<Section title="What I worked on">
+  <ul className="my-4 ml-6 list-disc space-y-1 text-slate-700 dark:text-slate-300">
+    <li className="text-base leading-7">
+      {'Backend services for import and export workflows.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Support for custom export templates.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Data handling around FMEA documents and user files.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Migration paths from spreadsheet-based work into the product.'}
+    </li>
+  </ul>
+</Section>
+
+  <Callout type="info" title="Important distinction">
+    FMEA Traditional did not contain the AI features. It was focused on the core FMEA workflow, document handling, and making existing client processes easier to move into the application.
   </Callout>
 </ContentBlock>
 
-<ContentBlock title="How the prediction workflow works">
-  Behind the interface, the system combines multiple ML prediction steps.
+<ContentBlock title="FMEA Excellence">
+  FMEA Excellence is the advanced risk-management platform I worked on as a software engineer in a small team. I took ownership of backend architecture and led development of core services in Python, while also contributing to Spring Boot, MySQL, Docker-based environments, and product-facing features.
 
-The models use scrap data from the selected station to estimate cost, predict the future trend, and calculate ROI. After that, genetic algorithms and linear programming are used to choose the best set of actions under the user's real constraints.
+This is where the AI-related work belongs. The product uses historical data, real-time data, and user-defined parameters to help predict future risk costs, forecast the value of action plans, and recommend better decisions for teams working with FMEA in automotive industry use cases.
 
-<Section title="What users get from the workflow">
-  - ROI estimation for planned actions. - Number of days until the investment is
-  expected to return. - Scrap trend prediction for a given production process. -
-  Prioritization of actions based on available budget and time.
+<Section title="AI and optimization features">
+  <ul className="my-4 ml-6 list-disc space-y-1 text-slate-700 dark:text-slate-300">
+    <li className="text-base leading-7">
+      {'Forecasting workflows for costs, risk impact, and action-plan value.'}
+    </li>
+    <li className="text-base leading-7">
+      {'Prediction modules for historical and real-time risk data.'}
+    </li>
+    <li className="text-base leading-7">
+      {'An optimization engine for comparing risk-action combinations.'}
+    </li>
+    <li className="text-base leading-7">
+      {'AI-assisted translation for documentation across languages.'}
+    </li>
+  </ul>
 </Section>
 
-The difficult part was not just building a model that worked on a small example. The real challenge appeared when the number of risks started to grow. More risks meant more calculations, more database work, and longer prediction times.
+</ContentBlock>
 
-We solved that by optimizing database queries, parallelizing the calculation flow, and precomputing the parts of the workflow where that was possible. That made the feature much more practical in real product usage.
+<ContentBlock title="Prediction and decision support">
+  The main AI workflow helps users compare risks, actions, costs, and expected returns. Instead of manually evaluating many possible actions, managers can see estimated ROI, expected return time, and projected scrap trends for a selected production process.
 
+Behind the interface, the system combines multiple prediction steps. The models use station-level scrap data to estimate cost and forecast future trends, then optimization techniques help choose the best set of actions under the user's budget, time, and business constraints.
+
+  <Callout type="tip" title="What made this valuable">
+    The goal was not to make AI visible for its own sake. The value was putting prediction directly inside the decision-making workflow, where it could reduce manual analysis and make risk planning faster.
+  </Callout>
 </ContentBlock>
 
 <ImageCarousel
@@ -62,12 +105,12 @@ We solved that by optimizing database queries, parallelizing the calculation flo
   ]}
 />
 
-<ContentBlock title="AI chatbot for FMEA knowledge">
-  The second feature is a RAG chatbot that answers questions about the application and about FMEA usage in industry.
+<ContentBlock title="AI assistant and translation">
+  I also worked on AI-assisted features that supported FMEA knowledge and multilingual documentation.
 
-The goal was to give users a place where they could ask practical questions without leaving the product. We used LangChain and GPT models as the foundation, with a knowledge base built from internal product material and research work by <a href="https://www.linkedin.com/in/nikola-banduka-phd-67b63ab1/" target="_blank" rel="noreferrer">Dr. Nikola Banduka</a> and <a href="https://www.linkedin.com/in/nikola-komatina-88b6b31a9/" target="_blank" rel="noreferrer">Nikola Komatina</a>, who both completed doctoral work in the field of FMEA analysis.
+The assistant side used a RAG-style workflow to answer practical questions about the application and the FMEA methodology. The translation side helped make business documentation easier to use across languages, which is important when clients have facilities, teams, and customers in different countries.
 
-This feature was useful because FMEA can be complex even for experienced teams. A good assistant can explain concepts, help users understand why a field matters, and guide them through the way the application expects the analysis to be structured.
+These features were useful because FMEA can be complex even for experienced teams. Good AI support should reduce friction, explain domain concepts, and help users keep moving through the workflow without taking ownership away from them.
 
 </ContentBlock>
 
@@ -79,14 +122,12 @@ This feature was useful because FMEA can be complex even for experienced teams. 
   zoomable={true}
 />
 
-<ContentBlock title="AI-assisted PFMEA table completion">
-  The third feature is similar to a RAG workflow, but it also takes the user's previous data into account.
+<ContentBlock title="The product website">
+  Alongside the application work, I independently created the public FMEA Excellence product website.
 
-Instead of only answering questions, the model helps fill fields inside PFMEA tables. It can look at previous analyses, similar processes, and existing user data, then suggest values that make the table easier and faster to complete.
+The site had a different kind of responsibility than the application itself: it needed to explain the product clearly, present the value of FMEA Excellence, and give people a direct way to understand the project before seeing the platform in detail.
 
-This is where AI becomes less visible but very useful. The user still owns the final decision, but the application removes repetitive typing and helps them start from something relevant instead of a blank table.
-
-  <Callout type="tip" title="Main takeaway">
-    The best AI features in this product were not separate demos. They were built into existing workflows, where they could reduce manual work and make decision-making faster.
+  <Callout type="info" title="Project scope">
+    My work covered both product engineering inside the platform and the public-facing website at fmea-excellence.com.
   </Callout>
 </ContentBlock>

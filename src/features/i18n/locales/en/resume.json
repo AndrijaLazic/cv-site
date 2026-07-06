@@ -42,30 +42,41 @@
   "blogFilterByTag": "Filter by tag",
   "jobs": [
     {
-      "jobTitle": "AI / Machine Learning Engineer",
+      "jobTitle": "DevOps Engineer",
       "company": "DigitalLeather",
       "location": "Kragujevac",
       "startDate": "2025-05-01",
-      "summary": "Worked on FMEA Excellence, a SaaS application that uses AI and machine learning to support risk evaluation and ROI-based decision-making.",
-      "tags": ["AI", "Machine Learning", "Python", "FastAPI", "Scikit-learn"],
-      "blogSlug": "fmea-excellence-ai-ml",
-      "content": "- Implemented an algorithm for time-series forecasting that selects the best model for each scenario and uses real-time data.\n- Developed machine learning workflows for predicting costs, risk impact, and action-plan value."
-    },
-    {
-      "jobTitle": "Backend Software Engineer",
-      "company": "DigitalLeather",
-      "location": "Kragujevac",
-      "startDate": "2025-05-01",
-      "summary": "Worked on FMEA Traditional, a SaaS application for industries where FMEA is part of the quality management standard.",
+      "summary": "Responsible for infrastructure, deployment automation, and production reliability across VPS and on-premises deployment environments.",
       "tags": [
-        "Backend Development",
-        "Spring Boot",
         "Docker",
-        "MySQL",
-        "GitHub Actions"
+        "Docker Compose",
+        "GitHub Actions",
+        "Nginx",
+        "Linux",
+        "VPS",
+        "SSL/TLS",
+        "CI/CD"
       ],
       "blogSlug": "digitalleather-backend-engineering",
-      "content": "- Developed backend features and automated deployment processes for cloud/VPS environments.\n- Implemented AI-assisted translation features for easier use of documentation in foreign languages.\n- Built file export functionality that allows users to export application data into custom templates.\n- Created deployment orchestration using GitHub Actions and Docker."
+      "content": "- Designed and set up the full infrastructure from scratch for VPS and on-premises deployments.\n- Containerized services using Docker and Docker Compose across development, demo, and production environments.\n- Built and maintained CI/CD pipelines with GitHub Actions, automating the full build and deployment lifecycle.\n- Configured Nginx, SSL/TLS, firewall rules, and security hardening across the stack.\n- Set up monitoring and logging for system health visibility and faster incident response."
+    },
+    {
+      "jobTitle": "Software Engineer",
+      "company": "DigitalLeather",
+      "location": "Kragujevac",
+      "startDate": "2024-11-01",
+      "endDate": "2026-06-30",
+      "summary": "Worked on FMEA Excellence, a real-time risk management platform based on the FMEA methodology for automotive industry use cases.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Scikit-learn",
+        "Spring Boot",
+        "MySQL",
+        "Docker"
+      ],
+      "blogSlug": "fmea-excellence-ai-ml",
+      "content": "- Developed core backend services, including APIs and business logic for risk analysis and data processing.\n- Developed backend features for user file import/export workflows, including exports into custom templates.\n- Designed AI-powered modules for predicting future risk costs using historical data, real-time data, and user-defined parameters.\n- Built machine learning workflows for forecasting costs, risk impact, and action-plan value.\n- Built an optimization engine that analyzes risk action combinations and recommends the most effective option based on user goals.\n- Implemented AI-assisted translation features for easier use of documentation in foreign languages.\n- Independently created the FMEA Excellence product website, including the public product page at fmea-excellence.com."
     },
     {
       "jobTitle": "Backend Intern",
@@ -84,23 +95,6 @@
       ],
       "blogSlug": "htec-backend-internship",
       "content": "- Developed automatic and manual report generation features as part of the backend team.\n- Implemented database auditing, a notification system, and backend tests."
-    },
-    {
-      "jobTitle": "Graduation Thesis - EzDeals",
-      "company": "Academic Project",
-      "location": "Kragujevac, Serbia",
-      "startDate": "2023-11-01",
-      "endDate": "2024-06-30",
-      "summary": "Web application for finding the best deals on selected products, developed as a graduation thesis project.",
-      "tags": [
-        "Python",
-        "Node.js",
-        "React",
-        "MongoDB",
-        "Web Application",
-        "Graduation Thesis"
-      ],
-      "content": "Web application that allows users to find the best deals on selected products.\n\nThis includes developing a web scraper, parallel programming, performance optimization, and implementing features for user accounts and personalized recommendations."
     }
   ],
   "educations": [
