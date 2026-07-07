@@ -46,6 +46,14 @@
   "blogAllPosts": "All",
   "blogLatestPost": "Latest",
   "blogFilterByTag": "Filter by tag",
+  "blogShareHeading": "Share this post",
+  "blogShareNative": "Share",
+  "blogShareLinkedIn": "Share on LinkedIn",
+  "blogShareX": "Share on X",
+  "blogShareFacebook": "Share on Facebook",
+  "blogShareEmail": "Share by email",
+  "blogShareCopy": "Copy link",
+  "blogShareCopied": "Copied",
   "jobs": [
     {
       "jobTitle": "DevOps Engineer",

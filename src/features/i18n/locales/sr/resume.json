@@ -46,6 +46,14 @@
   "blogAllPosts": "Sve",
   "blogLatestPost": "Najnovije",
   "blogFilterByTag": "Filtriraj po tagu",
+  "blogShareHeading": "Podeli post",
+  "blogShareNative": "Podeli",
+  "blogShareLinkedIn": "Podeli na LinkedIn-u",
+  "blogShareX": "Podeli na X-u",
+  "blogShareFacebook": "Podeli na Facebook-u",
+  "blogShareEmail": "Podeli emailom",
+  "blogShareCopy": "Kopiraj link",
+  "blogShareCopied": "Kopirano",
   "jobs": [
     {
       "jobTitle": "DevOps inženjer",
