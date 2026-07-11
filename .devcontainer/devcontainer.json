@@ -30,7 +30,8 @@
         "christian-kohler.path-intellisense",
         "streetsidesoftware.code-spell-checker",
         "ms-azuretools.vscode-docker",
-        "EditorConfig.EditorConfig"
+        "EditorConfig.EditorConfig",
+        "fedaykindev.openchamber"
       ],
       "settings": {
         "editor.formatOnSave": true,

@@ -7,16 +7,18 @@ services:
       dockerfile: docker/dev/Dockerfile
       args:
         NPM_VERSION: '11.12.1'
+        RTK_VERSION: ${RTK_VERSION:-v0.43.0}
     volumes:
       # Project files
       - ../..:/workspace
-      # Codex: Docker named volume (host path bind mounts cause SQLite lock/permission issues)
+      # Codex keeps its state in a Docker volume; host bind mounts can cause SQLite lock/permission issues.
       - codex_home:/home/devuser/.codex
-      # Copilot: Docker named volume
-      - copilot_home:/home/devuser/.copilot
       # OpenCode: data dir must be writable because the CLI writes logs/sessions there
       - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.local/share/opencode:/home/devuser/.local/share/opencode
-      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.config/opencode:/home/devuser/.config/opencode:ro
+      # Seed the writable OpenCode config volume from the host config. This lets RTK
+      # install its plugin without modifying the host configuration.
+      - ${HOST_HOME:-${HOME:-${USERPROFILE}}}/.config/opencode:/home/devuser/.config/opencode-host:ro
+      - opencode_config:/home/devuser/.config/opencode
       # Named volume for node_modules keeps installs fast and off the bind mount
       - node_modules_cache:/workspace/node_modules
     environment:
@@ -26,18 +28,22 @@ services:
       WATCHPACK_POLLING: 'true'
       VITE_USE_POLLING: 'true'
       VITE_WATCH_POLL_INTERVAL: '120'
+      CODEX_HOME: /home/devuser/.codex
     ports:
       - '${HOST_BIND:-0.0.0.0}:${HOST_VITE_PORT:-5173}:5173' # Optional Vite default port
       - '${HOST_BIND:-0.0.0.0}:${HOST_CRA_PORT:-3000}:3000' # App dev server for browser/LAN access
       - '${HOST_BIND:-0.0.0.0}:${HOST_PREVIEW_PORT:-4173}:4173' # Vite preview
       - '${HOST_BIND:-0.0.0.0}:${HOST_CODESERVER_PORT:-8080}:8080' # Code-server web UI for remote access
       - '${HOST_BIND:-0.0.0.0}:${HOST_OPENCODE_PORT:-24936}:24936' # OpenCode web UI
+      - '${HOST_BIND:-0.0.0.0}:${HOST_OPENCHAMBER_PORT:-3001}:3001' # OpenChamber web UI
     security_opt:
       - no-new-privileges:true
     cap_drop:
       - ALL
     cap_add:
       - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
       - SETGID
       - SETUID
     command:
@@ -58,4 +64,4 @@ services:
 volumes:
   node_modules_cache:
   codex_home:
-  copilot_home:
+  opencode_config:
