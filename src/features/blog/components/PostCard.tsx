@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
+import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
-import type { PostDetailRouteTo } from '#/features/blog/types/routes'
 import { cn } from '#/shared/utils'
 import { Badge } from '#/shared/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '#/shared/ui/card'
@@ -13,19 +13,24 @@ type PostCardProps = {
   post: BlogPostSummary
   featured?: boolean
   className?: string
-  postRouteTo?: PostDetailRouteTo
+  locale?: SupportedLanguage
 }
 
 export function PostCard({
   post,
   featured = false,
   className,
-  postRouteTo = '/blog/$slug',
+  locale,
 }: PostCardProps) {
+  const routeLocale = locale ?? post.locale
+
   return (
     <Link
-      to={postRouteTo}
-      params={{ slug: post.slug }}
+      to="/{-$locale}/blog/$slug"
+      params={{
+        locale: routeLocale === 'en' ? undefined : routeLocale,
+        slug: post.slug,
+      }}
       className="group block h-full focus-visible:outline-none"
     >
       <Card

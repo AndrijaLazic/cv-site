@@ -14,6 +14,7 @@ import i18n, {
   i18nReady,
   resolveSupportedLanguage,
 } from '#/features/i18n/config'
+import { getLocaleFromPath } from '#/features/i18n/url'
 
 import appCss from '../styles.css?url'
 
@@ -24,19 +25,22 @@ const AppDevtools = lazy(() =>
 )
 
 export const Route = createRootRoute({
-  loader: async () => {
+  loader: async ({ location }) => {
     const preferences = await loadInitialPreferences()
 
     await i18nReady
+
+    const resolvedLocale = getLocaleFromPath(location.pathname)
+
     const currentLanguage = resolveSupportedLanguage(
       i18n.resolvedLanguage ?? i18n.language,
     )
 
-    if (currentLanguage !== preferences.language) {
-      await i18n.changeLanguage(preferences.language)
+    if (currentLanguage !== resolvedLocale) {
+      await i18n.changeLanguage(resolvedLocale)
     }
 
-    return preferences
+    return { ...preferences, language: resolvedLocale }
   },
   head: () => ({
     meta: [
@@ -162,7 +166,8 @@ function NotFound() {
         The page you requested does not exist or was moved.
       </p>
       <Link
-        to="/"
+        to="/{-$locale}"
+        params={{ locale: undefined }}
         className="inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
         Back to home

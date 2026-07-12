@@ -10,73 +10,105 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as localeChar123LocaleChar125RouteRouteImport } from './routes/($locale)/{-$locale}/route'
+import { Route as localeChar123LocaleChar125IndexRouteImport } from './routes/($locale)/{-$locale}/index'
+import { Route as localeChar123LocaleChar125ContactRouteImport } from './routes/($locale)/{-$locale}/contact'
+import { Route as localeChar123LocaleChar125BlogIndexRouteImport } from './routes/($locale)/{-$locale}/blog/index'
+import { Route as localeChar123LocaleChar125BlogSlugRouteImport } from './routes/($locale)/{-$locale}/blog/$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const localeChar123LocaleChar125RouteRoute =
+  localeChar123LocaleChar125RouteRouteImport.update({
+    id: '/($locale)/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const localeChar123LocaleChar125IndexRoute =
+  localeChar123LocaleChar125IndexRouteImport
+    .update({
+      id: '/',
+      path: '/',
+      getParentRoute: () => localeChar123LocaleChar125RouteRoute,
+    } as any)
+    .lazy(() =>
+      import('./routes/($locale)/{-$locale}/index.lazy').then((d) => d.Route),
+    )
+const localeChar123LocaleChar125ContactRoute =
+  localeChar123LocaleChar125ContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => localeChar123LocaleChar125RouteRoute,
+  } as any)
+const localeChar123LocaleChar125BlogIndexRoute =
+  localeChar123LocaleChar125BlogIndexRouteImport.update({
+    id: '/blog/',
+    path: '/blog/',
+    getParentRoute: () => localeChar123LocaleChar125RouteRoute,
+  } as any)
+const localeChar123LocaleChar125BlogSlugRoute =
+  localeChar123LocaleChar125BlogSlugRouteImport.update({
+    id: '/blog/$slug',
+    path: '/blog/$slug',
+    getParentRoute: () => localeChar123LocaleChar125RouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
+  '/{-$locale}': typeof localeChar123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/contact': typeof localeChar123LocaleChar125ContactRoute
+  '/{-$locale}/': typeof localeChar123LocaleChar125IndexRoute
+  '/{-$locale}/blog/$slug': typeof localeChar123LocaleChar125BlogSlugRoute
+  '/{-$locale}/blog/': typeof localeChar123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog': typeof BlogIndexRoute
+  '/{-$locale}/contact': typeof localeChar123LocaleChar125ContactRoute
+  '/{-$locale}': typeof localeChar123LocaleChar125IndexRoute
+  '/{-$locale}/blog/$slug': typeof localeChar123LocaleChar125BlogSlugRoute
+  '/{-$locale}/blog': typeof localeChar123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
+  '/($locale)/{-$locale}': typeof localeChar123LocaleChar125RouteRouteWithChildren
+  '/($locale)/{-$locale}/contact': typeof localeChar123LocaleChar125ContactRoute
+  '/($locale)/{-$locale}/': typeof localeChar123LocaleChar125IndexRoute
+  '/($locale)/{-$locale}/blog/$slug': typeof localeChar123LocaleChar125BlogSlugRoute
+  '/($locale)/{-$locale}/blog/': typeof localeChar123LocaleChar125BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/sitemap.xml' | '/blog/$slug' | '/blog/'
+  fullPaths:
+    | '/sitemap.xml'
+    | '/{-$locale}'
+    | '/{-$locale}/contact'
+    | '/{-$locale}/'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/sitemap.xml' | '/blog/$slug' | '/blog'
-  id: '__root__' | '/' | '/contact' | '/sitemap.xml' | '/blog/$slug' | '/blog/'
+  to:
+    | '/sitemap.xml'
+    | '/{-$locale}/contact'
+    | '/{-$locale}'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/blog'
+  id:
+    | '__root__'
+    | '/sitemap.xml'
+    | '/($locale)/{-$locale}'
+    | '/($locale)/{-$locale}/contact'
+    | '/($locale)/{-$locale}/'
+    | '/($locale)/{-$locale}/blog/$slug'
+    | '/($locale)/{-$locale}/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ContactRoute: typeof ContactRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
+  localeChar123LocaleChar125RouteRoute: typeof localeChar123LocaleChar125RouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -88,43 +120,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/($locale)/{-$locale}': {
+      id: '/($locale)/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof localeChar123LocaleChar125RouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/($locale)/{-$locale}/': {
+      id: '/($locale)/{-$locale}/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof localeChar123LocaleChar125IndexRouteImport
+      parentRoute: typeof localeChar123LocaleChar125RouteRoute
     }
-    '/blog/': {
-      id: '/blog/'
+    '/($locale)/{-$locale}/contact': {
+      id: '/($locale)/{-$locale}/contact'
+      path: '/contact'
+      fullPath: '/{-$locale}/contact'
+      preLoaderRoute: typeof localeChar123LocaleChar125ContactRouteImport
+      parentRoute: typeof localeChar123LocaleChar125RouteRoute
+    }
+    '/($locale)/{-$locale}/blog/': {
+      id: '/($locale)/{-$locale}/blog/'
       path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/blog/'
+      preLoaderRoute: typeof localeChar123LocaleChar125BlogIndexRouteImport
+      parentRoute: typeof localeChar123LocaleChar125RouteRoute
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
+    '/($locale)/{-$locale}/blog/$slug': {
+      id: '/($locale)/{-$locale}/blog/$slug'
       path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/blog/$slug'
+      preLoaderRoute: typeof localeChar123LocaleChar125BlogSlugRouteImport
+      parentRoute: typeof localeChar123LocaleChar125RouteRoute
     }
   }
 }
 
+interface localeChar123LocaleChar125RouteRouteChildren {
+  localeChar123LocaleChar125ContactRoute: typeof localeChar123LocaleChar125ContactRoute
+  localeChar123LocaleChar125IndexRoute: typeof localeChar123LocaleChar125IndexRoute
+  localeChar123LocaleChar125BlogSlugRoute: typeof localeChar123LocaleChar125BlogSlugRoute
+  localeChar123LocaleChar125BlogIndexRoute: typeof localeChar123LocaleChar125BlogIndexRoute
+}
+
+const localeChar123LocaleChar125RouteRouteChildren: localeChar123LocaleChar125RouteRouteChildren =
+  {
+    localeChar123LocaleChar125ContactRoute:
+      localeChar123LocaleChar125ContactRoute,
+    localeChar123LocaleChar125IndexRoute: localeChar123LocaleChar125IndexRoute,
+    localeChar123LocaleChar125BlogSlugRoute:
+      localeChar123LocaleChar125BlogSlugRoute,
+    localeChar123LocaleChar125BlogIndexRoute:
+      localeChar123LocaleChar125BlogIndexRoute,
+  }
+
+const localeChar123LocaleChar125RouteRouteWithChildren =
+  localeChar123LocaleChar125RouteRoute._addFileChildren(
+    localeChar123LocaleChar125RouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ContactRoute: ContactRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
+  localeChar123LocaleChar125RouteRoute:
+    localeChar123LocaleChar125RouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

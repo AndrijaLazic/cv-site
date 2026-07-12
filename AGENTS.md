@@ -50,6 +50,7 @@ content/
 ## Blog Content Format
 
 Each post lives at `content/blog/{NNN-slug}/{locale}/`:
+
 - `meta.ts` — eager `PostMeta` export (slug, title, date, tags, etc.)
 - `post.mdx` — lazy-loaded MDX content
 - `postImages.tsx` — optional per-post image map

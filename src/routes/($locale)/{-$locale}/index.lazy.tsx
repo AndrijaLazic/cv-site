@@ -2,11 +2,11 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { ResumeHomePage } from '#/features/resume/home/ResumeHomePage'
 import { publicConfig } from '#/shared/config/public-env'
 
-export const Route = createLazyFileRoute('/')({
-  component: App,
+export const Route = createLazyFileRoute('/($locale)/{-$locale}/')({
+  component: HomePage,
 })
 
-function PersonJsonLd() {
+function HomePage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -26,24 +26,14 @@ function PersonJsonLd() {
       'DevOps',
       'Machine Learning',
     ],
-    alumniOf: {
-      '@type': 'EducationalOrganization',
-      name: 'Faculty of Natural Sciences and Mathematics',
-    },
   }
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  )
-}
-
-function App() {
-  return (
     <>
-      <PersonJsonLd />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ResumeHomePage />
     </>
   )

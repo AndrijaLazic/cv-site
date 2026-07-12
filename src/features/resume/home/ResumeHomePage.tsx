@@ -85,7 +85,7 @@ export function ResumeHomePage() {
         <div className="relative isolate overflow-hidden">
           <div className="relative z-[1] px-4 sm:px-6 lg:px-10">
             <div className="mx-auto max-w-6xl">
-              <HeroSection t={t} />
+              <HeroSection t={t} language={activeLanguage} />
             </div>
           </div>
           {/* Gradient strip: hero → ExperienceIntroSection color */}
@@ -101,13 +101,19 @@ export function ResumeHomePage() {
         <ExperienceIntroSection t={t} />
         <ExperienceSection t={t} jobs={sortedJobs} language={activeLanguage} />
         <EducationSection t={t} educations={sortedEducations} />
-        <ContactSection />
+        <ContactSection language={activeLanguage} />
       </BackgroundSection>
     </ScrollSnapPage>
   )
 }
 
-function HeroSection({ t }: { t: Translation }) {
+function HeroSection({
+  t,
+  language,
+}: {
+  t: Translation
+  language: SupportedLanguage
+}) {
   const heroSummary = limitToSentences(t('careerSummaryText'), 2)
 
   return (
@@ -186,7 +192,8 @@ function HeroSection({ t }: { t: Translation }) {
               {t('viewProjects')}
             </a>
             <Link
-              to="/contact"
+              to="/{-$locale}/contact"
+              params={{ locale: language === 'en' ? undefined : language }}
               className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-8 text-sm font-semibold transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
               style={{
                 borderColor: 'var(--color-border)',
@@ -465,30 +472,30 @@ function JobCard({
   const impactItems = job.impact ?? []
 
   return (
-    <Card className="group relative w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-[rgba(100,140,210,0.18)] bg-[#070d1a] py-0 text-[#f4f7fb] shadow-[0_30px_90px_-55px_rgba(47,128,255,0.65)] transition-all duration-300 hover:border-[rgba(74,144,255,0.48)] md:mx-auto">
+    <Card className="group relative w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-card) py-0 text-(--color-text) shadow-[0_30px_90px_-55px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] transition-all duration-300 hover:border-(--color-primary) md:mx-auto">
       <div
         className="pointer-events-none absolute inset-0 opacity-80"
         style={{
           background:
-            'radial-gradient(70% 52% at 72% 0%, rgba(47, 211, 255, 0.12), transparent 58%), radial-gradient(44% 44% at 0% 18%, rgba(79, 140, 255, 0.12), transparent 64%), linear-gradient(135deg, rgba(16, 27, 49, 0.92), rgba(7, 13, 26, 0.96) 48%, rgba(11, 20, 38, 0.96))',
+            'radial-gradient(70% 52% at 100% 0%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 58%), radial-gradient(52% 48% at 0% 100%, color-mix(in srgb, var(--color-primary) 14%, transparent), transparent 64%), linear-gradient(135deg, color-mix(in srgb, var(--color-surface-soft) 70%, var(--color-card)), var(--color-card) 48%, color-mix(in srgb, var(--color-bg) 42%, var(--color-card)))',
         }}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-px rounded-[15px] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),inset_0_0_48px_rgba(79,140,255,0.06)]"
+        className="pointer-events-none absolute inset-px rounded-[15px] shadow-[inset_0_1px_0_color-mix(in_srgb,var(--color-text)_8%,transparent),inset_0_0_48px_color-mix(in_srgb,var(--color-primary)_7%,transparent)]"
         aria-hidden="true"
       />
 
       <CardContent className="relative z-10 grid w-full min-w-0 p-0 lg:grid-cols-[20rem_minmax(0,1fr)]">
-        <aside className="flex min-w-0 flex-col gap-5 border-b border-[rgba(100,140,210,0.18)] p-4 sm:p-6 lg:gap-6 lg:border-b-0 lg:p-7">
+        <aside className="flex min-w-0 flex-col gap-5 border-b border-(--color-border) p-4 sm:p-6 lg:gap-6 lg:border-b-0 lg:p-7">
           <div className="flex min-w-0 flex-col gap-4 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between lg:block lg:space-y-6">
             <BrandMark job={job} />
 
             <Badge
               variant="secondary"
-              className="min-h-8 max-w-full shrink-0 gap-1.5 rounded-full border border-[rgba(100,140,210,0.22)] bg-[rgba(16,27,49,0.78)] px-3 py-1.5 text-xs font-semibold whitespace-normal text-[#a9b7d0] shadow-[0_8px_22px_-18px_rgba(47,128,255,0.8)]"
+              className="min-h-8 max-w-full shrink-0 gap-1.5 rounded-full border border-(--color-border) bg-(--color-surface-soft) px-3 py-1.5 text-xs font-semibold whitespace-normal text-(--color-muted) shadow-sm"
             >
-              <Calendar className="h-3.5 w-3.5 text-[#4f8cff]" />
+              <Calendar className="h-3.5 w-3.5 text-(--color-primary)" />
               <time dateTime={job.startDate}>
                 {formatResumeDate(job.startDate, language)}
               </time>{' '}
@@ -504,19 +511,19 @@ function JobCard({
           </div>
 
           <div className="min-w-0 space-y-4">
-            <p className="flex min-w-0 items-center gap-2 text-xs font-bold break-words text-[#4f8cff] uppercase">
+            <p className="flex min-w-0 items-center gap-2 text-xs font-bold break-words text-(--color-primary) uppercase">
               <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
               {job.company}
             </p>
             <div className="space-y-3">
               <div>
-                <h3 className="text-3xl leading-tight font-extrabold break-words text-[#f4f7fb] sm:text-4xl lg:text-[2.45rem]">
+                <h3 className="text-3xl leading-tight font-extrabold break-words text-(--color-text) sm:text-4xl lg:text-[2.45rem]">
                   {job.jobTitle}
                 </h3>
               </div>
-              <p className="flex min-w-0 items-center gap-2 text-sm font-medium break-words text-[#a9b7d0]">
+              <p className="flex min-w-0 items-center gap-2 text-sm font-medium break-words text-(--color-muted)">
                 <MapPin
-                  className="h-4 w-4 shrink-0 text-[#2fd3ff]"
+                  className="h-4 w-4 shrink-0 text-(--color-accent)"
                   aria-hidden="true"
                 />
                 <span className="min-w-0 flex-1 break-words">
@@ -526,11 +533,11 @@ function JobCard({
             </div>
           </div>
 
-          <div className="min-w-0 border-l border-[rgba(47,211,255,0.34)] py-1 pl-4">
-            <p className="text-sm leading-6 font-semibold break-words text-[#f4f7fb]">
+          <div className="min-w-0 border-l border-(--color-accent) py-1 pl-4">
+            <p className="text-sm leading-6 font-semibold break-words text-(--color-text)">
               {job.product?.name ?? job.company}
             </p>
-            <p className="mt-2 text-sm leading-6 break-words text-[#a9b7d0]">
+            <p className="mt-2 text-sm leading-6 break-words text-(--color-muted)">
               {job.summary}
             </p>
           </div>
@@ -542,7 +549,7 @@ function JobCard({
                   href={job.product.websiteUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="group/project inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-[rgba(74,144,255,0.42)] bg-[linear-gradient(135deg,#2f80ff,#4f8cff)] px-5 text-sm font-semibold text-white shadow-[0_16px_36px_-22px_rgba(47,128,255,0.95)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4f8cff] active:translate-y-0"
+                  className="group/project inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-primary) bg-(--color-button) px-5 text-sm font-semibold text-(--color-button-text) shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0"
                 >
                   {t('projectCheckOut')}
                   <ArrowUpRight
@@ -554,9 +561,12 @@ function JobCard({
 
               {job.blogSlug ? (
                 <Link
-                  to="/blog/$slug"
-                  params={{ slug: job.blogSlug }}
-                  className="group/read-more inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-[rgba(100,140,210,0.22)] bg-[rgba(16,27,49,0.54)] px-5 text-sm font-semibold text-[#f4f7fb] shadow-[0_12px_30px_-24px_rgba(47,128,255,0.72)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(74,144,255,0.42)] hover:bg-[rgba(19,32,57,0.84)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4f8cff] active:translate-y-0"
+                  to="/{-$locale}/blog/$slug"
+                  params={{
+                    locale: language === 'en' ? undefined : language,
+                    slug: job.blogSlug,
+                  }}
+                  className="group/read-more inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-border) bg-(--color-surface-soft) px-5 text-sm font-semibold text-(--color-text) shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0"
                 >
                   {t('blogReadMore')}
                   <ArrowUpRight
@@ -575,7 +585,7 @@ function JobCard({
               <SectionHeading
                 icon={Layers3}
                 label={t('techStack')}
-                accentColor="#2fd3ff"
+                accentColor="var(--color-accent)"
               />
               <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:flex-wrap">
                 {job.tags.map((tag) => {
@@ -585,10 +595,10 @@ function JobCard({
                     <Badge
                       key={tag}
                       variant="outline"
-                      className="h-11 w-full justify-start gap-2 rounded-xl border-[rgba(100,140,210,0.18)] bg-[rgba(16,27,49,0.76)] px-3 text-sm font-semibold text-[#f4f7fb] shadow-sm transition-all duration-200 hover:border-[rgba(74,144,255,0.55)] hover:bg-[rgba(19,32,57,0.95)] md:w-auto"
+                      className="h-11 w-full justify-start gap-2 rounded-xl border-(--color-border) bg-(--color-surface-soft) px-3 text-sm font-semibold text-(--color-text) shadow-sm transition-all duration-200 hover:border-(--color-primary) hover:brightness-105 md:w-auto"
                     >
                       <Icon
-                        className="h-4 w-4 shrink-0 text-[#2fd3ff]"
+                        className="h-4 w-4 shrink-0 text-(--color-accent)"
                         aria-hidden="true"
                       />
                       {tag}
@@ -600,11 +610,11 @@ function JobCard({
           ) : null}
 
           {selectedWorkItems.length > 0 ? (
-            <section className="min-w-0 rounded-2xl border border-[rgba(74,144,255,0.42)] bg-[linear-gradient(145deg,rgba(16,27,49,0.86),rgba(11,20,38,0.7))] p-4 shadow-[0_18px_44px_-38px_rgba(47,128,255,0.9),inset_0_1px_0_rgba(255,255,255,0.045)] sm:p-5">
+            <section className="min-w-0 rounded-2xl border border-(--color-primary) bg-(--color-surface-soft) p-4 shadow-sm sm:p-5">
               <SectionHeading
                 icon={CheckCircle2}
                 label={t('selectedWork')}
-                accentColor="#4f8cff"
+                accentColor="var(--color-primary)"
               />
               <ul
                 className={cn(
@@ -621,26 +631,26 @@ function JobCard({
                     <li
                       key={item}
                       className={cn(
-                        'flex gap-3 rounded-xl border border-[rgba(100,140,210,0.16)] bg-[rgba(7,13,26,0.42)] p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(74,144,255,0.42)] hover:bg-[rgba(16,27,49,0.72)] sm:p-4',
+                        'flex gap-3 rounded-xl border border-(--color-border) bg-(--color-card) p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:brightness-105 sm:p-4',
                         selectedWorkItems.length === 3 &&
-                          'min-[960px]:rounded-none min-[960px]:border-y-0 min-[960px]:border-r-0 min-[960px]:bg-transparent min-[960px]:px-5 min-[960px]:py-1 min-[960px]:hover:translate-y-0 min-[960px]:hover:bg-transparent',
+                          'min-[960px]:rounded-none min-[960px]:border-y-0 min-[960px]:border-r-0 min-[960px]:bg-transparent min-[960px]:px-5 min-[960px]:py-1 min-[960px]:hover:translate-y-0 min-[960px]:hover:brightness-100',
                         selectedWorkItems.length === 3 &&
                           itemIndex > 0 &&
-                          'min-[960px]:border-l-[rgba(100,140,210,0.18)]',
+                          'min-[960px]:border-l-(--color-border)',
                         selectedWorkItems.length === 3 &&
                           itemIndex === 0 &&
                           'min-[960px]:border-l-0 min-[960px]:pl-0',
                       )}
                     >
-                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[rgba(74,144,255,0.36)] bg-[rgba(47,128,255,0.14)] text-[#4f8cff]">
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-(--color-primary) bg-(--color-primary-soft) text-(--color-primary)">
                         <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <strong className="block text-sm leading-6 font-bold break-words text-[#f4f7fb]">
+                        <strong className="block text-sm leading-6 font-bold break-words text-(--color-text)">
                           {title}
                         </strong>
                         {detail ? (
-                          <span className="mt-1 block text-sm leading-6 break-words text-[#a9b7d0]">
+                          <span className="mt-1 block text-sm leading-6 break-words text-(--color-muted)">
                             {detail}
                           </span>
                         ) : null}
@@ -652,7 +662,10 @@ function JobCard({
             </section>
           ) : null}
 
-          <ExperienceImpactList label={t('productImpact')} items={impactItems} />
+          <ExperienceImpactList
+            label={t('productImpact')}
+            items={impactItems}
+          />
         </div>
       </CardContent>
     </Card>
@@ -666,7 +679,7 @@ function BrandMark({ job }: { job: ResumeJob }) {
 
   return (
     <div className="flex min-w-0 max-w-full items-center gap-4">
-      <div className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-2xl border border-[rgba(100,140,210,0.2)] bg-[rgba(16,27,49,0.82)] p-3 shadow-[0_18px_42px_-28px_rgba(47,128,255,0.75),inset_0_1px_0_rgba(255,255,255,0.05)] lg:h-24 lg:w-24">
+      <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-(--color-border) bg-(--color-surface-soft) p-3 shadow-sm lg:h-28 lg:w-28">
         {logoSrc ? (
           <img
             src={logoSrc}
@@ -675,16 +688,16 @@ function BrandMark({ job }: { job: ResumeJob }) {
             loading="lazy"
           />
         ) : (
-          <span className="text-lg font-extrabold text-[#4f8cff]">
+          <span className="text-lg font-extrabold text-(--color-primary)">
             {getInitials(label)}
           </span>
         )}
       </div>
       <div className="min-w-0 lg:hidden">
-        <p className="truncate text-sm font-bold text-[#f4f7fb]">
+        <p className="truncate text-sm font-bold text-(--color-text)">
           {label}
         </p>
-        <p className="truncate text-xs text-[#a9b7d0]">{job.company}</p>
+        <p className="truncate text-xs text-(--color-muted)">{job.company}</p>
       </div>
     </div>
   )
@@ -702,13 +715,13 @@ function ExperienceImpactList({
   }
 
   return (
-    <section className="min-w-0 border-t border-[rgba(100,140,210,0.14)] pt-5">
+    <section className="min-w-0 border-t border-(--color-border) pt-5">
       <SectionHeading
         icon={ShieldCheck}
         label={label}
-        accentColor="#34d399"
+        accentColor="var(--color-accent)"
       />
-      <ul className="mt-4 divide-y divide-[rgba(100,140,210,0.14)]">
+      <ul className="mt-4 divide-y divide-(--color-border)">
         {items.map((item, index) => {
           const Icon = getImpactIcon(index)
 
@@ -717,10 +730,10 @@ function ExperienceImpactList({
               key={item}
               className="flex min-w-0 gap-3 py-4 first:pt-0 last:pb-0"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(52,211,153,0.24)] bg-[rgba(52,211,153,0.08)] text-[#34d399]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-(--color-accent) bg-(--color-primary-soft) text-(--color-accent)">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
-              <span className="min-w-0 flex-1 text-sm leading-6 break-words text-[#a9b7d0] sm:text-[0.95rem]">
+              <span className="min-w-0 flex-1 text-sm leading-6 break-words text-(--color-muted) sm:text-[0.95rem]">
                 {item}
               </span>
             </li>
@@ -736,7 +749,7 @@ type ExperienceIcon = LucideIcon
 function SectionHeading({
   icon: Icon,
   label,
-  accentColor = '#4f8cff',
+  accentColor = 'var(--color-primary)',
 }: {
   icon: ExperienceIcon
   label: string
@@ -969,7 +982,7 @@ function EducationCard({
   )
 }
 
-function ContactSection() {
+function ContactSection({ language }: { language: SupportedLanguage }) {
   return (
     <BackgroundSection
       id="contact"
@@ -991,7 +1004,8 @@ function ContactSection() {
         Let's build something great.
       </h2>
       <Link
-        to="/contact"
+        to="/{-$locale}/contact"
+        params={{ locale: language === 'en' ? undefined : language }}
         className="relative mt-6 inline-flex h-20 rotate-12 items-center justify-center rounded-xl border px-9 text-3xl font-extrabold shadow-2xl backdrop-blur-md transition hover:-translate-y-1 hover:rotate-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 sm:mt-8 sm:h-24 sm:px-11 sm:text-4xl"
         style={{
           borderColor: 'var(--color-border)',

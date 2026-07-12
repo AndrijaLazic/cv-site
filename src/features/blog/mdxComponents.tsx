@@ -1,4 +1,4 @@
-import type { MDXComponents } from '@mdx-js/react'
+import type { MDXComponents } from 'mdx/types'
 import type React from 'react'
 import {
   BlogCode,

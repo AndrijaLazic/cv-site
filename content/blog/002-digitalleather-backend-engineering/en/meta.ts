@@ -1,6 +1,7 @@
 import type { PostMeta } from '#/features/blog/types/blog'
 
 export const meta: PostMeta = {
+  articleId: '002',
   slug: 'digitalleather-backend-engineering',
   locale: 'en',
   title: 'DevOps Engineering at DigitalLeather',

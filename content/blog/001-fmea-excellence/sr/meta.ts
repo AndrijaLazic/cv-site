@@ -1,6 +1,7 @@
 import type { PostMeta } from '#/features/blog/types/blog'
 
 export const meta: PostMeta = {
+  articleId: '001',
   slug: 'fmea-excellence-ai-ml',
   locale: 'sr',
   title: 'FMEA Traditional i FMEA Excellence',

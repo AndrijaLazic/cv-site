@@ -33,10 +33,10 @@ Main functions:
 
 ## Route behavior
 
-1. `src/routes/blog.index.tsx`
+1. `src/routes/($locale)/{-$locale}/blog/index.tsx`
    - Resolves active language from i18n.
    - Renders cards from `getAllPostMetas(activeLanguage)`.
-2. `src/routes/blog.$slug.tsx`
+2. `src/routes/($locale)/{-$locale}/blog/$slug.tsx`
    - Resolves active language.
    - Loads both meta + MDX component by `slug`.
    - Uses `socialImage` for share metadata when present, otherwise falls back to `coverImage`.

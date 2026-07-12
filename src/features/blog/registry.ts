@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 import postSourceModules from 'virtual:blog-post-sources'
-import type { SupportedLanguage } from '#/app/i18n/languages'
+import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostDetail, BlogPostSummary, PostMeta } from './types/blog'
 import { resolvePostImages } from './postImages'
 import { extractTableOfContents } from './tableOfContents'
@@ -9,7 +9,6 @@ type MdxModule = {
   default: ComponentType
 }
 
-// Metadata is eagerly loaded so SEO head generation and sitemap data stay synchronous.
 const metaModules = import.meta.glob<{ meta: PostMeta }>(
   '/content/blog/**/meta.ts',
   {
@@ -17,8 +16,8 @@ const metaModules = import.meta.glob<{ meta: PostMeta }>(
   },
 )
 
-// Post content modules stay lazy and are loaded only when a blog post route requests them.
 const postModules = import.meta.glob<MdxModule>('/content/blog/**/post.mdx')
+
 function parseContentPath(
   filePath: string,
 ): { articleFolder: string; locale: SupportedLanguage } | null {
@@ -26,7 +25,9 @@ function parseContentPath(
     /\/content\/blog\/([^/]+)\/([^/]+)\/(?:meta\.ts|post\.mdx)$/,
   )
   if (!match) return null
-  return { articleFolder: match[1], locale: match[2] as SupportedLanguage }
+  const locale = match[2]
+  if (locale !== 'en' && locale !== 'sr') return null
+  return { articleFolder: match[1], locale }
 }
 
 function buildIndex() {
@@ -36,6 +37,12 @@ function buildIndex() {
   const tocByArticleLocale = new Map<
     string,
     BlogPostSummary['tableOfContents']
+  >()
+
+  const articleIdByLocaleSlug = new Map<string, string>()
+  const slugByArticleIdAndLocale = new Map<
+    string,
+    Map<SupportedLanguage, string>
   >()
 
   for (const [filePath, source] of Object.entries(postSourceModules)) {
@@ -51,16 +58,41 @@ function buildIndex() {
     const parsed = parseContentPath(filePath)
     if (!parsed) continue
     const key = `${parsed.locale}:${module.meta.slug}`
+
+    if (summaryByLocaleSlug.has(key)) {
+      throw new Error(
+        `Duplicate slug "${module.meta.slug}" for locale "${parsed.locale}" in ${filePath}`,
+      )
+    }
+
+    const articleLocaleKey = `${parsed.articleFolder}:${parsed.locale}`
+    const existingArticleSlug = slugByArticleLocale.get(articleLocaleKey)
+    if (existingArticleSlug) {
+      throw new Error(
+        `Duplicate article/locale combination for ${articleLocaleKey} in ${filePath}`,
+      )
+    }
+
     summaryByLocaleSlug.set(key, {
       ...resolvePostImages(module.meta),
       tableOfContents:
         tocByArticleLocale.get(`${parsed.articleFolder}:${parsed.locale}`) ??
         [],
     })
-    slugByArticleLocale.set(
-      `${parsed.articleFolder}:${parsed.locale}`,
-      module.meta.slug,
-    )
+    slugByArticleLocale.set(articleLocaleKey, module.meta.slug)
+    articleIdByLocaleSlug.set(key, module.meta.articleId)
+
+    let localeMap = slugByArticleIdAndLocale.get(module.meta.articleId)
+    if (!localeMap) {
+      localeMap = new Map()
+      slugByArticleIdAndLocale.set(module.meta.articleId, localeMap)
+    }
+    if (localeMap.has(parsed.locale)) {
+      throw new Error(
+        `Duplicate articleId "${module.meta.articleId}" for locale "${parsed.locale}" in ${filePath}`,
+      )
+    }
+    localeMap.set(parsed.locale, module.meta.slug)
   }
 
   for (const [filePath, loadModule] of Object.entries(postModules)) {
@@ -74,10 +106,20 @@ function buildIndex() {
     postLoaderByLocaleSlug.set(key, loadModule)
   }
 
-  return { summaryByLocaleSlug, postLoaderByLocaleSlug }
+  return {
+    summaryByLocaleSlug,
+    postLoaderByLocaleSlug,
+    articleIdByLocaleSlug,
+    slugByArticleIdAndLocale,
+  }
 }
 
-const { summaryByLocaleSlug, postLoaderByLocaleSlug } = buildIndex()
+const {
+  summaryByLocaleSlug,
+  postLoaderByLocaleSlug,
+  articleIdByLocaleSlug,
+  slugByArticleIdAndLocale,
+} = buildIndex()
 
 export function getRegistryBlogPostSummaries(
   locale: SupportedLanguage,
@@ -126,7 +168,33 @@ export async function loadRegistryBlogPost(
   }
 }
 
-// Backward-compatible exports kept during refactor.
+export function getTranslatedBlogSlug(
+  articleId: string,
+  targetLocale: SupportedLanguage,
+): string | undefined {
+  return slugByArticleIdAndLocale.get(articleId)?.get(targetLocale)
+}
+
+export function getArticleIdBySlug(
+  locale: SupportedLanguage,
+  slug: string,
+): string | undefined {
+  return articleIdByLocaleSlug.get(`${locale}:${slug}`)
+}
+
+export function getTranslationGroup(
+  articleId: string,
+): Map<SupportedLanguage, string> | undefined {
+  return slugByArticleIdAndLocale.get(articleId)
+}
+
+export function getRegistrySlugByArticleIdAndLocale(
+  articleId: string,
+  locale: SupportedLanguage,
+): string | undefined {
+  return slugByArticleIdAndLocale.get(articleId)?.get(locale)
+}
+
 export function getAllPostMetas(locale: SupportedLanguage): PostMeta[] {
   return getRegistryBlogPostSummaries(locale)
 }

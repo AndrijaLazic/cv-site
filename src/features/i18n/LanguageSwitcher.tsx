@@ -2,12 +2,15 @@ import { useTranslation } from 'react-i18next'
 import { memo, useEffect, useRef, useState } from 'react'
 import type { ComponentType } from 'react'
 import { Check } from 'lucide-react'
+import { useNavigate, useLocation } from '@tanstack/react-router'
 import {
   LANGUAGE_COOKIE_KEY,
   setClientCookie,
 } from '#/features/preferences/cookies'
 import { supportedLanguages, resolveSupportedLanguage } from './languages'
 import type { SupportedLanguage } from './languages'
+import { getLocaleFromPath, removeLocalePrefix, localizePath } from './url'
+import { getArticleIdBySlug, getTranslatedBlogSlug } from '#/features/blog/api'
 
 type FlagIconProps = {
   className?: string
@@ -88,8 +91,35 @@ const languageMeta: Record<
   sr: { labelKey: 'language.sr', Icon: SerbiaFlagIcon },
 }
 
+function resolveNewPath(
+  currentPath: string,
+  currentLocale: SupportedLanguage,
+  targetLocale: SupportedLanguage,
+): string {
+  if (currentLocale === targetLocale) return currentPath
+
+  const cleanPath = removeLocalePrefix(currentPath)
+
+  const blogMatch = cleanPath.match(/^\/blog\/(.+)$/)
+  if (blogMatch) {
+    const slug = blogMatch[1]
+    const articleId = getArticleIdBySlug(currentLocale, slug)
+    if (articleId) {
+      const translatedSlug = getTranslatedBlogSlug(articleId, targetLocale)
+      if (translatedSlug) {
+        return localizePath(`/blog/${translatedSlug}`, targetLocale)
+      }
+      return localizePath('/blog', targetLocale)
+    }
+  }
+
+  return localizePath(cleanPath, targetLocale)
+}
+
 function LanguageSwitcher() {
   const { i18n, t } = useTranslation('common')
+  const navigate = useNavigate()
+  const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
@@ -117,10 +147,25 @@ function LanguageSwitcher() {
   }, [isOpen])
 
   function switchLanguage(nextLang: SupportedLanguage) {
+    if (nextLang === currentLang) {
+      setIsOpen(false)
+      return
+    }
+
+    const pathLocale = getLocaleFromPath(location.pathname)
+    const newPath = resolveNewPath(location.pathname, pathLocale, nextLang)
+
     void i18n.changeLanguage(nextLang)
     document.documentElement.lang = nextLang
     setClientCookie(LANGUAGE_COOKIE_KEY, nextLang)
     setIsOpen(false)
+
+    void navigate({
+      to: newPath,
+      search: true,
+      hash: true,
+      replace: true,
+    })
   }
 
   return (

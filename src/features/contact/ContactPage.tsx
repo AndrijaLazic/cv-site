@@ -1,4 +1,3 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import type { ComponentType } from 'react'
 import {
@@ -10,42 +9,12 @@ import {
   Send,
   Sparkles,
 } from 'lucide-react'
-import { publicConfig } from '#/shared/config/public-env'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
 import { BackgroundSection } from '#/shared/ui/background-section'
 import { Badge } from '#/shared/ui/badge'
 import { cn } from '#/shared/utils'
 
-export const Route = createFileRoute('/contact')({
-  component: Contact,
-  head: () => ({
-    meta: [
-      {
-        title: 'Contact | Andrija Lazic',
-      },
-      {
-        name: 'description',
-        content:
-          'Reach out to Andrija Lazic — available via email, GitHub, and LinkedIn for backend engineering opportunities and collaborations.',
-      },
-      {
-        property: 'og:title',
-        content: 'Contact | Andrija Lazic',
-      },
-      {
-        property: 'og:description',
-        content:
-          'Reach out to Andrija Lazic — available via email, GitHub, and LinkedIn for backend engineering opportunities and collaborations.',
-      },
-      {
-        property: 'og:url',
-        content: `${publicConfig.siteUrl}/contact`,
-      },
-    ],
-  }),
-})
-
-function Contact() {
+export function ContactPage() {
   const { t } = useTranslation('common')
   const contactLinks = [
     {

@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { execFile } from 'node:child_process'
 import { defineConfig, loadEnv } from 'vite'
+import type { Plugin } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -9,7 +10,6 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import contentCollections from '@content-collections/vite'
 import mdx from '@mdx-js/rollup'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
@@ -82,7 +82,7 @@ function rawBlogMdxContent() {
   }
 }
 
-function blogPostSourceManifest() {
+function blogPostSourceManifest(): Plugin {
   const virtualModuleId = 'virtual:blog-post-sources'
   const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
@@ -188,7 +188,6 @@ const config = defineConfig(({ mode }) => {
           open: openSourceInEditor,
         },
       }),
-      contentCollections(),
       tsconfigPaths({ projects: ['./tsconfig.json'] }),
       tailwindcss(),
       tanstackStart(),

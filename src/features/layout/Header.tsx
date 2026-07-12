@@ -4,6 +4,7 @@ import { Menu, ArrowLeft } from 'lucide-react'
 import { memo, useEffect, useState } from 'react'
 import ThemeSelector from '#/features/theme/ThemeSelector'
 import LanguageSwitcher from '#/features/i18n/LanguageSwitcher'
+import { getLocaleFromPath } from '#/features/i18n/url'
 
 const HeaderControls = memo(function HeaderControlsView({
   className = '',
@@ -26,6 +27,12 @@ function Header() {
     select: (location) => `${location.pathname}${location.hash}`,
   })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const pathname = useLocation({
+    select: (location) => location.pathname,
+  })
+  const currentLocale = getLocaleFromPath(pathname)
+  const routeLocale = currentLocale === 'en' ? undefined : currentLocale
 
   useEffect(() => {
     setIsMenuOpen(false)
@@ -84,7 +91,8 @@ function Header() {
         {/* Desktop Left: Logo */}
         <div className="hidden flex-1 shrink-0 items-center gap-2 lg:flex">
           <Link
-            to="/"
+            to="/{-$locale}"
+            params={{ locale: routeLocale }}
             className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             activeProps={noActiveClassName}
           >
@@ -100,7 +108,8 @@ function Header() {
         {/* Mobile Center: Title */}
         <div className="flex shrink-0 gap-2 items-center justify-center font-semibold text-(--color-text) lg:hidden">
           <Link
-            to="/"
+            to="/{-$locale}"
+            params={{ locale: routeLocale }}
             className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             activeProps={noActiveClassName}
           >
@@ -117,7 +126,8 @@ function Header() {
         <div className="hidden shrink-0 lg:block">
           <div className="flex items-center gap-4 text-sm font-medium">
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="about"
               className="nav-link shrink-0 transition-colors hover:text-(--color-text) text-muted-foreground"
               activeProps={noActiveClassName}
@@ -125,7 +135,8 @@ function Header() {
               {t('nav.about')}
             </Link>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="experience"
               className="nav-link shrink-0 transition-colors hover:text-(--color-text) text-muted-foreground"
               activeProps={noActiveClassName}
@@ -133,7 +144,8 @@ function Header() {
               {t('nav.experience')}
             </Link>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="education"
               className="nav-link shrink-0 transition-colors hover:text-(--color-text) text-muted-foreground"
               activeProps={noActiveClassName}
@@ -141,14 +153,17 @@ function Header() {
               {t('nav.education')}
             </Link>
             <Link
-              to="/blog"
+              to="/{-$locale}/blog"
+              params={{ locale: routeLocale }}
+              search={{ tag: undefined }}
               className="nav-link shrink-0 transition-colors hover:text-(--color-text) text-muted-foreground"
               activeProps={noActiveClassName}
             >
               {t('nav.blog')}
             </Link>
             <Link
-              to="/contact"
+              to="/{-$locale}/contact"
+              params={{ locale: routeLocale }}
               className="nav-link shrink-0 transition-colors hover:text-(--color-text) text-muted-foreground"
               activeProps={noActiveClassName}
             >
@@ -191,7 +206,8 @@ function Header() {
 
           <div className="flex flex-col gap-1 p-4 px-6 overflow-y-auto">
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="about"
               className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
@@ -199,7 +215,8 @@ function Header() {
               {t('nav.about')}
             </Link>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="experience"
               className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
@@ -207,7 +224,8 @@ function Header() {
               {t('nav.experience')}
             </Link>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={{ locale: routeLocale }}
               hash="education"
               className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
@@ -215,14 +233,17 @@ function Header() {
               {t('nav.education')}
             </Link>
             <Link
-              to="/blog"
+              to="/{-$locale}/blog"
+              params={{ locale: routeLocale }}
+              search={{ tag: undefined }}
               className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.blog')}
             </Link>
             <Link
-              to="/contact"
+              to="/{-$locale}/contact"
+              params={{ locale: routeLocale }}
               className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
             >

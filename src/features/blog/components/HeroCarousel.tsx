@@ -2,9 +2,8 @@ import { Link } from '@tanstack/react-router'
 import { memo, useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '#/shared/utils'
-import type { SupportedLanguage } from '#/app/i18n/languages'
+import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
-import type { PostDetailRouteTo } from '#/features/blog/types/routes'
 import { HERO_IMAGE_SIZES } from '../contentImages'
 import { ResponsiveImage } from './ResponsiveImage'
 
@@ -12,7 +11,6 @@ type HeroCarouselProps = {
   posts: BlogPostSummary[]
   activeLanguage: SupportedLanguage
   ariaLabel: string
-  postRouteTo?: PostDetailRouteTo
 }
 
 const HERO_POST_TITLE_LINE_CLAMP_CLASS = 'line-clamp-3'
@@ -21,7 +19,6 @@ function HeroCarouselView({
   posts,
   activeLanguage,
   ariaLabel,
-  postRouteTo = '/blog/$slug',
 }: HeroCarouselProps) {
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
@@ -79,8 +76,11 @@ function HeroCarouselView({
           {posts.map((post) => (
             <div key={post.slug} className="w-full shrink-0">
               <Link
-                to={postRouteTo}
-                params={{ slug: post.slug }}
+                to="/{-$locale}/blog/$slug"
+                params={{
+                  locale: activeLanguage === 'en' ? undefined : activeLanguage,
+                  slug: post.slug,
+                }}
                 className="relative flex h-auto flex-col focus-visible:outline-none md:h-[clamp(26rem,62svh,44rem)] md:flex-row"
               >
                 <div
@@ -121,7 +121,7 @@ function HeroCarouselView({
                 <div className="flex min-h-0 flex-col justify-center bg-white p-5 pb-12 sm:p-8 sm:pb-14 md:h-full md:w-1/2 md:pb-8 dark:bg-slate-950">
                   <time className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     {new Date(post.publishedDate).toLocaleDateString(
-                      activeLanguage === 'sr' ? 'sr-RS' : 'en-US',
+                      activeLanguage === 'sr' ? 'sr-Latn-RS' : 'en-US',
                       {
                         year: 'numeric',
                         month: 'short',

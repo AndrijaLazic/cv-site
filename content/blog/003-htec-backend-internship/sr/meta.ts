@@ -1,6 +1,7 @@
 import type { PostMeta } from '#/features/blog/types/blog'
 
 export const meta: PostMeta = {
+  articleId: '003',
   slug: 'htec-backend-internship',
   locale: 'sr',
   title: 'Moja Backend Praksa u HTEC-u',

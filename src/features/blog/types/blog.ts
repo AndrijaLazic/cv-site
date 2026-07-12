@@ -1,4 +1,4 @@
-import type { SupportedLanguage } from '#/app/i18n/languages'
+import type { SupportedLanguage } from '#/features/i18n/languages'
 
 export type ImageFit = 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
 
@@ -38,6 +38,7 @@ export interface BlogTableOfContentsItem {
 }
 
 export interface BlogPostMeta {
+  articleId: string
   slug: string
   locale: SupportedLanguage
   title: string

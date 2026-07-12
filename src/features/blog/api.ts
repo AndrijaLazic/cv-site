@@ -1,4 +1,4 @@
-import type { SupportedLanguage } from '#/app/i18n/languages'
+import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { ComponentType } from 'react'
 import type { BlogPostDetail, BlogPostSummary } from './types/blog'
 import {
@@ -6,6 +6,9 @@ import {
   getRegistryBlogPostMeta,
   getRegistryBlogPostSummaries,
   loadRegistryBlogPost,
+  getTranslatedBlogSlug,
+  getArticleIdBySlug,
+  getTranslationGroup,
 } from './registry'
 
 export function getBlogPostSummaries(
@@ -34,3 +37,5 @@ export async function loadBlogPostComponent(
 ): Promise<ComponentType | undefined> {
   return getPostComponent(locale, slug)
 }
+
+export { getTranslatedBlogSlug, getArticleIdBySlug, getTranslationGroup }

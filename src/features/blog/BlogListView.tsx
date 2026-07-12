@@ -1,62 +1,22 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useMemo, useState } from 'react'
 import { cn } from '#/shared/utils'
-import { getBlogPostSummaries } from '#/features/blog/api'
-import {
-  resolveSupportedLanguage,
-  supportedLanguages,
-} from '#/features/i18n/config'
+import { resolveSupportedLanguage } from '#/features/i18n/config'
 import { HeroCarousel, PostCard } from '#/features/blog/components'
-import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
-import { publicConfig } from '#/shared/config/public-env'
 import { BackgroundSection } from '#/shared/ui/background-section'
 import { Reveal } from '#/shared/ui/reveal'
 
-const allPostsByLanguage = Object.fromEntries(
-  supportedLanguages.map((lang) => [lang, getBlogPostSummaries(lang)]),
-) as Record<SupportedLanguage, BlogPostSummary[]>
+type BlogListViewProps = {
+  posts: BlogPostSummary[]
+}
 
-export const Route = createFileRoute('/blog/')({
-  component: BlogList,
-  validateSearch: (search: Record<string, unknown>) => ({
-    tag: typeof search.tag === 'string' ? search.tag : undefined,
-  }),
-  head: () => {
-    const canonicalUrl = `${publicConfig.siteUrl}/blog`
-    return {
-      meta: [
-        { title: 'Blog | Andrija Lazic' },
-        {
-          name: 'description',
-          content:
-            'Technical blog by Andrija Lazic — experiments, findings, and insights from backend engineering, AI, and DevOps.',
-        },
-        { property: 'og:title', content: 'Blog | Andrija Lazic' },
-        {
-          property: 'og:description',
-          content:
-            'Technical blog by Andrija Lazic — experiments, findings, and insights from backend engineering, AI, and DevOps.',
-        },
-        { property: 'og:url', content: canonicalUrl },
-        { property: 'og:type', content: 'website' },
-      ],
-      links: [{ rel: 'canonical', href: canonicalUrl }],
-    }
-  },
-})
-
-function BlogList() {
+export function BlogListView({ posts }: BlogListViewProps) {
   const { t, i18n } = useTranslation('resume')
   const activeLanguage = resolveSupportedLanguage(
     i18n.resolvedLanguage ?? i18n.language,
   )
-  const { tag: activeTag } = Route.useSearch()
-  const navigate = useNavigate({ from: '/blog/' })
-  const posts = allPostsByLanguage[activeLanguage]
 
-  // Hero carousel - Top 3 newest posts (no tag filter)
   const topPosts = useMemo(() => {
     return [...posts]
       .sort(
@@ -67,7 +27,6 @@ function BlogList() {
       .slice(0, 3)
   }, [posts])
 
-  // Tags & Sorting
   const allTags = useMemo(() => {
     const tagSet = new Set<string>()
     posts.forEach((p) => p.tags.forEach((tag) => tagSet.add(tag)))
@@ -75,6 +34,8 @@ function BlogList() {
   }, [posts])
 
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc')
+
+  const [activeTag, setActiveTag] = useState<string | undefined>()
 
   const filteredPosts = useMemo(() => {
     const result = activeTag
@@ -91,9 +52,9 @@ function BlogList() {
 
   function handleTagClick(tag: string) {
     if (tag === activeTag) {
-      void navigate({ search: {} })
+      setActiveTag(undefined)
     } else {
-      void navigate({ search: { tag } })
+      setActiveTag(tag)
     }
   }
 
@@ -103,7 +64,6 @@ function BlogList() {
       className="flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-14"
     >
       <div className="mx-auto max-w-5xl space-y-10">
-        {/* Page header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">
             {t('blogTitle')}
@@ -113,7 +73,6 @@ function BlogList() {
           </p>
         </div>
 
-        {/* Top - Hero Carousel */}
         {topPosts.length > 0 && !activeTag && (
           <HeroCarousel
             posts={topPosts}
@@ -122,14 +81,13 @@ function BlogList() {
           />
         )}
 
-        {/* Filter & Sort Bar */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           {allTags.length > 0 && (
             <nav aria-label={t('blogFilterByTag')} className="flex-1">
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => void navigate({ search: {} })}
+                  onClick={() => setActiveTag(undefined)}
                   className={cn(
                     'rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
                     !activeTag
@@ -191,7 +149,6 @@ function BlogList() {
           </div>
         </div>
 
-        {/* Post grid with scroll-reveal */}
         {filteredPosts.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPosts.map((post, index) => {
@@ -203,7 +160,7 @@ function BlogList() {
                   duration="duration-500"
                   className="h-full"
                 >
-                  <PostCard post={post} />
+                  <PostCard post={post} locale={activeLanguage} />
                 </Reveal>
               )
             })}

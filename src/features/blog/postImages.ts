@@ -14,8 +14,11 @@ export const DEFAULT_POST_HERO_IMAGE: BlogImageContent = {
   aspectRatio: '16/9',
 }
 
-export function resolvePostImages(meta: BlogPostMeta): BlogPostSummary {
-  const heroImage = meta.heroImage ??
+export function resolvePostImages(
+  meta: BlogPostMeta,
+): Omit<BlogPostSummary, 'tableOfContents'> {
+  const heroImage =
+    meta.heroImage ??
     meta.coverImage ??
     meta.socialImage ??
     DEFAULT_POST_HERO_IMAGE

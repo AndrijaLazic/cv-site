@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import {
@@ -10,80 +10,31 @@ import {
   Mail,
   Share2,
 } from 'lucide-react'
-import { getBlogPostMeta, loadBlogPost } from '#/features/blog/api'
 import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
 import { BlogImage, BlogTableOfContents } from '#/features/blog/components'
-import {
-  resolveSupportedLanguage,
-  supportedLanguages,
-} from '#/features/i18n/config'
-import type { BlogPostSummary } from '#/features/blog/types/blog'
+import type {
+  BlogPostDetail,
+  BlogPostSummary,
+} from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
 import { Badge } from '#/shared/ui/badge'
 import { LinkedInIcon } from '#/shared/ui/brand-icons'
 import { cn } from '#/shared/utils'
 
-function findPostBySlug(slug: string): BlogPostSummary | undefined {
-  for (const locale of supportedLanguages) {
-    const post = getBlogPostMeta(locale, slug)
-    if (post) {
-      return post
-    }
-  }
-
-  return undefined
+type BlogPostViewProps = {
+  post: BlogPostDetail
+  backTo: string
 }
 
-export const Route = createFileRoute('/blog/$slug')({
-  component: BlogPostPage,
-  loader: async ({ params }) =>
-    Object.fromEntries(
-      await Promise.all(
-        supportedLanguages.map(async (locale) => [
-          locale,
-          await loadBlogPost(locale, params.slug),
-        ]),
-      ),
-    ),
-  head: ({ params }) => {
-    const siteUrl = publicConfig.siteUrl
-    const canonicalUrl = `${siteUrl}/blog/${params.slug}`
-    const post = findPostBySlug(params.slug)
-    const title = post
-      ? `${post.title} | Andrija Lazic`
-      : 'Blog | Andrija Lazic'
-    const description = post?.summary ?? 'Blog post by Andrija Lazic.'
-    const coverImageSrc = post?.coverImage.src
-    const coverImageUrl = coverImageSrc
-      ? coverImageSrc.startsWith('http')
-        ? coverImageSrc
-        : `${siteUrl}${coverImageSrc}`
-      : undefined
-    const meta: Array<Record<string, string>> = [
-      { title },
-      { name: 'description', content: description },
-      { property: 'og:title', content: title },
-      { property: 'og:description', content: description },
-      { property: 'og:url', content: canonicalUrl },
-      { property: 'og:type', content: 'article' },
-    ]
-    if (coverImageUrl) {
-      meta.push({ property: 'og:image', content: coverImageUrl })
-    }
-    return {
-      meta,
-      links: [{ rel: 'canonical', href: canonicalUrl }],
-    }
-  },
-})
-
-function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
+export function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
   const coverImageSrc = post.coverImage.src
   const coverImageUrl = coverImageSrc
     ? coverImageSrc.startsWith('http')
       ? coverImageSrc
       : `${publicConfig.siteUrl}${coverImageSrc}`
     : undefined
+
+  const postUrl = `${publicConfig.siteUrl}${post.locale === 'en' ? '' : '/sr'}/blog/${post.slug}`
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -96,7 +47,8 @@ function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
       name: post.author,
       url: post.authorUrl ?? publicConfig.siteUrl,
     },
-    url: `${publicConfig.siteUrl}/blog/${post.slug}`,
+    url: postUrl,
+    inLanguage: post.locale,
     keywords: post.tags.join(', '),
     ...(coverImageUrl ? { image: coverImageUrl } : {}),
   }
@@ -109,39 +61,12 @@ function BlogPostJsonLd({ post }: { post: BlogPostSummary }) {
   )
 }
 
-function BlogPostPage() {
-  const postsByLanguage = Route.useLoaderData()
-  const { t, i18n } = useTranslation('resume')
-  const activeLanguage = resolveSupportedLanguage(
-    i18n.resolvedLanguage ?? i18n.language,
-  )
+export function BlogPostView({ post, backTo }: BlogPostViewProps) {
+  const { t } = useTranslation('resume')
 
-  const post = postsByLanguage[activeLanguage]
-  const showTableOfContents = post?.showTableOfContents !== false
+  const postUrl = `${publicConfig.siteUrl}${post.locale === 'en' ? '' : '/sr'}/blog/${post.slug}`
 
-  if (!post) {
-    return (
-      <div className="flex-1 bg-(--color-bg) px-4 py-10 sm:px-6 sm:py-14">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
-            404
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900 dark:text-slate-100">
-            Post not found
-          </h1>
-          <Link
-            to="/blog"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-cyan-700 hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
-          >
-            <ArrowLeft className="size-4" />
-            {t('blogBackToList')}
-          </Link>
-        </div>
-      </div>
-    )
-  }
-
-  const postUrl = `${publicConfig.siteUrl}/blog/${post.slug}`
+  const showTableOfContents = post.showTableOfContents !== false
 
   return (
     <>
@@ -149,7 +74,7 @@ function BlogPostPage() {
       <div className="flex-1 bg-(--color-bg) px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-18">
         <div className="mx-auto max-w-7xl">
           <Link
-            to="/blog"
+            to={backTo}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-700 transition-colors hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
           >
             <ArrowLeft className="size-4" />
@@ -160,7 +85,7 @@ function BlogPostPage() {
             <header className="max-w-4xl space-y-5">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <TagLink key={tag} tag={tag} />
+                  <TagLink key={tag} tag={tag} locale={post.locale} />
                 ))}
               </div>
               <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-6xl dark:text-slate-50">
@@ -199,11 +124,9 @@ function BlogPostPage() {
               />
             </header>
 
-            {post.coverImage ? (
-              <div className="mt-10 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
-                <BlogImage {...post.coverImage} />
-              </div>
-            ) : null}
+            <div className="mt-10 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+              <BlogImage {...post.coverImage} />
+            </div>
 
             <div
               className={
@@ -297,7 +220,7 @@ function ShareButtons({
   }
 
   async function sharePost() {
-    if (navigator.share) {
+    if ('share' in navigator) {
       try {
         await navigator.share({
           title: post.title,
@@ -401,9 +324,13 @@ function AuthorLink({ post }: { post: BlogPostSummary }) {
   )
 }
 
-function TagLink({ tag }: { tag: string }) {
+function TagLink({ tag, locale }: { tag: string; locale: string }) {
   return (
-    <Link to="/blog" search={{ tag }}>
+    <Link
+      to="/{-$locale}/blog"
+      params={{ locale: locale === 'en' ? undefined : locale }}
+      search={{ tag }}
+    >
       <Badge
         variant="outline"
         className="border-slate-300/80 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition-colors hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
