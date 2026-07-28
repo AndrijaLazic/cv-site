@@ -150,15 +150,7 @@ function HeroSection({
                 {t('heroTaglineHighlight1')}
               </span>{' '}
               {t('heroTaglineMid')}{' '}
-              <span
-                style={{
-                  background:
-                    'linear-gradient(90deg, var(--color-primary), var(--color-accent))',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
+              <span style={{ color: 'var(--color-primary)' }}>
                 {t('heroTaglineHighlight2')}
               </span>
               .

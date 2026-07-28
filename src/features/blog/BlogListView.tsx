@@ -65,10 +65,10 @@ export function BlogListView({ posts }: BlogListViewProps) {
     >
       <div className="mx-auto max-w-5xl space-y-10">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">
+          <h1 className="text-foreground text-3xl font-bold sm:text-4xl">
             {t('blogTitle')}
           </h1>
-          <p className="text-base text-slate-600 sm:text-lg dark:text-slate-400">
+          <p className="text-muted-foreground text-base sm:text-lg">
             {t('blogSubtitle')}
           </p>
         </div>
@@ -91,8 +91,8 @@ export function BlogListView({ posts }: BlogListViewProps) {
                   className={cn(
                     'rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
                     !activeTag
-                      ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                      : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300',
+                      ? 'border-primary bg-primary text-primary-foreground'
+                      : 'border-border bg-card/70 text-foreground hover:border-primary hover:text-primary',
                   )}
                 >
                   {t('blogAllPosts')}
@@ -105,8 +105,8 @@ export function BlogListView({ posts }: BlogListViewProps) {
                     className={cn(
                       'rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
                       activeTag === tag
-                        ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                        : 'border-slate-300 bg-white/70 text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:text-cyan-300',
+                        ? 'border-primary bg-primary text-primary-foreground'
+                        : 'border-border bg-card/70 text-foreground hover:border-primary hover:text-primary',
                     )}
                   >
                     {tag}
@@ -117,7 +117,7 @@ export function BlogListView({ posts }: BlogListViewProps) {
           )}
 
           <div className="flex items-center gap-2 self-end sm:self-auto">
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            <span className="text-muted-foreground text-sm font-medium">
               Sort:
             </span>
             <div className="flex rounded-md shadow-sm">
@@ -125,10 +125,10 @@ export function BlogListView({ posts }: BlogListViewProps) {
                 type="button"
                 onClick={() => setSortOrder('desc')}
                 className={cn(
-                  'rounded-l-md border border-slate-300 px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                  'border-border rounded-l-md border px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
                   sortOrder === 'desc'
-                    ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                    : 'bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50',
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : 'bg-card/70 text-foreground hover:bg-muted',
                 )}
               >
                 {t('blogNewest', 'Newest')}
@@ -137,10 +137,10 @@ export function BlogListView({ posts }: BlogListViewProps) {
                 type="button"
                 onClick={() => setSortOrder('asc')}
                 className={cn(
-                  'rounded-r-md border border-l-0 border-slate-300 px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
+                  'border-border rounded-r-md border border-l-0 px-3 py-1 text-xs font-medium transition-colors sm:text-sm',
                   sortOrder === 'asc'
-                    ? 'border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500'
-                    : 'bg-white/70 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-700/50',
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : 'bg-card/70 text-foreground hover:bg-muted',
                 )}
               >
                 {t('blogOldest', 'Oldest')}
@@ -166,7 +166,7 @@ export function BlogListView({ posts }: BlogListViewProps) {
             })}
           </div>
         ) : (
-          <p className="py-12 text-center text-slate-500 dark:text-slate-400">
+          <p className="text-muted-foreground py-12 text-center">
             {t('blogFilterByTag')}: <strong>{activeTag}</strong> — 0 posts
           </p>
         )}

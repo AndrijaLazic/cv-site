@@ -35,14 +35,14 @@ export function PostCard({
     >
       <Card
         className={cn(
-          'flex h-full min-h-104 flex-col gap-0 overflow-hidden border border-slate-200/50 bg-white/60 dark:bg-slate-900/40 py-0 shadow-sm ring-0 backdrop-blur-xl transition-all duration-300 group-hover:-translate-y-1 group-hover:border-fmea-brand-blue/30 group-hover:shadow-lg group-hover:shadow-fmea-brand-blue/10 dark:border-slate-800/50 dark:group-hover:border-fmea-brand-blue/40',
+          'border-border/50 bg-card/60 group-hover:border-primary/40 group-hover:shadow-primary/10 flex h-full min-h-104 flex-col gap-0 overflow-hidden border py-0 shadow-sm ring-0 backdrop-blur-xl transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg',
           featured && 'md:min-h-96 md:flex-row',
           className,
         )}
       >
         <div
           className={cn(
-            'relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-slate-200/80 dark:border-slate-700/80',
+            'border-border/80 relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b',
             featured
               ? 'h-64 sm:h-80 md:h-auto md:w-1/2 md:border-r md:border-b-0'
               : post.coverImage.aspectRatio
@@ -88,7 +88,7 @@ export function PostCard({
 
             <CardTitle
               className={cn(
-                'line-clamp-2 leading-tight font-extrabold text-slate-900 transition-colors group-hover:text-fmea-brand-blue dark:text-slate-100 dark:group-hover:text-blue-400 text-balance',
+                'text-foreground group-hover:text-primary line-clamp-2 leading-tight font-extrabold text-balance transition-colors',
                 featured ? 'text-xl sm:text-3xl' : 'text-lg sm:text-xl',
               )}
             >
@@ -99,19 +99,19 @@ export function PostCard({
           <CardContent className="flex min-h-0 flex-1 flex-col space-y-4 px-4 pb-4 sm:px-5 sm:pb-5 lg:px-6">
             <p
               className={cn(
-                'text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-300',
+                'text-muted-foreground text-sm leading-relaxed sm:text-base',
                 featured ? 'line-clamp-4' : 'line-clamp-3',
               )}
             >
               {post.summary}
             </p>
 
-            <div className="mt-auto flex flex-wrap gap-2 border-t border-slate-200/50 pt-4 dark:border-slate-800/50">
+            <div className="border-border/50 mt-auto flex flex-wrap gap-2 border-t pt-4">
               {post.tags.map((tag) => (
                 <Badge
                   key={`${post.slug}-${tag}`}
                   variant="outline"
-                  className="border-slate-200 bg-slate-50/50 text-xs font-medium text-slate-600 dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-300"
+                  className="border-border/50 bg-muted/50 text-muted-foreground text-xs font-medium"
                 >
                   {tag}
                 </Badge>

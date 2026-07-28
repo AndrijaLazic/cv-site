@@ -60,7 +60,7 @@ function HeroCarouselView({
   return (
     <section
       aria-label={ariaLabel}
-      className="group relative w-full overflow-hidden rounded-2xl md:rounded-3xl border border-slate-200/50 bg-white/5 p-2 backdrop-blur-xl shadow-xl dark:border-slate-800/50 dark:bg-slate-900/40"
+      className="border-border/50 bg-card/40 group relative w-full overflow-hidden rounded-2xl border p-2 shadow-xl backdrop-blur-xl md:rounded-3xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -68,7 +68,7 @@ function HeroCarouselView({
     >
       <div className="pointer-events-none absolute inset-0 rounded-3xl bg-linear-to-tr from-primary/5 via-transparent to-accent/5" />
 
-      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg md:rounded-xl shadow-inner relative w-full overflow-hidden z-10">
+      <div className="border-border bg-card relative z-10 w-full overflow-hidden rounded-lg border shadow-inner md:rounded-xl">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
@@ -84,7 +84,7 @@ function HeroCarouselView({
                 className="relative flex h-auto flex-col focus-visible:outline-none md:h-[clamp(26rem,62svh,44rem)] md:flex-row"
               >
                 <div
-                  className="relative aspect-[16/11] w-full shrink-0 overflow-hidden border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50 sm:aspect-video md:h-full md:w-1/2 md:border-r md:border-b-0"
+                  className="border-border/80 bg-muted/50 relative aspect-[16/11] w-full shrink-0 overflow-hidden border-b sm:aspect-video md:h-full md:w-1/2 md:border-r md:border-b-0"
                   style={{
                     backgroundColor: post.heroImage.bgColor ?? 'transparent',
                     ...(post.heroImage.padding
@@ -118,8 +118,8 @@ function HeroCarouselView({
                     ))}
                   </div>
                 </div>
-                <div className="flex min-h-0 flex-col justify-center bg-white p-5 pb-12 sm:p-8 sm:pb-14 md:h-full md:w-1/2 md:pb-8 dark:bg-slate-950">
-                  <time className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <div className="bg-card flex min-h-0 flex-col justify-center p-5 pb-12 sm:p-8 sm:pb-14 md:h-full md:w-1/2 md:pb-8">
+                  <time className="text-muted-foreground mb-3 text-xs font-semibold tracking-widest uppercase">
                     {new Date(post.publishedDate).toLocaleDateString(
                       activeLanguage === 'sr' ? 'sr-Latn-RS' : 'en-US',
                       {
@@ -132,19 +132,19 @@ function HeroCarouselView({
                   <h2
                     className={cn(
                       HERO_POST_TITLE_LINE_CLAMP_CLASS,
-                      'mb-3 text-xl leading-tight font-extrabold text-slate-900 transition-colors group-hover:text-primary sm:mb-4 sm:text-3xl lg:text-4xl dark:text-white',
+                      'text-foreground group-hover:text-primary mb-3 text-xl leading-tight font-extrabold transition-colors sm:mb-4 sm:text-3xl lg:text-4xl',
                     )}
                   >
                     {post.title}
                   </h2>
-                  <p className="line-clamp-3 text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400 font-medium">
+                  <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed font-medium sm:text-base">
                     {post.summary}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-1.5 md:hidden">
                     {post.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-700/70 dark:bg-slate-900 dark:text-slate-300"
+                        className="border-border bg-muted text-muted-foreground rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-wide uppercase"
                       >
                         {tag}
                       </span>
@@ -165,7 +165,7 @@ function HeroCarouselView({
               e.preventDefault()
               handlePrev()
             }}
-            className="absolute left-3 top-1/2 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-950/55 text-white shadow-lg backdrop-blur-md transition-colors hover:bg-slate-950/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:left-4 sm:size-11"
+            className="border-border bg-background/70 text-foreground hover:bg-muted focus-visible:ring-ring absolute top-1/2 left-3 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-md transition-colors focus-visible:ring-2 focus-visible:outline-none sm:left-4 sm:size-11"
             aria-label="Previous post"
           >
             <ChevronLeft className="size-5 sm:size-6" aria-hidden="true" />
@@ -176,7 +176,7 @@ function HeroCarouselView({
               e.preventDefault()
               handleNext()
             }}
-            className="absolute right-3 top-1/2 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-950/55 text-white shadow-lg backdrop-blur-md transition-colors hover:bg-slate-950/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:right-4 sm:size-11"
+            className="border-border bg-background/70 text-foreground hover:bg-muted focus-visible:ring-ring absolute top-1/2 right-3 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-md transition-colors focus-visible:ring-2 focus-visible:outline-none sm:right-4 sm:size-11"
             aria-label="Next post"
           >
             <ChevronRight className="size-5 sm:size-6" aria-hidden="true" />
@@ -191,10 +191,10 @@ function HeroCarouselView({
                   setCarouselIndex(i)
                 }}
                 className={cn(
-                  'h-2.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80',
+                  'focus-visible:ring-ring h-2.5 rounded-full transition-all focus-visible:ring-2 focus-visible:outline-none',
                   i === carouselIndex
-                    ? 'w-7 bg-primary shadow-sm shadow-primary/30 ring-1 ring-white/80'
-                    : 'w-2.5 bg-white/70 hover:bg-white dark:bg-slate-500/70 dark:hover:bg-slate-300',
+                    ? 'ring-background w-7 bg-primary shadow-sm shadow-primary/30 ring-1'
+                    : 'bg-muted-foreground/60 hover:bg-muted-foreground w-2.5',
                 )}
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={i === carouselIndex ? 'true' : undefined}
