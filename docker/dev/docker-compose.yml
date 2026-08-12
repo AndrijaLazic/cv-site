@@ -29,6 +29,10 @@ services:
       VITE_USE_POLLING: 'true'
       VITE_WATCH_POLL_INTERVAL: '120'
       CODEX_HOME: /home/devuser/.codex
+      # Override the host's Docker-backed Playwright MCP with the native binary
+      # baked into this image. Inline config has highest OpenCode precedence.
+      OPENCODE_CONFIG_CONTENT: >-
+        {"mcp":{"playwright":{"type":"local","command":["/usr/local/bin/playwright-mcp","--headless","--browser","chromium","--no-sandbox","--isolated"],"enabled":true}}}
     ports:
       - '${HOST_BIND:-0.0.0.0}:${HOST_VITE_PORT:-5173}:5173' # Optional Vite default port
       - '${HOST_BIND:-0.0.0.0}:${HOST_CRA_PORT:-3000}:3000' # App dev server for browser/LAN access

@@ -1,6 +1,8 @@
 FROM node:25.8.2-bookworm-slim
 ARG NPM_VERSION=11.12.1
 ARG RTK_VERSION=v0.43.0
+ARG CODEX_VERSION=0.147.0
+ARG PLAYWRIGHT_MCP_VERSION=0.0.79
 
 # Install essential development tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -22,8 +24,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Keep npm pinned to the requested major version for dev containers
 RUN npm install -g npm@${NPM_VERSION}
 
-# Install the coding-agent CLIs globally so they are available in every workspace.
-RUN npm install -g opencode-ai @openchamber/web
+# Install the coding-agent CLIs and Playwright MCP globally so they are
+# available in every workspace without relying on the host configuration.
+RUN npm install -g \
+    opencode-ai \
+    @openchamber/web \
+    @openai/codex@${CODEX_VERSION} \
+    @playwright/mcp@${PLAYWRIGHT_MCP_VERSION}
+
+# Keep the browser in an image-wide location that is readable by devuser.
+# Playwright installs the matching Chromium build and its Linux dependencies.
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN playwright-mcp install-browser --with-deps chromium --no-progress \
+    && chmod -R a+rX /ms-playwright
 
 # Install the verified RTK release used by Codex and the OpenCode rewrite plugin.
 RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/develop/install.sh \
@@ -45,6 +58,7 @@ RUN chmod 0755 /usr/local/bin/docker-dev-entrypoint
 
 ENV HOME=/home/devuser \
     CODEX_HOME=/home/devuser/.codex \
+    XDG_CONFIG_HOME=/home/devuser/.config \
     XDG_CACHE_HOME=/home/devuser/.cache \
     XDG_DATA_HOME=/home/devuser/.local/share \
     XDG_STATE_HOME=/home/devuser/.local/state \
