@@ -76,7 +76,7 @@ export function ImageCarousel({
       <ResponsiveImage
         src={img.src}
         alt={img.alt}
-        className="h-full w-full rounded-xl"
+        className="h-full w-full"
         pictureClassName="block h-full w-full"
         sizes={POST_CONTENT_IMAGE_SIZES}
         style={{
@@ -89,7 +89,7 @@ export function ImageCarousel({
     return (
       <figure className={cn('w-full', className)}>
         <div
-          className="image-carousel-slide aspect-video w-full overflow-hidden rounded-xl shadow-md"
+          className="image-carousel-slide aspect-video w-full overflow-hidden border border-(--article-line)"
           style={{
             backgroundColor: img.bgColor,
             padding: img.padding,
@@ -98,7 +98,7 @@ export function ImageCarousel({
           {img.zoomable !== false ? <Zoom>{imageElement}</Zoom> : imageElement}
         </div>
         {img.caption && (
-          <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
+          <figcaption className="mt-2 text-center text-sm italic text-(--article-muted)">
             {img.caption}
           </figcaption>
         )}
@@ -107,6 +107,7 @@ export function ImageCarousel({
   }
 
   const currentCaption = images[currentIndex]?.caption
+  const currentImage = images[currentIndex]
 
   return (
     <figure
@@ -123,49 +124,41 @@ export function ImageCarousel({
       aria-live="polite"
     >
       {/* Image track — overflow-hidden scoped to this element only */}
-      <div className="relative w-full overflow-hidden rounded-xl shadow-md">
+      <div className="relative aspect-video w-full overflow-hidden border border-(--article-line) bg-(--article-media)">
         <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          className="image-carousel-slide size-full"
+          style={{
+            backgroundColor: currentImage.bgColor,
+            padding: currentImage.padding,
+          }}
         >
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className="image-carousel-slide aspect-video w-full shrink-0"
+          {currentImage.zoomable !== false ? (
+            <Zoom>
+              <ResponsiveImage
+                src={currentImage.src}
+                alt={currentImage.alt}
+                className="h-full w-full"
+                pictureClassName="block h-full w-full"
+                sizes={POST_CONTENT_IMAGE_SIZES}
+                style={{
+                  objectFit: currentImage.fit ?? 'cover',
+                  objectPosition: currentImage.position ?? 'center',
+                }}
+              />
+            </Zoom>
+          ) : (
+            <ResponsiveImage
+              src={currentImage.src}
+              alt={currentImage.alt}
+              className="h-full w-full"
+              pictureClassName="block h-full w-full"
+              sizes={POST_CONTENT_IMAGE_SIZES}
               style={{
-                backgroundColor: img.bgColor,
-                padding: img.padding,
+                objectFit: currentImage.fit ?? 'cover',
+                objectPosition: currentImage.position ?? 'center',
               }}
-            >
-              {img.zoomable !== false ? (
-                <Zoom>
-                  <ResponsiveImage
-                    src={img.src}
-                    alt={img.alt}
-                    className="h-full w-full"
-                    pictureClassName="block h-full w-full"
-                    sizes={POST_CONTENT_IMAGE_SIZES}
-                    style={{
-                      objectFit: img.fit ?? 'cover',
-                      objectPosition: img.position ?? 'center',
-                    }}
-                  />
-                </Zoom>
-              ) : (
-                <ResponsiveImage
-                  src={img.src}
-                  alt={img.alt}
-                  className="h-full w-full"
-                  pictureClassName="block h-full w-full"
-                  sizes={POST_CONTENT_IMAGE_SIZES}
-                  style={{
-                    objectFit: img.fit ?? 'cover',
-                    objectPosition: img.position ?? 'center',
-                  }}
-                />
-              )}
-            </div>
-          ))}
+            />
+          )}
         </div>
 
         {/* Prev/Next buttons */}
@@ -174,7 +167,7 @@ export function ImageCarousel({
             e.preventDefault()
             goToPrev()
           }}
-          className="absolute left-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-blue-500"
+          className="absolute left-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-md border border-white/30 bg-black/55 text-white transition-colors hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
           aria-label="Previous image"
         >
           <ChevronLeft className="size-5" />
@@ -185,14 +178,14 @@ export function ImageCarousel({
             e.preventDefault()
             goToNext()
           }}
-          className="absolute right-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-blue-500"
+          className="absolute right-2 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-md border border-white/30 bg-black/55 text-white transition-colors hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
           aria-label="Next image"
         >
           <ChevronRight className="size-5" />
         </button>
 
         {/* Dots — inside image area, no overlap with caption */}
-        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1">
           {images.map((_, i) => (
             <button
               key={i}
@@ -201,8 +194,8 @@ export function ImageCarousel({
                 setCurrentIndex(i)
               }}
               className={cn(
-                'size-2 rounded-full transition-colors',
-                i === currentIndex ? 'bg-blue-400' : 'bg-white/50',
+                'h-1 w-5 border border-black/20 transition-colors',
+                i === currentIndex ? 'bg-white' : 'bg-white/45',
               )}
               aria-label={`Go to slide ${i + 1}`}
             />
@@ -212,7 +205,7 @@ export function ImageCarousel({
 
       {/* Caption rendered outside the overflow-hidden track */}
       {currentCaption && (
-        <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
+        <figcaption className="mt-2 text-center text-sm italic text-(--article-muted)">
           {currentCaption}
         </figcaption>
       )}

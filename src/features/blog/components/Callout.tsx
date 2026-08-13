@@ -11,23 +11,19 @@ type CalloutProps = {
 const config = {
   info: {
     icon: Info,
-    classes:
-      'border-blue-300/60 bg-blue-50/70 text-blue-900 dark:border-blue-700/50 dark:bg-blue-950/40 dark:text-blue-200',
+    classes: 'border-(--article-primary) bg-(--article-primary-soft) text-(--article-ink)',
   },
   tip: {
     icon: Lightbulb,
-    classes:
-      'border-emerald-300/60 bg-emerald-50/70 text-emerald-900 dark:border-emerald-700/50 dark:bg-emerald-950/40 dark:text-emerald-200',
+    classes: 'border-(--article-accent) bg-(--article-accent-soft) text-(--article-ink)',
   },
   warning: {
     icon: TriangleAlert,
-    classes:
-      'border-amber-300/60 bg-amber-50/70 text-amber-900 dark:border-amber-700/50 dark:bg-amber-950/40 dark:text-amber-200',
+    classes: 'border-(--article-warning) bg-(--article-warning-soft) text-(--article-ink)',
   },
   danger: {
     icon: OctagonX,
-    classes:
-      'border-red-300/60 bg-red-50/70 text-red-900 dark:border-red-800/50 dark:bg-red-950/40 dark:text-red-200',
+    classes: 'border-(--article-danger) bg-(--article-danger-soft) text-(--article-ink)',
   },
 }
 
@@ -37,15 +33,15 @@ export function Callout({ type = 'info', title, children }: CalloutProps) {
   return (
     <div
       className={cn(
-        'my-6 rounded-lg border border-l-4 px-4 py-3 text-sm',
+        'my-7 border border-l-2 px-4 py-4 text-sm leading-6',
         classes,
       )}
     >
       <div className="flex items-center gap-2">
-        <Icon className="size-4 shrink-0" />
+        <Icon className="size-4 shrink-0" aria-hidden="true" />
         {title && <span className="font-semibold">{title}</span>}
       </div>
-      <div className="prose prose-sm dark:prose-invert mt-1 max-w-none text-current">
+      <div className="mt-1 max-w-none text-current [&_p]:my-2 [&_a]:text-current [&_a]:decoration-current">
         {children}
       </div>
     </div>

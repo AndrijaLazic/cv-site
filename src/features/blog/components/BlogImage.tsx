@@ -15,7 +15,8 @@ export function BlogImage({
   aspectRatio = '16/9',
   rounded = false,
   zoomable = false,
-}: BlogImageContent) {
+  priority = false,
+}: BlogImageContent & { priority?: boolean }) {
   const wrapperStyle: CSSProperties = {
     width: '100%',
     aspectRatio,
@@ -41,7 +42,8 @@ export function BlogImage({
       src={src}
       alt={alt}
       className="block h-full w-full"
-      loading="lazy"
+      fetchPriority={priority ? 'high' : undefined}
+      loading={priority ? 'eager' : 'lazy'}
       pictureClassName="block h-full w-full"
       sizes={POST_CONTENT_IMAGE_SIZES}
       style={imageStyle}

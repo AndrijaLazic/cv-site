@@ -28,9 +28,9 @@ export function BlogCode({
   }
 
   return (
-    <div className="relative my-6 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-700/60">
-      <div className="flex items-center justify-between bg-slate-100 px-4 py-2 text-xs dark:bg-slate-800">
-        <div className="flex gap-2 text-slate-600 dark:text-slate-400">
+    <div className="relative my-7 overflow-hidden border border-(--article-line) bg-(--article-code)">
+      <div className="flex items-center justify-between gap-3 border-b border-(--article-line) bg-(--article-surface-soft) px-4 py-2.5 text-xs">
+        <div className="flex min-w-0 gap-2 text-(--article-muted)">
           {language && (
             <span className="font-semibold uppercase tracking-wider">
               {language}
@@ -40,7 +40,7 @@ export function BlogCode({
         </div>
         <button
           onClick={copyToClipboard}
-          className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+          className="flex min-h-11 shrink-0 items-center gap-1.5 rounded-sm px-1 text-(--article-muted) transition-colors hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
           aria-label="Copy code to clipboard"
         >
           {copied ? (
@@ -56,7 +56,7 @@ export function BlogCode({
           )}
         </button>
       </div>
-      <div className="overflow-x-auto bg-slate-950 p-4 text-sm text-slate-100 dark:bg-slate-900">
+      <div className="overflow-x-auto p-4 text-sm text-(--article-code-ink)">
         <pre
           className={cn('font-mono', { 'show-line-numbers': showLineNumbers })}
           data-show-line-numbers={showLineNumbers}

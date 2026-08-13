@@ -7,8 +7,14 @@ type BlogContentRendererProps = {
   content: BlogPostContent
 }
 
-function MissingMdxContent() {
-  return null
+function MdxLoadingState() {
+  return (
+    <div className="space-y-4 py-2" role="status" aria-label="Loading article content">
+      <div className="h-5 w-full animate-pulse bg-(--article-loading)" />
+      <div className="h-5 w-11/12 animate-pulse bg-(--article-loading)" />
+      <div className="h-5 w-4/5 animate-pulse bg-(--article-loading)" />
+    </div>
+  )
 }
 
 function CompiledMdxRenderer({
@@ -24,16 +30,20 @@ function CompiledMdxRenderer({
           content.slug,
         )
 
-        return { default: Component ?? MissingMdxContent }
+        return { default: Component ?? EmptyMdxContent }
       }),
     [content.locale, content.slug],
   )
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<MdxLoadingState />}>
       <MdxRenderer Component={MdxComponent} />
     </Suspense>
   )
+}
+
+function EmptyMdxContent() {
+  return null
 }
 
 export function BlogContentRenderer({ content }: BlogContentRendererProps) {

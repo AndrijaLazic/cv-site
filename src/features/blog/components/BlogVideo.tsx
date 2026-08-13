@@ -23,7 +23,7 @@ export function BlogVideo({ src, title, caption, className }: BlogVideoProps) {
 
   return (
     <figure className={cn('my-6', className)}>
-      <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+      <div className="relative aspect-video w-full overflow-hidden border border-(--article-line) bg-(--article-media)">
         {ytId ? (
           <iframe
             src={`https://www.youtube.com/embed/${ytId}`}
@@ -50,7 +50,7 @@ export function BlogVideo({ src, title, caption, className }: BlogVideoProps) {
         )}
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm italic text-slate-500 dark:text-slate-400">
+        <figcaption className="mt-2 text-center text-sm italic text-(--article-muted)">
           {caption}
         </figcaption>
       )}

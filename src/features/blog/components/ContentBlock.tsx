@@ -21,12 +21,12 @@ export function ContentBlock({
     <section
       id={sectionId}
       className={cn(
-        'my-11 scroll-mt-28 border-t border-slate-200/80 pt-8 first:mt-0 first:border-t-0 first:pt-0 dark:border-slate-800',
+        'my-12 scroll-mt-28 border-t border-(--article-line) pt-8 first:mt-0 first:border-t-0 first:pt-0',
         className,
       )}
     >
       {title && (
-        <h2 className="mb-4 text-2xl font-semibold leading-tight text-slate-950 dark:text-slate-50">
+        <h2 className="mb-4 text-2xl font-semibold leading-tight tracking-[-0.025em] text-(--article-ink)">
           {title}
         </h2>
       )}

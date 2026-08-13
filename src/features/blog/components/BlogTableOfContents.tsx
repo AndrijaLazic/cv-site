@@ -3,12 +3,14 @@ import { cn } from '#/shared/utils'
 
 export type BlogTableOfContentsProps = {
   className?: string
+  compact?: boolean
   items: BlogPostSummary['tableOfContents']
   locale: BlogPostSummary['locale']
 }
 
 export function BlogTableOfContents({
   className,
+  compact = false,
   items,
   locale,
 }: BlogTableOfContentsProps) {
@@ -16,32 +18,52 @@ export function BlogTableOfContents({
     return null
   }
 
+  const links = (
+    <ol className="mt-3 space-y-1.5">
+      {items.map((item, index) => (
+        <li key={item.id}>
+          <a
+            className={cn(
+              'group flex gap-2 rounded-sm py-1 text-sm leading-5 text-(--article-muted) transition-colors hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)',
+              item.level === 3 && 'pl-4',
+            )}
+            href={`#${item.id}`}
+          >
+            <span className="font-mono text-[0.65rem] text-(--article-faint) group-hover:text-(--article-accent)" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span>{item.title}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  )
+
+  if (compact) {
+    return (
+      <details className={cn('border border-(--article-line) bg-(--article-surface)', className)}>
+        <summary className="flex min-h-11 cursor-pointer items-center px-4 font-mono text-xs font-semibold tracking-[0.12em] text-(--article-ink) uppercase marker:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-(--article-focus)">
+          {locale === 'sr' ? 'Sadržaj' : 'Table of Contents'}
+        </summary>
+        <nav aria-label={locale === 'sr' ? 'Sadržaj' : 'Table of contents'} className="border-t border-(--article-line) px-4 pb-4">
+          {links}
+        </nav>
+      </details>
+    )
+  }
+
   return (
     <nav
       aria-label={locale === 'sr' ? 'Sadržaj' : 'Table of contents'}
       className={cn(
-        'border-l border-slate-200 pl-5 dark:border-slate-800 lg:sticky lg:top-28',
+        'border-l border-(--article-line) pl-5 lg:sticky lg:top-28',
         className,
       )}
     >
-      <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+      <h2 className="font-mono text-[0.68rem] font-semibold tracking-[0.16em] text-(--article-muted) uppercase">
         {locale === 'sr' ? 'Sadržaj' : 'Table of Contents'}
       </h2>
-      <ol className="mt-4 space-y-2.5">
-        {items.map((item) => (
-          <li key={item.id}>
-            <a
-              className={cn(
-                'block text-sm leading-5 text-slate-600 transition-colors hover:text-cyan-700 dark:text-slate-400 dark:hover:text-cyan-300',
-                item.level === 3 && 'pl-4',
-              )}
-              href={`#${item.id}`}
-            >
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ol>
+      {links}
     </nav>
   )
 }

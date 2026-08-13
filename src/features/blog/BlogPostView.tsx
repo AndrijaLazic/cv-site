@@ -9,6 +9,7 @@ import {
   Copy,
   Mail,
   Share2,
+  SquareTerminal,
 } from 'lucide-react'
 import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
 import { BlogImage, BlogTableOfContents } from '#/features/blog/components'
@@ -17,7 +18,6 @@ import type {
   BlogPostSummary,
 } from '#/features/blog/types/blog'
 import { publicConfig } from '#/shared/config/public-env'
-import { Badge } from '#/shared/ui/badge'
 import { LinkedInIcon } from '#/shared/ui/brand-icons'
 import { cn } from '#/shared/utils'
 
@@ -71,74 +71,88 @@ export function BlogPostView({ post, backTo }: BlogPostViewProps) {
   return (
     <>
       <BlogPostJsonLd post={post} />
-      <div className="flex-1 bg-(--color-bg) px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-18">
-        <div className="mx-auto max-w-7xl">
+      <div className="article-page flex-1 px-4 py-6 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
+        <div className="mx-auto max-w-6xl">
           <Link
             to={backTo}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-700 transition-colors hover:text-cyan-800 dark:text-cyan-400 dark:hover:text-cyan-300"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md px-1 font-mono text-xs font-semibold tracking-[0.08em] text-(--article-muted) transition-colors hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--article-focus)"
           >
             <ArrowLeft className="size-4" />
             {t('blogBackToList')}
           </Link>
 
-          <article className="mt-8">
-            <header className="max-w-4xl space-y-5">
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <TagLink key={tag} tag={tag} locale={post.locale} />
-                ))}
-              </div>
-              <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-6xl dark:text-slate-50">
-                {post.title}
-              </h1>
-              <p className="max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
-                {post.summary}
-              </p>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-slate-200/80 pt-5 text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
-                <AuthorLink post={post} />
-                <span className="inline-flex items-center gap-1.5">
-                  <CalendarDays className="size-4" aria-hidden="true" />
-                  <span className="sr-only">{t('blogPublished')}</span>
-                  <time dateTime={post.publishedDate}>
-                    {post.publishedDate}
-                  </time>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Clock3 className="size-4" aria-hidden="true" />
-                  {estimateReadingTime(post)}
-                </span>
-              </div>
-              <ShareButtons
-                post={post}
-                postUrl={postUrl}
-                copy={{
-                  heading: t('blogShareHeading', 'Share this post'),
-                  nativeLabel: t('blogShareNative', 'Share'),
-                  linkedInLabel: t('blogShareLinkedIn', 'Share on LinkedIn'),
-                  xLabel: t('blogShareX', 'Share on X'),
-                  facebookLabel: t('blogShareFacebook', 'Share on Facebook'),
-                  emailLabel: t('blogShareEmail', 'Share by email'),
-                  copyLabel: t('blogShareCopy', 'Copy link'),
-                  copiedLabel: t('blogShareCopied', 'Copied'),
-                }}
+          <article className="mt-3">
+            <header className="article-hero relative overflow-hidden border border-(--article-line) bg-(--article-surface) px-5 py-7 shadow-sm sm:px-8 sm:py-9 lg:px-12 lg:py-12">
+              <div
+                className="article-hero-grid pointer-events-none absolute inset-0"
+                aria-hidden="true"
               />
+              <div className="relative max-w-4xl">
+                <div className="mb-5 flex items-center gap-2 font-mono text-[0.68rem] font-semibold tracking-[0.16em] text-(--article-muted) uppercase">
+                  <SquareTerminal
+                    className="size-3.5 text-(--article-accent)"
+                    aria-hidden="true"
+                  />
+                  <span>{t('blogKicker')}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <TagLink key={tag} tag={tag} locale={post.locale} />
+                  ))}
+                </div>
+                <h1 className="mt-6 text-4xl font-bold leading-[1.03] tracking-[-0.045em] text-balance text-(--article-ink) sm:text-5xl lg:text-6xl">
+                  {post.title}
+                </h1>
+                <p className="mt-5 max-w-3xl text-lg leading-8 text-(--article-muted) sm:text-xl sm:leading-9">
+                  {post.summary}
+                </p>
+                <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs leading-5 text-(--article-muted)">
+                  <AuthorLink post={post} />
+                  <span className="inline-flex items-center gap-1.5">
+                    <CalendarDays className="size-4" aria-hidden="true" />
+                    <span className="sr-only">{t('blogPublished')}</span>
+                    <time dateTime={post.publishedDate}>
+                      {post.publishedDate}
+                    </time>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock3 className="size-4" aria-hidden="true" />
+                    {estimateReadingTime(post)}
+                  </span>
+                </div>
+                <ShareButtons
+                  post={post}
+                  postUrl={postUrl}
+                  copy={{
+                    heading: t('blogShareHeading', 'Share this post'),
+                    nativeLabel: t('blogShareNative', 'Share'),
+                    linkedInLabel: t('blogShareLinkedIn', 'Share on LinkedIn'),
+                    xLabel: t('blogShareX', 'Share on X'),
+                    facebookLabel: t('blogShareFacebook', 'Share on Facebook'),
+                    emailLabel: t('blogShareEmail', 'Share by email'),
+                    copyLabel: t('blogShareCopy', 'Copy link'),
+                    copiedLabel: t('blogShareCopied', 'Copied'),
+                  }}
+                />
+              </div>
             </header>
 
-            <div className="mt-10 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
-              <BlogImage {...post.coverImage} />
+            <div className="mt-5 overflow-hidden border border-(--article-line) bg-(--article-media) shadow-sm">
+              <BlogImage {...post.coverImage} priority />
             </div>
 
             <div
               className={
                 showTableOfContents
-                  ? 'mx-auto mt-10 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,640px)_minmax(240px,280px)] lg:items-start lg:justify-center'
-                  : 'mx-auto mt-10 max-w-[640px]'
+                  ? 'mx-auto mt-9 grid max-w-5xl gap-9 lg:grid-cols-[minmax(0,660px)_minmax(220px,260px)] lg:items-start lg:justify-center'
+                  : 'mx-auto mt-9 max-w-[660px]'
               }
             >
               <div className="min-w-0">
                 {showTableOfContents ? (
                   <BlogTableOfContents
                     className="mb-9 lg:hidden"
+                    compact
                     items={post.tableOfContents}
                     locale={post.locale}
                   />
@@ -239,8 +253,8 @@ function ShareButtons({
   }
 
   return (
-    <div className="flex flex-col gap-3 border-t border-slate-200/80 pt-5 dark:border-slate-800">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+    <section className="flex flex-col gap-3 pt-5" aria-label={copy.heading}>
+      <p className="text-sm font-semibold text-(--article-ink)">
         {copy.heading}
       </p>
       <div className="flex flex-wrap items-center gap-2">
@@ -249,7 +263,7 @@ function ShareButtons({
           onClick={() => {
             void sharePost()
           }}
-          className="inline-flex h-10 items-center gap-2 rounded-md border border-cyan-600 bg-cyan-600 px-3 text-sm font-semibold text-white shadow-sm transition-colors hover:border-cyan-700 hover:bg-cyan-700 focus-visible:ring-[3px] focus-visible:ring-cyan-500/30 focus-visible:outline-none dark:border-cyan-500 dark:bg-cyan-500 dark:text-slate-950 dark:hover:border-cyan-400 dark:hover:bg-cyan-400"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-(--article-primary) bg-(--article-primary) px-3 text-sm font-semibold text-(--article-primary-ink) shadow-sm transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
           aria-label={copy.nativeLabel}
           title={copy.nativeLabel}
         >
@@ -264,7 +278,7 @@ function ShareButtons({
               href={link.href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex size-10 items-center justify-center rounded-md border border-slate-300 bg-white text-sm font-bold text-slate-700 shadow-sm transition-colors hover:border-cyan-500 hover:text-cyan-700 focus-visible:ring-[3px] focus-visible:ring-cyan-500/30 focus-visible:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
+              className="inline-flex size-11 items-center justify-center rounded-md border border-(--article-line) bg-(--article-surface-raised) text-sm font-bold text-(--article-ink) shadow-sm transition-colors hover:border-(--article-primary) hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
               aria-label={link.label}
               title={link.label}
             >
@@ -283,10 +297,10 @@ function ShareButtons({
             void copyLink()
           }}
           className={cn(
-            'inline-flex h-10 items-center gap-2 rounded-md border px-3 text-sm font-semibold shadow-sm transition-colors focus-visible:ring-[3px] focus-visible:ring-cyan-500/30 focus-visible:outline-none',
+            'inline-flex min-h-11 items-center gap-2 rounded-md border px-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)',
             copied
-              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-950/50 dark:text-emerald-300'
-              : 'border-slate-300 bg-white text-slate-700 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300',
+              ? 'border-(--article-accent) bg-(--article-accent-soft) text-(--article-accent-ink)'
+              : 'border-(--article-line) bg-(--article-surface-raised) text-(--article-ink) hover:border-(--article-primary) hover:text-(--article-primary)',
           )}
           aria-label={copied ? copy.copiedLabel : copy.copyLabel}
           title={copied ? copy.copiedLabel : copy.copyLabel}
@@ -299,16 +313,17 @@ function ShareButtons({
           <span>{copied ? copy.copiedLabel : copy.copyLabel}</span>
         </button>
       </div>
-    </div>
+      <span className="sr-only" aria-live="polite">
+        {copied ? copy.copiedLabel : ''}
+      </span>
+    </section>
   )
 }
 
 function AuthorLink({ post }: { post: BlogPostSummary }) {
   if (!post.authorUrl) {
     return (
-      <span className="font-semibold text-slate-700 dark:text-slate-200">
-        {post.author}
-      </span>
+      <span className="font-semibold text-(--article-ink)">{post.author}</span>
     )
   }
 
@@ -317,7 +332,7 @@ function AuthorLink({ post }: { post: BlogPostSummary }) {
       href={post.authorUrl}
       target="_blank"
       rel="noreferrer"
-      className="font-semibold text-slate-700 underline-offset-4 transition-colors hover:text-cyan-700 hover:underline dark:text-slate-200 dark:hover:text-cyan-300"
+      className="font-semibold text-(--article-ink) underline decoration-(--article-line) underline-offset-4 transition-colors hover:text-(--article-primary) hover:decoration-current focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
     >
       {post.author}
     </a>
@@ -329,14 +344,10 @@ function TagLink({ tag, locale }: { tag: string; locale: string }) {
     <Link
       to="/{-$locale}/blog"
       params={{ locale: locale === 'en' ? undefined : locale }}
-      search={{ tag }}
+      search={{ tag: [tag] }}
+      className="text-sm font-medium text-(--article-muted) underline decoration-(--article-line) underline-offset-4 transition-colors hover:text-(--article-primary) hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
     >
-      <Badge
-        variant="outline"
-        className="border-slate-300/80 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition-colors hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:text-cyan-300"
-      >
-        {tag}
-      </Badge>
+      {tag}
     </Link>
   )
 }

@@ -18,7 +18,7 @@ export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        'mb-5 mt-10 first:mt-0 text-3xl font-bold leading-tight tracking-tight text-slate-950 dark:text-slate-50',
+        'mb-5 mt-10 first:mt-0 text-3xl font-bold leading-tight tracking-[-0.03em] text-(--article-ink)',
         className,
       )}
       {...props}
@@ -33,7 +33,7 @@ export const mdxComponents: MDXComponents = {
     <h2
       id={id}
       className={cn(
-        'mb-4 mt-11 scroll-mt-28 border-t border-slate-200/80 pt-8 text-2xl font-semibold leading-tight text-slate-950 first:border-t-0 first:pt-0 dark:border-slate-800 dark:text-slate-50',
+        'mb-4 mt-12 scroll-mt-28 border-t border-(--article-line) pt-8 text-2xl font-semibold leading-tight tracking-[-0.025em] text-(--article-ink) first:border-t-0 first:pt-0',
         className,
       )}
       {...props}
@@ -50,7 +50,7 @@ export const mdxComponents: MDXComponents = {
     <h3
       id={id}
       className={cn(
-        'mb-3 mt-8 scroll-mt-28 text-xl font-semibold leading-snug text-slate-900 dark:text-slate-100',
+        'mb-3 mt-9 scroll-mt-28 text-xl font-semibold leading-snug tracking-[-0.015em] text-(--article-ink)',
         className,
       )}
       {...props}
@@ -61,7 +61,7 @@ export const mdxComponents: MDXComponents = {
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        'mb-1 mt-4 text-lg font-semibold text-slate-800 dark:text-slate-200',
+        'mb-2 mt-7 text-lg font-semibold text-(--article-ink)',
         className,
       )}
       {...props}
@@ -70,7 +70,7 @@ export const mdxComponents: MDXComponents = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        'my-5 text-[1.03rem] leading-8 text-slate-700 first:mt-0 dark:text-slate-300',
+        'my-5 text-[1.03rem] leading-8 text-(--article-prose) first:mt-0 sm:text-[1.05rem]',
         className,
       )}
       {...props}
@@ -79,7 +79,7 @@ export const mdxComponents: MDXComponents = {
   a: ({ className, ...props }) => (
     <a
       className={cn(
-        'text-blue-700 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300',
+        'font-medium text-(--article-primary) underline decoration-(--article-primary) underline-offset-3 transition-colors hover:decoration-current focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)',
         className,
       )}
       {...props}
@@ -90,7 +90,7 @@ export const mdxComponents: MDXComponents = {
       <ResponsiveImage
         {...props}
         alt={alt ?? ''}
-        className={cn('h-auto max-w-full rounded-xl', className)}
+        className={cn('h-auto max-w-full', className)}
         decoding={decoding ?? 'async'}
         loading={loading ?? 'lazy'}
         pictureClassName="my-6 block"
@@ -101,7 +101,7 @@ export const mdxComponents: MDXComponents = {
       <img
         {...props}
         alt={alt}
-        className={cn('my-6 h-auto max-w-full rounded-xl', className)}
+        className={cn('my-6 h-auto max-w-full', className)}
         decoding={decoding ?? 'async'}
         loading={loading ?? 'lazy'}
         src={src}
@@ -110,7 +110,7 @@ export const mdxComponents: MDXComponents = {
   ul: ({ className, ...props }) => (
     <ul
       className={cn(
-        'my-5 ml-6 list-disc space-y-2 text-slate-700 dark:text-slate-300',
+        'my-5 ml-6 list-disc space-y-2 text-(--article-prose) marker:text-(--article-accent)',
         className,
       )}
       {...props}
@@ -119,36 +119,30 @@ export const mdxComponents: MDXComponents = {
   ol: ({ className, ...props }) => (
     <ol
       className={cn(
-        'my-5 ml-6 list-decimal space-y-2 text-slate-700 dark:text-slate-300',
+        'my-5 ml-6 list-decimal space-y-2 text-(--article-prose) marker:font-mono marker:text-(--article-accent)',
         className,
       )}
       {...props}
     />
   ),
   li: ({ className, ...props }) => (
-    <li className={cn('text-[1.03rem] leading-8', className)} {...props} />
+    <li className={cn('pl-1 text-[1.03rem] leading-8', className)} {...props} />
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        'my-7 border-l-4 border-slate-300 pl-5 text-lg italic leading-8 text-slate-600 dark:border-slate-600 dark:text-slate-400',
+        'my-8 border-l-2 border-(--article-accent) pl-5 text-lg italic leading-8 text-(--article-muted)',
         className,
       )}
       {...props}
     />
   ),
   hr: ({ className, ...props }) => (
-    <hr
-      className={cn('my-8 border-slate-200 dark:border-slate-700', className)}
-      {...props}
-    />
+    <hr className={cn('my-10 border-(--article-line)', className)} {...props} />
   ),
   strong: ({ className, ...props }) => (
     <strong
-      className={cn(
-        'font-semibold text-slate-900 dark:text-slate-100',
-        className,
-      )}
+      className={cn('font-semibold text-(--article-ink)', className)}
       {...props}
     />
   ),
@@ -157,7 +151,10 @@ export const mdxComponents: MDXComponents = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className={cn('my-6 overflow-x-auto rounded-xl p-4 text-sm', className)}
+      className={cn(
+        'my-7 overflow-x-auto border border-(--article-line) bg-(--article-code) p-4 text-sm text-(--article-code-ink)',
+        className,
+      )}
       {...props}
     />
   ),
@@ -174,7 +171,7 @@ export const mdxComponents: MDXComponents = {
       return (
         <code
           className={cn(
-            'rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm text-slate-800 dark:bg-slate-800 dark:text-slate-200',
+            'rounded-sm bg-(--article-inline-code) px-1.5 py-0.5 font-mono text-[0.9em] text-(--article-ink)',
             className,
           )}
           {...props}
@@ -191,14 +188,17 @@ export const mdxComponents: MDXComponents = {
   },
   table: ({ className, ...props }) => (
     <table
-      className={cn('my-6 w-full border-collapse text-sm', className)}
+      className={cn(
+        'my-7 block w-full overflow-x-auto border-collapse text-sm',
+        className,
+      )}
       {...props}
     />
   ),
   th: ({ className, ...props }) => (
     <th
       className={cn(
-        'border border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100',
+        'border border-(--article-line) bg-(--article-surface-soft) px-3 py-2.5 text-left font-semibold text-(--article-ink)',
         className,
       )}
       {...props}
@@ -206,17 +206,14 @@ export const mdxComponents: MDXComponents = {
   ),
   tr: ({ className, ...props }) => (
     <tr
-      className={cn(
-        'border-b border-slate-200 dark:border-slate-700',
-        className,
-      )}
+      className={cn('border-b border-(--article-line)', className)}
       {...props}
     />
   ),
   td: ({ className, ...props }) => (
     <td
       className={cn(
-        'border border-slate-200 px-3 py-2 text-slate-700 dark:border-slate-700 dark:text-slate-300',
+        'border border-(--article-line) px-3 py-2 text-(--article-prose)',
         className,
       )}
       {...props}

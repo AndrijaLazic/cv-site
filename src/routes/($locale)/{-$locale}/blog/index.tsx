@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { BlogListView } from '#/features/blog/BlogListView'
 import { getBlogPostSummaries } from '#/features/blog/api'
 import { resolveSupportedLanguage } from '#/features/i18n/languages'
@@ -11,9 +11,14 @@ const descriptions = {
 
 export const Route = createFileRoute('/($locale)/{-$locale}/blog/')({
   component: BlogIndexPage,
-  validateSearch: (search: Record<string, unknown>) => ({
-    tag: typeof search.tag === 'string' ? search.tag : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>) => {
+    const tagValues = Array.isArray(search.tag) ? search.tag : [search.tag]
+    const tags = tagValues.filter(
+      (tag): tag is string => typeof tag === 'string' && tag.length > 0,
+    )
+
+    return { tag: tags.length > 0 ? tags : undefined }
+  },
   loader: ({ params }) =>
     getBlogPostSummaries(resolveSupportedLanguage(params.locale)),
   head: ({ params }) => {
@@ -52,5 +57,28 @@ export const Route = createFileRoute('/($locale)/{-$locale}/blog/')({
 })
 
 function BlogIndexPage() {
-  return <BlogListView posts={Route.useLoaderData()} />
+  const posts = Route.useLoaderData()
+  const { tag } = Route.useSearch()
+  const { locale } = Route.useParams()
+  const navigate = useNavigate()
+
+  function handleTagsChange(
+    nextTags: string[],
+    options?: { replace?: boolean },
+  ) {
+    void navigate({
+      to: '/{-$locale}/blog',
+      params: { locale },
+      search: { tag: nextTags.length > 0 ? nextTags : undefined },
+      replace: options?.replace ?? false,
+    })
+  }
+
+  return (
+    <BlogListView
+      posts={posts}
+      activeTags={tag ?? []}
+      onTagsChange={handleTagsChange}
+    />
+  )
 }

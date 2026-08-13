@@ -15,7 +15,7 @@ export function Section({ id, title, children, className }: SectionProps) {
   return (
     <section id={sectionId} className={cn('scroll-mt-28 space-y-3', className)}>
       {title ? (
-        <h3 className="text-xl font-semibold leading-snug text-slate-900 dark:text-slate-100">
+        <h3 className="text-xl font-semibold leading-snug tracking-[-0.015em] text-(--article-ink)">
           {title}
         </h3>
       ) : null}

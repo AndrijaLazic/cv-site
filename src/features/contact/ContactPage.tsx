@@ -1,150 +1,88 @@
 import { useTranslation } from 'react-i18next'
-import type { ComponentType } from 'react'
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  FileText,
-  MapPin,
-  MessageSquare,
-  Send,
-  Sparkles,
-} from 'lucide-react'
+import { ArrowUpRight, FileText } from 'lucide-react'
 import { GitHubIcon, LinkedInIcon } from '#/shared/ui/brand-icons'
-import { BackgroundSection } from '#/shared/ui/background-section'
-import { Badge } from '#/shared/ui/badge'
-import { cn } from '#/shared/utils'
+import type { ReactNode } from 'react'
 
 export function ContactPage() {
   const { t } = useTranslation('common')
-  const contactLinks = [
+
+  const contactLinks: ContactLinkProps[] = [
     {
       href: 'https://www.linkedin.com/in/andrija-lazic-dev/',
       label: t('contact.linkedin'),
       description: t('contact.linkedinDescription'),
-      icon: LinkedInIcon,
-      primary: true,
+      external: true,
+      icon: <LinkedInIcon className="h-5 w-5" />,
     },
     {
       href: 'https://github.com/AndrijaLazic',
       label: t('contact.github'),
       description: t('contact.githubDescription'),
-      icon: GitHubIcon,
-      primary: false,
+      external: true,
+      icon: <GitHubIcon className="h-5 w-5" />,
     },
     {
       href: '/docs/Andrija_Lazic_Resume.docx',
       label: t('contact.resume'),
       description: t('contact.resumeDescription'),
-      icon: FileText,
-      primary: false,
+      external: false,
+      format: t('contact.resumeFormat'),
+      icon: <FileText className="h-5 w-5" />,
     },
   ]
+
   const profileItems = [
-    {
-      icon: BriefcaseBusiness,
-      label: t('contact.focusLabel'),
-      value: t('contact.focusValue'),
-    },
-    {
-      icon: MapPin,
-      label: t('contact.locationLabel'),
-      value: t('contact.locationValue'),
-    },
+    { label: t('contact.focusLabel'), value: t('contact.focusValue') },
+    { label: t('contact.locationLabel'), value: t('contact.locationValue') },
+    { label: t('contact.stackLabel'), value: t('contact.stackValue') },
   ]
 
   return (
-    <BackgroundSection
-      variant="mesh-blobs"
-      className="flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:py-18"
-    >
-      <section className="relative z-10 mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-        <div className="flex min-h-[32rem] flex-col justify-between rounded-2xl border border-(--color-border) bg-(--color-card)/92 p-6 shadow-[0_26px_80px_-46px_rgba(15,23,42,0.8)] backdrop-blur-xl sm:p-8 lg:p-10">
-          <div className="space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge className="border border-(--color-accent)/30 bg-(--color-accent)/12 px-3 py-1 text-(--color-accent)">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                {t('contact.availability')}
-              </Badge>
-              <span className="font-mono text-xs tracking-[0.16em] text-(--color-muted) uppercase">
-                {t('contact.kicker')}
-              </span>
-            </div>
+    <section className="flex-1 bg-(--color-bg)">
+      <div className="page-wrap px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
+          {/* Left: editorial intro (7 columns) */}
+          <div className="lg:col-span-7">
+            <p className="text-sm font-medium text-(--color-muted)">
+              {t('contact.kicker')}
+            </p>
+            <h1 className="mt-3 max-w-2xl text-balance text-4xl leading-[1.05] font-semibold tracking-tight text-(--color-text) sm:text-5xl lg:text-6xl">
+              {t('contact.title')}
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-(--color-muted) sm:text-lg sm:leading-8">
+              {t('contact.description')}
+            </p>
 
-            <div className="space-y-4">
-              <h1 className="max-w-3xl text-4xl leading-tight font-extrabold text-(--color-text) sm:text-5xl lg:text-6xl">
-                {t('contact.title')}
-              </h1>
-              <p className="max-w-2xl text-base leading-8 text-(--color-muted) sm:text-lg">
-                {t('contact.description')}
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 grid gap-3 sm:grid-cols-2">
-            {profileItems.map((item) => {
-              const Icon = item.icon
-              return (
+            <dl className="mt-10 border-t border-(--color-border)">
+              {profileItems.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-xl border border-(--color-border) bg-(--color-surface-soft)/70 p-4"
+                  className="flex flex-col gap-1 border-b border-(--color-border) py-4 sm:flex-row sm:items-baseline sm:gap-4"
                 >
-                  <Icon
-                    className="mb-4 h-5 w-5 text-(--color-accent)"
-                    aria-hidden="true"
-                  />
-                  <p className="text-xs font-semibold tracking-[0.14em] text-(--color-muted) uppercase">
+                  <dt className="text-sm font-semibold text-(--color-text) sm:w-40 sm:shrink-0">
                     {item.label}
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-(--color-text)">
+                  </dt>
+                  <dd className="text-sm leading-6 text-(--color-muted)">
                     {item.value}
-                  </p>
+                  </dd>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="grid gap-4">
-          <div className="rounded-2xl border border-(--color-border) bg-(--color-card)/92 p-5 shadow-[0_18px_60px_-42px_rgba(15,23,42,0.78)] backdrop-blur-xl sm:p-6">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-(--color-primary) text-(--color-button-text)">
-                <Send className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div>
-                <h2 className="text-xl font-bold text-(--color-text)">
-                  {t('contact.channelsTitle')}
-                </h2>
-                <p className="text-sm text-(--color-muted)">
-                  {t('contact.channelsDescription')}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-3">
-              {contactLinks.map((link) => (
-                <ContactLink key={link.href} {...link} />
               ))}
-            </div>
+            </dl>
           </div>
 
-          <div className="rounded-2xl border border-(--color-border) bg-(--color-card)/92 p-5 shadow-[0_18px_60px_-42px_rgba(15,23,42,0.78)] backdrop-blur-xl sm:p-6">
-            <div className="flex gap-4">
-              <span className="mt-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-(--color-accent)/30 bg-(--color-accent)/12 text-(--color-accent)">
-                <MessageSquare className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div className="space-y-2">
-                <h2 className="text-xl font-bold text-(--color-text)">
-                  {t('contact.replyTitle')}
-                </h2>
-                <p className="text-sm leading-6 text-(--color-muted)">
-                  {t('contact.replyDescription')}
-                </p>
-              </div>
-            </div>
+          {/* Right: ruled contact links (5 columns) */}
+          <div className="lg:col-span-5">
+            <ul className="border-t border-(--color-border)">
+              {contactLinks.map((link) => (
+                <li key={link.href}>
+                  <ContactLink {...link} />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </section>
-    </BackgroundSection>
+      </div>
+    </section>
   )
 }
 
@@ -152,52 +90,47 @@ type ContactLinkProps = {
   href: string
   label: string
   description: string
-  icon: ComponentType<{ className?: string; 'aria-hidden'?: boolean }>
-  primary: boolean
+  external: boolean
+  format?: string
+  icon: ReactNode
 }
 
 function ContactLink({
   href,
   label,
   description,
-  icon: Icon,
-  primary,
+  external,
+  format,
+  icon,
 }: ContactLinkProps) {
   return (
     <a
       href={href}
-      target={href.startsWith('http') ? '_blank' : undefined}
-      rel={href.startsWith('http') ? 'noreferrer' : undefined}
-      className={cn(
-        'group/contact-link flex items-center gap-4 rounded-xl border p-4 transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)',
-        primary
-          ? 'border-(--color-primary) bg-(--color-button) text-(--color-button-text) shadow-[0_14px_32px_-22px_var(--color-primary)]'
-          : 'border-(--color-border) bg-(--color-surface) text-(--color-text) hover:border-(--color-primary) hover:bg-(--link-bg-hover)',
-      )}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      className="group flex items-start justify-between gap-6 border-b border-(--color-border) py-6 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-accent) focus-visible:ring-offset-[3px] focus-visible:ring-offset-(--color-bg)"
     >
       <span
-        className={cn(
-          'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border',
-          primary
-            ? 'border-white/18 bg-white/12 text-(--color-button-text)'
-            : 'border-(--color-border) bg-(--color-surface-soft) text-(--color-accent)',
-        )}
+        className="mt-1 h-5 w-5 shrink-0 text-(--color-muted) transition-colors duration-150 group-hover:text-(--color-primary)"
+        aria-hidden="true"
       >
-        <Icon className="h-5 w-5" aria-hidden={true} />
+        {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-bold">{label}</span>
-        <span
-          className={cn(
-            'mt-1 block text-sm leading-5',
-            primary ? 'text-(--color-button-text)/78' : 'text-(--color-muted)',
-          )}
-        >
+        <span className="block text-xl leading-snug font-semibold text-(--color-text) underline-offset-4 transition-colors duration-150 group-hover:text-(--color-primary) group-hover:underline sm:text-2xl">
+          {label}
+        </span>
+        <span className="mt-1.5 block text-sm leading-6 text-(--color-muted)">
           {description}
         </span>
+        {format ? (
+          <span className="mt-2 block text-xs font-semibold tracking-[0.14em] text-(--color-muted) uppercase">
+            {format}
+          </span>
+        ) : null}
       </span>
       <ArrowUpRight
-        className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover/contact-link:-translate-y-0.5 group-hover/contact-link:translate-x-0.5"
+        className="mt-1 h-5 w-5 shrink-0 text-(--color-muted) transition-colors duration-150 group-hover:text-(--color-primary)"
         aria-hidden="true"
       />
     </a>

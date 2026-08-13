@@ -106,6 +106,32 @@ samp {
   --color-button: var(--primary);
   --color-button-text: var(--primary-foreground);
 
+  --article-surface: var(--color-surface);
+  --article-surface-raised: var(--color-surface);
+  --article-surface-soft: var(--color-surface-soft);
+  --article-media: var(--color-surface-soft);
+  --article-ink: var(--color-text);
+  --article-prose: var(--color-text);
+  --article-muted: var(--color-muted);
+  --article-faint: color-mix(in oklab, var(--color-muted) 72%, transparent);
+  --article-line: var(--color-border);
+  --article-primary: var(--color-primary);
+  --article-primary-ink: var(--color-button-text);
+  --article-primary-soft: var(--color-primary-soft);
+  --article-accent: var(--color-accent);
+  --article-accent-soft: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+  --article-accent-ink: var(--color-text);
+  --article-warning: #d97706;
+  --article-warning-soft: color-mix(in srgb, #d97706 13%, var(--color-surface));
+  --article-danger: var(--destructive);
+  --article-danger-soft: color-mix(in srgb, var(--destructive) 13%, var(--color-surface));
+  --article-code: color-mix(in srgb, var(--color-bg) 82%, #000);
+  --article-code-ink: var(--color-text);
+  --article-inline-code: var(--color-surface-soft);
+  --article-tag: color-mix(in srgb, var(--color-surface) 80%, var(--color-primary-soft));
+  --article-loading: var(--color-surface-soft);
+  --article-focus: var(--color-primary);
+
   --scrollbar-track: rgb(148 163 184 / 0.15);
   --scrollbar-thumb: rgb(71 85 105 / 0.5);
   --scrollbar-thumb-hover: rgb(51 65 85 / 0.68);
@@ -171,6 +197,32 @@ samp {
   --color-card: var(--card);
   --color-button: var(--primary);
   --color-button-text: var(--primary-foreground);
+
+  --article-surface: var(--color-surface);
+  --article-surface-raised: var(--color-surface);
+  --article-surface-soft: var(--color-surface-soft);
+  --article-media: var(--color-surface-soft);
+  --article-ink: var(--color-text);
+  --article-prose: color-mix(in srgb, var(--color-text) 88%, var(--color-bg));
+  --article-muted: var(--color-muted);
+  --article-faint: color-mix(in oklab, var(--color-muted) 72%, transparent);
+  --article-line: var(--color-border);
+  --article-primary: var(--color-primary);
+  --article-primary-ink: var(--color-button-text);
+  --article-primary-soft: var(--color-primary-soft);
+  --article-accent: var(--color-accent);
+  --article-accent-soft: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+  --article-accent-ink: var(--color-text);
+  --article-warning: #fbbf24;
+  --article-warning-soft: color-mix(in srgb, #fbbf24 14%, var(--color-surface));
+  --article-danger: var(--destructive);
+  --article-danger-soft: color-mix(in srgb, var(--destructive) 15%, var(--color-surface));
+  --article-code: color-mix(in srgb, var(--color-bg) 70%, #000);
+  --article-code-ink: var(--color-text);
+  --article-inline-code: var(--color-surface-soft);
+  --article-tag: color-mix(in srgb, var(--color-surface) 80%, var(--color-primary-soft));
+  --article-loading: var(--color-surface-soft);
+  --article-focus: var(--color-primary);
 
   --scrollbar-track: rgb(71 85 105 / 0.22);
   --scrollbar-thumb: rgb(148 163 184 / 0.5);
@@ -370,6 +422,32 @@ samp {
   --color-button: #4f8cff;
   --color-button-text: #ffffff;
 
+  --article-surface: #151b2e;
+  --article-surface-raised: #1e2740;
+  --article-surface-soft: #1e2740;
+  --article-media: #0b1020;
+  --article-ink: #e6edf7;
+  --article-prose: #c4d0e7;
+  --article-muted: #9daed0;
+  --article-faint: #6f83aa;
+  --article-line: #2a3553;
+  --article-primary: #75a6ff;
+  --article-primary-ink: #08101f;
+  --article-primary-soft: #1a2e5a;
+  --article-accent: #67e8f9;
+  --article-accent-soft: #143848;
+  --article-accent-ink: #e6edf7;
+  --article-warning: #fbbf24;
+  --article-warning-soft: #433413;
+  --article-danger: #f87171;
+  --article-danger-soft: #45232a;
+  --article-code: #090e1b;
+  --article-code-ink: #dbeafe;
+  --article-inline-code: #293858;
+  --article-tag: #192540;
+  --article-loading: #273454;
+  --article-focus: #75a6ff;
+
   --header-bg: rgb(11 16 32 / 0.85);
   --chip-bg: rgb(21 27 46 / 0.9);
   --chip-line: #1e2740;
@@ -417,6 +495,32 @@ samp {
   --color-card: #1b1f24;
   --color-button: #a78bfa;
   --color-button-text: #111315;
+
+  --article-surface: #1b1f24;
+  --article-surface-raised: #252930;
+  --article-surface-soft: #252930;
+  --article-media: #111315;
+  --article-ink: #f3f4f6;
+  --article-prose: #d1d5db;
+  --article-muted: #aeb5c1;
+  --article-faint: #717986;
+  --article-line: #303640;
+  --article-primary: #c4b5fd;
+  --article-primary-ink: #181322;
+  --article-primary-soft: #2e2547;
+  --article-accent: #6ee7b7;
+  --article-accent-soft: #173b32;
+  --article-accent-ink: #effdf5;
+  --article-warning: #fbbf24;
+  --article-warning-soft: #443613;
+  --article-danger: #f87171;
+  --article-danger-soft: #4a262c;
+  --article-code: #0d0f11;
+  --article-code-ink: #e5e7eb;
+  --article-inline-code: #2b3039;
+  --article-tag: #24212f;
+  --article-loading: #2c3139;
+  --article-focus: #c4b5fd;
 
   --header-bg: rgb(17 19 21 / 0.85);
   --chip-bg: rgb(27 31 36 / 0.9);
@@ -466,6 +570,32 @@ samp {
   --color-button: #2563eb;
   --color-button-text: #ffffff;
 
+  --article-surface: #ffffff;
+  --article-surface-raised: #ffffff;
+  --article-surface-soft: #f1f5f9;
+  --article-media: #f8fafc;
+  --article-ink: #0f172a;
+  --article-prose: #334155;
+  --article-muted: #64748b;
+  --article-faint: #94a3b8;
+  --article-line: #dbe3ee;
+  --article-primary: #2563eb;
+  --article-primary-ink: #ffffff;
+  --article-primary-soft: #dbeafe;
+  --article-accent: #0f9f91;
+  --article-accent-soft: #ccfbf1;
+  --article-accent-ink: #134e4a;
+  --article-warning: #b45309;
+  --article-warning-soft: #fef3c7;
+  --article-danger: #dc2626;
+  --article-danger-soft: #fee2e2;
+  --article-code: #172033;
+  --article-code-ink: #e2e8f0;
+  --article-inline-code: #e8eef6;
+  --article-tag: #eff6ff;
+  --article-loading: #e2e8f0;
+  --article-focus: #2563eb;
+
   --header-bg: rgb(248 250 252 / 0.88);
   --chip-bg: rgb(255 255 255 / 0.9);
   --chip-line: #e2e8f0;
@@ -495,4 +625,31 @@ samp {
 
 .cursor-blink {
   animation: cursor-blink 1.1s step-end infinite;
+}
+
+.article-page {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--article-primary-soft) 28%, transparent), transparent 26rem),
+    var(--color-bg);
+}
+
+.article-hero-grid {
+  opacity: 0.55;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--article-line) 72%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--article-line) 72%, transparent) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+  mask-image: linear-gradient(to right, black, transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+  .animate-pulse {
+    animation: none;
+  }
 }
