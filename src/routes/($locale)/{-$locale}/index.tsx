@@ -6,12 +6,12 @@ const copy = {
   en: {
     title: 'Andrija Lazic | Software Engineer',
     description:
-      'Explore the professional resume of Andrija Lazic — software engineer with experience in Spring Boot, Python, .NET, AI, and DevOps. View work history, projects, and skills.',
+      'Software Developer with 6+ years of practical IT experience and 2+ years building web applications, deployment, and AI features.',
   },
   sr: {
     title: 'Andrija Lazic | Softverski Inženjer',
     description:
-      'Profesionalna biografija Andrije Lazića — softverski inženjer sa iskustvom u Spring Boot, Python, .NET, AI i DevOps-u. Pregled radnog iskustva, projekata i veština.',
+      'Software Developer sa 6+ godina praktičnog IT iskustva i 2+ godine rada na web aplikacijama, deployment procesima i AI funkcionalnostima.',
   },
 } as const
 

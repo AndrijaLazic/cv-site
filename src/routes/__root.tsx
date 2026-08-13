@@ -15,6 +15,7 @@ import i18n, {
   resolveSupportedLanguage,
 } from '#/features/i18n/config'
 import { getLocaleFromPath } from '#/features/i18n/url'
+import { publicConfig } from '#/shared/config/public-env'
 
 import appCss from '../styles.css?url'
 
@@ -52,6 +53,10 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
+        name: 'theme-color',
+        content: '#000000',
+      },
+      {
         title: 'Andrija Lazic | Backend Software Engineer',
       },
       {
@@ -80,14 +85,71 @@ export const Route = createRootRoute({
         content: 'sr_RS',
       },
       {
+        property: 'og:image',
+        content: `${publicConfig.siteUrl}/icon-512.png`,
+      },
+      {
+        property: 'og:image:type',
+        content: 'image/png',
+      },
+      {
+        property: 'og:image:width',
+        content: '512',
+      },
+      {
+        property: 'og:image:height',
+        content: '512',
+      },
+      {
+        property: 'og:image:alt',
+        content: 'Andrija Lazic',
+      },
+      {
         name: 'twitter:card',
-        content: 'summary_large_image',
+        content: 'summary',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Andrija Lazic | Backend Software Engineer',
+      },
+      {
+        name: 'twitter:description',
+        content:
+          'Andrija Lazic — backend software engineer specializing in Spring Boot, Python, .NET, AI systems, and DevOps. View resume, blog, and contact info.',
+      },
+      {
+        name: 'twitter:image',
+        content: `${publicConfig.siteUrl}/icon-512.png`,
+      },
+      {
+        name: 'twitter:image:alt',
+        content: 'Andrija Lazic',
       },
     ],
     links: [
       {
         rel: 'stylesheet',
         href: appCss,
+      },
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        sizes: 'any',
+        href: '/favicon.svg',
+      },
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+      {
+        rel: 'manifest',
+        href: '/manifest.json',
       },
     ],
   }),
