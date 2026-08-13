@@ -131,35 +131,7 @@
 }
 
 .bg-preset-hero-gradient {
-  background:
-    radial-gradient(
-      125% 80% at 50% 65%,
-      color-mix(in srgb, var(--color-primary) 22%, var(--color-surface-soft)) 0%,
-      color-mix(in srgb, var(--color-primary) 12%, var(--color-bg)) 38%,
-      transparent 72%
-    ),
-    linear-gradient(
-      180deg,
-      var(--header-bg) 0%,
-      color-mix(in srgb, var(--header-bg) 80%, var(--color-bg)) 42%,
-      var(--color-surface-soft) 100%
-    );
-}
-
-.dark .bg-preset-hero-gradient {
-  background:
-    radial-gradient(
-      125% 80% at 50% 85%,
-      color-mix(in srgb, var(--color-primary) 42%, var(--color-surface)) 0%,
-      color-mix(in srgb, var(--color-primary) 24%, var(--color-surface)) 34%,
-      transparent 72%
-    ),
-    linear-gradient(
-      180deg,
-      var(--header-bg) 0%,
-      color-mix(in srgb, var(--header-bg) 82%, var(--color-surface)) 48%,
-      var(--color-surface) 100%
-    );
+  background-color: var(--color-bg);
 }
 
 .bg-preset-features-gradient {

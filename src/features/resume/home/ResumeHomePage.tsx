@@ -19,8 +19,6 @@ import {
   MapPin,
   MonitorCog,
   Network,
-  Repeat2,
-  Rocket,
   Server,
   ShieldCheck,
   Terminal,
@@ -121,9 +119,9 @@ function HeroSection({
       id="about"
       className="relative flex flex-col justify-center gap-6 py-5 sm:gap-8 sm:py-8 md:gap-10"
     >
-      <div className="grid gap-6 sm:gap-8 md:grid-cols-[minmax(0,1fr)_minmax(24rem,30rem)] md:items-start md:gap-10">
+      <div className="grid gap-7 sm:gap-8 md:grid-cols-[minmax(0,1fr)_minmax(24rem,30rem)] md:items-start md:gap-10">
         {/* Left: text content */}
-        <div className="order-2 flex flex-col items-center gap-4 text-center sm:gap-5 md:order-1 md:items-start md:gap-7 md:pt-6 md:text-left">
+        <div className="order-2 md:order-1 flex flex-col items-center gap-5 text-center sm:gap-6 md:items-start md:gap-8 md:text-left">
           {/* <Reveal delayMs={0}>
             <div className="flex items-center gap-2">
               <span
@@ -139,10 +137,10 @@ function HeroSection({
             </div>
           </Reveal> */}
 
-          <Reveal delayMs={60}>
+          <Reveal disabled>
             <h1
               id="about-heading"
-              className="text-balance text-3xl font-extrabold leading-[1.08] tracking-tight min-[380px]:text-[2.45rem] sm:text-5xl lg:text-[3.25rem]"
+              className="text-balance text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-[3.25rem]"
               style={{ color: 'var(--color-text)' }}
             >
               {t('heroTaglinePre')}{' '}
@@ -157,9 +155,9 @@ function HeroSection({
             </h1>
           </Reveal>
 
-          <Reveal delayMs={160}>
+          <Reveal disabled>
             <p
-              className="text-pretty text-sm leading-relaxed sm:text-lg"
+              className="text-pretty text-sm leading-relaxed sm:text-lg md:max-w-[36rem]"
               style={{ color: 'var(--color-muted)' }}
             >
               {heroSummary}
@@ -167,66 +165,51 @@ function HeroSection({
           </Reveal>
 
           <Reveal
-            delayMs={260}
+            disabled
             className="flex w-full flex-col gap-3 sm:flex-row md:w-auto"
           >
-            <a
-              href="#experience"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-8 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
-              style={{
-                backgroundColor: 'var(--color-primary)',
-                boxShadow:
-                  '0 4px 18px 0 color-mix(in srgb, var(--color-primary) 40%, transparent)',
-                ['--tw-ring-color' as string]: 'var(--color-primary)',
-              }}
-            >
-              <Rocket className="h-4 w-4" aria-hidden="true" />
-              {t('viewProjects')}
-            </a>
             <Link
               to="/{-$locale}/contact"
               params={{ locale: language === 'en' ? undefined : language }}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-8 text-sm font-semibold transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 active:translate-y-0"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg px-7 text-sm font-semibold transition-colors duration-150 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
               style={{
-                borderColor: 'var(--color-border)',
-                color: 'var(--color-text)',
-                backgroundColor:
-                  'color-mix(in srgb, var(--color-surface) 80%, transparent)',
-                ['--tw-ring-color' as string]: 'var(--color-primary)',
+                backgroundColor: 'var(--color-button)',
+                // Use the page background color as button text: the default
+                // --color-button-text pairing (white on --color-button) is only
+                // ~3.2:1 in midnight-editor, while the page background color
+                // passes WCAG AA (>=4.5:1) in all three themes.
+                color: 'var(--color-bg)',
               }}
             >
               <Mail className="h-4 w-4" aria-hidden="true" />
               {t('contactMe')}
             </Link>
+            <a
+              href="https://github.com/AndrijaLazic"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border px-7 text-sm font-semibold transition-colors duration-150 hover:bg-(--link-bg-hover) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
+              style={{
+                borderColor: 'var(--color-border)',
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-text)',
+              }}
+            >
+              <Github className="h-4 w-4" aria-hidden="true" />
+              {t('viewGitHub')}
+            </a>
           </Reveal>
         </div>
 
         {/* Right: code editor */}
         <Reveal
-          delayMs={80}
-          className="relative order-1 mx-auto flex w-full max-w-[18rem] flex-col items-center gap-2 md:order-2 md:w-[90%] md:max-w-[26rem] md:self-center md:justify-self-center"
+          disabled
+          className="order-1 md:order-2 mx-auto flex w-full max-w-[18rem] flex-col items-center md:w-[90%] md:max-w-[26rem] md:self-center md:justify-self-center"
         >
           <div
             aria-hidden="true"
-            className="absolute -inset-5 rounded-[2rem] opacity-80 blur-2xl md:-inset-7 md:rounded-[2.25rem]"
-            style={{
-              background:
-                'radial-gradient(70% 72% at 52% 38%, color-mix(in srgb, var(--color-primary) 30%, transparent), color-mix(in srgb, var(--color-accent) 12%, transparent) 48%, transparent 76%)',
-            }}
-          />
-          <div
-            className="relative z-20 hidden w-full rounded-xl border p-3 shadow-xl backdrop-blur-sm sm:block md:p-4"
-            style={{
-              borderColor: 'var(--color-border)',
-              backgroundColor:
-                'color-mix(in srgb, var(--color-surface) 95%, transparent)',
-            }}
+            className="w-full rounded-lg border border-(--color-border) bg-(--color-surface) p-4"
           >
-            <div className="mb-2 flex items-center gap-1.5" aria-hidden="true">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-            </div>
             <HeroCodeSnippet />
           </div>
         </Reveal>
@@ -434,6 +417,10 @@ function JobSection({
   if (index !== 0) {
     return (
       <section id={id} className={className}>
+        <div
+          className="mb-6 h-px w-full bg-(--color-border) sm:mb-8"
+          aria-hidden="true"
+        />
         {content}
       </section>
     )
@@ -461,206 +448,169 @@ function JobCard({
 }) {
   const selectedWorkItems =
     job.selectedWork ?? getJobContentPreviewItems(job.content)
-  const impactItems = job.impact ?? []
 
   return (
-    <Card className="group relative w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-card) py-0 text-(--color-text) shadow-[0_30px_90px_-55px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] transition-all duration-300 hover:border-(--color-primary) md:mx-auto">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-80"
-        style={{
-          background:
-            'radial-gradient(70% 52% at 100% 0%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 58%), radial-gradient(52% 48% at 0% 100%, color-mix(in srgb, var(--color-primary) 14%, transparent), transparent 64%), linear-gradient(135deg, color-mix(in srgb, var(--color-surface-soft) 70%, var(--color-card)), var(--color-card) 48%, color-mix(in srgb, var(--color-bg) 42%, var(--color-card)))',
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-px rounded-[15px] shadow-[inset_0_1px_0_color-mix(in_srgb,var(--color-text)_8%,transparent),inset_0_0_48px_color-mix(in_srgb,var(--color-primary)_7%,transparent)]"
-        aria-hidden="true"
-      />
+    <article className="grid w-full min-w-0 gap-4 md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] md:gap-8">
+      {/* Dates — muted uppercase rail on desktop, stacked above details on mobile */}
+      <div className="min-w-0">
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold tracking-[0.14em] uppercase text-(--color-muted) md:pt-2">
+          <Calendar
+            className="h-3.5 w-3.5 shrink-0 text-(--color-accent)"
+            aria-hidden="true"
+          />
+          <time dateTime={job.startDate}>
+            {formatResumeDate(job.startDate, language)}
+          </time>
+          <span aria-hidden="true">–</span>
+          {job.endDate ? (
+            <time dateTime={job.endDate}>
+              {formatResumeDate(job.endDate, language)}
+            </time>
+          ) : (
+            <span>{t('present')}</span>
+          )}
+        </p>
+      </div>
 
-      <CardContent className="relative z-10 grid w-full min-w-0 p-0 lg:grid-cols-[20rem_minmax(0,1fr)]">
-        <aside className="flex min-w-0 flex-col gap-5 border-b border-(--color-border) p-4 sm:p-6 lg:gap-6 lg:border-b-0 lg:p-7">
-          <div className="flex min-w-0 flex-col gap-4 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between lg:block lg:space-y-6">
+      {/* Details */}
+      <div className="min-w-0 space-y-5 sm:space-y-6">
+        <header className="min-w-0 space-y-3">
+          <div className="flex min-w-0 flex-wrap items-center gap-4">
             <BrandMark job={job} />
-
-            <Badge
-              variant="secondary"
-              className="min-h-8 max-w-full shrink-0 gap-1.5 rounded-full border border-(--color-border) bg-(--color-surface-soft) px-3 py-1.5 text-xs font-semibold whitespace-normal text-(--color-muted) shadow-sm"
-            >
-              <Calendar className="h-3.5 w-3.5 text-(--color-primary)" />
-              <time dateTime={job.startDate}>
-                {formatResumeDate(job.startDate, language)}
-              </time>{' '}
-              -{' '}
-              {job.endDate ? (
-                <time dateTime={job.endDate}>
-                  {formatResumeDate(job.endDate, language)}
-                </time>
-              ) : (
-                t('present')
-              )}
-            </Badge>
-          </div>
-
-          <div className="min-w-0 space-y-4">
-            <p className="flex min-w-0 items-center gap-2 text-xs font-bold break-words text-(--color-primary) uppercase">
-              <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
-              {job.company}
-            </p>
-            <div className="space-y-3">
-              <div>
-                <h3 className="text-3xl leading-tight font-extrabold break-words text-(--color-text) sm:text-4xl lg:text-[2.45rem]">
-                  {job.jobTitle}
-                </h3>
-              </div>
-              <p className="flex min-w-0 items-center gap-2 text-sm font-medium break-words text-(--color-muted)">
-                <MapPin
-                  className="h-4 w-4 shrink-0 text-(--color-accent)"
+            <div className="min-w-0 flex-1 space-y-1.5">
+              <h3 className="text-2xl leading-tight font-extrabold break-words text-(--color-text) sm:text-3xl lg:text-4xl">
+                {job.jobTitle}
+              </h3>
+              <p className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-[0.16em] uppercase text-(--color-primary)">
+                <Building2
+                  className="h-3.5 w-3.5 shrink-0"
                   aria-hidden="true"
                 />
-                <span className="min-w-0 flex-1 break-words">
-                  {job.location}
-                </span>
+                <span className="min-w-0 truncate">{job.company}</span>
               </p>
             </div>
           </div>
+          <p className="flex min-w-0 items-center gap-2 text-sm font-medium text-(--color-muted)">
+            <MapPin
+              className="h-4 w-4 shrink-0 text-(--color-accent)"
+              aria-hidden="true"
+            />
+            <span className="min-w-0 break-words">{job.location}</span>
+          </p>
+        </header>
 
-          <div className="min-w-0 border-l border-(--color-accent) py-1 pl-4">
-            <p className="text-sm leading-6 font-semibold break-words text-(--color-text)">
-              {job.product?.name ?? job.company}
-            </p>
-            <p className="mt-2 text-sm leading-6 break-words text-(--color-muted)">
-              {job.summary}
-            </p>
-          </div>
+        <div className="min-w-0 border-l-2 border-(--color-accent) py-0.5 pl-4">
+          <p className="text-sm leading-6 font-semibold break-words text-(--color-text)">
+            {job.product?.name ?? job.company}
+          </p>
+          <p className="mt-1 text-sm leading-6 break-words text-(--color-muted)">
+            {job.summary}
+          </p>
+        </div>
 
-          {job.product?.websiteUrl || job.blogSlug ? (
-            <div className="flex flex-col gap-3">
-              {job.product?.websiteUrl ? (
-                <a
-                  href={job.product.websiteUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group/project inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-primary) bg-(--color-button) px-5 text-sm font-semibold text-(--color-button-text) shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0"
-                >
-                  {t('projectCheckOut')}
-                  <ArrowUpRight
-                    className="h-4 w-4 transition-transform duration-200 group-hover/project:translate-x-0.5 group-hover/project:-translate-y-0.5"
-                    aria-hidden="true"
-                  />
-                </a>
-              ) : null}
+        {job.tags.length > 0 ? (
+          <section className="min-w-0">
+            <SectionHeading
+              icon={Layers3}
+              label={t('techStack')}
+              accentColor="var(--color-accent)"
+            />
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {job.tags.map((tag) => {
+                const Icon = getTechIcon(tag)
 
-              {job.blogSlug ? (
-                <Link
-                  to="/{-$locale}/blog/$slug"
-                  params={{
-                    locale: language === 'en' ? undefined : language,
-                    slug: job.blogSlug,
-                  }}
-                  className="group/read-more inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-border) bg-(--color-surface-soft) px-5 text-sm font-semibold text-(--color-text) shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0"
-                >
-                  {t('blogReadMore')}
-                  <ArrowUpRight
-                    className="h-4 w-4 transition-transform duration-200 group-hover/read-more:translate-x-0.5 group-hover/read-more:-translate-y-0.5"
-                    aria-hidden="true"
-                  />
-                </Link>
-              ) : null}
-            </div>
-          ) : null}
-        </aside>
-
-        <div className="min-w-0 space-y-5 p-4 sm:space-y-6 sm:p-6 lg:p-7">
-          {job.tags.length > 0 ? (
-            <section className="min-w-0">
-              <SectionHeading
-                icon={Layers3}
-                label={t('techStack')}
-                accentColor="var(--color-accent)"
-              />
-              <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:flex-wrap">
-                {job.tags.map((tag) => {
-                  const Icon = getTechIcon(tag)
-
-                  return (
+                return (
+                  <li key={tag}>
                     <Badge
-                      key={tag}
                       variant="outline"
-                      className="h-11 w-full justify-start gap-2 rounded-xl border-(--color-border) bg-(--color-surface-soft) px-3 text-sm font-semibold text-(--color-text) shadow-sm transition-all duration-200 hover:border-(--color-primary) hover:brightness-105 md:w-auto"
+                      className="h-8 gap-1.5 rounded-full border-(--color-accent)/35 bg-(--color-accent)/10 px-3 text-xs font-semibold text-(--color-accent) transition-colors duration-200 hover:border-(--color-accent)/60"
                     >
                       <Icon
-                        className="h-4 w-4 shrink-0 text-(--color-accent)"
+                        className="h-3.5 w-3.5 shrink-0"
                         aria-hidden="true"
                       />
                       {tag}
                     </Badge>
-                  )
-                })}
-              </div>
-            </section>
-          ) : null}
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        ) : null}
 
-          {selectedWorkItems.length > 0 ? (
-            <section className="min-w-0 rounded-2xl border border-(--color-primary) bg-(--color-surface-soft) p-4 shadow-sm sm:p-5">
-              <SectionHeading
-                icon={CheckCircle2}
-                label={t('selectedWork')}
-                accentColor="var(--color-primary)"
-              />
-              <ul
-                className={cn(
-                  'mt-4 grid gap-3',
-                  selectedWorkItems.length === 3
-                    ? 'min-[960px]:grid-cols-3 min-[960px]:gap-0'
-                    : 'sm:grid-cols-2',
-                )}
+        {selectedWorkItems.length > 0 ? (
+          <section className="min-w-0">
+            <SectionHeading
+              icon={CheckCircle2}
+              label={t('selectedWork')}
+              accentColor="var(--color-primary)"
+            />
+            <ul className="mt-3 space-y-3">
+              {selectedWorkItems.map((item) => {
+                const { title, detail } = splitWorkItem(item)
+
+                return (
+                  <li key={item} className="flex min-w-0 gap-3">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-(--color-primary-soft) text-(--color-primary)">
+                      <CheckCircle2
+                        className="h-3.5 w-3.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <strong className="block text-sm leading-6 font-semibold break-words text-(--color-text)">
+                        {title}
+                      </strong>
+                      {detail ? (
+                        <span className="mt-0.5 block text-sm leading-6 break-words text-(--color-muted)">
+                          {detail}
+                        </span>
+                      ) : null}
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        ) : null}
+
+        {job.product?.websiteUrl || job.blogSlug ? (
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            {job.product?.websiteUrl ? (
+              <a
+                href={job.product.websiteUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group/project inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-primary) bg-(--color-button) px-5 text-sm font-semibold text-(--color-button-text) shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 sm:w-auto"
               >
-                {selectedWorkItems.map((item, itemIndex) => {
-                  const { title, detail } = splitWorkItem(item)
+                {t('projectCheckOut')}
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-200 group-hover/project:translate-x-0.5 group-hover/project:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </a>
+            ) : null}
 
-                  return (
-                    <li
-                      key={item}
-                      className={cn(
-                        'flex gap-3 rounded-xl border border-(--color-border) bg-(--color-card) p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:brightness-105 sm:p-4',
-                        selectedWorkItems.length === 3 &&
-                          'min-[960px]:rounded-none min-[960px]:border-y-0 min-[960px]:border-r-0 min-[960px]:bg-transparent min-[960px]:px-5 min-[960px]:py-1 min-[960px]:hover:translate-y-0 min-[960px]:hover:brightness-100',
-                        selectedWorkItems.length === 3 &&
-                          itemIndex > 0 &&
-                          'min-[960px]:border-l-(--color-border)',
-                        selectedWorkItems.length === 3 &&
-                          itemIndex === 0 &&
-                          'min-[960px]:border-l-0 min-[960px]:pl-0',
-                      )}
-                    >
-                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-(--color-primary) bg-(--color-primary-soft) text-(--color-primary)">
-                        <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <strong className="block text-sm leading-6 font-bold break-words text-(--color-text)">
-                          {title}
-                        </strong>
-                        {detail ? (
-                          <span className="mt-1 block text-sm leading-6 break-words text-(--color-muted)">
-                            {detail}
-                          </span>
-                        ) : null}
-                      </span>
-                    </li>
-                  )
-                })}
-              </ul>
-            </section>
-          ) : null}
-
-          <ExperienceImpactList
-            label={t('productImpact')}
-            items={impactItems}
-          />
-        </div>
-      </CardContent>
-    </Card>
+            {job.blogSlug ? (
+              <Link
+                to="/{-$locale}/blog/$slug"
+                params={{
+                  locale: language === 'en' ? undefined : language,
+                  slug: job.blogSlug,
+                }}
+                className="group/read-more inline-flex h-12 w-full max-w-full items-center justify-center gap-2 rounded-xl border border-(--color-border) bg-(--color-surface-soft) px-5 text-sm font-semibold text-(--color-text) shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 sm:w-auto"
+              >
+                {t('blogReadMore')}
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-200 group-hover/read-more:translate-x-0.5 group-hover/read-more:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </Link>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </article>
   )
 }
 
@@ -670,69 +620,20 @@ function BrandMark({ job }: { job: ResumeJob }) {
   const label = job.product?.name ?? job.company
 
   return (
-    <div className="flex min-w-0 max-w-full items-center gap-4">
-      <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-(--color-border) bg-(--color-surface-soft) p-3 shadow-sm lg:h-28 lg:w-28">
-        {logoSrc ? (
-          <img
-            src={logoSrc}
-            alt={logoAlt}
-            className="max-h-full max-w-full object-contain"
-            loading="lazy"
-          />
-        ) : (
-          <span className="text-lg font-extrabold text-(--color-primary)">
-            {getInitials(label)}
-          </span>
-        )}
-      </div>
-      <div className="min-w-0 lg:hidden">
-        <p className="truncate text-sm font-bold text-(--color-text)">
-          {label}
-        </p>
-        <p className="truncate text-xs text-(--color-muted)">{job.company}</p>
-      </div>
+    <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-(--color-border) bg-(--color-surface-soft) p-2 shadow-sm">
+      {logoSrc ? (
+        <img
+          src={logoSrc}
+          alt={logoAlt}
+          className="max-h-full max-w-full object-contain"
+          loading="lazy"
+        />
+      ) : (
+        <span className="text-base font-extrabold text-(--color-primary)">
+          {getInitials(label)}
+        </span>
+      )}
     </div>
-  )
-}
-
-function ExperienceImpactList({
-  label,
-  items,
-}: {
-  label: string
-  items: Array<string>
-}) {
-  if (items.length === 0) {
-    return null
-  }
-
-  return (
-    <section className="min-w-0 border-t border-(--color-border) pt-5">
-      <SectionHeading
-        icon={ShieldCheck}
-        label={label}
-        accentColor="var(--color-accent)"
-      />
-      <ul className="mt-4 divide-y divide-(--color-border)">
-        {items.map((item, index) => {
-          const Icon = getImpactIcon(index)
-
-          return (
-            <li
-              key={item}
-              className="flex min-w-0 gap-3 py-4 first:pt-0 last:pb-0"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-(--color-accent) bg-(--color-primary-soft) text-(--color-accent)">
-                <Icon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <span className="min-w-0 flex-1 text-sm leading-6 break-words text-(--color-muted) sm:text-[0.95rem]">
-                {item}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-    </section>
   )
 }
 
@@ -802,10 +703,6 @@ function getTechIcon(tag: string): ExperienceIcon {
   }
 
   return Code2
-}
-
-function getImpactIcon(index: number): ExperienceIcon {
-  return [Rocket, Repeat2, ShieldCheck][index] ?? ShieldCheck
 }
 
 function splitWorkItem(item: string) {

@@ -96,7 +96,7 @@ function Header() {
             className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             activeProps={noActiveClassName}
           >
-            <span className="font-mono text-xl font-bold text-[var(--color-primary)]">
+            <span className="font-mono text-xl font-bold tracking-[0.1em] text-[var(--color-primary)]">
               {'</>'}
             </span>
             <span className="text-lg font-semibold text-(--color-text)">
@@ -113,8 +113,8 @@ function Header() {
             className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             activeProps={noActiveClassName}
           >
-            <span className="font-mono text-lg font-bold text-[var(--color-primary)] sm:text-xl">
-              {'</> '}
+            <span className="font-mono text-lg font-bold tracking-[0.1em] text-[var(--color-primary)] sm:text-xl">
+              {'</>'}
             </span>
             <span className="text-base font-semibold text-(--color-text) sm:text-lg">
               Andrija Lazic

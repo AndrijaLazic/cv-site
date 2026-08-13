@@ -1,3 +1,3 @@
 # CV Site
 
-A multilingual professional resume site
+A multilingual resume and blog.
