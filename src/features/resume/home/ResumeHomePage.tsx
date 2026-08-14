@@ -875,19 +875,18 @@ function ContactSection({ language }: { language: SupportedLanguage }) {
   return (
     <BackgroundSection
       id="contact"
-      variant="sunset-gradient"
       snap={{
         settledThreshold: {
           desktop: 0.75,
           mobile: 0.6,
         },
       }}
-      reveal={{ duration: 'duration-800' }}
-      className="flex w-full items-center justify-center"
+      reveal={{ duration: 'duration-200' }}
+      className="flex w-full items-center justify-center border-t border-(--color-border) bg-(--color-bg)"
       contentClassName="relative mx-auto flex min-h-[calc(100svh-var(--header-height))] w-full max-w-5xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-10"
     >
       <h2
-        className="max-w-3xl text-6xl leading-[0.92] font-extrabold tracking-normal text-balance sm:text-7xl md:text-8xl"
+        className="max-w-3xl text-balance text-4xl leading-tight font-bold sm:text-5xl"
         style={{ color: 'var(--color-text)' }}
       >
         Let's build something great.
@@ -895,16 +894,14 @@ function ContactSection({ language }: { language: SupportedLanguage }) {
       <Link
         to="/{-$locale}/contact"
         params={{ locale: language === 'en' ? undefined : language }}
-        className="relative mt-6 inline-flex h-20 rotate-12 items-center justify-center rounded-xl border px-9 text-3xl font-extrabold shadow-2xl backdrop-blur-md transition hover:-translate-y-1 hover:rotate-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) active:translate-y-0 sm:mt-8 sm:h-24 sm:px-11 sm:text-4xl"
+        className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-lg border px-6 text-sm font-semibold transition-colors duration-150 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg) sm:mt-8"
         style={{
-          borderColor: 'var(--color-border)',
+          borderColor: 'var(--color-button)',
           backgroundColor: 'var(--color-button)',
-          color: 'var(--color-button-text)',
-          boxShadow:
-            '0 24px 70px -30px color-mix(in srgb, var(--color-primary) 70%, transparent)',
+          color: 'var(--color-bg)',
         }}
       >
-        <Mail className="mr-3 h-7 w-7 sm:h-9 sm:w-9" aria-hidden="true" />
+        <Mail className="h-4 w-4" aria-hidden="true" />
         Say hi!
       </Link>
     </BackgroundSection>
