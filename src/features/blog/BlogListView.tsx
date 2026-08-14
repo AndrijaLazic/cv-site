@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Calendar, Check, ChevronDown, SearchX, Tag } from 'lucide-react'
 import { cn } from '#/shared/utils'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
-import { PostCard } from '#/features/blog/components'
+import { HeroCarousel, PostCard } from '#/features/blog/components'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
 import { BackgroundSection } from '#/shared/ui/background-section'
 
@@ -90,6 +90,16 @@ export function BlogListView({
     return result
   }, [posts, effectiveTags, sortOrder])
 
+  const latestPosts = useMemo(() => {
+    return [...posts]
+      .sort(
+        (a, b) =>
+          new Date(b.publishedDate).getTime() -
+          new Date(a.publishedDate).getTime(),
+      )
+      .slice(0, 3)
+  }, [posts])
+
   function handleTagClick(tag: string) {
     const nextTags = effectiveTags.includes(tag)
       ? effectiveTags.filter((selectedTag) => selectedTag !== tag)
@@ -108,6 +118,10 @@ export function BlogListView({
             {t('blogSubtitle')}
           </p>
         </header>
+
+        {effectiveTags.length === 0 && latestPosts.length > 0 ? (
+          <HeroCarousel posts={latestPosts} activeLanguage={activeLanguage} />
+        ) : null}
 
         <section
           aria-label={t('blogFilterByTag')}

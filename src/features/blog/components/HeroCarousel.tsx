@@ -1,17 +1,17 @@
 import { Link } from '@tanstack/react-router'
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useId, useRef, useState } from 'react'
+import type { TouchEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '#/shared/utils'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
+import { Badge } from '#/shared/ui/badge'
 import { HERO_IMAGE_SIZES } from '../contentImages'
 import { ResponsiveImage } from './ResponsiveImage'
 
 type HeroCarouselProps = {
   posts: BlogPostSummary[]
   activeLanguage: SupportedLanguage
-  ariaLabel: string
 }
 
 const HERO_POST_TITLE_LINE_CLAMP_CLASS = 'line-clamp-3'
@@ -28,29 +28,39 @@ function formatPublishedDate(date: string, locale: SupportedLanguage) {
   )
 }
 
-function HeroCarouselView({
-  posts,
-  activeLanguage,
-  ariaLabel,
-}: HeroCarouselProps) {
+function HeroCarouselView({ posts, activeLanguage }: HeroCarouselProps) {
   const { t } = useTranslation('resume')
   const [carouselIndex, setCarouselIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isFocused, setIsFocused] = useState(false)
+  const [autoplayReset, setAutoplayReset] = useState(0)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const touchStartX = useRef<number | null>(null)
+  const carouselId = useId()
 
   useEffect(() => {
     setCarouselIndex(0)
   }, [posts])
 
   useEffect(() => {
-    if (posts.length <= 1 || isHovered || isFocused) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const timer = setInterval(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches)
+
+    updatePreference()
+    mediaQuery.addEventListener('change', updatePreference)
+
+    return () => mediaQuery.removeEventListener('change', updatePreference)
+  }, [])
+
+  useEffect(() => {
+    if (posts.length <= 1 || prefersReducedMotion) {
+      return
+    }
+
+    const timer = window.setTimeout(() => {
       setCarouselIndex((prev) => (prev + 1) % posts.length)
     }, AUTO_ROTATE_INTERVAL_MS)
-    return () => clearInterval(timer)
-  }, [posts.length, isHovered, isFocused])
+
+    return () => window.clearTimeout(timer)
+  }, [autoplayReset, carouselIndex, posts.length, prefersReducedMotion])
 
   function handleNext() {
     setCarouselIndex((prev) => (prev + 1) % posts.length)
@@ -60,11 +70,16 @@ function HeroCarouselView({
     setCarouselIndex((prev) => (prev - 1 + posts.length) % posts.length)
   }
 
-  function handleTouchStart(e: React.TouchEvent) {
+  function handleSlideSelect(index: number) {
+    setCarouselIndex(index)
+    setAutoplayReset((prev) => prev + 1)
+  }
+
+  function handleTouchStart(e: TouchEvent<HTMLElement>) {
     touchStartX.current = e.touches[0].clientX
   }
 
-  function handleTouchEnd(e: React.TouchEvent) {
+  function handleTouchEnd(e: TouchEvent<HTMLElement>) {
     if (touchStartX.current === null) return
     const touchEndX = e.changedTouches[0].clientX
     const diff = touchStartX.current - touchEndX
@@ -73,57 +88,54 @@ function HeroCarouselView({
     touchStartX.current = null
   }
 
+  if (posts.length === 0) return null
+
+  const activeIndex = Math.min(carouselIndex, posts.length - 1)
+
   return (
     <section
-      aria-label={ariaLabel}
-      className="group/hero relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocusCapture={() => setIsFocused(true)}
-      onBlurCapture={() => setIsFocused(false)}
+      aria-label={t('blogLatestPost')}
+      aria-roledescription={t('blogCarousel')}
+      className="mt-8 touch-pan-y"
+      onTouchCancel={() => {
+        touchStartX.current = null
+      }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      role="region"
     >
-      <div className="mb-4 flex items-center justify-between gap-4 px-1 sm:mb-5">
-        <p className="font-mono text-primary flex items-center gap-2 text-xs font-semibold tracking-[0.25em] uppercase sm:text-sm">
-          <span
-            aria-hidden="true"
-            className="border-primary/30 bg-primary/10 inline-flex size-1.5 rounded-full"
-          />
-          {t('blogFeatured')}
-        </p>
-        {posts.length > 1 && (
-          <p
-            aria-hidden="true"
-            className="font-mono text-muted-foreground text-xs tabular-nums sm:text-sm"
-          >
-            {String(carouselIndex + 1).padStart(2, '0')} /{' '}
-            {String(posts.length).padStart(2, '0')}
-          </p>
-        )}
-      </div>
+      <div className="border-border bg-card overflow-hidden rounded-lg border">
+        <div className="border-border flex min-h-14 items-center justify-between gap-4 border-b px-4 sm:px-5">
+          <h2 className="font-heading text-foreground text-xl font-semibold">
+            {t('blogLatestPost')}
+          </h2>
+        </div>
 
-      <div className="border-border/50 bg-card/40 relative w-full overflow-hidden rounded-2xl border p-2 shadow-xl backdrop-blur-xl md:rounded-3xl">
-        <div className="pointer-events-none absolute inset-0 rounded-3xl bg-linear-to-tr from-primary/5 via-transparent to-accent/5" />
-
-        <div className="border-border bg-card has-[:focus-visible]:ring-ring relative z-10 w-full overflow-hidden rounded-lg border shadow-inner has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background md:rounded-xl">
+        <div aria-live="polite" className="overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out motion-reduce:transition-none"
-            style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
-            {posts.map((post) => (
-              <div key={post.slug} className="w-full shrink-0">
-                <Link
-                  to="/{-$locale}/blog/$slug"
-                  params={{
-                    locale:
-                      activeLanguage === 'en' ? undefined : activeLanguage,
-                    slug: post.slug,
-                  }}
-                  className="relative flex h-auto flex-col focus-visible:outline-none md:h-[clamp(26rem,62svh,44rem)] md:flex-row"
+            {posts.map((post, index) => {
+              const isActive = index === activeIndex
+              const slideId = `${carouselId}-slide-${index}`
+
+              return (
+                <article
+                  key={post.slug}
+                  id={slideId}
+                  aria-hidden={!isActive}
+                  inert={!isActive}
+                  className="grid w-full shrink-0 min-w-0 md:grid-cols-2"
                 >
-                  <div
-                    className="border-border/80 bg-muted/50 relative aspect-[16/11] w-full shrink-0 overflow-hidden border-b sm:aspect-video md:h-full md:w-1/2 md:border-r md:border-b-0"
+                  <Link
+                    to="/{-$locale}/blog/$slug"
+                    params={{
+                      locale:
+                        activeLanguage === 'en' ? undefined : activeLanguage,
+                      slug: post.slug,
+                    }}
+                    className="border-border bg-muted block aspect-[16/10] min-w-0 overflow-hidden border-b focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-inset focus-visible:outline-none md:min-h-80 md:border-r md:border-b-0"
                     style={{
                       backgroundColor: post.heroImage.bgColor ?? 'transparent',
                       ...(post.heroImage.padding
@@ -138,105 +150,93 @@ function HeroCarouselView({
                       src={post.heroImage.src}
                       alt={post.heroImage.alt}
                       className="block h-full w-full"
-                      loading="lazy"
+                      loading={isActive ? 'eager' : 'lazy'}
                       pictureClassName="block h-full w-full"
                       sizes={HERO_IMAGE_SIZES}
                       style={{
                         objectFit: post.heroImage.fit ?? 'cover',
                         objectPosition: post.heroImage.position ?? 'center',
-                        display: 'block',
                       }}
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="absolute bottom-6 left-6 hidden flex-wrap gap-2 text-white md:flex">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-white/25 bg-black/45 px-3 py-1 text-[10px] font-semibold tracking-wider text-white uppercase shadow-sm backdrop-blur-md"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="bg-card flex min-h-0 flex-col justify-center p-5 pb-12 sm:p-8 sm:pb-14 md:h-full md:w-1/2 md:pb-8">
-                    <time className="font-mono text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase">
+                  </Link>
+
+                  <div className="flex min-w-0 flex-col justify-center p-4 sm:p-6 md:p-8">
+                    <time
+                      dateTime={post.publishedDate}
+                      className="text-muted-foreground text-sm"
+                    >
                       {formatPublishedDate(post.publishedDate, activeLanguage)}
                     </time>
-                    <h2
+                    <h3
                       className={cn(
                         HERO_POST_TITLE_LINE_CLAMP_CLASS,
-                        'font-heading text-foreground group-hover/hero:text-primary mb-3 text-2xl leading-tight font-bold text-balance transition-colors sm:mb-4 sm:text-3xl lg:text-4xl',
+                        'font-heading mt-3 text-2xl leading-tight font-semibold text-balance sm:text-3xl',
                       )}
                     >
-                      {post.title}
-                    </h2>
-                    <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed font-medium sm:text-base">
+                      <Link
+                        to="/{-$locale}/blog/$slug"
+                        params={{
+                          locale:
+                            activeLanguage === 'en'
+                              ? undefined
+                              : activeLanguage,
+                          slug: post.slug,
+                        }}
+                        className="text-foreground hover:text-primary focus-visible:ring-ring rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2"
+                      >
+                        {post.title}
+                      </Link>
+                    </h3>
+                    <p className="text-muted-foreground mt-3 line-clamp-4 text-sm leading-6 sm:text-base sm:leading-7">
                       {post.summary}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-1.5 md:hidden">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="border-border bg-muted text-muted-foreground rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-wide uppercase"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {post.tags.length > 0 ? (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="border-border text-muted-foreground bg-muted/40"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
-                </Link>
-              </div>
-            ))}
+                </article>
+              )
+            })}
           </div>
         </div>
 
-        {posts.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                handlePrev()
-              }}
-              className="border-border bg-background/70 text-foreground hover:bg-muted focus-visible:ring-ring absolute top-1/2 left-3 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-md transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:left-4 sm:size-11"
-              aria-label={t('carouselPrevious')}
+        {posts.length > 1 ? (
+          <div className="border-border border-t p-3 sm:px-5">
+            <div
+              aria-label={t('blogCarousel')}
+              className="flex flex-wrap items-center justify-center gap-2"
+              role="group"
             >
-              <ChevronLeft className="size-5 sm:size-6" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                handleNext()
-              }}
-              className="border-border bg-background/70 text-foreground hover:bg-muted focus-visible:ring-ring absolute top-1/2 right-3 z-20 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-md transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:right-4 sm:size-11"
-              aria-label={t('carouselNext')}
-            >
-              <ChevronRight className="size-5 sm:size-6" aria-hidden="true" />
-            </button>
-            <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2 pt-2 sm:bottom-4 sm:pt-0">
-              {posts.map((_, i) => (
+              {posts.map((post, index) => (
                 <button
-                  key={i}
+                  key={post.slug}
                   type="button"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setCarouselIndex(i)
-                  }}
+                  onClick={() => handleSlideSelect(index)}
                   className={cn(
-                    'focus-visible:ring-ring h-2.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                    i === carouselIndex
-                      ? 'ring-background w-7 bg-primary shadow-sm shadow-primary/30 ring-1'
-                      : 'bg-muted-foreground/60 hover:bg-muted-foreground w-2.5',
+                    'border-border bg-background text-foreground hover:border-primary hover:text-primary focus-visible:ring-ring inline-flex size-11 items-center justify-center rounded-lg border text-sm font-medium transition-colors motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                    index === activeIndex &&
+                      'border-primary bg-primary text-primary-foreground',
                   )}
-                  aria-label={t('carouselGoToSlide', { index: i + 1 })}
-                  aria-current={i === carouselIndex ? 'true' : undefined}
-                />
+                  aria-controls={`${carouselId}-slide-${index}`}
+                  aria-current={index === activeIndex ? 'true' : undefined}
+                  aria-label={t('carouselGoToSlide', { index: index + 1 })}
+                >
+                  {index + 1}
+                </button>
               ))}
             </div>
-          </>
-        )}
+          </div>
+        ) : null}
       </div>
     </section>
   )
