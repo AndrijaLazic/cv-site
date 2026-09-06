@@ -19,6 +19,7 @@ import {
   MapPin,
   MonitorCog,
   Network,
+  Play,
   Server,
   ShieldCheck,
   Terminal,
@@ -66,7 +67,9 @@ export function ResumeHomePage() {
     () => sortEducations(educations),
     [educations],
   )
-  const isInitialSnapDisabled = useInitialScrollSnapDisabled()
+  const isInitialSnapDisabled = useInitialScrollSnapDisabled({
+    historyKey: 'resume-home',
+  })
   const isHashNavigationActive = Boolean(locationHash)
 
   useOneTimeScrollSnap({
@@ -775,11 +778,11 @@ function EducationSection({
   return (
     <ScrollSnapSection
       id="education"
-      className="relative flex w-full flex-col justify-center bg-(--color-bg) py-18 pt-5 sm:pt-5"
+      className="relative flex w-full flex-col justify-center bg-(--color-bg) py-8"
     >
       <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10">
-        <div className="rounded-3xl border border-(--color-border) bg-(--color-card) p-7 shadow-[0_14px_35px_-30px_rgba(15,23,42,0.85)] backdrop-blur-sm sm:p-7">
-          <div className="mb-6 space-y-2 sm:mb-8">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-4 sm:p-6">
+          <div className="mb-6 space-y-2">
             <h2
               id="education-heading"
               className="text-2xl font-semibold text-(--color-text) sm:text-3xl"
@@ -820,20 +823,16 @@ function EducationCard({
     <Reveal delayMs={index * 150} className="relative pl-5 sm:pl-7">
       <span
         aria-hidden="true"
-        className="absolute top-8 left-0 h-2.5 w-2.5 rounded-full bg-(--color-accent) ring-4 ring-(--color-accent)/15"
+        className="absolute top-8 left-0 h-2.5 w-2.5 rounded-full border border-(--color-accent) bg-(--color-surface)"
       />
       {!isLast ? (
         <span
           aria-hidden="true"
-          className="absolute top-11 left-[4px] h-[calc(100%-0.75rem)] w-px"
-          style={{
-            background:
-              'linear-gradient(to bottom, color-mix(in srgb, var(--color-accent) 55%, transparent), color-mix(in srgb, var(--color-border) 70%, transparent))',
-          }}
+          className="absolute top-11 left-[4px] h-[calc(100%-0.75rem)] w-px bg-(--color-border)"
         />
       ) : null}
 
-      <Card className="border-(--color-border) bg-(--color-card) py-0 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--color-primary) hover:shadow-md">
+      <Card className="rounded-lg border-(--color-border) bg-(--color-surface) py-0 shadow-none">
         <CardHeader className="space-y-3 border-b border-(--color-border) py-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <h3 className="text-lg font-semibold text-(--color-text) sm:text-xl">
@@ -842,7 +841,7 @@ function EducationCard({
 
             <Badge
               variant="secondary"
-              className="rounded-full border border-(--color-border) bg-(--color-surface-soft) text-xs font-medium text-(--color-muted) sm:text-sm"
+              className="rounded-none border-0 bg-transparent p-0 text-xs font-normal text-(--color-muted) sm:text-sm"
             >
               <time>{education.startDate}</time> -{' '}
               {education.endDate ? (
@@ -861,7 +860,7 @@ function EducationCard({
 
           {education.content ? (
             <div
-              className="prose prose-slate prose-sm max-w-none text-(--color-muted) dark:prose-invert [&>ul]:mt-2 [&>ul]:mb-0 [&>ul]:list-disc [&>ul]:pl-5"
+              className="prose prose-sm max-w-none text-(--color-muted) prose-headings:text-(--color-text) prose-strong:text-(--color-text) prose-li:text-(--color-muted) [&>ul]:mt-2 [&>ul]:mb-0 [&>ul]:list-disc [&>ul]:pl-5"
               dangerouslySetInnerHTML={{ __html: marked(education.content) }}
             />
           ) : null}
@@ -872,6 +871,8 @@ function EducationCard({
 }
 
 function ContactSection({ language }: { language: SupportedLanguage }) {
+  const { t } = useTranslation('resume')
+
   return (
     <BackgroundSection
       id="contact"
@@ -894,15 +895,20 @@ function ContactSection({ language }: { language: SupportedLanguage }) {
       <Link
         to="/{-$locale}/contact"
         params={{ locale: language === 'en' ? undefined : language }}
-        className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-lg border px-6 text-sm font-semibold transition-colors duration-150 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg) sm:mt-8"
-        style={{
-          borderColor: 'var(--color-button)',
-          backgroundColor: 'var(--color-button)',
-          color: 'var(--color-bg)',
-        }}
+        aria-label={`build & run — ${t('contactMe')}`}
+        className="group relative mt-6 inline-flex h-28 w-28 items-center justify-center rounded-xl text-emerald-600 transition-colors duration-150 hover:text-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg) sm:mt-8 sm:h-32 sm:w-32 dark:text-emerald-400"
       >
-        <Mail className="h-4 w-4" aria-hidden="true" />
-        Say hi!
+        <Play
+          className="ml-1 h-20 w-20 fill-current motion-safe:transition-[translate,scale] motion-safe:duration-300 motion-safe:ease-out motion-safe:group-focus-visible:-translate-x-6 motion-safe:group-focus-visible:scale-110 sm:h-24 sm:w-24 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:group-hover:-translate-x-6 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:group-hover:scale-110"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-full -translate-x-3 -translate-y-1/2 whitespace-nowrap font-mono text-xs text-(--color-text) opacity-0 [clip-path:inset(0_100%_0_0)] group-focus-visible:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:[clip-path:inset(0_0_0_0)] motion-safe:transition-[opacity,translate,clip-path] motion-safe:duration-300 motion-safe:ease-out sm:ml-2 sm:text-base [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-0 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 [@media(hover:hover)_and_(pointer:fine)]:group-hover:[clip-path:inset(0_0_0_0)]"
+        >
+          build &amp; run
+        </span>
       </Link>
     </BackgroundSection>
   )

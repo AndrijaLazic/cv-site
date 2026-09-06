@@ -165,6 +165,7 @@ function LanguageSwitcher() {
       search: true,
       hash: true,
       replace: true,
+      resetScroll: false,
     })
   }
 

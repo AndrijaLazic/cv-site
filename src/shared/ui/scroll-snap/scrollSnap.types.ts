@@ -71,5 +71,7 @@ export type UseOneTimeScrollSnapOptions = {
 
 export type UseInitialScrollSnapDisabledOptions = {
   enabled?: boolean
+  /** Remembers maximum scroll progress across client-side visits to this page. */
+  historyKey?: string
   scrollProgressThreshold?: number
 }

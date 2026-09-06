@@ -31,6 +31,8 @@ const directInputThresholdMultiplier = 1.35
 // completes snaps when the user has clearly moved toward the next section.
 const settledSnapThresholdMultiplier = 0.95
 const initialScrollSnapDisableProgressThreshold = 0.2
+// Client-side navigation keeps this history alive across page mounts.
+const visitedPageScrollProgress = new Map<string, number>()
 
 /**
  * Disables initial assisted snapping after the page has already been restored to
@@ -39,16 +41,38 @@ const initialScrollSnapDisableProgressThreshold = 0.2
  */
 export function useInitialScrollSnapDisabled({
   enabled = true,
+  historyKey,
   scrollProgressThreshold = initialScrollSnapDisableProgressThreshold,
 }: UseInitialScrollSnapDisabledOptions = {}) {
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(
+    () =>
+      enabled &&
+      historyKey != null &&
+      (visitedPageScrollProgress.get(historyKey) ?? 0) >
+        scrollProgressThreshold,
+  )
 
   useEffect(() => {
     if (!enabled || typeof window === 'undefined') {
       return
     }
 
+    // Remember progress for the next visit without interrupting this visit's
+    // normal snapping when the user first crosses the threshold.
+    const rememberProgress = () => {
+      if (historyKey != null) {
+        visitedPageScrollProgress.set(
+          historyKey,
+          Math.max(
+            visitedPageScrollProgress.get(historyKey) ?? 0,
+            getPageScrollProgress(),
+          ),
+        )
+      }
+    }
+
     const updateDisabled = () => {
+      rememberProgress()
       if (getPageScrollProgress() > scrollProgressThreshold) {
         setIsDisabled(true)
       }
@@ -60,14 +84,16 @@ export function useInitialScrollSnapDisabled({
     const timeoutId = window.setTimeout(updateDisabled, 100)
     window.addEventListener('pageshow', updateDisabled)
     window.addEventListener('load', updateDisabled)
+    window.addEventListener('scroll', rememberProgress, { passive: true })
 
     return () => {
       window.cancelAnimationFrame(animationFrameId)
       window.clearTimeout(timeoutId)
       window.removeEventListener('pageshow', updateDisabled)
       window.removeEventListener('load', updateDisabled)
+      window.removeEventListener('scroll', rememberProgress)
     }
-  }, [enabled, scrollProgressThreshold])
+  }, [enabled, historyKey, scrollProgressThreshold])
 
   return isDisabled
 }
