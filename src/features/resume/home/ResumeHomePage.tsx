@@ -896,7 +896,7 @@ function ContactSection({ language }: { language: SupportedLanguage }) {
         to="/{-$locale}/contact"
         params={{ locale: language === 'en' ? undefined : language }}
         aria-label={`build & run — ${t('contactMe')}`}
-        className="group relative mt-6 inline-flex h-28 w-28 items-center justify-center rounded-xl text-emerald-600 transition-colors duration-150 hover:text-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg) sm:mt-8 sm:h-32 sm:w-32 dark:text-emerald-400"
+        className="group relative mt-6 inline-flex h-28 w-28 items-center justify-center rounded-xl text-emerald-600 transition-colors duration-150 hover:text-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg) sm:mt-8 sm:h-32 sm:w-32 sm:motion-safe:transition-[translate] sm:motion-safe:duration-300 sm:motion-safe:group-focus-visible:-translate-x-10 dark:text-emerald-400 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:group-hover:-translate-x-10"
       >
         <Play
           className="ml-1 h-20 w-20 fill-current motion-safe:transition-[translate,scale] motion-safe:duration-300 motion-safe:ease-out motion-safe:group-focus-visible:-translate-x-6 motion-safe:group-focus-visible:scale-110 sm:h-24 sm:w-24 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:group-hover:-translate-x-6 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:group-hover:scale-110"
@@ -905,9 +905,10 @@ function ContactSection({ language }: { language: SupportedLanguage }) {
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-full -translate-x-3 -translate-y-1/2 whitespace-nowrap font-mono text-xs text-(--color-text) opacity-0 [clip-path:inset(0_100%_0_0)] group-focus-visible:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:[clip-path:inset(0_0_0_0)] motion-safe:transition-[opacity,translate,clip-path] motion-safe:duration-300 motion-safe:ease-out sm:ml-2 sm:text-base [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-0 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 [@media(hover:hover)_and_(pointer:fine)]:group-hover:[clip-path:inset(0_0_0_0)]"
+          className="pointer-events-none absolute top-1/2 left-full -translate-x-3 -translate-y-1/2 whitespace-nowrap font-mono text-xs text-(--color-text) opacity-100 [clip-path:inset(0_0_0_0)] group-focus-visible:translate-x-0 motion-safe:transition-[opacity,translate,clip-path] motion-safe:duration-300 motion-safe:ease-out sm:ml-2 sm:text-base sm:opacity-0 sm:[clip-path:inset(0_100%_0_0)] sm:group-focus-visible:-translate-x-6 sm:group-focus-visible:opacity-100 sm:group-focus-visible:[clip-path:inset(0_0_0_0)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-x-6 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 [@media(hover:hover)_and_(pointer:fine)]:group-hover:[clip-path:inset(0_0_0_0)]"
         >
-          build &amp; run
+          &gt;{t('contactPrompt')}
+          <span className="cursor-blink">_</span>
         </span>
       </Link>
     </BackgroundSection>

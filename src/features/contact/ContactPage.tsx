@@ -43,9 +43,6 @@ export function ContactPage() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
           {/* Left: editorial intro (7 columns) */}
           <div className="lg:col-span-7">
-            <p className="text-sm font-medium text-(--color-muted)">
-              {t('contact.kicker')}
-            </p>
             <h1 className="mt-3 max-w-2xl text-balance text-4xl leading-[1.05] font-semibold tracking-tight text-(--color-text) sm:text-5xl lg:text-6xl">
               {t('contact.title')}
             </h1>
