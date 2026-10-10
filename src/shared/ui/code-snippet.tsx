@@ -15,7 +15,7 @@ const codeTokenColors: Record<CodeTokenVariant, string> = {
   identifier: 'var(--color-text)',
   property: 'var(--color-accent)',
   function: 'var(--color-accent)',
-  string: 'oklch(0.74 0.16 55)',
+  string: 'var(--color-code-string)',
   punctuation: 'var(--color-muted)',
 }
 

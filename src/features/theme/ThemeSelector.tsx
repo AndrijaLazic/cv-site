@@ -3,12 +3,7 @@ import { Check, ChevronDown, Moon, Sun } from 'lucide-react'
 import { cn } from '#/shared/utils'
 import { THEME_LABELS, isDarkTheme, useTheme } from './ThemeContext'
 import type { ThemeMode } from './ThemeContext'
-
-const THEMES: ThemeMode[] = [
-  'midnight-editor',
-  'graphite-neon',
-  'paper-terminal',
-]
+import { THEMES, THEME_PRIMARY_COLORS } from './themes'
 
 function ThemeIcon({
   mode,
@@ -17,10 +12,14 @@ function ThemeIcon({
   mode: ThemeMode
   className?: string
 }) {
-  return isDarkTheme(mode) ? (
-    <Moon className={className} aria-hidden="true" />
-  ) : (
-    <Sun className={className} aria-hidden="true" />
+  const Icon = isDarkTheme(mode) ? Moon : Sun
+
+  return (
+    <Icon
+      className={className}
+      style={{ color: THEME_PRIMARY_COLORS[mode] }}
+      aria-hidden="true"
+    />
   )
 }
 
@@ -90,10 +89,7 @@ function ThemeSelectorView() {
                 }}
                 className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-(--sea-ink) transition hover:bg-(--link-bg-hover)"
               >
-                <ThemeIcon
-                  mode={theme}
-                  className="h-4 w-4 shrink-0 text-(--sea-ink-soft)"
-                />
+                <ThemeIcon mode={theme} className="h-4 w-4 shrink-0" />
                 <span className="whitespace-nowrap">{THEME_LABELS[theme]}</span>
                 {isActive ? (
                   <Check

@@ -2,6 +2,7 @@ FROM node:25.8.2-bookworm-slim
 ARG NPM_VERSION=11.12.1
 ARG RTK_VERSION=v0.43.0
 ARG CODEX_VERSION=0.147.0
+ARG OPENCODE_VERSION=2.0.26
 ARG PLAYWRIGHT_MCP_VERSION=0.0.79
 
 # Install essential development tools
@@ -27,10 +28,13 @@ RUN npm install -g npm@${NPM_VERSION}
 # Install the coding-agent CLIs and Playwright MCP globally so they are
 # available in every workspace without relying on the host configuration.
 RUN npm install -g \
-    opencode-ai \
+    @opencode/cli@${OPENCODE_VERSION} \
     @openchamber/web \
     @openai/codex@${CODEX_VERSION} \
     @playwright/mcp@${PLAYWRIGHT_MCP_VERSION}
+
+# OpenChamber requires OpenCode v2; fail the build if the wrong major is installed.
+RUN opencode --version | grep -E '^opencode v2\.'
 
 # Keep the browser in an image-wide location that is readable by devuser.
 # Playwright installs the matching Chromium build and its Linux dependencies.

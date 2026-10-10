@@ -11,25 +11,11 @@ import {
   THEME_COOKIE_KEY,
   setClientCookie,
 } from '#/features/preferences/cookies'
+import { THEMES, THEME_SWATCHES, isDarkTheme } from './themes'
+import type { ThemeMode } from './themes'
 
-export type ThemeMode = 'midnight-editor' | 'graphite-neon' | 'paper-terminal'
-
-export const THEME_LABELS: Record<ThemeMode, string> = {
-  'midnight-editor': 'Midnight Editor',
-  'graphite-neon': 'Graphite Neon',
-  'paper-terminal': 'Paper Terminal',
-}
-
-/** Swatches used by the theme picker — the dominant bg color of each theme */
-export const THEME_SWATCHES: Record<ThemeMode, string> = {
-  'midnight-editor': '#0B1020',
-  'graphite-neon': '#111315',
-  'paper-terminal': '#F8FAFC',
-}
-
-export function isDarkTheme(mode: ThemeMode): boolean {
-  return mode !== 'paper-terminal'
-}
+export { THEME_LABELS, THEME_SWATCHES, isDarkTheme } from './themes'
+export type { ThemeMode } from './themes'
 
 interface ThemeContextValue {
   mode: ThemeMode
@@ -48,11 +34,15 @@ function applyTheme(mode: ThemeMode) {
     'midnight-editor',
     'graphite-neon',
     'paper-terminal',
+    ...THEMES,
   )
   root.classList.add(mode)
   root.classList.add(dark ? 'dark' : 'light')
   root.setAttribute('data-theme', mode)
   root.style.colorScheme = dark ? 'dark' : 'light'
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', THEME_SWATCHES[mode])
 }
 
 type ThemeProviderProps = {

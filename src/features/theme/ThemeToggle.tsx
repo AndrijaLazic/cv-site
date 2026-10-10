@@ -2,12 +2,11 @@ import { memo } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { isDarkTheme, useTheme } from './ThemeContext'
 import type { ThemeMode } from './ThemeContext'
+import { DEFAULT_THEME } from './themes'
 
 function ThemeToggle() {
   const { mode, setMode } = useTheme()
-  const nextMode: ThemeMode = isDarkTheme(mode)
-    ? 'paper-terminal'
-    : 'graphite-neon'
+  const nextMode: ThemeMode = isDarkTheme(mode) ? 'cloud-teal' : DEFAULT_THEME
   const label = isDarkTheme(mode)
     ? 'Switch to light theme'
     : 'Switch to dark theme'

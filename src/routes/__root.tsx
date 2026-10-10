@@ -10,6 +10,7 @@ import Footer from '#/features/layout/Footer'
 import Header from '#/features/layout/Header'
 import { loadInitialPreferences } from '#/features/preferences/preference.functions'
 import { ThemeProvider, isDarkTheme } from '#/features/theme/ThemeContext'
+import { DEFAULT_THEME, THEME_SWATCHES } from '#/features/theme/themes'
 import i18n, {
   i18nReady,
   resolveSupportedLanguage,
@@ -43,7 +44,7 @@ export const Route = createRootRoute({
 
     return { ...preferences, language: resolvedLocale }
   },
-  head: () => ({
+  head: ({ loaderData }) => ({
     meta: [
       {
         charSet: 'utf-8',
@@ -54,7 +55,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'theme-color',
-        content: '#000000',
+        content: THEME_SWATCHES[loaderData?.theme ?? DEFAULT_THEME],
       },
       {
         title: 'Andrija Lazic | Backend Software Engineer',

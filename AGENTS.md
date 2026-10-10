@@ -45,7 +45,7 @@ content/
 - UI components use CVA for variants
 - No semicolons, single quotes, trailing commas (Prettier)
 - TypeScript: `strict`, `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax` — use `import type` for type-only imports
-- Themes: `midnight-editor` | `graphite-neon` | `paper-terminal`, set via `<html data-theme>`, persisted in cookies. `graphite-neon` is the default.
+- Themes: `forest-terminal` | `plum-dusk` | `midnight-indigo` | `cloud-teal`, set via `<html data-theme>`, persisted in cookies. `midnight-indigo` is the default. Legacy theme cookies are mapped in `src/features/theme/themes.ts`.
 
 ## Blog Content Format
 

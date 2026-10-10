@@ -119,16 +119,28 @@ samp {
   --article-primary-ink: var(--color-button-text);
   --article-primary-soft: var(--color-primary-soft);
   --article-accent: var(--color-accent);
-  --article-accent-soft: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+  --article-accent-soft: color-mix(
+    in srgb,
+    var(--color-accent) 15%,
+    var(--color-surface)
+  );
   --article-accent-ink: var(--color-text);
   --article-warning: #d97706;
   --article-warning-soft: color-mix(in srgb, #d97706 13%, var(--color-surface));
   --article-danger: var(--destructive);
-  --article-danger-soft: color-mix(in srgb, var(--destructive) 13%, var(--color-surface));
+  --article-danger-soft: color-mix(
+    in srgb,
+    var(--destructive) 13%,
+    var(--color-surface)
+  );
   --article-code: color-mix(in srgb, var(--color-bg) 82%, #000);
   --article-code-ink: var(--color-text);
   --article-inline-code: var(--color-surface-soft);
-  --article-tag: color-mix(in srgb, var(--color-surface) 80%, var(--color-primary-soft));
+  --article-tag: color-mix(
+    in srgb,
+    var(--color-surface) 80%,
+    var(--color-primary-soft)
+  );
   --article-loading: var(--color-surface-soft);
   --article-focus: var(--color-primary);
 
@@ -211,16 +223,28 @@ samp {
   --article-primary-ink: var(--color-button-text);
   --article-primary-soft: var(--color-primary-soft);
   --article-accent: var(--color-accent);
-  --article-accent-soft: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+  --article-accent-soft: color-mix(
+    in srgb,
+    var(--color-accent) 15%,
+    var(--color-surface)
+  );
   --article-accent-ink: var(--color-text);
   --article-warning: #fbbf24;
   --article-warning-soft: color-mix(in srgb, #fbbf24 14%, var(--color-surface));
   --article-danger: var(--destructive);
-  --article-danger-soft: color-mix(in srgb, var(--destructive) 15%, var(--color-surface));
+  --article-danger-soft: color-mix(
+    in srgb,
+    var(--destructive) 15%,
+    var(--color-surface)
+  );
   --article-code: color-mix(in srgb, var(--color-bg) 70%, #000);
   --article-code-ink: var(--color-text);
   --article-inline-code: var(--color-surface-soft);
-  --article-tag: color-mix(in srgb, var(--color-surface) 80%, var(--color-primary-soft));
+  --article-tag: color-mix(
+    in srgb,
+    var(--color-surface) 80%,
+    var(--color-primary-soft)
+  );
   --article-loading: var(--color-surface-soft);
   --article-focus: var(--color-primary);
 
@@ -381,237 +405,174 @@ samp {
 }
 
 /* ================================================================
-   THEME TOKENS — 3-theme system
+   THEME TOKENS — palette system
    Each [data-theme] block overrides the key design tokens so that
    backgrounds, text, and accent colors shift per theme.
    The .dark class is still applied for dark themes so that all
    existing dark: Tailwind variants continue to work.
    ================================================================ */
 
-[data-theme='midnight-editor'] {
-  --background: #0b1020;
-  --foreground: #e6edf7;
-  --card: #151b2e;
-  --card-foreground: #e6edf7;
-  --popover: #151b2e;
-  --popover-foreground: #e6edf7;
-  --primary: #4f8cff;
-  --primary-foreground: #ffffff;
-  --secondary: #1e2740;
-  --secondary-foreground: #e6edf7;
-  --muted: #1e2740;
-  --muted-foreground: #8fa1c7;
-  --accent: #22d3ee;
-  --accent-foreground: #0b1020;
-  --border: #1e2740;
-  --input: #1e2740;
-  --ring: #4f8cff;
+/* Palette values from dev_site_palettes_round_two.html. */
+[data-theme='forest-terminal'] {
+  --background: #0b1210;
+  --foreground: #dcebe3;
+  --card: #121c18;
+  --secondary: #223129;
+  --muted-foreground: #7f9a8c;
+  --primary: #3ddc97;
+  --primary-foreground: #0b1210;
+  --accent: #e8c547;
+  --accent-foreground: #0b1210;
+  --border: #223129;
   --destructive: #f87171;
-  --destructive-foreground: #0b1020;
-
-  --color-bg: #0b1020;
-  --color-surface: #151b2e;
-  --color-surface-soft: #1e2740;
-  --color-primary: #4f8cff;
-  --color-primary-soft: #1a2e5a;
-  --color-accent: #22d3ee;
-  --color-text: #e6edf7;
-  --color-muted: #8fa1c7;
-  --color-border: #1e2740;
-  --color-card: #151b2e;
-  --color-button: #4f8cff;
-  --color-button-text: #ffffff;
-
-  --article-surface: #151b2e;
-  --article-surface-raised: #1e2740;
-  --article-surface-soft: #1e2740;
-  --article-media: #0b1020;
-  --article-ink: #e6edf7;
-  --article-prose: #c4d0e7;
-  --article-muted: #9daed0;
-  --article-faint: #6f83aa;
-  --article-line: #2a3553;
-  --article-primary: #75a6ff;
-  --article-primary-ink: #08101f;
-  --article-primary-soft: #1a2e5a;
-  --article-accent: #67e8f9;
-  --article-accent-soft: #143848;
-  --article-accent-ink: #e6edf7;
-  --article-warning: #fbbf24;
-  --article-warning-soft: #433413;
-  --article-danger: #f87171;
-  --article-danger-soft: #45232a;
-  --article-code: #090e1b;
-  --article-code-ink: #dbeafe;
-  --article-inline-code: #293858;
-  --article-tag: #192540;
-  --article-loading: #273454;
-  --article-focus: #75a6ff;
-
-  --header-bg: rgb(11 16 32 / 0.85);
-  --chip-bg: rgb(21 27 46 / 0.9);
-  --chip-line: #1e2740;
-  --line: #1e2740;
-  --sea-ink: #e6edf7;
-  --sea-ink-soft: #8fa1c7;
-  --link-bg-hover: rgb(79 140 255 / 0.15);
-  --card-bg: rgb(21 27 46 / 0.95);
-
-  --scrollbar-track: rgb(79 140 255 / 0.12);
-  --scrollbar-thumb: rgb(143 161 199 / 0.45);
-  --scrollbar-thumb-hover: rgb(230 237 247 / 0.6);
+  --destructive-foreground: #0b1210;
+  --article-warning: #e8c547;
 }
 
-[data-theme='graphite-neon'] {
-  --background: #111315;
-  --foreground: #f3f4f6;
-  --card: #1b1f24;
-  --card-foreground: #f3f4f6;
-  --popover: #1b1f24;
-  --popover-foreground: #f3f4f6;
-  --primary: #a78bfa;
-  --primary-foreground: #111315;
-  --secondary: #252930;
-  --secondary-foreground: #f3f4f6;
-  --muted: #252930;
-  --muted-foreground: #9ca3af;
-  --accent: #34d399;
-  --accent-foreground: #111315;
-  --border: #252930;
-  --input: #252930;
-  --ring: #a78bfa;
+[data-theme='plum-dusk'] {
+  --background: #14101a;
+  --foreground: #ebe4f4;
+  --card: #1d1726;
+  --secondary: #332a42;
+  --muted-foreground: #9a8fb0;
+  --primary: #ff7eb6;
+  --primary-foreground: #14101a;
+  --accent: #7dd3fc;
+  --accent-foreground: #14101a;
+  --border: #332a42;
   --destructive: #f87171;
-  --destructive-foreground: #111315;
-
-  --color-bg: #111315;
-  --color-surface: #1b1f24;
-  --color-surface-soft: #252930;
-  --color-primary: #a78bfa;
-  --color-primary-soft: #2e2547;
-  --color-accent: #34d399;
-  --color-text: #f3f4f6;
-  --color-muted: #9ca3af;
-  --color-border: #252930;
-  --color-card: #1b1f24;
-  --color-button: #a78bfa;
-  --color-button-text: #111315;
-
-  --article-surface: #1b1f24;
-  --article-surface-raised: #252930;
-  --article-surface-soft: #252930;
-  --article-media: #111315;
-  --article-ink: #f3f4f6;
-  --article-prose: #d1d5db;
-  --article-muted: #aeb5c1;
-  --article-faint: #717986;
-  --article-line: #303640;
-  --article-primary: #c4b5fd;
-  --article-primary-ink: #181322;
-  --article-primary-soft: #2e2547;
-  --article-accent: #6ee7b7;
-  --article-accent-soft: #173b32;
-  --article-accent-ink: #effdf5;
-  --article-warning: #fbbf24;
-  --article-warning-soft: #443613;
-  --article-danger: #f87171;
-  --article-danger-soft: #4a262c;
-  --article-code: #0d0f11;
-  --article-code-ink: #e5e7eb;
-  --article-inline-code: #2b3039;
-  --article-tag: #24212f;
-  --article-loading: #2c3139;
-  --article-focus: #c4b5fd;
-
-  --header-bg: rgb(17 19 21 / 0.85);
-  --chip-bg: rgb(27 31 36 / 0.9);
-  --chip-line: #252930;
-  --line: #252930;
-  --sea-ink: #f3f4f6;
-  --sea-ink-soft: #9ca3af;
-  --link-bg-hover: rgb(167 139 250 / 0.15);
-  --card-bg: rgb(27 31 36 / 0.95);
-
-  --scrollbar-track: rgb(167 139 250 / 0.12);
-  --scrollbar-thumb: rgb(156 163 175 / 0.45);
-  --scrollbar-thumb-hover: rgb(243 244 246 / 0.6);
+  --destructive-foreground: #14101a;
+  --article-warning: #e8c547;
 }
 
-[data-theme='paper-terminal'] {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+/* Midnight Indigo from dev_site_palettes.html. */
+[data-theme='midnight-indigo'] {
+  --background: #0f1020;
+  --foreground: #e4e6f5;
+  --card: #17182e;
+  --secondary: #2a2c4a;
+  --muted-foreground: #8a8fb5;
+  --primary: #7c83ff;
+  --primary-foreground: #0f1020;
+  --accent: #4de0c1;
+  --accent-foreground: #0f1020;
+  --border: #2a2c4a;
+  --destructive: #f87171;
+  --destructive-foreground: #0f1020;
+  --article-warning: #e8c547;
+}
+
+[data-theme='cloud-teal'] {
+  --background: #f4f7fa;
+  --foreground: #12202b;
   --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
+  --secondary: #edf2f6;
+  --muted-foreground: #5b6b7a;
+  --primary: #0b7a75;
   --primary-foreground: #ffffff;
-  --secondary: #eff6ff;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #14b8a6;
-  --accent-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #2563eb;
-  --destructive: #dc2626;
+  --accent: #d9480f;
+  --accent-foreground: #000000;
+  --border: #dbe3ea;
+  --destructive: #b93535;
   --destructive-foreground: #ffffff;
+  --article-warning: #945d00;
+}
 
-  --color-bg: #f8fafc;
-  --color-surface: #ffffff;
-  --color-surface-soft: #f1f5f9;
-  --color-primary: #2563eb;
-  --color-primary-soft: #dbeafe;
-  --color-accent: #14b8a6;
-  --color-text: #0f172a;
-  --color-muted: #64748b;
-  --color-border: #e2e8f0;
-  --color-card: #ffffff;
-  --color-button: #2563eb;
-  --color-button-text: #ffffff;
+/* Shared semantic tokens keep every surface tied to the selected palette. */
+[data-theme] {
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --input: var(--border);
+  --ring: var(--primary);
 
-  --article-surface: #ffffff;
-  --article-surface-raised: #ffffff;
-  --article-surface-soft: #f1f5f9;
-  --article-media: #f8fafc;
-  --article-ink: #0f172a;
-  --article-prose: #334155;
-  --article-muted: #64748b;
-  --article-faint: #94a3b8;
-  --article-line: #dbe3ee;
-  --article-primary: #2563eb;
-  --article-primary-ink: #ffffff;
-  --article-primary-soft: #dbeafe;
-  --article-accent: #0f9f91;
-  --article-accent-soft: #ccfbf1;
-  --article-accent-ink: #134e4a;
-  --article-warning: #b45309;
-  --article-warning-soft: #fef3c7;
-  --article-danger: #dc2626;
-  --article-danger-soft: #fee2e2;
-  --article-code: #172033;
-  --article-code-ink: #e2e8f0;
-  --article-inline-code: #e8eef6;
-  --article-tag: #eff6ff;
-  --article-loading: #e2e8f0;
-  --article-focus: #2563eb;
+  --color-bg: var(--background);
+  --color-surface: var(--card);
+  --color-surface-soft: var(--secondary);
+  --color-primary: var(--primary);
+  --color-primary-soft: color-mix(
+    in srgb,
+    var(--primary) 16%,
+    var(--background)
+  );
+  --color-accent: var(--accent);
+  --color-text: var(--foreground);
+  --color-muted: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-button: var(--primary);
+  --color-button-text: var(--primary-foreground);
+  --color-code-string: var(--accent);
 
-  --header-bg: rgb(248 250 252 / 0.88);
-  --chip-bg: rgb(255 255 255 / 0.9);
-  --chip-line: #e2e8f0;
-  --line: #e2e8f0;
-  --sea-ink: #0f172a;
-  --sea-ink-soft: #64748b;
-  --link-bg-hover: rgb(37 99 235 / 0.08);
-  --card-bg: rgb(255 255 255 / 0.95);
+  --article-surface: var(--card);
+  --article-surface-raised: var(--secondary);
+  --article-surface-soft: var(--secondary);
+  --article-media: var(--background);
+  --article-ink: var(--foreground);
+  --article-prose: color-mix(in srgb, var(--foreground) 90%, var(--background));
+  --article-muted: var(--muted-foreground);
+  --article-faint: var(--muted-foreground);
+  --article-line: var(--border);
+  --article-primary: var(--primary);
+  --article-primary-ink: var(--primary-foreground);
+  --article-primary-soft: var(--color-primary-soft);
+  --article-accent: var(--accent);
+  --article-accent-soft: color-mix(in srgb, var(--accent) 12%, var(--card));
+  --article-accent-ink: var(--foreground);
+  --article-warning-soft: color-mix(
+    in srgb,
+    var(--article-warning) 12%,
+    var(--card)
+  );
+  --article-danger: var(--destructive);
+  --article-danger-soft: color-mix(
+    in srgb,
+    var(--destructive) 12%,
+    var(--card)
+  );
+  --article-code: var(--card);
+  --article-code-ink: var(--foreground);
+  --article-inline-code: var(--secondary);
+  --article-tag: var(--color-primary-soft);
+  --article-loading: var(--secondary);
+  --article-focus: var(--primary);
 
-  --scrollbar-track: rgb(37 99 235 / 0.08);
-  --scrollbar-thumb: rgb(100 116 139 / 0.4);
-  --scrollbar-thumb-hover: rgb(15 23 42 / 0.55);
+  --header-bg: color-mix(in srgb, var(--background) 88%, transparent);
+  --chip-bg: color-mix(in srgb, var(--card) 94%, transparent);
+  --chip-line: var(--border);
+  --line: var(--border);
+  --sea-ink: var(--foreground);
+  --sea-ink-soft: var(--muted-foreground);
+  --link-bg-hover: color-mix(in srgb, var(--primary) 12%, transparent);
+  --card-bg: var(--card);
+
+  --scrollbar-track: color-mix(in srgb, var(--primary) 10%, var(--background));
+  --scrollbar-thumb: color-mix(
+    in srgb,
+    var(--muted-foreground) 60%,
+    var(--background)
+  );
+  --scrollbar-thumb-hover: var(--muted-foreground);
+
+  --chart-1: var(--primary);
+  --chart-2: var(--accent);
+  --chart-3: var(--muted-foreground);
+  --chart-4: var(--article-warning);
+  --chart-5: var(--destructive);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--primary);
 }
 
 /* ================================================================
-   CURSOR BLINK — used in hero "Hi, I'm _" animation
+   CURSOR BLINK — terminal-style text cursors
    ================================================================ */
 @keyframes cursor-blink {
   0%,
@@ -629,15 +590,26 @@ samp {
 
 .article-page {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--article-primary-soft) 28%, transparent), transparent 26rem),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--article-primary-soft) 28%, transparent),
+      transparent 26rem
+    ),
     var(--color-bg);
 }
 
 .article-hero-grid {
   opacity: 0.55;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--article-line) 72%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--article-line) 72%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      color-mix(in srgb, var(--article-line) 72%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--article-line) 72%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 2rem 2rem;
   mask-image: linear-gradient(to right, black, transparent 78%);
 }
@@ -649,7 +621,8 @@ samp {
     scroll-behavior: auto !important;
   }
 
-  .animate-pulse {
+  .animate-pulse,
+  .cursor-blink {
     animation: none;
   }
 }

@@ -209,7 +209,7 @@ function Header() {
               to="/{-$locale}"
               params={{ locale: routeLocale }}
               hash="about"
-              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
+              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-(--color-primary)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.about')}
@@ -218,7 +218,7 @@ function Header() {
               to="/{-$locale}"
               params={{ locale: routeLocale }}
               hash="experience"
-              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
+              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-(--color-primary)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.experience')}
@@ -227,7 +227,7 @@ function Header() {
               to="/{-$locale}"
               params={{ locale: routeLocale }}
               hash="education"
-              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
+              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-(--color-primary)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.education')}
@@ -236,7 +236,7 @@ function Header() {
               to="/{-$locale}/blog"
               params={{ locale: routeLocale }}
               search={{ tag: undefined }}
-              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
+              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-(--color-primary)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.blog')}
@@ -244,7 +244,7 @@ function Header() {
             <Link
               to="/{-$locale}/contact"
               params={{ locale: routeLocale }}
-              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-blue-400"
+              className="block rounded-lg py-3 text-base font-bold text-(--color-text) transition-colors hover:text-(--color-primary)"
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.contact')}

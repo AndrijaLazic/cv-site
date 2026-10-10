@@ -11,6 +11,8 @@
   "viewGitHub": "View GitHub",
   "contactMe": "Contact Me",
   "contactPrompt": "get in contact",
+  "contactHeadline": "Let’s build something",
+  "contactHeadlineHighlight": "worth shipping.",
   "careerSummary": "Professional Summary",
   "careerSummaryText": "Software Developer with 6+ years of hands-on IT experience and 2+ years building web applications, deployment workflows, and AI-powered features.",
   "headshot": "Professional headshot",
@@ -20,20 +22,20 @@
   "experienceIntroDescription": "My journey started with real-world IT problem solving, then grew into building reliable software, deployment workflows, and AI-powered features that solve practical problems.",
   "experienceIntroItValue": "6+",
   "experienceIntroItLabel": "Years of IT technician experience",
-  "experienceIntroItDescription": "Hands-on experience in computer repair, troubleshooting, system maintenance, networking, and customer support.",
+  "experienceIntroItDescription": "years as an IT technician: repair, networking, system maintenance, customer support",
   "experienceIntroAppsValue": "2+",
   "experienceIntroAppsLabel": "Years developing real-world apps",
-  "experienceIntroAppsDescription": "Building web applications, RESTful APIs, backend services, and deployment workflows with modern development tools.",
+  "experienceIntroAppsDescription": "years building web apps, RESTful APIs, backend services and deployment workflows",
   "experienceIntroProjectsValue": "4+",
   "experienceIntroProjectsLabel": "Projects completed",
-  "experienceIntroProjectsDescription": "Delivered practical applications and features across resume, business, AI, and automation-focused projects.",
+  "experienceIntroProjectsDescription": "projects delivered across resume, business, AI and automation use cases",
   "roleSnapshot": "Role snapshot",
   "productScope": "Product / scope",
   "productImpact": "Impact",
   "techStack": "Tech stack",
   "selectedWork": "Selected work",
   "education": "Education",
-  "educationWithCertifications": "Education & Certifications",
+  "educationWithCertifications": "Education & certifications",
   "present": "Present",
   "skillsFilter": "Skills & Technologies",
   "experienceWith": "Experience with {{tag}} in professional development",
@@ -176,7 +178,7 @@
   "educations": [
     {
       "school": "Faculty of Natural Sciences and Mathematics",
-      "summary": "Bachelor of Computer Science with a focus on Software Engineering.",
+      "summary": "Bachelor of Computer Science, focus on Software Engineering.",
       "startDate": "2019-10-01",
       "endDate": "2024-09-30",
       "tags": [
@@ -190,8 +192,8 @@
       "content": ""
     },
     {
-      "school": "Auditor Training",
-      "summary": "Internal Auditor Course for Information Security Management Systems (ISO/IEC 27001:2022) with practical implementation.",
+      "school": "Internal Auditor, ISO/IEC 27001:2022",
+      "summary": "Information security management systems. Set up the office’s development environments and network with practical security controls.",
       "startDate": "2026-02-03",
       "endDate": "2026-02-03",
       "tags": [
@@ -203,11 +205,12 @@
       "content": "I have been in charge of setting up all development environments and network in the office, ensuring robust information security practices. Developed practical understanding of implementing and auditing ISO/IEC 27001:2022 controls in real-world scenarios."
     },
     {
-      "school": "Language Proficiency",
-      "summary": "Bilingual communicator.",
+      "school": "Bilingual",
+      "summary": "English, fluent in professional contexts.\nSerbian, native.",
       "startDate": "2019-10-01",
       "tags": ["English", "Serbian"],
-      "content": "- **English**: Fluent in professional contexts.\n- **Serbian**: Native speaker."
+      "content": "- **English**: Fluent in professional contexts.\n- **Serbian**: Native speaker.",
+      "periodLabel": "Languages"
     }
   ]
 }

@@ -11,6 +11,8 @@
   "viewGitHub": "GitHub profil",
   "contactMe": "Kontaktiraj me",
   "contactPrompt": "stupi u kontakt",
+  "contactHeadline": "Hajde da napravimo",
+  "contactHeadlineHighlight": "nešto vredno objave.",
   "careerSummary": "Profesionalni rezime",
   "careerSummaryText": "Software Developer sa 6+ godina praktičnog IT iskustva i 2+ godine rada na web aplikacijama, deployment procesima i AI funkcionalnostima.",
   "headshot": "Profesionalna fotografija",
@@ -20,13 +22,13 @@
   "experienceIntroDescription": "Moj put je počeo rešavanjem stvarnih IT problema, a zatim prerastao u razvoj pouzdanog softvera, deployment procesa i AI funkcionalnosti koje rešavaju praktične probleme.",
   "experienceIntroItValue": "6+",
   "experienceIntroItLabel": "Godina iskustva kao IT tehničar",
-  "experienceIntroItDescription": "Praktično iskustvo u popravci računara, rešavanju problema, održavanju sistema, mrežama i korisničkoj podršci.",
+  "experienceIntroItDescription": "godina rada kao IT tehničar: popravke, mreže, održavanje sistema i korisnička podrška",
   "experienceIntroAppsValue": "2+",
   "experienceIntroAppsLabel": "Godine razvoja realnih aplikacija",
-  "experienceIntroAppsDescription": "Razvoj web aplikacija, REST API-ja, backend servisa i deployment procesa uz moderne razvojne alate.",
+  "experienceIntroAppsDescription": "godine razvoja web aplikacija, REST API-ja, backend servisa i deployment procesa",
   "experienceIntroProjectsValue": "4+",
   "experienceIntroProjectsLabel": "Završena projekta",
-  "experienceIntroProjectsDescription": "Isporučene praktične aplikacije i funkcionalnosti kroz resume, poslovne, AI i automatizacione projekte.",
+  "experienceIntroProjectsDescription": "projekta isporučena za CV, poslovne, AI i automatizacione potrebe",
   "roleSnapshot": "Pregled uloge",
   "productScope": "Proizvod / scope",
   "productImpact": "Uticaj",
@@ -178,19 +180,20 @@
       "content": ""
     },
     {
-      "school": "Auditor Training",
-      "summary": "ISO19011:2018 i kurs internog auditora za bezbednost informacija, sajber bezbednost i zastitu privatnosti.",
+      "school": "Interni auditor, ISO/IEC 27001:2022",
+      "summary": "Sistemi upravljanja bezbednošću informacija. Postavio razvojna okruženja i mrežu u kancelariji uz praktične bezbednosne kontrole.",
       "startDate": "2026-02-03",
       "endDate": "2026-02-03",
       "tags": ["Sertifikat", "ISO19011:2018", "ISO/IEC 27001:2022", "Issue 2"],
       "content": "Bio sam zadužen za postavljanje svih razvojnih okruženja i mreže u kancelariji, obezbeđujući robusne prakse informacione bezbednosti. Razvio sam praktično razumevanje implementacije i audita ISO/IEC 27001:2022 kontrola u realnim scenarijima."
     },
     {
-      "school": "Jezičke veštine",
-      "summary": "Dvojezični komunikator.",
+      "school": "Dvojezičan",
+      "summary": "Engleski, tečno u profesionalnim kontekstima.\nSrpski, maternji jezik.",
       "startDate": "2019-10-01",
       "tags": ["Engleski", "Srpski"],
-      "content": "- **Engleski**: Tečno u profesionalnim kontekstima.\n- **Srpski**: Maternji jezik."
+      "content": "- **Engleski**: Tečno u profesionalnim kontekstima.\n- **Srpski**: Maternji jezik.",
+      "periodLabel": "Jezici"
     }
   ]
 }

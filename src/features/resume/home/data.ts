@@ -26,6 +26,7 @@ export type ResumeJob = ResumeEntry & {
 
 export type ResumeEducation = ResumeEntry & {
   school: string
+  periodLabel?: string
 }
 
 type ResumeLocaleNamespace = {

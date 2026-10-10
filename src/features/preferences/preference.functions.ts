@@ -1,22 +1,11 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
-import type { ThemeMode } from '#/features/theme/ThemeContext'
+import { resolveThemeMode } from '#/features/theme/themes'
+import type { ThemeMode } from '#/features/theme/themes'
 import { resolveSupportedLanguage } from '#/features/i18n/languages'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 
 import { LANGUAGE_COOKIE_KEY, THEME_COOKIE_KEY } from './cookies'
-
-const defaultTheme: ThemeMode = 'graphite-neon'
-
-const validThemes: ReadonlyArray<string> = [
-  'midnight-editor',
-  'graphite-neon',
-  'paper-terminal',
-]
-
-function resolveThemeMode(theme?: string): ThemeMode {
-  return validThemes.includes(theme ?? '') ? (theme as ThemeMode) : defaultTheme
-}
 
 export type InitialPreferences = {
   language: SupportedLanguage
