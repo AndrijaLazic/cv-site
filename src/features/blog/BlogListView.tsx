@@ -3,8 +3,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Calendar, Check, ChevronDown, SearchX, Tag } from 'lucide-react'
 import { cn } from '#/shared/utils'
 import { resolveSupportedLanguage } from '#/features/i18n/config'
-import { HeroCarousel, PostCard } from '#/features/blog/components'
+import { HeroCarousel } from '#/features/blog/components'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
+import { PostRow } from '#/features/blog/components/PostRow'
 import { BackgroundSection } from '#/shared/ui/background-section'
 
 type BlogListViewProps = {
@@ -108,26 +109,23 @@ export function BlogListView({
   }
 
   return (
-    <BackgroundSection className="bg-background flex-1 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <header className="max-w-2xl">
-          <h1 className="font-heading text-foreground text-3xl font-semibold tracking-tight sm:text-4xl">
-            {t('blogTitle')}
-          </h1>
-          <p className="text-muted-foreground mt-2 text-base leading-7">
-            {t('blogSubtitle')}
-          </p>
-        </header>
+    <BackgroundSection className="blog-list-page bg-background flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1004px]">
+        <h1 className="sr-only">{t('blogTitle')}</h1>
 
         {effectiveTags.length === 0 && latestPosts.length > 0 ? (
           <HeroCarousel posts={latestPosts} activeLanguage={activeLanguage} />
         ) : null}
 
-        <section
+        <details
+          open={effectiveTags.length > 0 || undefined}
           aria-label={t('blogFilterByTag')}
-          className="border-border bg-card mt-8 rounded-xl border p-4 sm:p-5"
+          className="border-border mt-8 border-b pb-4"
         >
-          <div className="flex flex-col lg:flex-row lg:items-stretch">
+          <summary className="text-muted-foreground focus-visible:ring-ring min-h-11 w-fit cursor-pointer rounded-sm py-3 text-sm focus-visible:ring-2 focus-visible:outline-none">
+            {t('blogFiltersAndSort')}
+          </summary>
+          <div className="flex flex-col py-4 lg:flex-row lg:items-stretch">
             {allTags.length > 0 && (
               <div className="min-w-0 flex-1">
                 <div className="text-foreground flex items-center gap-2 text-sm font-medium">
@@ -195,9 +193,7 @@ export function BlogListView({
                   className="border-border bg-background text-foreground hover:border-primary hover:text-primary focus-visible:ring-ring flex h-11 w-full items-center justify-between gap-2 rounded-lg border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                 >
                   <span>
-                    {sortOrder === 'desc'
-                      ? t('blogNewest')
-                      : t('blogOldest')}
+                    {sortOrder === 'desc' ? t('blogNewest') : t('blogOldest')}
                   </span>
                   <ChevronDown
                     className={cn(
@@ -246,19 +242,30 @@ export function BlogListView({
               </div>
             </div>
           </div>
-        </section>
+        </details>
 
         {filteredPosts.length > 0 ? (
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <PostCard
-                key={post.slug}
-                post={post}
-                locale={activeLanguage}
-                className="bg-card border-border shadow-none backdrop-blur-none duration-150 group-hover:translate-y-0 group-hover:shadow-none group-hover:[&_picture_img]:scale-100 group-hover:[&_svg]:translate-x-0 group-hover:[&_svg]:translate-y-0 [&_picture_img]:transition-none"
-              />
+          <section className="mt-8" aria-labelledby="earlier-posts-title">
+            <div className="border-border flex items-center justify-between gap-4 border-b pb-5">
+              <h2
+                id="earlier-posts-title"
+                className="font-heading text-foreground text-xl font-semibold"
+              >
+                {effectiveTags.length > 0 || sortOrder === 'asc'
+                  ? t('blogTitle')
+                  : t('blogEarlierPosts')}
+              </h2>
+              <span className="text-muted-foreground font-mono text-xs">
+                {t('blogScrollForMore')}
+              </span>
+            </div>
+            {(effectiveTags.length > 0 || sortOrder === 'asc'
+              ? filteredPosts
+              : filteredPosts.slice(1)
+            ).map((post) => (
+              <PostRow key={post.slug} post={post} locale={activeLanguage} />
             ))}
-          </div>
+          </section>
         ) : (
           <div className="border-border mt-8 flex flex-col items-start gap-3 border-b pb-8">
             <SearchX

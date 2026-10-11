@@ -1,16 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
-import {
-  ArrowLeft,
-  CalendarDays,
-  Check,
-  Clock3,
-  Copy,
-  Mail,
-  Share2,
-  SquareTerminal,
-} from 'lucide-react'
+import { ArrowLeft, Check, Copy, Mail, Share2 } from 'lucide-react'
 import { BlogContentRenderer } from '#/features/blog/BlogContentRenderer'
 import { BlogImage, BlogTableOfContents } from '#/features/blog/components'
 import type {
@@ -72,80 +63,76 @@ export function BlogPostView({ post, backTo }: BlogPostViewProps) {
     <>
       <BlogPostJsonLd post={post} />
       <div className="article-page flex-1 px-4 py-6 sm:px-6 sm:py-10 lg:px-10 lg:py-14">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[1004px]">
           <Link
             to={backTo}
             className="inline-flex min-h-11 items-center gap-2 rounded-md px-1 font-mono text-xs font-semibold tracking-[0.08em] text-(--article-muted) transition-colors hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--article-focus)"
           >
-            <ArrowLeft className="size-4" />
+            <ArrowLeft className="size-3" aria-hidden="true" />
             {t('blogBackToList')}
           </Link>
 
           <article className="mt-3">
-            <header className="article-hero relative overflow-hidden border border-(--article-line) bg-(--article-surface) px-5 py-7 shadow-sm sm:px-8 sm:py-9 lg:px-12 lg:py-12">
-              <div
-                className="article-hero-grid pointer-events-none absolute inset-0"
-                aria-hidden="true"
-              />
-              <div className="relative max-w-4xl">
-                <div className="mb-5 flex items-center gap-2 font-mono text-[0.68rem] font-semibold tracking-[0.16em] text-(--article-muted) uppercase">
-                  <SquareTerminal
-                    className="size-3.5 text-(--article-accent)"
-                    aria-hidden="true"
-                  />
-                  <span>{t('blogKicker')}</span>
-                </div>
+            <header className="max-w-3xl">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-6 tracking-wider text-(--article-muted) uppercase">
+                {post.tags[0] && (
+                  <>
+                    <span className="text-(--article-primary)">
+                      {post.tags.includes('Backend Development')
+                        ? post.locale === 'sr'
+                          ? 'Bekend'
+                          : 'Backend'
+                        : post.tags[0]}
+                    </span>
+                    <span aria-hidden="true">·</span>
+                  </>
+                )}
+                <time dateTime={post.publishedDate}>
+                  {new Date(post.publishedDate).toLocaleDateString(
+                    post.locale === 'sr' ? 'sr-Latn-RS' : 'en-US',
+                    {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                      timeZone: 'UTC',
+                    },
+                  )}
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>{estimateReadingTime(post)}</span>
+              </div>
+              <h1 className="mt-5 text-4xl leading-[1.1] font-bold tracking-[-0.045em] text-balance text-(--article-ink) sm:text-5xl lg:text-6xl">
+                {post.title}
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-(--article-muted) sm:text-xl">
+                {post.summary}
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+                <AuthorLink post={post} />
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <TagLink key={tag} tag={tag} locale={post.locale} />
                   ))}
                 </div>
-                <h1 className="mt-6 text-4xl font-bold leading-[1.03] tracking-[-0.045em] text-balance text-(--article-ink) sm:text-5xl lg:text-6xl">
-                  {post.title}
-                </h1>
-                <p className="mt-5 max-w-3xl text-lg leading-8 text-(--article-muted) sm:text-xl sm:leading-9">
-                  {post.summary}
-                </p>
-                <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs leading-5 text-(--article-muted)">
-                  <AuthorLink post={post} />
-                  <span className="inline-flex items-center gap-1.5">
-                    <CalendarDays className="size-4" aria-hidden="true" />
-                    <span className="sr-only">{t('blogPublished')}</span>
-                    <time dateTime={post.publishedDate}>
-                      {post.publishedDate}
-                    </time>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock3 className="size-4" aria-hidden="true" />
-                    {estimateReadingTime(post)}
-                  </span>
-                </div>
-                <ShareButtons
-                  post={post}
-                  postUrl={postUrl}
-                  copy={{
-                    heading: t('blogShareHeading', 'Share this post'),
-                    nativeLabel: t('blogShareNative', 'Share'),
-                    linkedInLabel: t('blogShareLinkedIn', 'Share on LinkedIn'),
-                    xLabel: t('blogShareX', 'Share on X'),
-                    facebookLabel: t('blogShareFacebook', 'Share on Facebook'),
-                    emailLabel: t('blogShareEmail', 'Share by email'),
-                    copyLabel: t('blogShareCopy', 'Copy link'),
-                    copiedLabel: t('blogShareCopied', 'Copied'),
-                  }}
-                />
               </div>
+              <a
+                href="#share-post"
+                className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg border border-(--article-line) bg-(--article-surface) px-3 text-sm font-medium text-(--article-ink) transition-colors hover:border-(--article-primary) hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--article-focus)"
+              >
+                {t('blogShareHeading')}
+                <Share2 className="size-4" aria-hidden="true" />
+              </a>
             </header>
 
-            <div className="mt-5 overflow-hidden border border-(--article-line) bg-(--article-media) shadow-sm">
-              <BlogImage {...post.coverImage} priority />
+            <div className="mt-9 overflow-hidden rounded-[20px] border border-(--article-line) bg-(--article-media)">
+              <BlogImage {...post.heroImage} aspectRatio="23/10" priority />
             </div>
 
             <div
               className={
                 showTableOfContents
-                  ? 'mx-auto mt-9 grid max-w-5xl gap-9 lg:grid-cols-[minmax(0,660px)_minmax(220px,260px)] lg:items-start lg:justify-center'
-                  : 'mx-auto mt-9 max-w-[660px]'
+                  ? 'mt-12 grid gap-9 lg:grid-cols-[minmax(0,660px)_minmax(0,1fr)] lg:items-start'
+                  : 'mt-12 max-w-[660px]'
               }
             >
               <div className="min-w-0">
@@ -158,6 +145,31 @@ export function BlogPostView({ post, backTo }: BlogPostViewProps) {
                   />
                 ) : null}
                 <BlogContentRenderer content={post.content} />
+                <footer
+                  id="share-post"
+                  className="mt-12 scroll-mt-32 border-t border-(--article-line) pt-6 pb-4"
+                >
+                  <ShareButtons
+                    post={post}
+                    postUrl={postUrl}
+                    copy={{
+                      heading: t('blogShareHeading', 'Share this post'),
+                      nativeLabel: t('blogShareNative', 'Share'),
+                      linkedInLabel: t(
+                        'blogShareLinkedIn',
+                        'Share on LinkedIn',
+                      ),
+                      xLabel: t('blogShareX', 'Share on X'),
+                      facebookLabel: t(
+                        'blogShareFacebook',
+                        'Share on Facebook',
+                      ),
+                      emailLabel: t('blogShareEmail', 'Share by email'),
+                      copyLabel: t('blogShareCopy', 'Copy link'),
+                      copiedLabel: t('blogShareCopied', 'Copied'),
+                    }}
+                  />
+                </footer>
               </div>
               {showTableOfContents ? (
                 <BlogTableOfContents
@@ -345,7 +357,7 @@ function TagLink({ tag, locale }: { tag: string; locale: string }) {
       to="/{-$locale}/blog"
       params={{ locale: locale === 'en' ? undefined : locale }}
       search={{ tag: [tag] }}
-      className="text-sm font-medium text-(--article-muted) underline decoration-(--article-line) underline-offset-4 transition-colors hover:text-(--article-primary) hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
+      className="rounded-md bg-(--article-surface-raised) px-2.5 py-1 font-mono text-xs text-(--article-muted) transition-colors hover:bg-(--article-primary-soft) hover:text-(--article-primary) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--article-focus)"
     >
       {tag}
     </Link>

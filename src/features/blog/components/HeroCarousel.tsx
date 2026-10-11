@@ -1,11 +1,11 @@
 import { Link } from '@tanstack/react-router'
-import { memo, useEffect, useId, useRef, useState } from 'react'
+import { memo, useId, useRef, useState } from 'react'
 import type { TouchEvent } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '#/shared/utils'
 import type { SupportedLanguage } from '#/features/i18n/languages'
 import type { BlogPostSummary } from '#/features/blog/types/blog'
-import { Badge } from '#/shared/ui/badge'
 import { HERO_IMAGE_SIZES } from '../contentImages'
 import { ResponsiveImage } from './ResponsiveImage'
 
@@ -14,136 +14,77 @@ type HeroCarouselProps = {
   activeLanguage: SupportedLanguage
 }
 
-const HERO_POST_TITLE_LINE_CLAMP_CLASS = 'line-clamp-3'
-const AUTO_ROTATE_INTERVAL_MS = 5000
-
-function formatPublishedDate(date: string, locale: SupportedLanguage) {
-  return new Date(date).toLocaleDateString(
-    locale === 'sr' ? 'sr-Latn-RS' : 'en-US',
-    {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    },
-  )
-}
-
 function HeroCarouselView({ posts, activeLanguage }: HeroCarouselProps) {
   const { t } = useTranslation('resume')
   const [carouselIndex, setCarouselIndex] = useState(0)
-  const [autoplayReset, setAutoplayReset] = useState(0)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const touchStartX = useRef<number | null>(null)
   const carouselId = useId()
-
-  useEffect(() => {
-    setCarouselIndex(0)
-  }, [posts])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches)
-
-    updatePreference()
-    mediaQuery.addEventListener('change', updatePreference)
-
-    return () => mediaQuery.removeEventListener('change', updatePreference)
-  }, [])
-
-  useEffect(() => {
-    if (posts.length <= 1 || prefersReducedMotion) {
-      return
-    }
-
-    const timer = window.setTimeout(() => {
-      setCarouselIndex((prev) => (prev + 1) % posts.length)
-    }, AUTO_ROTATE_INTERVAL_MS)
-
-    return () => window.clearTimeout(timer)
-  }, [autoplayReset, carouselIndex, posts.length, prefersReducedMotion])
-
-  function handleNext() {
-    setCarouselIndex((prev) => (prev + 1) % posts.length)
+  if (posts.length === 0) return null
+  const activeIndex = carouselIndex % posts.length
+  function moveSlide(direction: number) {
+    setCarouselIndex(
+      (index) => (index + direction + posts.length) % posts.length,
+    )
   }
-
-  function handlePrev() {
-    setCarouselIndex((prev) => (prev - 1 + posts.length) % posts.length)
-  }
-
-  function handleSlideSelect(index: number) {
-    setCarouselIndex(index)
-    setAutoplayReset((prev) => prev + 1)
-  }
-
-  function handleTouchStart(e: TouchEvent<HTMLElement>) {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  function handleTouchEnd(e: TouchEvent<HTMLElement>) {
+  function handleTouchEnd(event: TouchEvent<HTMLElement>) {
     if (touchStartX.current === null) return
-    const touchEndX = e.changedTouches[0].clientX
-    const diff = touchStartX.current - touchEndX
-    if (diff > 50) handleNext()
-    else if (diff < -50) handlePrev()
+    const distance = touchStartX.current - event.changedTouches[0].clientX
+    if (Math.abs(distance) > 50) moveSlide(distance > 0 ? 1 : -1)
     touchStartX.current = null
   }
-
-  if (posts.length === 0) return null
-
-  const activeIndex = Math.min(carouselIndex, posts.length - 1)
-
   return (
     <section
       aria-label={t('blogLatestPost')}
       aria-roledescription={t('blogCarousel')}
-      className="mt-8 touch-pan-y"
+      className="touch-pan-y"
+      onTouchStart={(event) => {
+        touchStartX.current = event.touches[0].clientX
+      }}
+      onTouchEnd={handleTouchEnd}
       onTouchCancel={() => {
         touchStartX.current = null
       }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      role="region"
     >
-      <div className="border-border bg-card overflow-hidden rounded-lg border">
-        <div className="border-border flex min-h-14 items-center justify-between gap-4 border-b px-4 sm:px-5">
-          <h2 className="font-heading text-foreground text-xl font-semibold">
-            {t('blogLatestPost')}
-          </h2>
-        </div>
-
-        <div aria-live="polite" className="overflow-hidden">
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <h2 className="font-heading text-foreground text-xl font-semibold">
+          {t('blogLatestPost')}
+        </h2>
+        <span
+          className="text-muted-foreground font-mono text-xs tabular-nums"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {String(activeIndex + 1).padStart(2, '0')} /{' '}
+          {String(posts.length).padStart(2, '0')}
+        </span>
+      </div>
+      <div className="border-border bg-card overflow-hidden rounded-[20px] border">
+        <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-500 ease-in-out motion-reduce:transition-none"
+            className="flex transition-transform duration-300 ease-out motion-reduce:transition-none"
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
             {posts.map((post, index) => {
               const isActive = index === activeIndex
-              const slideId = `${carouselId}-slide-${index}`
-
+              const params = {
+                locale: activeLanguage === 'en' ? undefined : activeLanguage,
+                slug: post.slug,
+              }
               return (
                 <article
                   key={post.slug}
-                  id={slideId}
+                  id={`${carouselId}-slide-${index}`}
                   aria-hidden={!isActive}
                   inert={!isActive}
-                  className="grid w-full shrink-0 min-w-0 md:grid-cols-2"
+                  className="grid w-full min-w-0 shrink-0 md:grid-cols-2"
                 >
                   <Link
                     to="/{-$locale}/blog/$slug"
-                    params={{
-                      locale:
-                        activeLanguage === 'en' ? undefined : activeLanguage,
-                      slug: post.slug,
-                    }}
-                    className="border-border bg-muted block aspect-[16/10] min-w-0 overflow-hidden border-b focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-inset focus-visible:outline-none md:min-h-80 md:border-r md:border-b-0"
+                    params={params}
+                    className="border-border bg-background focus-visible:ring-ring order-first block aspect-[7/3] min-w-0 overflow-hidden border-b focus-visible:ring-2 focus-visible:ring-inset focus-visible:outline-none md:order-last md:aspect-auto md:min-h-[400px] md:border-b-0 md:border-l"
                     style={{
-                      backgroundColor: post.heroImage.bgColor ?? 'transparent',
-                      ...(post.heroImage.padding
-                        ? { padding: post.heroImage.padding }
-                        : {}),
-                      ...(post.heroImage.rounded
-                        ? { borderRadius: '8px' }
-                        : {}),
+                      backgroundColor: post.heroImage.bgColor,
+                      padding: post.heroImage.padding,
                     }}
                   >
                     <ResponsiveImage
@@ -154,92 +95,117 @@ function HeroCarouselView({ posts, activeLanguage }: HeroCarouselProps) {
                       pictureClassName="block h-full w-full"
                       sizes={HERO_IMAGE_SIZES}
                       style={{
-                        objectFit: post.heroImage.fit ?? 'cover',
+                        objectFit: post.heroImage.fit ?? 'contain',
                         objectPosition: post.heroImage.position ?? 'center',
                       }}
                     />
                   </Link>
-
-                  <div className="flex min-w-0 flex-col justify-center p-4 sm:p-6 md:p-8">
-                    <time
-                      dateTime={post.publishedDate}
-                      className="text-muted-foreground text-sm"
-                    >
-                      {formatPublishedDate(post.publishedDate, activeLanguage)}
-                    </time>
-                    <h3
-                      className={cn(
-                        HERO_POST_TITLE_LINE_CLAMP_CLASS,
-                        'font-heading mt-3 text-2xl leading-tight font-semibold text-balance sm:text-3xl',
+                  <div className="flex min-w-0 flex-col justify-center px-6 py-6 sm:p-10 lg:p-11">
+                    <div className="text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-6 tracking-wider uppercase">
+                      <time dateTime={post.publishedDate}>
+                        {new Date(post.publishedDate).toLocaleDateString(
+                          activeLanguage === 'sr' ? 'sr-Latn-RS' : 'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            timeZone: 'UTC',
+                          },
+                        )}
+                      </time>
+                      {post.tags.length > 0 && (
+                        <>
+                          <span aria-hidden="true">·</span>
+                          <span>
+                            {post.tags.includes('AI') ? 'AI + ' : ''}
+                            {post.tags[0]}
+                          </span>
+                        </>
                       )}
-                    >
+                    </div>
+                    <h3 className="font-heading mt-3 text-2xl sm:mt-4 sm:text-3xl leading-[1.15] font-bold tracking-tight text-balance lg:text-4xl">
                       <Link
                         to="/{-$locale}/blog/$slug"
-                        params={{
-                          locale:
-                            activeLanguage === 'en'
-                              ? undefined
-                              : activeLanguage,
-                          slug: post.slug,
-                        }}
-                        className="text-foreground hover:text-primary focus-visible:ring-ring rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2"
+                        params={params}
+                        className="text-foreground hover:text-primary focus-visible:ring-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
                       >
                         {post.title}
                       </Link>
                     </h3>
-                    <p className="text-muted-foreground mt-3 line-clamp-4 text-sm leading-6 sm:text-base sm:leading-7">
+                    <p className="text-muted-foreground mt-4 line-clamp-4 text-[15px] leading-[1.55] sm:mt-5 sm:text-base sm:leading-[1.65] lg:text-lg">
                       {post.summary}
                     </p>
-                    {post.tags.length > 0 ? (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge
-                            key={tag}
-                            variant="outline"
-                            className="border-border text-muted-foreground bg-muted/40"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    ) : null}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {post.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-secondary text-muted-foreground rounded-md px-2.5 py-1 font-mono text-xs"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <Link
+                      to="/{-$locale}/blog/$slug"
+                      params={params}
+                      className="text-primary focus-visible:ring-ring mt-2 inline-flex min-h-11 sm:mt-5 w-fit items-center gap-1 rounded-sm text-sm font-semibold hover:underline focus-visible:ring-2 focus-visible:outline-none"
+                    >
+                      {t('blogReadWriteUp')} <span aria-hidden="true">→</span>
+                    </Link>
                   </div>
                 </article>
               )
             })}
           </div>
         </div>
-
-        {posts.length > 1 ? (
-          <div className="border-border border-t p-3 sm:px-5">
+        {posts.length > 1 && (
+          <div className="border-border flex min-h-[60px] items-center justify-between gap-4 border-t px-5 sm:px-6">
             <div
-              aria-label={t('blogCarousel')}
-              className="flex flex-wrap items-center justify-center gap-2"
+              className="flex items-center"
               role="group"
+              aria-label={t('blogCarousel')}
             >
               {posts.map((post, index) => (
                 <button
                   key={post.slug}
                   type="button"
-                  onClick={() => handleSlideSelect(index)}
-                  className={cn(
-                    'border-border bg-background text-foreground hover:border-primary hover:text-primary focus-visible:ring-ring inline-flex size-11 items-center justify-center rounded-lg border text-sm font-medium transition-colors motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                    index === activeIndex &&
-                      'border-primary bg-primary text-primary-foreground',
-                  )}
+                  onClick={() => setCarouselIndex(index)}
+                  className="focus-visible:ring-ring flex min-h-11 min-w-6 items-center justify-center rounded-sm px-1.5 focus-visible:ring-2 focus-visible:outline-none"
                   aria-controls={`${carouselId}-slide-${index}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
                   aria-label={t('carouselGoToSlide', { index: index + 1 })}
                 >
-                  {index + 1}
+                  <span
+                    className={cn(
+                      'bg-muted-foreground/35 h-2.5 w-2.5 rounded-full',
+                      index === activeIndex && 'bg-primary w-7',
+                    )}
+                  />
                 </button>
               ))}
             </div>
+            <div className="flex gap-2.5">
+              <button
+                type="button"
+                onClick={() => moveSlide(-1)}
+                aria-label={t('blogPreviousPost')}
+                className="border-border text-foreground hover:border-primary hover:text-primary focus-visible:ring-ring flex size-11 items-center justify-center rounded-xl border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              >
+                <ChevronLeft className="size-5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => moveSlide(1)}
+                aria-label={t('blogNextPost')}
+                className="border-border text-foreground hover:border-primary hover:text-primary focus-visible:ring-ring flex size-11 items-center justify-center rounded-xl border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              >
+                <ChevronRight className="size-5" aria-hidden="true" />
+              </button>
+            </div>
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   )
 }
-
 export const HeroCarousel = memo(HeroCarouselView)

@@ -589,13 +589,33 @@ samp {
 }
 
 .article-page {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--article-primary-soft) 28%, transparent),
-      transparent 26rem
-    ),
-    var(--color-bg);
+  --article-surface: var(--card);
+  --article-surface-raised: var(--secondary);
+  --article-media: var(--background);
+  --article-ink: var(--foreground);
+  --article-prose: color-mix(in srgb, var(--foreground) 90%, var(--background));
+  --article-muted: var(--muted-foreground);
+  --article-faint: var(--muted-foreground);
+  --article-line: var(--border);
+  --article-primary: var(--primary);
+  --article-primary-soft: color-mix(
+    in srgb,
+    var(--primary) 16%,
+    var(--background)
+  );
+  --article-focus: var(--primary);
+  background: var(--background);
+}
+
+/* The blog index uses the softer blue palette from its editorial layout. */
+[data-theme='midnight-indigo'] :is(.blog-list-page, .article-page) {
+  --background: #13141e;
+  --foreground: #bacbff;
+  --card: #1d1e2e;
+  --secondary: #25273e;
+  --muted-foreground: #899acf;
+  --primary: #7aa2ff;
+  --border: #2b2e48;
 }
 
 .article-hero-grid {
